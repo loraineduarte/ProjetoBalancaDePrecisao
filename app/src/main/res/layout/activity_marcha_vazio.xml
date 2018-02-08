@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Atividades.RelatorioVerificacao.Testes.MarchaVazio.MarchaVazioActivity">
+
+
+
+    <Button
+        android:id="@+id/buttonSalvarAvaliador"
+        android:layout_width="115dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="88dp"
+        android:text="Salvar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/buttonLimparCamposAvaliador"
+        app:layout_constraintTop_toBottomOf="@+id/numeroMatriculaAvaliador" />
+
+    <Button
+        android:id="@+id/buttonLimparCamposAvaliador"
+        android:layout_width="120dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="88dp"
+        android:text="Limpar"
+        app:layout_constraintEnd_toStartOf="@+id/buttonSalvarAvaliador"
+        app:layout_constraintHorizontal_bias="0.806"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/numeroMatriculaAvaliador" />
+
+
+
+</android.support.constraint.ConstraintLayout>
