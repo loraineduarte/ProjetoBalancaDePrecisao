@@ -1,6 +1,7 @@
 package com.memtpadraomonofasico.apppadromonofsico.Atividades.Avaliador;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,10 +16,18 @@ import com.memtpadraomonofasico.apppadromonofsico.R;
 
 public class CriarAvaliadorActivity extends AppCompatActivity {
 
+    private static final String TAG = "Criar Avaliador";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_criar_avaliador);
+
+        BancoController crud = new BancoController(getBaseContext());
+        Cursor cursor = crud.pegaAvaliadores();
+
+        Log.d(TAG, String.valueOf(cursor.getCount()));
+
 
         Button botaoCriarAvaliador = (Button)findViewById(R.id.buttonSalvarAvaliador);
 
@@ -30,8 +39,7 @@ public class CriarAvaliadorActivity extends AppCompatActivity {
                 EditText matricula = (EditText)findViewById(R.id.numeroMatriculaAvaliador);
                 String nomeString = nome.getText().toString();
                 String matriculaString = matricula.getText().toString();
-                String resultado;
-                resultado = crud.insereNovoAvaliador(nomeString,matriculaString);
+                String resultado = crud.insereNovoAvaliador(nomeString,matriculaString);
                 Toast.makeText(getApplicationContext(), resultado, Toast.LENGTH_LONG).show();
                 finish();
             }
