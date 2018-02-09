@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.memtpadraomonofasico.apppadromonofsico.BancoDeDados.BancoController;
@@ -25,8 +26,29 @@ public class CriarAvaliadorActivity extends AppCompatActivity {
 
         BancoController crud = new BancoController(getBaseContext());
         Cursor cursor = crud.pegaAvaliadores();
-
         Log.d(TAG, String.valueOf(cursor.getCount()));
+
+        final EditText nomeAvaliador = (EditText) findViewById( R.id.nomeAvaliador );
+        nomeAvaliador.setOnFocusChangeListener( new View.OnFocusChangeListener() {
+
+            public void onFocusChange( View v, boolean hasFocus ) {
+                if( hasFocus ) {
+                    nomeAvaliador.setText( "", TextView.BufferType.EDITABLE );
+                }
+            }
+
+        } );
+
+        final EditText matriculaAvaliador = (EditText) findViewById( R.id.numeroMatriculaAvaliador );
+        matriculaAvaliador.setOnFocusChangeListener( new View.OnFocusChangeListener() {
+
+            public void onFocusChange( View v, boolean hasFocus ) {
+                if( hasFocus ) {
+                    matriculaAvaliador.setText( "", TextView.BufferType.EDITABLE );
+                }
+            }
+
+        } );
 
 
         Button botaoCriarAvaliador = (Button)findViewById(R.id.buttonSalvarAvaliador);
@@ -39,9 +61,16 @@ public class CriarAvaliadorActivity extends AppCompatActivity {
                 EditText matricula = (EditText)findViewById(R.id.numeroMatriculaAvaliador);
                 String nomeString = nome.getText().toString();
                 String matriculaString = matricula.getText().toString();
-                String resultado = crud.insereNovoAvaliador(nomeString,matriculaString);
-                Toast.makeText(getApplicationContext(), resultado, Toast.LENGTH_LONG).show();
-                finish();
+
+                if(nomeString.equals("")|| matriculaString.equals("")){
+                    Toast.makeText(getApplicationContext(), "Campos em branco! ", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    String resultado = crud.insereNovoAvaliador(nomeString,matriculaString);
+                    Toast.makeText(getApplicationContext(), resultado, Toast.LENGTH_LONG).show();
+                    finish();
+                }
+
             }
         });
 
@@ -52,8 +81,8 @@ public class CriarAvaliadorActivity extends AppCompatActivity {
             public void onClick(View v) {
                 EditText nome = (EditText)findViewById(R.id.nomeAvaliador);
                 EditText matricula = (EditText)findViewById(R.id.numeroMatriculaAvaliador);
-                nome.clearComposingText();
-                matricula.clearComposingText();
+                nome.getText().clear();
+                matricula.getText().clear();
             }
         });
 
@@ -64,4 +93,5 @@ public class CriarAvaliadorActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
+
 }
