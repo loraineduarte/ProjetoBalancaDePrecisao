@@ -6,33 +6,147 @@
     android:layout_height="match_parent"
     tools:context=".Atividades.RelatorioVerificacao.Testes.MarchaVazio.MarchaVazioActivity">
 
-
-
-    <Button
-        android:id="@+id/buttonSalvarAvaliador"
-        android:layout_width="115dp"
-        android:layout_height="0dp"
+    <TextView
+        android:id="@+id/MarchaVazio"
+        android:layout_width="175dp"
+        android:layout_height="35dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="88dp"
-        android:text="Salvar"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:text="Marcha em Vazio"
+        android:textAppearance="@android:style/TextAppearance.Material.DialogWindowTitle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/buttonLimparCamposAvaliador"
-        app:layout_constraintTop_toBottomOf="@+id/numeroMatriculaAvaliador" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/buttonLimparCamposAvaliador"
-        android:layout_width="120dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="40dp"
+        android:id="@+id/buttonAplicarTensao"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="88dp"
-        android:text="Limpar"
-        app:layout_constraintEnd_toStartOf="@+id/buttonSalvarAvaliador"
-        app:layout_constraintHorizontal_bias="0.806"
+        android:layout_marginTop="16dp"
+        android:text="Aplicar Tensão"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@android:color/black"
+        android:textColorLink="@android:color/black"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/numeroMatriculaAvaliador" />
+        app:layout_constraintTop_toBottomOf="@+id/MarchaVazio" />
 
 
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="Status"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonAplicarTensao" />
+
+    <RadioButton
+        android:id="@+id/radioButton4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:text="Aprovado"
+        android:textColorHint="@color/colorPrimaryDark"
+        android:textColorLink="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+    <RadioButton
+        android:id="@+id/radioButton5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:text="Não Realizado"
+        android:textColorHint="@color/colorPrimaryDark"
+        android:textColorLink="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioButton4" />
+
+    <RadioButton
+        android:id="@+id/radioButton6"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="230dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:text="Reprovado"
+        android:textColorHint="@color/colorPrimaryDark"
+        android:textColorLink="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioButton5" />
+
+    <Button
+        android:id="@+id/PreviousFase4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorPrimaryDark"
+        android:backgroundTint="?attr/colorPrimaryDark"
+        android:elevation="2dp"
+        android:text="Anterior"
+        android:textColor="@android:color/background_light"
+        android:textColorLink="@android:color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/NextFase5"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioButton6"
+        app:layout_constraintVertical_bias="0.934" />
+
+    <Button
+        android:id="@+id/NextFase5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="220dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorPrimaryDark"
+        android:backgroundTint="?attr/colorPrimaryDark"
+        android:elevation="2dp"
+        android:text="Próximo"
+        android:textColor="@android:color/background_light"
+        android:textColorLink="@android:color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText5"
+        app:layout_constraintVertical_bias="0.927" />
+
+    <EditText
+        android:id="@+id/editText5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="200dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="time"
+        android:text="Tempo"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColorHighlight="@android:color/black"
+        android:textColorHint="@android:color/black"
+        android:textColorLink="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioButton5" />
 
 </android.support.constraint.ConstraintLayout>

@@ -24,14 +24,15 @@
     <EditText
         android:id="@+id/NumNotaServico"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="41dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Número da Nota de Serviço"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColorLink="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Servico" />
@@ -45,6 +46,8 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Número da Instalação"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColorLink="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/NumNotaServico" />
@@ -58,6 +61,8 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Nome do Cliente"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColorLink="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/NumInstalacao" />
@@ -71,6 +76,8 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Número do documento do Cliente"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColorLink="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/NomeCliente" />
@@ -85,6 +92,8 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Rua/Avenida"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColorLink="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -104,12 +113,16 @@
 
     <EditText
         android:id="@+id/editText6"
-        android:layout_width="181dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="220dp"
         android:layout_marginStart="16dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Numero"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColorLink="@android:color/black"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Rua" />
 
@@ -122,6 +135,8 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Complemento"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColorLink="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.466"
         app:layout_constraintStart_toEndOf="@+id/editText6"
@@ -129,12 +144,16 @@
 
     <EditText
         android:id="@+id/editText8"
-        android:layout_width="182dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="220dp"
         android:layout_marginStart="16dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Bairro"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColorLink="@android:color/black"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText6" />
 
@@ -147,6 +166,8 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="CEP"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColorLink="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/editText8"
@@ -164,6 +185,8 @@
         android:backgroundTint="?attr/colorPrimaryDark"
         android:elevation="2dp"
         android:text="Anterior"
+        android:textColor="@android:color/background_light"
+        android:textColorLink="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/NextFase2"
         app:layout_constraintHorizontal_bias="0.517"
@@ -182,6 +205,8 @@
         android:backgroundTint="?attr/colorPrimaryDark"
         android:elevation="2dp"
         android:text="Próximo"
+        android:textColor="@android:color/background_light"
+        android:textColorLink="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

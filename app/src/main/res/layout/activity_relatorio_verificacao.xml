@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/RelatorioVerificacao"
-        android:layout_width="214dp"
+        android:layout_width="237dp"
         android:layout_height="36dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
@@ -28,6 +28,7 @@
         android:layout_marginTop="16dp"
         android:text="Selecionar Avaliador"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        android:textColor="@android:color/darker_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/RelatorioVerificacao" />
@@ -41,6 +42,7 @@
         android:layout_marginTop="8dp"
         android:text="Matrícula do Avaliador"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColorLink="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/SelecionarAvaliador" />
@@ -56,6 +58,7 @@
         android:inputType="textPersonName"
         android:text="Nome do Avaliador"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColorLink="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/MatriculaAvaliador" />
@@ -69,6 +72,8 @@
         android:layout_marginTop="32dp"
         android:text="Dados Gerais"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        android:textColor="@android:color/darker_gray"
+        android:textColorLink="@android:color/darker_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText2" />
@@ -81,6 +86,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="Solicitação do Consumidor"
+        android:textColorHint="@android:color/holo_blue_dark"
+        android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
@@ -93,6 +100,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="SEM"
+        android:textColorHint="@color/colorPrimaryDark"
+        android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radioButton" />
@@ -105,6 +114,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="TOI"
+        android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radioButton2" />
@@ -120,6 +130,7 @@
         android:inputType="textPersonName"
         android:text="TOI Nº"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColorLink="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radioButton3" />
@@ -135,6 +146,8 @@
         android:background="@color/colorPrimaryDark"
         android:backgroundTint="@color/colorPrimaryDark"
         android:text="Próximo"
+        android:textColor="@android:color/background_light"
+        android:textColorLink="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
