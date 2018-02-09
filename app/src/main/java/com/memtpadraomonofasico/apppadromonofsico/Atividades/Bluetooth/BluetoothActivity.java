@@ -9,26 +9,24 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 import static java.lang.System.out;
 import com.memtpadraomonofasico.apppadromonofsico.R;
+import android.widget.EditText;
 
 public class BluetoothActivity extends AppCompatActivity {
 
     private static final String TAG = "Bluetooth";
-    private static final int REQUEST_ENABLE_BT = 0;
-    private static final int REQUEST_DISCOVERABLE_BT = 0;
+
+    public static int ENABLE_BLUETOOTH = 1;
     public static int SELECT_PAIRED_DEVICE = 2;
     public static int SELECT_DISCOVERED_DEVICE = 3;
+    private static final int REQUEST_ENABLE_BT = 4;
+
+    static TextView statusMessage;
     static TextView textSpace;
+
     ThreadConexao conexao;
     String enderecoDispositivo = "";
-
-
-    public void discoverDevices(View view){
-        Intent searchPairedDevicesIntent = new Intent(this, DiscoveredDevices.class);
-        startActivityForResult(searchPairedDevicesIntent, SELECT_DISCOVERED_DEVICE);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,25 +34,85 @@ public class BluetoothActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bluetooth);
 
+        statusMessage = (TextView) findViewById(R.id.statusMessage);
+        textSpace = (TextView) findViewById(R.id.textSpace);
+
+        // Início - verificando ativação do bluetooth
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         if (mBluetoothAdapter == null) {
+            statusMessage.setText("Bluetooth não está funcionando.");
             out.append("device not supported");
         }
-
-        if (!mBluetoothAdapter.isEnabled()) {
-
-            Log.d(TAG, "ATIVANDO BLUETOOTH");
-            Intent enableBtIntent  = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-            startActivityForResult(enableBtIntent, REQUEST_DISCOVERABLE_BT);
-            enableBtIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 1000);
-
+        else{
+            statusMessage.setText("Bluetooth está funcionando.");
+            if (!mBluetoothAdapter.isEnabled()) {
+                Log.d(TAG, "ATIVANDO BLUETOOTH");
+                Intent enableBtIntent  = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+                statusMessage.setText("Solicitando ativação do Bluetooth...");
+                //startActivityForResult(enableBtIntent, REQUEST_DISCOVERABLE_BT);
+                //enableBtIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 1000);
+            }
+            else{
+                statusMessage.setText("Bluetooth Ativado.");
+            }
         }
+        // Fim - verificando ativação do bluetooth
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == ENABLE_BLUETOOTH) {
+            if(resultCode == RESULT_OK) {
+                statusMessage.setText("Bluetooth ativado.");
+            }
+            else {
+                statusMessage.setText("Bluetooth não ativado.");
+            }
+        }
+        else if(requestCode == SELECT_PAIRED_DEVICE || requestCode == SELECT_DISCOVERED_DEVICE) {
+            if(resultCode == RESULT_OK) {
+                statusMessage.setText("Você selecionou " + data.getStringExtra("btDevName") + "\n"
+                        + data.getStringExtra("btDevAddress"));
 
+                conexao = new ThreadConexao(data.getStringExtra("btDevAddress"));
+                conexao.start();
+            }
+            else {
+                statusMessage.setText("Nenhum dispositivo selecionado.");
+            }
+        }
+    }
+
+    public void searchPairedDevices(View view){
+        Intent searchPairedDevicesIntent = new Intent(this, PairedDevices.class);
+        startActivityForResult(searchPairedDevicesIntent, SELECT_PAIRED_DEVICE);
+    }
+
+    public void discoverDevices(View view){
+        Intent searchPairedDevicesIntent = new Intent(this, DiscoveredDevices.class);
+        startActivityForResult(searchPairedDevicesIntent, SELECT_DISCOVERED_DEVICE);
+    }
+
+    public void waitConnection(View view){
+        conexao = new ThreadConexao();
+        conexao.start();
+    }
+
+    public void enableVisibility(View view){
+        Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+        discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 30);
+        startActivity(discoverableIntent);
+    }
+
+    public void sendMessage(View view){
+        EditText messageBox = (EditText) findViewById(R.id.editText_MessageBox);
+        String messageBoxString = messageBox.getText().toString();
+        byte[] data =  messageBoxString.getBytes();
+        conexao.write(data);
+    }
 
     @Override
     protected void onDestroy() {
@@ -91,33 +149,5 @@ public class BluetoothActivity extends AppCompatActivity {
             }
         }
     };
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        if (requestCode == SELECT_PAIRED_DEVICE || requestCode == SELECT_DISCOVERED_DEVICE) {
-            if (resultCode == RESULT_OK) {
-
-                Log.d(TAG,"Você selecionou " + data.getStringExtra("btDevName") + "\n" + data.getStringExtra("btDevAddress"));
-                enderecoDispositivo = data.getStringExtra("btDevAddress");
-                Log.d(TAG, String.valueOf(enderecoDispositivo));
-
-                if (BluetoothAdapter.checkBluetoothAddress(String.valueOf(enderecoDispositivo))) {
-
-                    conexao = new ThreadConexao(enderecoDispositivo);
-                    conexao.start();
-
-                    Toast.makeText(getApplicationContext(), "Conectado", Toast.LENGTH_SHORT).show();
-
-
-                } else {
-                    Toast.makeText(getApplicationContext(), "Endereço MAC do dispositivo Bluetooth remoto não é válido", Toast.LENGTH_SHORT).show();
-                }
-
-            } else {
-                Log.d(TAG,"Nenhum dispositivo selecionado :(");
-            }
-        }
-    }
 
 }

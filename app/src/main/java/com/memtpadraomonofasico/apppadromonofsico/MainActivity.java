@@ -120,8 +120,6 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-
-
     private void abrirMedidores() {
         Log.d(TAG, "Opção de medidores");
         Intent intent = new Intent(this, CriarMedidorActivity.class);
@@ -134,7 +132,4 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(this, RelatorioVerificacaoActivity.class);
         startActivity(intent);
     }
-
-
-
 }

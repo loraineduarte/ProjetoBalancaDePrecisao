@@ -10,12 +10,17 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import com.memtpadraomonofasico.apppadromonofsico.R;
+
 /**
  * Created by loraine.duarte on 05/02/2018.
  */
@@ -28,18 +33,38 @@ public class DiscoveredDevices extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        /*  Esse trecho não é essencial, mas dá um melhor visual à lista.
+            Adiciona um título à lista de dispositivos pareados utilizando
+        o layout text_header.xml.
+        */
+        ListView listView = getListView();
+        LayoutInflater inflater = getLayoutInflater();
+        View header = inflater.inflate(R.layout.text_header, listView, false);
+        ((TextView) header.findViewById(R.id.textView)).setText("\nDispositivos\n");
+        listView.addHeaderView(header, null, false);
+
+        /*  Cria um modelo para a lista e o adiciona à tela.
+            Para adicionar um elemento à lista, usa-se arrayAdapter.add().
+         */
         arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         setListAdapter(arrayAdapter);
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) { // Pede permissao de localizaçao ao usuario.
+        /*  Pede permissao de localizaçao ao usuario.
+        *   Necessario para API > 22 */
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1001);
         }
 
-        BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();  //  Usa o adaptador Bluetooth padrão para iniciar o processo de descoberta.
+        /*  Usa o adaptador Bluetooth padrão para iniciar o processo de descoberta.
+         */
+        BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
         btAdapter.startDiscovery();
 
-        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND); //Cria um filtro que captura o momento em que um dispositivo é descoberto.
-        registerReceiver(receiver, filter); //Registra o filtro e define um receptor para o evento de descoberta.
+        /*  Cria um filtro que captura o momento em que um dispositivo é descoberto.
+            Registra o filtro e define um receptor para o evento de descoberta.
+         */
+        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+        registerReceiver(receiver, filter);
     }
 
     @Override
@@ -57,15 +82,21 @@ public class DiscoveredDevices extends ListActivity {
         finish();
     }
 
+    /*  Define um receptor para o evento de descoberta de dispositivo.
+     */
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
 
         /*  Este método é executado sempre que um novo dispositivo for descoberto.
          */
         public void onReceive(Context context, Intent intent) {
 
+            /*  Obtem o Intent que gerou a ação.
+                Verifica se a ação corresponde à descoberta de um novo dispositivo.
+                Obtem um objeto que representa o dispositivo Bluetooth descoberto.
+                Exibe seu nome e endereço na lista.
+             */
             String action = intent.getAction();
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-                Log.d("Device", "Achou um device para conectar");
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 arrayAdapter.add(device.getName() + "\n" + device.getAddress());
             }
@@ -77,7 +108,5 @@ public class DiscoveredDevices extends ListActivity {
         super.onDestroy();
         unregisterReceiver(receiver);
     }
-
-
 
 }
