@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.SituacoesObservadasActivity;
+import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.MarchaVazio.MarchaVazioActivity;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 
 public class InspecaoConformidadeActivity extends AppCompatActivity {
@@ -35,12 +37,12 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
     }
 
     private void abrirSituacoesObservadas() {
-        Intent intent = new Intent(this, InspecaoConformidadeActivity.class);
+        Intent intent = new Intent(this, SituacoesObservadasActivity.class);
         startActivity(intent);
     }
 
     private void abrirMarchaVazio() {
-        Intent intent = new Intent(this, InspecaoConformidadeActivity.class);
+        Intent intent = new Intent(this, MarchaVazioActivity.class);
         startActivity(intent);
     }
 }

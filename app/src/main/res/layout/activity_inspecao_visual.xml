@@ -36,7 +36,7 @@
         android:id="@+id/Selo1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="220dp"
+        android:layout_marginEnd="210dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:ems="10"
@@ -54,7 +54,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="210dp"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
@@ -62,15 +62,14 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColorLink="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/Selo1"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <EditText
         android:id="@+id/Selo3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="220dp"
+        android:layout_marginEnd="210dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:ems="10"
@@ -80,14 +79,14 @@
         android:textColorLink="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Selo2" />
+        app:layout_constraintTop_toBottomOf="@+id/Selo1" />
 
     <EditText
         android:id="@+id/Selo4"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="210dp"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
@@ -95,15 +94,15 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColorLink="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/Selo3"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Selo2" />
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_width="59dp"
+        android:layout_height="23dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:text="Status"
         android:textColor="@android:color/darker_gray"
@@ -122,7 +121,6 @@
         android:text="Aprovado"
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.14"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
@@ -158,14 +156,13 @@
         android:id="@+id/addObservacao"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="220dp"
+        android:layout_marginEnd="210dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="152dp"
+        android:layout_marginTop="24dp"
         android:text="Adicionar Observação"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AprovadoInspecaoVisual" />
+        app:layout_constraintTop_toBottomOf="@+id/NaoPadronizadosInpecao" />
 
     <RadioButton
         android:id="@+id/AusentesInspecao"
@@ -210,13 +207,13 @@
     <Button
         android:id="@+id/tirarFotoInspecao"
         android:layout_width="0dp"
-        android:layout_height="54dp"
+        android:layout_height="48dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginStart="220dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="210dp"
+        android:layout_marginTop="24dp"
         android:text="Adicionar Foto"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.864"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/NaoPadronizadosInpecao" />
 
@@ -226,8 +223,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
         android:layout_marginEnd="220dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
         android:background="@color/colorPrimaryDark"
         android:backgroundTint="?attr/colorPrimaryDark"
         android:elevation="2dp"
@@ -236,26 +232,23 @@
         android:textColorLink="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.032"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addObservacao"
-        app:layout_constraintVertical_bias="0.121" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/NextFase4"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="210dp"
         android:background="@color/colorPrimaryDark"
         android:backgroundTint="?attr/colorPrimaryDark"
         android:elevation="2dp"
         android:text="Próximo"
         android:textColor="@android:color/background_light"
         android:textColorLink="@android:color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/PreviousFase3"
-        app:layout_constraintTop_toBottomOf="@+id/tirarFotoInspecao" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

@@ -67,7 +67,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:text="Não Realizado"
         android:textColorHint="@color/colorPrimaryDark"
         android:textColorLink="@color/colorPrimaryDark"
@@ -77,11 +77,11 @@
 
     <RadioButton
         android:id="@+id/radioButton6"
-        android:layout_width="0dp"
+        android:layout_width="157dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="230dp"
+        android:layout_marginEnd="220dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:text="Reprovado"
         android:textColorHint="@color/colorPrimaryDark"
         android:textColorLink="@color/colorPrimaryDark"
@@ -94,9 +94,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginEnd="220dp"
+        android:layout_marginStart="16dp"
         android:background="@color/colorPrimaryDark"
         android:backgroundTint="?attr/colorPrimaryDark"
         android:elevation="2dp"
@@ -104,11 +103,8 @@
         android:textColor="@android:color/background_light"
         android:textColorLink="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/NextFase5"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioButton6"
-        app:layout_constraintVertical_bias="0.934" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/NextFase5"
@@ -117,7 +113,6 @@
         android:layout_marginBottom="32dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="220dp"
-        android:layout_marginTop="8dp"
         android:background="@color/colorPrimaryDark"
         android:backgroundTint="?attr/colorPrimaryDark"
         android:elevation="2dp"
@@ -126,18 +121,15 @@
         android:textColorLink="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText5"
-        app:layout_constraintVertical_bias="0.927" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/editText5"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="36dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginStart="200dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="220dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="time"
         android:text="Tempo"
@@ -146,6 +138,7 @@
         android:textColorHint="@android:color/black"
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.901"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radioButton5" />
 

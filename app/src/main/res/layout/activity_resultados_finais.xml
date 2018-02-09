@@ -6,4 +6,156 @@
     android:layout_height="match_parent"
     tools:context="com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.ResultadosFinaisActivity">
 
+
+    <TextView
+        android:id="@+id/MarchaVazio"
+        android:layout_width="186dp"
+        android:layout_height="38dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:text="Resultados Finais"
+        android:textAppearance="@android:style/TextAppearance.Material.DialogWindowTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <Button
+        android:id="@+id/PreviousFase9"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="220dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="150dp"
+        android:background="@color/colorPrimaryDark"
+        android:backgroundTint="?attr/colorPrimaryDark"
+        android:elevation="2dp"
+        android:text="Anterior"
+        android:textColor="@android:color/background_light"
+        android:textColorLink="@android:color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioButton11" />
+
+    <Button
+        android:id="@+id/NextFase10"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="220dp"
+        android:layout_marginTop="150dp"
+        android:background="@color/colorPrimaryDark"
+        android:backgroundTint="?attr/colorPrimaryDark"
+        android:elevation="2dp"
+        android:text="Próximo"
+        android:textColor="@android:color/background_light"
+        android:textColorLink="@android:color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioButton11" />
+
+    <EditText
+        android:id="@+id/editText16"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="220dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:inputType="date"
+        android:text="Data Início"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/MarchaVazio" />
+
+    <EditText
+        android:id="@+id/editText17"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="220dp"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:inputType="time"
+        android:text="Hora Início"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/MarchaVazio" />
+
+    <EditText
+        android:id="@+id/editText18"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="220dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="date"
+        android:text="Data Fim"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText16" />
+
+    <EditText
+        android:id="@+id/editText19"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="220dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="time"
+        android:text="Hora Fim"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText17" />
+
+    <EditText
+        android:id="@+id/editText20"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Leitura de Retirada"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText19" />
+
+    <EditText
+        android:id="@+id/editText21"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Leitura de Calibração"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText20" />
+
+    <EditText
+        android:id="@+id/editText22"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Leitura Pós Calibração"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText21" />
+
+
 </android.support.constraint.ConstraintLayout>

@@ -49,136 +49,146 @@
 
     <EditText
         android:id="@+id/ModeloMedidor"
-        android:layout_width="175dp"
+        android:layout_width="0dp"
         android:layout_height="34dp"
+        android:layout_marginEnd="220dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Modelo"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText" />
 
     <EditText
         android:id="@+id/editText3"
-        android:layout_width="0dp"
+        android:layout_width="196dp"
         android:layout_height="36dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="220dp"
         android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Fabricante"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ModeloMedidor"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText" />
 
     <EditText
         android:id="@+id/TensaoNominal"
-        android:layout_width="173dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="220dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Tensão Nominal (V)"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ModeloMedidor" />
 
     <EditText
         android:id="@+id/CorrenteNominal"
-        android:layout_width="0dp"
+        android:layout_width="196dp"
         android:layout_height="38dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="220dp"
         android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Corrente Nominal (A)"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/TensaoNominal"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText3" />
 
     <RadioButton
         android:id="@+id/radioButtonEletronico"
-        android:layout_width="173dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="220dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="Eletrônico"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TensaoNominal" />
 
     <RadioButton
         android:id="@+id/RadioButtonMecanico"
-        android:layout_width="189dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="220dp"
         android:layout_marginTop="16dp"
         android:text="Mecânico"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/radioButtonEletronico"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/CorrenteNominal" />
 
     <EditText
         android:id="@+id/editText10"
-        android:layout_width="174dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="220dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Kd/Ke"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radioButtonEletronico" />
 
     <EditText
         android:id="@+id/Classe"
-        android:layout_width="0dp"
+        android:layout_width="196dp"
         android:layout_height="37dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="220dp"
         android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Classe"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/editText10"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/RadioButtonMecanico" />
 
     <EditText
         android:id="@+id/editText12"
-        android:layout_width="174dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="220dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Nº de Elementos"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText10" />
 
     <EditText
         android:id="@+id/editText13"
-        android:layout_width="0dp"
+        android:layout_width="196dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="220dp"
         android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Ano de Fabricação"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/editText12"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Classe" />
 
     <EditText

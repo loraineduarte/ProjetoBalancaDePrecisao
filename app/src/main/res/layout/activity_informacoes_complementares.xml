@@ -6,4 +6,111 @@
     android:layout_height="match_parent"
     tools:context="com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.InformacoesComplementaresActivity">
 
+
+    <TextView
+        android:id="@+id/MarchaVazio"
+        android:layout_width="0dp"
+        android:layout_height="62dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:text="Informações Complementares e Desacordo com o TOI"
+        android:textAppearance="@android:style/TextAppearance.Material.DialogWindowTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <RadioButton
+        android:id="@+id/radioButton4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:text="Tampa do Medidor Solidarizada"
+        android:textColorHint="@color/colorPrimaryDark"
+        android:textColorLink="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/MarchaVazio" />
+
+    <RadioButton
+        android:id="@+id/radioButton5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:text="Tampa do Medidor Danificada"
+        android:textColorHint="@color/colorPrimaryDark"
+        android:textColorLink="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioButton4" />
+
+    <RadioButton
+        android:id="@+id/radioButton6"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:text="Tampa do Bloco Ausente"
+        android:textColorHint="@color/colorPrimaryDark"
+        android:textColorLink="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioButton5" />
+
+    <Button
+        android:id="@+id/PreviousFase8"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="220dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="150dp"
+        android:background="@color/colorPrimaryDark"
+        android:backgroundTint="?attr/colorPrimaryDark"
+        android:elevation="2dp"
+        android:text="Anterior"
+        android:textColor="@android:color/background_light"
+        android:textColorLink="@android:color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioButton11" />
+
+    <Button
+        android:id="@+id/NextFase9"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="220dp"
+        android:layout_marginTop="150dp"
+        android:background="@color/colorPrimaryDark"
+        android:backgroundTint="?attr/colorPrimaryDark"
+        android:elevation="2dp"
+        android:text="Próximo"
+        android:textColor="@android:color/background_light"
+        android:textColorLink="@android:color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioButton11" />
+
+    <RadioButton
+        android:id="@+id/radioButton11"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:text="Selos Rompidos No Labortório"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioButton6" />
+
 </android.support.constraint.ConstraintLayout>

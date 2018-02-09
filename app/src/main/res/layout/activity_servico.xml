@@ -117,6 +117,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="220dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Numero"
@@ -131,15 +132,15 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="220dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Complemento"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColorLink="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.466"
-        app:layout_constraintStart_toEndOf="@+id/editText6"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Rua" />
 
     <EditText
@@ -148,6 +149,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="220dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Bairro"
@@ -162,25 +164,24 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="220dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="CEP"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColorLink="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/editText8"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText7" />
 
     <Button
         android:id="@+id/PreviousFase1"
-        android:layout_width="158dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="220dp"
+        android:layout_marginStart="24dp"
         android:background="@color/colorPrimaryDark"
         android:backgroundTint="?attr/colorPrimaryDark"
         android:elevation="2dp"
@@ -188,19 +189,16 @@
         android:textColor="@android:color/background_light"
         android:textColorLink="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/NextFase2"
-        app:layout_constraintHorizontal_bias="0.517"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText8" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/NextFase2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginStart="220dp"
-        android:layout_marginTop="8dp"
         android:background="@color/colorPrimaryDark"
         android:backgroundTint="?attr/colorPrimaryDark"
         android:elevation="2dp"
@@ -209,8 +207,8 @@
         android:textColorLink="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText9" />
+        app:layout_constraintHorizontal_bias="0.574"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>
