@@ -112,7 +112,7 @@
         app:layout_constraintTop_toBottomOf="@+id/NumDocumentoCliente" />
 
     <EditText
-        android:id="@+id/editText6"
+        android:id="@+id/Numero"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="220dp"
@@ -128,7 +128,7 @@
         app:layout_constraintTop_toBottomOf="@+id/Rua" />
 
     <EditText
-        android:id="@+id/editText7"
+        android:id="@+id/Complemento"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -144,7 +144,7 @@
         app:layout_constraintTop_toBottomOf="@+id/Rua" />
 
     <EditText
-        android:id="@+id/editText8"
+        android:id="@+id/Bairro"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="220dp"
@@ -157,10 +157,10 @@
         android:textColorLink="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText6" />
+        app:layout_constraintTop_toBottomOf="@+id/Numero" />
 
     <EditText
-        android:id="@+id/editText9"
+        android:id="@+id/CEP"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -173,7 +173,7 @@
         android:textColorLink="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText7" />
+        app:layout_constraintTop_toBottomOf="@+id/Complemento" />
 
     <Button
         android:id="@+id/PreviousFase1"

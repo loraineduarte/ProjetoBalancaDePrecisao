@@ -52,7 +52,7 @@
         app:layout_constraintTop_toBottomOf="@+id/NumSerieMedidor" />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/fabricanteMedidor"
         android:layout_width="0dp"
         android:layout_height="36dp"
         android:layout_marginEnd="16dp"
@@ -71,7 +71,7 @@
         android:id="@+id/TensaoNominal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="220dp"
+        android:layout_marginEnd="210dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:ems="10"
@@ -88,7 +88,7 @@
         android:layout_width="0dp"
         android:layout_height="37dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginStart="220dp"
+        android:layout_marginStart="210dp"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
@@ -97,7 +97,7 @@
         android:textColorLink="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText3" />
+        app:layout_constraintTop_toBottomOf="@+id/fabricanteMedidor" />
 
     <RadioButton
         android:id="@+id/radioButtonEletronico"
@@ -126,7 +126,7 @@
         app:layout_constraintTop_toBottomOf="@+id/CorrenteNominal" />
 
     <EditText
-        android:id="@+id/editText10"
+        android:id="@+id/KdKe"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="220dp"
@@ -171,10 +171,10 @@
         android:textColorLink="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText10" />
+        app:layout_constraintTop_toBottomOf="@+id/KdKe" />
 
     <EditText
-        android:id="@+id/editText13"
+        android:id="@+id/AnoFabricacao"
         android:layout_width="0dp"
         android:layout_height="44dp"
         android:layout_marginEnd="16dp"
@@ -190,7 +190,7 @@
         app:layout_constraintTop_toBottomOf="@+id/Classe" />
 
     <EditText
-        android:id="@+id/editText14"
+        android:id="@+id/PorInmetro"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -203,7 +203,7 @@
         android:textColorLink="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText13" />
+        app:layout_constraintTop_toBottomOf="@+id/AnoFabricacao" />
 
     <Button
         android:id="@+id/PreviousFase2"

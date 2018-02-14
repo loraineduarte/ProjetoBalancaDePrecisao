@@ -122,7 +122,8 @@
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        android:onClick="onCheckboxClicked" />
 
     <RadioButton
         android:id="@+id/ReprovadoInspecaoVisual"
@@ -136,7 +137,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.96"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        android:onClick="onCheckboxClicked" />
 
     <RadioButton
         android:id="@+id/VioladosInpecao"
@@ -150,7 +152,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ReprovadoInspecaoVisual" />
+        app:layout_constraintTop_toBottomOf="@+id/ReprovadoInspecaoVisual"
+        android:onClick="onCheckboxClicked" />
 
     <Button
         android:id="@+id/addObservacao"
@@ -176,7 +179,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.044"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/VioladosInpecao" />
+        app:layout_constraintTop_toBottomOf="@+id/VioladosInpecao"
+        android:onClick="onCheckboxClicked" />
 
     <RadioButton
         android:id="@+id/ReconstituidosInspecao"
@@ -189,7 +193,8 @@
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AusentesInspecao" />
+        app:layout_constraintTop_toBottomOf="@+id/AusentesInspecao"
+        android:onClick="onCheckboxClicked" />
 
     <RadioButton
         android:id="@+id/NaoPadronizadosInpecao"
@@ -202,12 +207,13 @@
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ReconstituidosInspecao" />
+        app:layout_constraintTop_toBottomOf="@+id/ReconstituidosInspecao"
+        android:onClick="onCheckboxClicked" />
 
     <Button
         android:id="@+id/tirarFotoInspecao"
         android:layout_width="0dp"
-        android:layout_height="48dp"
+        android:layout_height="54dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="210dp"
         android:layout_marginTop="24dp"

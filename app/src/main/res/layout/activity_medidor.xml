@@ -20,20 +20,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/CadastrarMedidor"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:text="Cadastrar Medidor"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText14" />
-
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/numSerie"
         android:layout_width="0dp"
         android:layout_height="35dp"
         android:layout_marginEnd="16dp"
@@ -60,11 +48,11 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/numSerie" />
 
     <EditText
-        android:id="@+id/editText3"
-        android:layout_width="196dp"
+        android:id="@+id/fabricanteMedidor"
+        android:layout_width="0dp"
         android:layout_height="36dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="220dp"
@@ -75,13 +63,13 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/numSerie" />
 
     <EditText
         android:id="@+id/TensaoNominal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="220dp"
+        android:layout_marginEnd="210dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:ems="10"
@@ -94,10 +82,10 @@
 
     <EditText
         android:id="@+id/CorrenteNominal"
-        android:layout_width="196dp"
+        android:layout_width="0dp"
         android:layout_height="38dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginStart="220dp"
+        android:layout_marginStart="210dp"
         android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="textPersonName"
@@ -105,7 +93,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText3" />
+        app:layout_constraintTop_toBottomOf="@+id/fabricanteMedidor" />
 
     <RadioButton
         android:id="@+id/radioButtonEletronico"
@@ -117,7 +105,8 @@
         android:text="Eletrônico"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TensaoNominal" />
+        app:layout_constraintTop_toBottomOf="@+id/TensaoNominal"
+        android:onClick="onCheckboxClicked" />
 
     <RadioButton
         android:id="@+id/RadioButtonMecanico"
@@ -129,10 +118,11 @@
         android:text="Mecânico"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/CorrenteNominal" />
+        app:layout_constraintTop_toBottomOf="@+id/CorrenteNominal"
+        android:onClick="onCheckboxClicked"/>
 
     <EditText
-        android:id="@+id/editText10"
+        android:id="@+id/KdKe"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="220dp"
@@ -148,7 +138,7 @@
 
     <EditText
         android:id="@+id/Classe"
-        android:layout_width="196dp"
+        android:layout_width="0dp"
         android:layout_height="37dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="220dp"
@@ -162,7 +152,7 @@
         app:layout_constraintTop_toBottomOf="@+id/RadioButtonMecanico" />
 
     <EditText
-        android:id="@+id/editText12"
+        android:id="@+id/NumElementos"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="220dp"
@@ -174,11 +164,11 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText10" />
+        app:layout_constraintTop_toBottomOf="@+id/KdKe" />
 
     <EditText
-        android:id="@+id/editText13"
-        android:layout_width="196dp"
+        android:id="@+id/AnoFabricacao"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="220dp"
@@ -192,7 +182,7 @@
         app:layout_constraintTop_toBottomOf="@+id/Classe" />
 
     <EditText
-        android:id="@+id/editText14"
+        android:id="@+id/PorInmetro"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -204,6 +194,33 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText13" />
+        app:layout_constraintTop_toBottomOf="@+id/AnoFabricacao" />
+
+
+    <Button
+        android:id="@+id/buttonSalvarMedidor"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="220dp"
+        android:layout_marginTop="32dp"
+        android:text="Salvar"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PorInmetro" />
+
+    <Button
+        android:id="@+id/buttonLimparCamposMedidor"
+        android:layout_width="0dp"
+        android:layout_height="54dp"
+        android:layout_marginEnd="220dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:text="Limpar"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PorInmetro" />
 
 </android.support.constraint.ConstraintLayout>

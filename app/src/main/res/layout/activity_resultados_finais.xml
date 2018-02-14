@@ -69,6 +69,7 @@
         android:ems="10"
         android:inputType="date"
         android:text="Data Início"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/MarchaVazio" />
@@ -83,6 +84,7 @@
         android:ems="10"
         android:inputType="time"
         android:text="Hora Início"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/MarchaVazio" />
@@ -97,6 +99,7 @@
         android:ems="10"
         android:inputType="date"
         android:text="Data Fim"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText16" />
@@ -111,6 +114,7 @@
         android:ems="10"
         android:inputType="time"
         android:text="Hora Fim"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText17" />
@@ -125,6 +129,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Leitura de Retirada"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText19" />
@@ -139,6 +144,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Leitura de Calibração"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText20" />
@@ -153,6 +159,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Leitura Pós Calibração"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText21" />
