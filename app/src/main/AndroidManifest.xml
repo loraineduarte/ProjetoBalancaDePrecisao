@@ -38,6 +38,10 @@
             android:name=".Atividades.Bluetooth.DiscoveredDevices"
             android:parentActivityName=".Atividades.Bluetooth.BluetoothActivity" />
 
+        <activity
+            android:name=".Atividades.Bluetooth.PairedDevices"
+            android:parentActivityName=".Atividades.Bluetooth.BluetoothActivity" />
+
         <activity android:name=".Atividades.RelatorioVerificacao.RelatorioVerificacaoActivity"
             android:parentActivityName=".MainActivity" />
 

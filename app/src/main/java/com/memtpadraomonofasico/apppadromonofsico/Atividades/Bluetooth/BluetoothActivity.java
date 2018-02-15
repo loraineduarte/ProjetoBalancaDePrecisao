@@ -7,6 +7,7 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import static java.lang.System.out;
@@ -21,6 +22,8 @@ public class BluetoothActivity extends AppCompatActivity {
     public static int SELECT_PAIRED_DEVICE = 2;
     public static int SELECT_DISCOVERED_DEVICE = 3;
     private static final int REQUEST_ENABLE_BT = 4;
+
+    private static String dados;
 
     static TextView statusMessage;
     static TextView textSpace;
@@ -110,8 +113,11 @@ public class BluetoothActivity extends AppCompatActivity {
     public void sendMessage(View view){
         EditText messageBox = (EditText) findViewById(R.id.editText_MessageBox);
         String messageBoxString = messageBox.getText().toString();
+        statusMessage.setText(messageBox.getText().toString());
         byte[] data =  messageBoxString.getBytes();
+        statusMessage.setText("byte");
         conexao.write(data);
+        statusMessage.setText("total");
     }
 
     @Override
@@ -136,18 +142,29 @@ public class BluetoothActivity extends AppCompatActivity {
             Bundle bundle = msg.getData();
             byte[] data = bundle.getByteArray("data");
             String dataString= new String(data);
-            Log.d("DataString", dataString);
+
 
             if(dataString.equals("---N"))
-
-                Log.d(TAG,"Ocorreu um erro durante a conexão D:");
+                statusMessage.setText("Ocorreu um erro durante a conexão.");
             else if(dataString.equals("---S"))
-                Log.d(TAG,"Conectado :D");
+                statusMessage.setText("Conectado.");
             else {
-
-                textSpace.setText(new String(data));
+                dados = dados+dataString;
+                textSpace.setText(dados);
             }
         }
     };
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+
+        return super.onOptionsItemSelected(item);
+    }
 
 }
