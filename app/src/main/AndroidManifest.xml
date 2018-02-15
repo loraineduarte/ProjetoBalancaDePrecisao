@@ -56,19 +56,19 @@
         <activity
             android:name=".Atividades.RelatorioVerificacao.Testes.InspecaoConformidade.InspecaoConformidadeActivity"
             android:parentActivityName=".Atividades.RelatorioVerificacao.Testes.MarchaVazio.MarchaVazioActivity" />
-
-        <activity android:name=".Atividades.RelatorioVerificacao.SituacoesObservadasActivity"
+        <activity
+            android:name=".Atividades.RelatorioVerificacao.SituacoesObservadasActivity"
             android:parentActivityName=".Atividades.RelatorioVerificacao.Testes.InspecaoConformidade.InspecaoConformidadeActivity" />
-
-        <activity android:name=".Atividades.RelatorioVerificacao.InformacoesComplementaresActivity"
+        <activity
+            android:name=".Atividades.RelatorioVerificacao.InformacoesComplementaresActivity"
             android:parentActivityName=".Atividades.RelatorioVerificacao.SituacoesObservadasActivity" />
-
-        <activity android:name=".Atividades.RelatorioVerificacao.ResultadosFinaisActivity"
+        <activity
+            android:name=".Atividades.RelatorioVerificacao.ResultadosFinaisActivity"
             android:parentActivityName=".Atividades.RelatorioVerificacao.InformacoesComplementaresActivity" />
-
-        <activity android:name=".Atividades.RelatorioVerificacao.ConclusaoActivity"
+        <activity
+            android:name=".Atividades.RelatorioVerificacao.ConclusaoActivity"
             android:parentActivityName=".Atividades.RelatorioVerificacao.ResultadosFinaisActivity" />
-
+        <activity android:name=".Atividades.RelatorioVerificacao.Testes.InspecaoVisual.ObservacaoInspecaoVisualActivity" />
     </application>
 
 </manifest>

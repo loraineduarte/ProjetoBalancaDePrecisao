@@ -35,7 +35,7 @@
         app:layout_constraintTop_toBottomOf="@+id/button3" />
 
     <RadioButton
-        android:id="@+id/radioButton4"
+        android:id="@+id/Aprovado"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
@@ -46,10 +46,11 @@
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintTop_toBottomOf="@+id/textView6"
+        android:onClick="onCheckboxClicked" />
 
     <RadioButton
-        android:id="@+id/radioButton5"
+        android:id="@+id/NaoPossibilitaTeste"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
@@ -60,10 +61,11 @@
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioButton4" />
+        app:layout_constraintTop_toBottomOf="@+id/Aprovado"
+        android:onClick="onCheckboxClicked"/>
 
     <RadioButton
-        android:id="@+id/radioButton6"
+        android:id="@+id/Reprovado"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
@@ -74,7 +76,8 @@
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioButton10" />
+        app:layout_constraintTop_toBottomOf="@+id/VariacaoLeitura"
+        android:onClick="onCheckboxClicked" />
 
     <Button
         android:id="@+id/PreviousFase6"
@@ -91,7 +94,7 @@
         android:textColorLink="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioButton6" />
+        app:layout_constraintTop_toBottomOf="@+id/Reprovado" />
 
     <Button
         android:id="@+id/NextFase7"
@@ -108,10 +111,10 @@
         android:textColorLink="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioButton6" />
+        app:layout_constraintTop_toBottomOf="@+id/Reprovado" />
 
     <RadioButton
-        android:id="@+id/radioButton10"
+        android:id="@+id/VariacaoLeitura"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
@@ -120,7 +123,8 @@
         android:text="Variação de Leitura"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioButton5" />
+        app:layout_constraintTop_toBottomOf="@+id/NaoPossibilitaTeste"
+        android:onClick="onCheckboxClicked" />
 
     <EditText
         android:id="@+id/editText11"

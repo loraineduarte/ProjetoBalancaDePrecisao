@@ -2,24 +2,33 @@ package com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificac
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.SelecionarMedidorActivity;
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.Registrador.RegistradorActivity;
-import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 
 public class InspecaoVisualActivity extends AppCompatActivity {
 
     private static final String TAG = "Inspeção Visual";
-    private RadioButton VioladosInpecao, AusentesInspecao, ReconstituidosInspecao, NaoPadronizadosInpecao;
+    private RadioButton VioladosInpecao, AusentesInspecao, ReconstituidosInspecao, NaoPadronizadosInpecao, Reprovado;
+    Intent observacao = new Intent();
+    private static final int TIRAR_FOTO = 10207;
+    private static final int REQUEST_OBS = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +71,8 @@ public class InspecaoVisualActivity extends AppCompatActivity {
         AusentesInspecao = findViewById(R.id.AusentesInspecao);
         ReconstituidosInspecao = findViewById(R.id.ReconstituidosInspecao);
         NaoPadronizadosInpecao = findViewById(R.id.NaoPadronizadosInpecao);
+        Reprovado = findViewById(R.id.ReprovadoInspecaoVisual);
+
 
         //clean the editText
         final EditText Selo1 = (EditText) findViewById(R.id.Selo1);
@@ -115,9 +126,14 @@ public class InspecaoVisualActivity extends AppCompatActivity {
     }
 
     private void tirarFoto() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, TIRAR_FOTO);
     }
 
     private void abrirAddObs() {
+        Log.d(TAG, "Adicionar Observação - Inspeção Visual ");
+        Intent intent = new Intent(this, ObservacaoInspecaoVisualActivity.class);
+        startActivityForResult(intent, REQUEST_OBS);
     }
 
     private void abrirMedidor() {
@@ -137,6 +153,7 @@ public class InspecaoVisualActivity extends AppCompatActivity {
 
         switch (view.getId()) {
             case R.id.AprovadoInspecaoVisual:
+                Reprovado.setChecked(false);
                 VioladosInpecao.setEnabled(false);
                 AusentesInspecao.setEnabled(false);
                 ReconstituidosInspecao.setEnabled(false);
@@ -151,6 +168,41 @@ public class InspecaoVisualActivity extends AppCompatActivity {
                 NaoPadronizadosInpecao.setEnabled(true);
                 break;
 
+        }
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //trazer as observações que o usuário adicionou
+        //salvar a foto que foi tirada
+
+        if (requestCode == TIRAR_FOTO) {
+            if (resultCode == RESULT_OK) {
+                if(data != null) {
+                    Bundle bundle = data.getExtras();
+                    Bitmap bitmap = (Bitmap) bundle.get("data");
+
+                    if(bitmap!=null){
+                        Toast.makeText(getBaseContext(), "A imagem foi capturada", Toast.LENGTH_SHORT);
+                        ImageView imageView = (ImageView) findViewById(R.id.imageView);
+                        imageView.setImageBitmap(bitmap);
+                    }
+                    else{
+
+                    }
+                } else if (resultCode == RESULT_CANCELED) {
+                    Toast.makeText(getBaseContext(), "A captura foi cancelada",
+                            Toast.LENGTH_SHORT);
+                } else {
+                    Toast.makeText(getBaseContext(), "A câmera foi fechada",
+                            Toast.LENGTH_SHORT);
+                }
+            }
+        }
+
+        Log.d(TAG, String.valueOf(data));
+        if(resultCode== RESULT_OK){ //add observação
+            observacao = data;
+            Log.d(TAG, String.valueOf(observacao));
         }
     }
 }

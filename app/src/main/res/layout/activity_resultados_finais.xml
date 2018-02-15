@@ -60,7 +60,7 @@
         app:layout_constraintTop_toBottomOf="@+id/radioButton11" />
 
     <EditText
-        android:id="@+id/editText16"
+        android:id="@+id/DataInicial"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="220dp"
@@ -90,7 +90,7 @@
         app:layout_constraintTop_toBottomOf="@+id/MarchaVazio" />
 
     <EditText
-        android:id="@+id/editText18"
+        android:id="@+id/DataFinal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="220dp"
@@ -102,7 +102,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText16" />
+        app:layout_constraintTop_toBottomOf="@+id/DataInicial" />
 
     <EditText
         android:id="@+id/editText19"

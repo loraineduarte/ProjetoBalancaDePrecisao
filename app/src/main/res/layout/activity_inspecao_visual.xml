@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Atividades.RelatorioVerificacao.Testes.InspecaoVisual.InspecaoVisualActivity">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".Atividades.RelatorioVerificacao.Testes.InspecaoVisual.InspecaoVisualActivity"
+    >
 
 
     <TextView
@@ -71,7 +73,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="210dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="3 -"
@@ -87,7 +89,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="210dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="4 -"
@@ -115,15 +117,15 @@
         android:id="@+id/AprovadoInspecaoVisual"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="220dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="200dp"
         android:layout_marginTop="8dp"
+        android:onClick="onCheckboxClicked"
         android:text="Aprovado"
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
-        android:onClick="onCheckboxClicked" />
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <RadioButton
         android:id="@+id/ReprovadoInspecaoVisual"
@@ -131,14 +133,13 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="200dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
+        android:onClick="onCheckboxClicked"
         android:text="Reprovado"
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.96"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
-        android:onClick="onCheckboxClicked" />
+        app:layout_constraintTop_toBottomOf="@+id/AprovadoInspecaoVisual" />
 
     <RadioButton
         android:id="@+id/VioladosInpecao"
@@ -159,9 +160,9 @@
         android:id="@+id/addObservacao"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="210dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="210dp"
+        android:layout_marginTop="8dp"
         android:text="Adicionar Observação"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -213,10 +214,10 @@
     <Button
         android:id="@+id/tirarFotoInspecao"
         android:layout_width="0dp"
-        android:layout_height="54dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="210dp"
-        android:layout_marginTop="24dp"
+        android:layout_height="57dp"
+        android:layout_marginEnd="210dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:text="Adicionar Foto"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.864"
@@ -227,9 +228,10 @@
         android:id="@+id/PreviousFase3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="24dp"
         android:layout_marginEnd="220dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:background="@color/colorPrimaryDark"
         android:backgroundTint="?attr/colorPrimaryDark"
         android:elevation="2dp"
@@ -238,15 +240,17 @@
         android:textColorLink="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tirarFotoInspecao" />
 
     <Button
         android:id="@+id/NextFase4"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="24dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="210dp"
+        android:layout_marginTop="8dp"
         android:background="@color/colorPrimaryDark"
         android:backgroundTint="?attr/colorPrimaryDark"
         android:elevation="2dp"
@@ -255,6 +259,20 @@
         android:textColorLink="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addObservacao" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="214dp"
+        android:layout_marginEnd="220dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        app:srcCompat="@android:drawable/ic_menu_camera" />
 
 </android.support.constraint.ConstraintLayout>

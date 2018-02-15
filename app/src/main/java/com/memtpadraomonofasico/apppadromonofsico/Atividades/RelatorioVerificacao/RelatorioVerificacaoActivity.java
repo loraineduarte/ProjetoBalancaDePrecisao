@@ -37,6 +37,7 @@ public class RelatorioVerificacaoActivity extends AppCompatActivity {
         SEM = findViewById(R.id.SEM);
         TOI = findViewById(R.id.TOI);
         matriculaAvaliador = findViewById(R.id.MatriculaAvaliador);
+        final EditText NomeAvaliador = (EditText) findViewById(R.id.NomeAvaliador);
 
         BancoController crud = new BancoController(getBaseContext());
         Cursor cursor = crud.pegaAvaliadores();
@@ -73,14 +74,27 @@ public class RelatorioVerificacaoActivity extends AppCompatActivity {
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, myData);
             autoCom.setAdapter(adapter);
 
-//            final String matricula = String.valueOf(MatriculaAvaliador.getText());
-//            Log.d(TAG, String.valueOf(matricula));
-//            final String nome = banco.SelecionaAvaliador(matricula);
-//
-//            final EditText NomeAvaliador = (EditText) findViewById(R.id.NomeAvaliador);
-//            NomeAvaliador.setText(nome, TextView.BufferType.EDITABLE);
-
         }
+
+        MatriculaAvaliador.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+//                if (s.length() >0)//MUDAR ESSE VALOR DEPOIS{
+//                {
+//                    String nome = banco.SelecionaAvaliador(String.valueOf(MatriculaAvaliador.getText()));
+//                    NomeAvaliador.setText(nome);
+//                }
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+        });
 
 
         @SuppressLint("WrongViewCast") Button fab = findViewById(R.id.NextFase1);
