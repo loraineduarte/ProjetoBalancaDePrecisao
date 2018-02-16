@@ -69,6 +69,7 @@
             android:name=".Atividades.RelatorioVerificacao.ConclusaoActivity"
             android:parentActivityName=".Atividades.RelatorioVerificacao.ResultadosFinaisActivity" />
         <activity android:name=".Atividades.RelatorioVerificacao.Testes.InspecaoVisual.ObservacaoInspecaoVisualActivity" />
+        <activity android:name=".Atividades.RelatorioVerificacao.Testes.Registrador.ObservacaoRegistradorActivity"></activity>
     </application>
 
 </manifest>

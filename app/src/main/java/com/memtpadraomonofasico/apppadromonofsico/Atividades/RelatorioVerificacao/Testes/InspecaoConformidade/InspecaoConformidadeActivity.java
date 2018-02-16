@@ -30,7 +30,7 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
             }
         });
 
-        @SuppressLint("WrongViewCast") Button previous =  findViewById(R.id.PreviousFase6);
+        @SuppressLint("WrongViewCast") Button previous = findViewById(R.id.PreviousFase6);
         previous.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,7 +61,6 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
                 NaoPossibilitaTeste.setEnabled(false);
                 VariacaoLeitura.setEnabled(false);
                 Reprovado.setEnabled(false);
-
                 break;
 
             case R.id.NaoPossibilitaTeste:

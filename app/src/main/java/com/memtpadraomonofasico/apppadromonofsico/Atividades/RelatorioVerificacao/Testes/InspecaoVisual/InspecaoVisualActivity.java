@@ -1,15 +1,17 @@
 package com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.InspecaoVisual;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
+import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.LruCache;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,7 +19,6 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.SelecionarMedidorActivity;
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.Registrador.RegistradorActivity;
 import com.memtpadraomonofasico.apppadromonofsico.R;
@@ -25,15 +26,20 @@ import com.memtpadraomonofasico.apppadromonofsico.R;
 public class InspecaoVisualActivity extends AppCompatActivity {
 
     private static final String TAG = "Inspeção Visual";
-    private RadioButton VioladosInpecao, AusentesInspecao, ReconstituidosInspecao, NaoPadronizadosInpecao, Reprovado;
+    private RadioButton VioladosInpecao, AusentesInspecao, ReconstituidosInspecao, NaoPadronizadosInpecao, Reprovado, Aprovado;
     Intent observacao = new Intent();
     private static final int TIRAR_FOTO = 10207;
     private static final int REQUEST_OBS = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inspecao_visual);
+
+
+
+
 
         @SuppressLint("WrongViewCast") Button next = findViewById(R.id.NextFase4);
         next.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +78,7 @@ public class InspecaoVisualActivity extends AppCompatActivity {
         ReconstituidosInspecao = findViewById(R.id.ReconstituidosInspecao);
         NaoPadronizadosInpecao = findViewById(R.id.NaoPadronizadosInpecao);
         Reprovado = findViewById(R.id.ReprovadoInspecaoVisual);
+        Aprovado = findViewById(R.id.AprovadoInspecaoVisual);
 
 
         //clean the editText
@@ -162,6 +169,7 @@ public class InspecaoVisualActivity extends AppCompatActivity {
                 break;
 
             case R.id.ReprovadoInspecaoVisual:
+                Aprovado.setChecked(false);
                 VioladosInpecao.setEnabled(true);
                 AusentesInspecao.setEnabled(true);
                 ReconstituidosInspecao.setEnabled(true);
@@ -177,14 +185,17 @@ public class InspecaoVisualActivity extends AppCompatActivity {
 
         if (requestCode == TIRAR_FOTO) {
             if (resultCode == RESULT_OK) {
+
                 if(data != null) {
+                    Toast.makeText(getBaseContext(), "A imagem foi capturada", Toast.LENGTH_SHORT);
                     Bundle bundle = data.getExtras();
                     Bitmap bitmap = (Bitmap) bundle.get("data");
 
                     if(bitmap!=null){
-                        Toast.makeText(getBaseContext(), "A imagem foi capturada", Toast.LENGTH_SHORT);
+
                         ImageView imageView = (ImageView) findViewById(R.id.imageView);
                         imageView.setImageBitmap(bitmap);
+
                     }
                     else{
 
@@ -205,4 +216,8 @@ public class InspecaoVisualActivity extends AppCompatActivity {
             Log.d(TAG, String.valueOf(observacao));
         }
     }
+
+
+
+
 }
