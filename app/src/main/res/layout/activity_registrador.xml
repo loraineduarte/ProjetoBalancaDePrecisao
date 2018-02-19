@@ -10,42 +10,46 @@
     <TextView
         android:id="@+id/Registrador"
         android:layout_width="114dp"
-        android:layout_height="35dp"
+        android:layout_height="30dp"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:text="Registrador"
+        android:layout_marginTop="16dp"
+        android:text="@string/registrador"
         android:textAppearance="@android:style/TextAppearance.Material.DialogWindowTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/buttonFotoAntes"
-        android:layout_width="0dp"
-        android:layout_height="55dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="220dp"
-        android:layout_marginTop="16dp"
-        android:text="Foto Pós Teste"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Registrador" />
-
-    <Button
         android:id="@+id/buttonFotoDepois"
         android:layout_width="0dp"
-        android:layout_height="57dp"
+        android:layout_height="63dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:text="Foto Pré Teste"
+        android:layout_marginStart="220dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/foto_p_s_teste"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintEnd_toStartOf="@+id/buttonFotoAntes"
-        app:layout_constraintHorizontal_bias="0.26"
+        android:textColor="@android:color/black"
+        android:textColorLink="@android:color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Registrador" />
+        app:layout_constraintTop_toBottomOf="@+id/FotoDepois" />
+
+    <Button
+        android:id="@+id/buttonFotoAntes"
+        android:layout_width="0dp"
+        android:layout_height="61dp"
+        android:layout_marginEnd="220dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/foto_pr_teste"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@android:color/black"
+        android:textColorLink="@android:color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/FotoAntes" />
 
     <TextView
         android:id="@+id/textView6"
@@ -54,67 +58,70 @@
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
-        android:text="Status"
+        android:text="@string/status"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonFotoAntes" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonFotoDepois" />
 
     <RadioButton
-        android:id="@+id/radioButton4"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:text="Aprovado"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
-
-    <RadioButton
-        android:id="@+id/radioButton5"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:text="Não Possibilita Teste"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioButton4" />
-
-    <RadioButton
-        android:id="@+id/radioButton6"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="250dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:text="Reprovado"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioButton5" />
-
-    <RadioButton
-        android:id="@+id/radioButton7"
+        android:id="@+id/Aprovado"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Não Registra Consumo"
+        android:text="@string/string_aprovado"
+        android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/radioButton6"
-        app:layout_constraintTop_toBottomOf="@+id/radioButton5" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+    <RadioButton
+        android:id="@+id/NaoPossibilitaTeste"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/n_o_possibilita_teste"
+        android:textColorLink="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Aprovado" />
+
+    <RadioButton
+        android:id="@+id/Reprovado"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="250dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/reprovado"
+        android:textColorLink="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/NaoPossibilitaTeste" />
+
+    <RadioButton
+        android:id="@+id/radioButton7"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/n_o_registra_consumo"
+        android:textColorLink="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/NaoPossibilitaTeste" />
 
     <RadioButton
         android:id="@+id/radioButton8"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="170dp"
-        android:layout_marginTop="8dp"
-        android:text="Não Registra Corretamente"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/n_o_registra_corretamente"
+        android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radioButton7" />
@@ -123,22 +130,22 @@
         android:id="@+id/radioButton9"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="170dp"
-        android:layout_marginTop="8dp"
-        android:text="Display Apagado"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/display_apagado"
+        android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radioButton8" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/addObservacao"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:text="Adicionar Observação"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/adiciona_observa_o"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radioButton9" />
@@ -146,39 +153,68 @@
     <Button
         android:id="@+id/PreviousFase3"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
+        android:layout_height="44dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="220dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:background="@color/colorPrimaryDark"
         android:backgroundTint="?attr/colorPrimaryDark"
         android:elevation="2dp"
-        android:text="Anterior"
+        android:text="@string/anterior"
+        android:textColor="@android:color/background_light"
+        android:textColorLink="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/NextFase4"
-        app:layout_constraintHorizontal_bias="0.698"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.067"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button"
-        app:layout_constraintVertical_bias="0.403" />
+        app:layout_constraintTop_toBottomOf="@+id/addObservacao"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/NextFase4"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
+        android:layout_height="44dp"
+        android:layout_marginBottom="24dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginStart="230dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="220dp"
+        android:layout_marginTop="8dp"
         android:background="@color/colorPrimaryDark"
         android:backgroundTint="?attr/colorPrimaryDark"
         android:elevation="2dp"
-        android:text="Próximo"
+        android:text="@string/pr_ximo"
+        android:textColor="@android:color/background_light"
+        android:textColorLink="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button"
-        app:layout_constraintVertical_bias="0.391" />
+        app:layout_constraintTop_toBottomOf="@+id/addObservacao"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/FotoAntes"
+        android:layout_width="0dp"
+        android:layout_height="77dp"
+        android:layout_marginEnd="220dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Registrador"
+        app:srcCompat="@android:drawable/ic_menu_camera" android:contentDescription="@string/todo" />
+
+    <ImageView
+        android:id="@+id/FotoDepois"
+        android:layout_width="0dp"
+        android:layout_height="75dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="220dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Registrador"
+        app:srcCompat="@android:drawable/ic_menu_camera" android:contentDescription="@string/todo" />
 
 </android.support.constraint.ConstraintLayout>

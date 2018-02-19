@@ -4,35 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Atividades.RelatorioVerificacao.Testes.InspecaoConformidade.InspecaoConformidadeActivity">
-
+    tools:context="com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.SituacoesObservadasActivity">
 
     <TextView
-        android:id="@+id/Conformidade"
-        android:layout_width="139dp"
+        android:id="@+id/MarchaVazio"
+        android:layout_width="229dp"
         android:layout_height="35dp"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/conformidade"
+        android:layout_marginTop="24dp"
+        android:text="Situações Observadas"
         android:textAppearance="@android:style/TextAppearance.Material.DialogWindowTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/status"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
 
     <RadioButton
         android:id="@+id/Aprovado"
@@ -41,13 +27,12 @@
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
-        android:text="@string/aprovado"
+        android:text="Sujeira Interna"
         android:textColorHint="@color/colorPrimaryDark"
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6"
-        android:onClick="onCheckboxClicked" />
+        app:layout_constraintTop_toBottomOf="@+id/MarchaVazio" />
 
     <RadioButton
         android:id="@+id/NaoPossibilitaTeste"
@@ -55,14 +40,13 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/n_o_possibilita_teste"
+        android:layout_marginTop="4dp"
+        android:text="Sinais de Carbonização"
         android:textColorHint="@color/colorPrimaryDark"
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Aprovado"
-        android:onClick="onCheckboxClicked"/>
+        app:layout_constraintTop_toBottomOf="@+id/Aprovado" />
 
     <RadioButton
         android:id="@+id/Reprovado"
@@ -70,34 +54,33 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/reprovado"
+        android:layout_marginTop="4dp"
+        android:text="Mancais Deslocados / Elem. Móvel Comprimido"
         android:textColorHint="@color/colorPrimaryDark"
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/VariacaoLeitura"
-        android:onClick="onCheckboxClicked" />
+        app:layout_constraintTop_toBottomOf="@+id/NaoPossibilitaTeste" />
 
     <Button
-        android:id="@+id/PreviousFase6"
+        android:id="@+id/PreviousFase7"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginEnd="220dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="32dp"
         android:background="@color/colorPrimaryDark"
         android:backgroundTint="?attr/colorPrimaryDark"
         android:elevation="2dp"
-        android:text="@string/anterior"
+        android:text="Anterior"
         android:textColor="@android:color/background_light"
         android:textColorLink="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Reprovado" />
+        app:layout_constraintTop_toBottomOf="@+id/radioButton18" />
 
     <Button
-        android:id="@+id/NextFase7"
+        android:id="@+id/NextFase8"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
@@ -106,78 +89,107 @@
         android:background="@color/colorPrimaryDark"
         android:backgroundTint="?attr/colorPrimaryDark"
         android:elevation="2dp"
-        android:text="@string/pr_ximo"
+        android:text="Próximo"
         android:textColor="@android:color/background_light"
         android:textColorLink="@android:color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioButton18" />
+
+    <RadioButton
+        android:id="@+id/radioButton11"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:text="Elemento Móvel Descentralizado"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Reprovado" />
 
     <RadioButton
-        android:id="@+id/VariacaoLeitura"
+        android:id="@+id/radioButton12"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/varia_o_de_leitura"
+        android:layout_marginTop="4dp"
+        android:text="Ranhuras no Disco do Elemento Móvel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NaoPossibilitaTeste"
-        android:onClick="onCheckboxClicked" />
+        app:layout_constraintTop_toBottomOf="@+id/radioButton11" />
 
-    <EditText
-        android:id="@+id/CargaNominalErro"
+    <RadioButton
+        android:id="@+id/radioButton13"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="@string/carga_nominal_erro"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:layout_marginTop="4dp"
+        android:text="Marcas nos Parafusos do Mancais"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Conformidade" />
+        app:layout_constraintTop_toBottomOf="@+id/radioButton12" />
 
-    <Button
-        android:id="@+id/button2"
+    <RadioButton
+        android:id="@+id/radioButton14"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/aplicar_carga_nominal"
+        android:layout_marginTop="4dp"
+        android:text="Led Disparado"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/CargaNominalErro" />
+        app:layout_constraintTop_toBottomOf="@+id/radioButton13" />
 
-    <EditText
-        android:id="@+id/CargaPequenaErro"
+    <RadioButton
+        android:id="@+id/radioButton15"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="@string/carga_pequena_erro"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:layout_marginTop="4dp"
+        android:text="Led Aceso Direto"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintTop_toBottomOf="@+id/radioButton14" />
 
-    <Button
-        android:id="@+id/button3"
+    <RadioButton
+        android:id="@+id/radioButton16"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/aplicar_carga_pequena"
+        android:layout_marginTop="4dp"
+        android:text="Led Intermitente"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/CargaPequenaErro" />
+        app:layout_constraintTop_toBottomOf="@+id/radioButton15" />
+
+    <RadioButton
+        android:id="@+id/radioButton17"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:text="Led Apagado/ Não Emite Pulso"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioButton16" />
+
+    <RadioButton
+        android:id="@+id/radioButton18"
+        android:layout_width="0dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:text="Circuito Eletrônico Defeituoso"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioButton17" />
 
 </android.support.constraint.ConstraintLayout>

@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/RelatorioVerificacao"
-        android:layout_width="214dp"
+        android:layout_width="237dp"
         android:layout_height="36dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
@@ -28,6 +28,7 @@
         android:layout_marginTop="16dp"
         android:text="Selecionar Avaliador"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        android:textColor="@android:color/darker_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/RelatorioVerificacao" />
@@ -41,12 +42,13 @@
         android:layout_marginTop="8dp"
         android:text="Matrícula do Avaliador"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColorLink="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SelecionarAvaliador" />
+        app:layout_constraintTop_toBottomOf="@+id/SelecionarAvaliador"  />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/NomeAvaliador"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -56,6 +58,7 @@
         android:inputType="textPersonName"
         android:text="Nome do Avaliador"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColorLink="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/MatriculaAvaliador" />
@@ -69,48 +72,58 @@
         android:layout_marginTop="32dp"
         android:text="Dados Gerais"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        android:textColor="@android:color/darker_gray"
+        android:textColorLink="@android:color/darker_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText2" />
+        app:layout_constraintTop_toBottomOf="@+id/NomeAvaliador" />
 
     <RadioButton
-        android:id="@+id/radioButton"
+        android:id="@+id/SolicitacaoConsumidor"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="Solicitação do Consumidor"
+        android:textColorHint="@android:color/holo_blue_dark"
+        android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        android:onClick="onCheckboxClicked" />
 
     <RadioButton
-        android:id="@+id/radioButton2"
+        android:id="@+id/SEM"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="SEM"
+        android:textColorHint="@color/colorPrimaryDark"
+        android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioButton" />
+        app:layout_constraintTop_toBottomOf="@+id/SolicitacaoConsumidor"
+        android:onClick="onCheckboxClicked" />
 
     <RadioButton
-        android:id="@+id/radioButton3"
+        android:id="@+id/TOI"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="TOI"
+        android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioButton2" />
+        app:layout_constraintTop_toBottomOf="@+id/SEM"
+        android:onClick="onCheckboxClicked" />
 
     <EditText
-        android:id="@+id/editText4"
+        android:id="@+id/ToiNumero"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -120,9 +133,10 @@
         android:inputType="textPersonName"
         android:text="TOI Nº"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColorLink="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioButton3" />
+        app:layout_constraintTop_toBottomOf="@+id/TOI" />
 
     <Button
         android:id="@+id/NextFase1"
@@ -135,9 +149,11 @@
         android:background="@color/colorPrimaryDark"
         android:backgroundTint="@color/colorPrimaryDark"
         android:text="Próximo"
+        android:textColor="@android:color/background_light"
+        android:textColorLink="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText4" />
+        app:layout_constraintTop_toBottomOf="@+id/ToiNumero" />
 
 </android.support.constraint.ConstraintLayout>
