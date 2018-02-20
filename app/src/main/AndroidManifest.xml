@@ -39,36 +39,28 @@
             android:name=".Atividades.RelatorioVerificacao.RelatorioVerificacaoActivity"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".Atividades.RelatorioVerificacao.ServicoActivity"
-            android:parentActivityName=".Atividades.RelatorioVerificacao.RelatorioVerificacaoActivity" />
+            android:name=".Atividades.RelatorioVerificacao.ServicoActivity" />
         <activity
-            android:name=".Atividades.RelatorioVerificacao.SelecionarMedidorActivity"
-            android:parentActivityName=".Atividades.RelatorioVerificacao.ServicoActivity" />
+            android:name=".Atividades.RelatorioVerificacao.SelecionarMedidorActivity"/>
         <activity
-            android:name=".Atividades.RelatorioVerificacao.Testes.InspecaoVisual.InspecaoVisualActivity"
-            android:parentActivityName=".Atividades.RelatorioVerificacao.SelecionarMedidorActivity" />
+            android:name=".Atividades.RelatorioVerificacao.Testes.InspecaoVisual.InspecaoVisualActivity" />
         <activity
-            android:name=".Atividades.RelatorioVerificacao.Testes.Registrador.RegistradorActivity"
-            android:parentActivityName=".Atividades.RelatorioVerificacao.Testes.InspecaoVisual.InspecaoVisualActivity" />
+            android:name=".Atividades.RelatorioVerificacao.Testes.Registrador.RegistradorActivity" />
         <activity
-            android:name=".Atividades.RelatorioVerificacao.Testes.MarchaVazio.MarchaVazioActivity"
-            android:parentActivityName=".Atividades.RelatorioVerificacao.Testes.Registrador.RegistradorActivity" />
+            android:name=".Atividades.RelatorioVerificacao.Testes.MarchaVazio.MarchaVazioActivity" />
         <activity
-            android:name=".Atividades.RelatorioVerificacao.Testes.InspecaoConformidade.InspecaoConformidadeActivity"
-            android:parentActivityName=".Atividades.RelatorioVerificacao.Testes.MarchaVazio.MarchaVazioActivity" />
+            android:name=".Atividades.RelatorioVerificacao.Testes.InspecaoConformidade.InspecaoConformidadeActivity" />
         <activity
-            android:name=".Atividades.RelatorioVerificacao.SituacoesObservadasActivity"
-            android:parentActivityName=".Atividades.RelatorioVerificacao.Testes.InspecaoConformidade.InspecaoConformidadeActivity" />
+            android:name=".Atividades.RelatorioVerificacao.SituacoesObservadasActivity" />
         <activity
-            android:name=".Atividades.RelatorioVerificacao.InformacoesComplementaresActivity"
-            android:parentActivityName=".Atividades.RelatorioVerificacao.SituacoesObservadasActivity" />
+            android:name=".Atividades.RelatorioVerificacao.InformacoesComplementaresActivity" />
         <activity
-            android:name=".Atividades.RelatorioVerificacao.ResultadosFinaisActivity"
-            android:parentActivityName=".Atividades.RelatorioVerificacao.InformacoesComplementaresActivity" />
+            android:name=".Atividades.RelatorioVerificacao.ResultadosFinaisActivity" />
         <activity
-            android:name=".Atividades.RelatorioVerificacao.ConclusaoActivity"
-            android:parentActivityName=".Atividades.RelatorioVerificacao.ResultadosFinaisActivity" />
+            android:name=".Atividades.RelatorioVerificacao.ConclusaoActivity"/>
+
         <activity android:name=".Atividades.RelatorioVerificacao.Testes.InspecaoVisual.ObservacaoInspecaoVisualActivity" />
+
         <activity android:name=".Atividades.RelatorioVerificacao.Testes.Registrador.ObservacaoRegistradorActivity"></activity>
     </application>
 

@@ -80,23 +80,6 @@
         android:onClick="onCheckboxClicked" />
 
     <Button
-        android:id="@+id/PreviousFase6"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="220dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
-        android:background="@color/colorPrimaryDark"
-        android:backgroundTint="?attr/colorPrimaryDark"
-        android:elevation="2dp"
-        android:text="@string/anterior"
-        android:textColor="@android:color/background_light"
-        android:textColorLink="@android:color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Reprovado" />
-
-    <Button
         android:id="@+id/NextFase7"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

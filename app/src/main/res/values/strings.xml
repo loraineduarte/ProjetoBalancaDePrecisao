@@ -146,6 +146,30 @@
     <string name="violados">Violados</string>
     <string name="adicionar_observa_o">Adicionar Observação</string>
     <string name="ausentes">Ausentes</string>
+    <string name="servi_o">Serviço</string>
+    <string name="numero">Numero</string>
+    <string name="cep">CEP</string>
+    <string name="bairro">Bairro</string>
+    <string name="n_mero_da_nota_de_servi_o">Número da Nota de Serviço</string>
+    <string name="complemento">Complemento</string>
+    <string name="endere_o">Endereço</string>
+    <string name="rua_avenida">Rua/Avenida</string>
+    <string name="n_mero_do_documento_do_cliente">Número do documento do Cliente</string>
+    <string name="n_mero_da_instala_o">Número da Instalação</string>
+    <string name="nome_do_cliente">Nome do Cliente</string>
+    <string name="selecionar_medidor">Selecionar Medidor</string>
+    <string name="corrente_nominal_a">Corrente Nominal (A)</string>
+    <string name="portaria_inmetro">Portaria Inmetro</string>
+    <string name="kd_ke">Kd/Ke</string>
+    <string name="ano_de_fabrica_o">Ano de Fabricação</string>
+    <string name="fabricante">Fabricante</string>
+    <string name="n_mero_de_s_rie">Número de Série</string>
+    <string name="modelo">Modelo</string>
+    <string name="n_de_elementos">Nº de Elementos</string>
+    <string name="tens_o_nominal_v">Tensão Nominal (V)</string>
+    <string name="eletr_nico">Eletrônico</string>
+    <string name="mec_nico">Mecânico</string>
+    <string name="classe">Classe</string>
 
 
 </resources>

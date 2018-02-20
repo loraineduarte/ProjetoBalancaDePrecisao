@@ -37,13 +37,7 @@ public class ResultadosFinaisActivity extends AppCompatActivity {
             }
         });
 
-        @SuppressLint("WrongViewCast") Button previous = findViewById(R.id.PreviousFase9);
-        previous.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                abrirInformacoesComplementares();
-            }
-        });
+
     }
 
     private void abrirConclusao() {
@@ -51,8 +45,4 @@ public class ResultadosFinaisActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void abrirInformacoesComplementares() {
-        Intent intent = new Intent(this, InformacoesComplementaresActivity.class);
-        startActivity(intent);
-    }
 }

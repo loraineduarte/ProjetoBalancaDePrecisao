@@ -3,18 +3,15 @@ package com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificac
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.SelecionarMedidorActivity;
-import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.InspecaoVisual.InspecaoVisualActivity;
-import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.InspecaoVisual.ObservacaoInspecaoVisualActivity;
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.MarchaVazio.MarchaVazioActivity;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 
@@ -37,14 +34,6 @@ public class RegistradorActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 abrirMarchaVazio();
-            }
-        });
-
-        @SuppressLint("WrongViewCast") Button previous =  findViewById(R.id.PreviousFase3);
-        previous.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                abrirInspecaoVisual();
             }
         });
 
@@ -85,10 +74,6 @@ public class RegistradorActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void abrirInspecaoVisual() {
-        Intent intent = new Intent(this, InspecaoVisualActivity.class);
-        startActivity(intent);
-    }
 
     private void tirarFotoAntes() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);

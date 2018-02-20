@@ -1,17 +1,12 @@
 package com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.InspecaoVisual;
 
 import android.annotation.SuppressLint;
-import android.app.ActivityManager;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Parcelable;
-import android.provider.MediaStore;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.util.LruCache;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,9 +14,10 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.SelecionarMedidorActivity;
+
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.Registrador.RegistradorActivity;
 import com.memtpadraomonofasico.apppadromonofsico.R;
+import com.orhanobut.hawk.Hawk;
 
 public class InspecaoVisualActivity extends AppCompatActivity {
 
@@ -34,6 +30,9 @@ public class InspecaoVisualActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Log.d("INSPEÇÃO VISUAL ", String.valueOf(Hawk.count()));
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inspecao_visual);
 
@@ -41,37 +40,7 @@ public class InspecaoVisualActivity extends AppCompatActivity {
 
 
 
-        @SuppressLint("WrongViewCast") Button next = findViewById(R.id.NextFase4);
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                abrirRegistrador();
-            }
-        });
 
-        @SuppressLint("WrongViewCast") Button previous = findViewById(R.id.PreviousFase3);
-        previous.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                abrirMedidor();
-            }
-        });
-
-        @SuppressLint("WrongViewCast") Button addObs = findViewById(R.id.addObservacao);
-        addObs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                abrirAddObs();
-            }
-        });
-
-        @SuppressLint("WrongViewCast") Button foto = findViewById(R.id.tirarFotoInspecao);
-        foto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tirarFoto();
-            }
-        });
 
         VioladosInpecao = findViewById(R.id.VioladosInpecao);
         AusentesInspecao = findViewById(R.id.AusentesInspecao);
@@ -130,6 +99,31 @@ public class InspecaoVisualActivity extends AppCompatActivity {
 
         });
 
+        @SuppressLint("WrongViewCast") Button next = findViewById(R.id.NextFase4);
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                abrirRegistrador();
+            }
+        });
+
+
+        @SuppressLint("WrongViewCast") Button addObs = findViewById(R.id.addObservacao);
+        addObs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                abrirAddObs();
+            }
+        });
+
+        @SuppressLint("WrongViewCast") Button foto = findViewById(R.id.tirarFotoInspecao);
+        foto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tirarFoto();
+            }
+        });
+
     }
 
     private void tirarFoto() {
@@ -143,11 +137,6 @@ public class InspecaoVisualActivity extends AppCompatActivity {
         startActivityForResult(intent, REQUEST_OBS);
     }
 
-    private void abrirMedidor() {
-        Log.d(TAG, "Selecionar Medidor");
-        Intent intent = new Intent(this, SelecionarMedidorActivity.class);
-        startActivity(intent);
-    }
 
     private void abrirRegistrador() {
 
