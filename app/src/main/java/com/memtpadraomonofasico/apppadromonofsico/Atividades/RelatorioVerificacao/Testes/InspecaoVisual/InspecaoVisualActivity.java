@@ -26,32 +26,29 @@ public class InspecaoVisualActivity extends AppCompatActivity {
     Intent observacao = new Intent();
     private static final int TIRAR_FOTO = 10207;
     private static final int REQUEST_OBS = 0;
+    String selo1, selo2, selo3, selo4, status, observacaoInspecao;
+    Bitmap fotoInspecao;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Hawk.delete("Selo1");
+        Hawk.delete("Selo2");
+        Hawk.delete("Selo3");
+        Hawk.delete("Selo4");
+        Hawk.delete("Status");
+        Hawk.delete("FotoInspecaoVisual");
+        Hawk.delete("ObservacaoInspecaoVisual");
 
         Log.d("INSPEÇÃO VISUAL ", String.valueOf(Hawk.count()));
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inspecao_visual);
 
-
-
-
-
-
-
-        VioladosInpecao = findViewById(R.id.VioladosInpecao);
-        AusentesInspecao = findViewById(R.id.AusentesInspecao);
-        ReconstituidosInspecao = findViewById(R.id.ReconstituidosInspecao);
-        NaoPadronizadosInpecao = findViewById(R.id.NaoPadronizadosInpecao);
-        Reprovado = findViewById(R.id.ReprovadoInspecaoVisual);
-        Aprovado = findViewById(R.id.AprovadoInspecaoVisual);
-
-
         //clean the editText
         final EditText Selo1 = (EditText) findViewById(R.id.Selo1);
+        selo1 = String.valueOf(Selo1.getText());
         Selo1.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 
             public void onFocusChange(View v, boolean hasFocus) {
@@ -64,6 +61,7 @@ public class InspecaoVisualActivity extends AppCompatActivity {
         });
 
         final EditText Selo2 = (EditText) findViewById(R.id.Selo2);
+        selo2 = String.valueOf(Selo2.getText());
         Selo2.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 
             public void onFocusChange(View v, boolean hasFocus) {
@@ -76,6 +74,7 @@ public class InspecaoVisualActivity extends AppCompatActivity {
         });
 
         final EditText Selo3 = (EditText) findViewById(R.id.Selo3);
+        selo3 = String.valueOf(Selo3.getText());
         Selo3.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 
             public void onFocusChange(View v, boolean hasFocus) {
@@ -88,6 +87,7 @@ public class InspecaoVisualActivity extends AppCompatActivity {
         });
 
         final EditText Selo4 = (EditText) findViewById(R.id.Selo4);
+        selo4 = String.valueOf(Selo4.getText());
         Selo4.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 
             public void onFocusChange(View v, boolean hasFocus) {
@@ -99,13 +99,35 @@ public class InspecaoVisualActivity extends AppCompatActivity {
 
         });
 
-        @SuppressLint("WrongViewCast") Button next = findViewById(R.id.NextFase4);
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                abrirRegistrador();
-            }
-        });
+        VioladosInpecao = findViewById(R.id.VioladosInpecao);
+        AusentesInspecao = findViewById(R.id.AusentesInspecao);
+        ReconstituidosInspecao = findViewById(R.id.ReconstituidosInspecao);
+        NaoPadronizadosInpecao = findViewById(R.id.NaoPadronizadosInpecao);
+        Reprovado = findViewById(R.id.ReprovadoInspecaoVisual);
+        Aprovado = findViewById(R.id.AprovadoInspecaoVisual);
+
+        if(VioladosInpecao.isChecked()){
+            status = "Violados";
+
+        } else if (AusentesInspecao.isChecked()){
+            status = "Ausentes";
+
+        } else if (ReconstituidosInspecao.isChecked()){
+            status = "Reconstituidos";
+
+        } else if (NaoPadronizadosInpecao.isChecked()){
+            status = "Não Padronizados";
+
+        } else if (Reprovado.isChecked()){
+            status = "Reprovado";
+
+        } else if (Aprovado.isChecked()){
+            status = "Aprovado";
+
+        }
+
+        observacaoInspecao = observacao.getDataString();
+         //fotoInspecao
 
 
         @SuppressLint("WrongViewCast") Button addObs = findViewById(R.id.addObservacao);
@@ -124,6 +146,14 @@ public class InspecaoVisualActivity extends AppCompatActivity {
             }
         });
 
+        @SuppressLint("WrongViewCast") Button next = findViewById(R.id.NextFase4);
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                abrirRegistrador();
+            }
+        });
+
     }
 
     private void tirarFoto() {
@@ -139,6 +169,14 @@ public class InspecaoVisualActivity extends AppCompatActivity {
 
 
     private void abrirRegistrador() {
+
+        Hawk.put("Selo1",selo1);
+        Hawk.put("Selo2", selo2);
+        Hawk.put("Selo3", selo3);
+        Hawk.put("Selo4", selo4);
+        Hawk.put("Status", status);
+        Hawk.put("FotoInspecaoVisual", fotoInspecao);
+        Hawk.put("ObservacaoInspecaoVisual", observacaoInspecao);
 
         Log.d(TAG, "Teste de Registrador");
         Intent intent = new Intent(this, RegistradorActivity.class);
@@ -178,12 +216,12 @@ public class InspecaoVisualActivity extends AppCompatActivity {
                 if(data != null) {
                     Toast.makeText(getBaseContext(), "A imagem foi capturada", Toast.LENGTH_SHORT);
                     Bundle bundle = data.getExtras();
-                    Bitmap bitmap = (Bitmap) bundle.get("data");
+                    fotoInspecao = (Bitmap) bundle.get("data");
 
-                    if(bitmap!=null){
+                    if(fotoInspecao!=null){
 
                         ImageView imageView = (ImageView) findViewById(R.id.imageView);
-                        imageView.setImageBitmap(bitmap);
+                        imageView.setImageBitmap(fotoInspecao);
 
                     }
                     else{

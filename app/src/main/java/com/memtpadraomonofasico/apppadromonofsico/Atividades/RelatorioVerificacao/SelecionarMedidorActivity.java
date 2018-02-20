@@ -34,6 +34,19 @@ public class SelecionarMedidorActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+
+        Hawk.delete("NumeroSerieMedidor");
+        Hawk.delete("ModeloMedidor");
+        Hawk.delete("FaricanteMedidor");
+        Hawk.delete("TensaoNominalMedidor");
+        Hawk.delete("CorrenteNominalMedidor");
+        Hawk.delete("TipoMedidor");
+        Hawk.delete("KdKeMedidor");
+        Hawk.delete("ClasseMedidor");
+        Hawk.delete("NumElementosMedidor");
+        Hawk.delete("AnoFabricacaoMedidor");
+        Hawk.delete("PortariaInmetroMedidor");
+
         Log.d("MEDIDOR", String.valueOf(Hawk.count()));
 
         super.onCreate(savedInstanceState);

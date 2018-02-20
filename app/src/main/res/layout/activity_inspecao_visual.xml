@@ -190,7 +190,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginStart="200dp"
         android:layout_marginTop="4dp"
-        android:text="Reconstituídos "
+        android:text="@string/reconstitu_dos"
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -204,7 +204,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginStart="200dp"
         android:layout_marginTop="4dp"
-        android:text="Não Padronizados"
+        android:text="@string/n_o_padronizados"
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -218,7 +218,7 @@
         android:layout_marginEnd="210dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="Adicionar Foto"
+        android:text="@string/adicionar_foto"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.864"
         app:layout_constraintStart_toStartOf="parent"
@@ -254,6 +254,6 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4"
-        app:srcCompat="@android:drawable/ic_menu_camera" />
+        app:srcCompat="@android:drawable/ic_menu_camera" android:contentDescription="TODO" />
 
 </android.support.constraint.ConstraintLayout>

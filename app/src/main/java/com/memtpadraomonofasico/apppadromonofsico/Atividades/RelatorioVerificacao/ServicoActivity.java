@@ -23,6 +23,16 @@ public class ServicoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
 
+        Hawk.delete("NumeroNotaServico");
+        Hawk.delete("NumeroInstalacaoServico");
+        Hawk.delete("NomeClienteServico");
+        Hawk.delete("NumDocumentoCliente");
+        Hawk.delete("RuaCliente");
+        Hawk.delete("NumeroCliente");
+        Hawk.delete("ComplementoCliente");
+        Hawk.delete("BairroCliente");
+        Hawk.delete("CepCliente");
+
         Log.d("SERVIÇO", String.valueOf(Hawk.count()));
 
 

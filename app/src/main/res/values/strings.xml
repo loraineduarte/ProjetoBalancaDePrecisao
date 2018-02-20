@@ -106,7 +106,6 @@
     <string name="n_o_possibilita_teste">Não Possibilita Teste</string>
     <string name="registrador">Registrador</string>
     <string name="anterior">Anterior</string>
-    <string name="pr_ximo">Próximo</string>
     <string name="foto_p_s_teste">Foto Pós Teste</string>
     <string name="foto_pr_teste">Foto Pré Teste</string>
     <string name="n_o_registra_corretamente">Não Registra Corretamente</string>
@@ -170,6 +169,10 @@
     <string name="eletr_nico">Eletrônico</string>
     <string name="mec_nico">Mecânico</string>
     <string name="classe">Classe</string>
+    <string name="reconstitu_dos">Reconstituídos</string>
+    <string name="n_o_padronizados">Não Padronizados</string>
+    <string name="adicionar_foto">Adicionar Foto</string>
+    <string name="pr_ximo">Próximo</string>
 
 
 </resources>
