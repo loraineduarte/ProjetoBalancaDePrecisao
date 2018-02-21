@@ -41,10 +41,10 @@
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
-        android:onClick="onCheckboxClicked"
         android:text="Aprovado"
         android:textColorHint="@color/colorPrimaryDark"
         android:textColorLink="@color/colorPrimaryDark"
+        android:onClick="onCheckboxClicked"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
@@ -59,10 +59,11 @@
         android:text="@string/n_o_possibilita_teste"
         android:textColorHint="@color/colorPrimaryDark"
         android:textColorLink="@color/colorPrimaryDark"
+        android:onClick="onCheckboxClicked"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/AprovadoMarchaVazio"
-        android:onClick="onCheckboxClicked"/>
+        />
 
     <RadioButton
         android:id="@+id/Reprovado"
@@ -71,13 +72,13 @@
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
-        android:text="@string/reprovado"
+        android:onClick="onCheckboxClicked"
+        android:text="Reprovado"
         android:textColorHint="@color/colorPrimaryDark"
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/VariacaoLeitura"
-        android:onClick="onCheckboxClicked" />
+        app:layout_constraintTop_toBottomOf="@+id/VariacaoLeitura" />
 
     <Button
         android:id="@+id/NextFase7"
@@ -104,10 +105,10 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:text="@string/varia_o_de_leitura"
+        android:onClick="onCheckboxClicked"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NaoRealizado"
-        android:onClick="onCheckboxClicked" />
+        app:layout_constraintTop_toBottomOf="@+id/NaoRealizado" />
 
     <EditText
         android:id="@+id/CargaNominalErro"

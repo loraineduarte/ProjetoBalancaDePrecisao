@@ -81,6 +81,11 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
 
     public void onCheckboxClicked(View view) {
 
+        Aprovado = findViewById(R.id.AprovadoMarchaVazio);
+        NaoPossibilitaTeste = findViewById(R.id.NaoRealizado);
+        VariacaoLeitura = findViewById(R.id.VariacaoLeitura);
+        Reprovado = findViewById(R.id.Reprovado);
+
         switch (view.getId()) {
             case R.id.AprovadoMarchaVazio:
                 NaoPossibilitaTeste.setEnabled(false);

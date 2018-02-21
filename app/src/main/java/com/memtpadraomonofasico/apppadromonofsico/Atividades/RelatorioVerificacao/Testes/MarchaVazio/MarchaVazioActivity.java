@@ -46,11 +46,11 @@ public class MarchaVazioActivity extends AppCompatActivity {
 
                 if(aprovado.isChecked()){
                     statusMarchaVazio = "Aprovado";
-                    tempoReprovadoMarchaVazio = Time.valueOf("00:00:00.00 UTC");
+                    tempoReprovadoMarchaVazio = Time.valueOf("00:00:00");
 
                 } else if (naoRealizado.isChecked()){
                     statusMarchaVazio = "Não Realizado";
-                    tempoReprovadoMarchaVazio = Time.valueOf("00:00:00.00 UTC");
+                    tempoReprovadoMarchaVazio = Time.valueOf("00:00:00");
 
                 } else if (reprovado.isChecked()){
                     statusMarchaVazio = "Reprovado";
@@ -72,9 +72,13 @@ public class MarchaVazioActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
     public void onCheckboxClicked(View view) {
 
         tempoReprovado = (findViewById(R.id.TempoMarchaVazio));
+        aprovado = findViewById(R.id.AprovadoMarchaVazio);
+        naoRealizado = findViewById(R.id.NaoRealizado);
+        reprovado = findViewById(R.id.Reprovado);
 
         switch (view.getId()) {
             case R.id.AprovadoMarchaVazio:

@@ -13,7 +13,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
-        android:text="Situações Observadas"
+        android:text="@string/situa_es_observadas"
         android:textAppearance="@android:style/TextAppearance.Material.DialogWindowTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,13 +21,13 @@
 
 
     <RadioButton
-        android:id="@+id/AprovadoMarchaVazio"
+        android:id="@+id/SujeiraInterna"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
-        android:text="Sujeira Interna"
+        android:text="@string/sujeira_interna"
         android:textColorHint="@color/colorPrimaryDark"
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,7 +41,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="4dp"
-        android:text="Sinais de Carbonização"
+        android:text="@string/sinais_de_carboniza_o"
         android:textColorHint="@color/colorPrimaryDark"
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
@@ -55,7 +55,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="4dp"
-        android:text="Mancais Deslocados / Elem. Móvel Comprimido"
+        android:text="@string/mancais_deslocados_elem_m_vel_comprimido"
         android:textColorHint="@color/colorPrimaryDark"
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
@@ -72,7 +72,7 @@
         android:background="@color/colorPrimaryDark"
         android:backgroundTint="?attr/colorPrimaryDark"
         android:elevation="2dp"
-        android:text="Próximo"
+        android:text="@string/pr_ximo"
         android:textColor="@android:color/background_light"
         android:textColorLink="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
@@ -86,7 +86,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="4dp"
-        android:text="Elemento Móvel Descentralizado"
+        android:text="@string/elemento_m_vel_descentralizado"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Reprovado" />
@@ -98,7 +98,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="4dp"
-        android:text="Ranhuras no Disco do Elemento Móvel"
+        android:text="@string/ranhuras_no_disco_do_elemento_m_vel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radioButton11" />
@@ -110,7 +110,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="4dp"
-        android:text="Marcas nos Parafusos do Mancais"
+        android:text="@string/marcas_nos_parafusos_do_mancais"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radioButton12" />
@@ -122,7 +122,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="4dp"
-        android:text="Led Disparado"
+        android:text="@string/led_disparado"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radioButton13" />
@@ -134,7 +134,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="4dp"
-        android:text="Led Aceso Direto"
+        android:text="@string/led_aceso_direto"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radioButton14" />
@@ -146,7 +146,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="4dp"
-        android:text="Led Intermitente"
+        android:text="@string/led_intermitente"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radioButton15" />
@@ -158,7 +158,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="4dp"
-        android:text="Led Apagado/ Não Emite Pulso"
+        android:text="@string/led_apagado_n_o_emite_pulso"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radioButton16" />
@@ -170,7 +170,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="4dp"
-        android:text="Circuito Eletrônico Defeituoso"
+        android:text="@string/circuito_eletr_nico_defeituoso"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radioButton17" />

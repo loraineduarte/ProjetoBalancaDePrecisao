@@ -177,6 +177,19 @@
     <string name="reprovado">Reprovado</string>
     <string name="pr_ximo">Próximo</string>
     <string name="tempo">Tempo</string>
+    <string name="situa_es_observadas">Situações Observadas</string>
+    <string name="sujeira_interna">Sujeira Interna</string>
+    <string name="sinais_de_carboniza_o">Sinais de Carbonização</string>
+    <string name="mancais_deslocados_elem_m_vel_comprimido">Mancais Deslocados / Elem. Móvel Comprimido</string>
+    <string name="pr_ximo">Próximo</string>
+    <string name="elemento_m_vel_descentralizado">Elemento Móvel Descentralizado</string>
+    <string name="ranhuras_no_disco_do_elemento_m_vel">Ranhuras no Disco do Elemento Móvel</string>
+    <string name="marcas_nos_parafusos_do_mancais">Marcas nos Parafusos do Mancais</string>
+    <string name="led_disparado">Led Disparado</string>
+    <string name="led_aceso_direto">Led Aceso Direto</string>
+    <string name="led_intermitente">Led Intermitente</string>
+    <string name="led_apagado_n_o_emite_pulso">Led Apagado/ Não Emite Pulso</string>
+    <string name="circuito_eletr_nico_defeituoso">Circuito Eletrônico Defeituoso</string>
 
 
 </resources>
