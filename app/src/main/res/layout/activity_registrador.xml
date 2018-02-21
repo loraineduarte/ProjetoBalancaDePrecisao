@@ -64,7 +64,7 @@
         app:layout_constraintTop_toBottomOf="@+id/buttonFotoDepois" />
 
     <RadioButton
-        android:id="@+id/Aprovado"
+        android:id="@+id/AprovadoMarchaVazio"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
@@ -77,7 +77,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <RadioButton
-        android:id="@+id/NaoPossibilitaTeste"
+        android:id="@+id/NaoRealizado"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
@@ -87,7 +87,7 @@
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Aprovado" />
+        app:layout_constraintTop_toBottomOf="@+id/AprovadoMarchaVazio" />
 
     <RadioButton
         android:id="@+id/Reprovado"
@@ -100,10 +100,10 @@
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NaoPossibilitaTeste" />
+        app:layout_constraintTop_toBottomOf="@+id/NaoRealizado" />
 
     <RadioButton
-        android:id="@+id/radioButton7"
+        android:id="@+id/NaoregistraConsumo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="150dp"
@@ -112,10 +112,10 @@
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NaoPossibilitaTeste" />
+        app:layout_constraintTop_toBottomOf="@+id/NaoRealizado" />
 
     <RadioButton
-        android:id="@+id/radioButton8"
+        android:id="@+id/NaoRegistraCorretamente"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="150dp"
@@ -124,10 +124,10 @@
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioButton7" />
+        app:layout_constraintTop_toBottomOf="@+id/NaoregistraConsumo" />
 
     <RadioButton
-        android:id="@+id/radioButton9"
+        android:id="@+id/displayApagado"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="150dp"
@@ -136,7 +136,7 @@
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioButton8" />
+        app:layout_constraintTop_toBottomOf="@+id/NaoRegistraCorretamente" />
 
     <Button
         android:id="@+id/addObservacao"
@@ -148,7 +148,7 @@
         android:text="@string/adiciona_observa_o"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioButton9" />
+        app:layout_constraintTop_toBottomOf="@+id/displayApagado" />
 
     <Button
         android:id="@+id/NextFase4"

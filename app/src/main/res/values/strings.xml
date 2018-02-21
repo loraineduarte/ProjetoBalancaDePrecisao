@@ -111,8 +111,6 @@
     <string name="n_o_registra_corretamente">Não Registra Corretamente</string>
     <string name="n_o_registra_consumo">Não Registra Consumo</string>
     <string name="display_apagado">Display Apagado</string>
-    <string name="status">Status</string>
-    <string name="reprovado">Reprovado</string>
     <string name="todo">TODO</string>
     <string name="limpar_campo">Limpar Campo</string>
     <string name="retornar_ao_teste_de_registrador">Retornar ao Teste de Registrador</string>
@@ -172,7 +170,13 @@
     <string name="reconstitu_dos">Reconstituídos</string>
     <string name="n_o_padronizados">Não Padronizados</string>
     <string name="adicionar_foto">Adicionar Foto</string>
+    <string name="marcha_em_vazio">Marcha em Vazio</string>
+    <string name="aplicar_tens_o">Aplicar Tensão</string>
+    <string name="status">Status</string>
+    <string name="n_o_realizado">Não Realizado</string>
+    <string name="reprovado">Reprovado</string>
     <string name="pr_ximo">Próximo</string>
+    <string name="tempo">Tempo</string>
 
 
 </resources>
