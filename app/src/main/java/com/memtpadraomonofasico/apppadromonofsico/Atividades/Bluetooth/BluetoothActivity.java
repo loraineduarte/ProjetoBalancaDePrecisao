@@ -11,8 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import static java.lang.System.out;
-
-import com.memtpadraomonofasico.apppadromonofsico.Atividades.Protocolo.Pacote;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 import android.widget.EditText;
 
@@ -120,23 +118,10 @@ public class BluetoothActivity extends AppCompatActivity {
     public void sendMessage(View view){
         EditText messageBox = (EditText) findViewById(R.id.editText_MessageBox);
         String messageBoxString = messageBox.getText().toString();
-        //statusMessage.setText(messageBox.getText().toString());
-        Pacote protoc = new Pacote();
 
         byte[] pacote = new byte[10];
 
         if (messageBox.getText().toString().equalsIgnoreCase("i")){
-            Byte[] dados = new Byte[8];
-            dados[0] = (byte)(0 & 0xFF);
-            dados[1] = (byte)(0 & 0xFF);
-            dados[2] = (byte)(90 & 0xFF);
-            dados[3] = (byte)(175 & 0xFF);
-            dados[4] = (byte)(0 & 0xFF);
-            dados[5] = (byte)(10 & 0xFF);
-            dados[6] = (byte)(0 & 0xFF);
-            dados[7] = (byte)(0 & 0xFF);
-            protoc.montaPacote((byte)('I' & 0xFF), (byte)('B' & 0xFF), dados);
-
             pacote[0] = ('I' & 0xFF);
             pacote[1] = ('B' & 0xFF);
             pacote[2] = (byte)(0 & 0xFF);
@@ -162,7 +147,7 @@ public class BluetoothActivity extends AppCompatActivity {
         }
 
         statusMessage.setText(pacote.toString());
-        conexao.write(protoc.getPacoteMontado());
+        conexao.write(pacote);
     }
 
     @Override
