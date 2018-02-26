@@ -27,7 +27,6 @@ public class ThreadConexao extends Thread {
     /*  Este construtor prepara o dispositivo para atuar como servidor.
      */
     public ThreadConexao() {
-
         this.server = true;
     }
 
@@ -36,7 +35,6 @@ public class ThreadConexao extends Thread {
     Bluetooth para o qual deve ser solicitada uma conexão.
      */
     public ThreadConexao(String btDevAddress) {
-
         this.server = false;
         this.btDevAddress = btDevAddress;
     }
