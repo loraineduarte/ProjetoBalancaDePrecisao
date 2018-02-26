@@ -13,7 +13,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
-        android:text="Marcha em Vazio"
+        android:text="@string/marcha_em_vazio"
         android:textAppearance="@android:style/TextAppearance.Material.DialogWindowTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,7 +26,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
-        android:text="Aplicar Tensão"
+        android:text="@string/aplicar_tens_o"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@android:color/black"
         android:textColorLink="@android:color/black"
@@ -48,32 +48,34 @@
         app:layout_constraintTop_toBottomOf="@+id/buttonAplicarTensao" />
 
     <RadioButton
-        android:id="@+id/Aprovado"
+        android:id="@+id/AprovadoMarchaVazio"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
-        android:text="Aprovado"
+        android:text="@string/aprovado"
         android:textColorHint="@color/colorPrimaryDark"
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintTop_toBottomOf="@+id/textView6"
+        android:onClick="onCheckboxClicked" />
 
     <RadioButton
-        android:id="@+id/NaoPossibilitaTeste"
+        android:id="@+id/NaoRealizado"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
-        android:text="Não Realizado"
+        android:text="@string/n_o_realizado"
         android:textColorHint="@color/colorPrimaryDark"
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Aprovado" />
+        app:layout_constraintTop_toBottomOf="@+id/AprovadoMarchaVazio"
+        android:onClick="onCheckboxClicked" />
 
     <RadioButton
         android:id="@+id/Reprovado"
@@ -87,24 +89,8 @@
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NaoPossibilitaTeste" />
-
-    <Button
-        android:id="@+id/PreviousFase4"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:layout_marginEnd="220dp"
-        android:layout_marginStart="16dp"
-        android:background="@color/colorPrimaryDark"
-        android:backgroundTint="?attr/colorPrimaryDark"
-        android:elevation="2dp"
-        android:text="Anterior"
-        android:textColor="@android:color/background_light"
-        android:textColorLink="@android:color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/NaoRealizado"
+        android:onClick="onCheckboxClicked"  />
 
     <Button
         android:id="@+id/NextFase5"
@@ -116,7 +102,7 @@
         android:background="@color/colorPrimaryDark"
         android:backgroundTint="?attr/colorPrimaryDark"
         android:elevation="2dp"
-        android:text="Próximo"
+        android:text="@string/pr_ximo"
         android:textColor="@android:color/background_light"
         android:textColorLink="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -124,7 +110,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/editText5"
+        android:id="@+id/TempoMarchaVazio"
         android:layout_width="0dp"
         android:layout_height="36dp"
         android:layout_marginEnd="24dp"
@@ -132,7 +118,7 @@
         android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="time"
-        android:text="Tempo"
+        android:text="@string/tempo"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColorHighlight="@android:color/black"
         android:textColorHint="@android:color/black"
@@ -140,6 +126,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.901"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NaoPossibilitaTeste" />
+        app:layout_constraintTop_toBottomOf="@+id/NaoRealizado" />
 
 </android.support.constraint.ConstraintLayout>
