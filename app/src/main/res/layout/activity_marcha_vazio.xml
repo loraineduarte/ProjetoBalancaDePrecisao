@@ -12,7 +12,7 @@
         android:layout_height="35dp"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="32dp"
         android:text="@string/marcha_em_vazio"
         android:textAppearance="@android:style/TextAppearance.Material.DialogWindowTitle"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,7 +48,7 @@
         app:layout_constraintTop_toBottomOf="@+id/buttonAplicarTensao" />
 
     <RadioButton
-        android:id="@+id/AprovadoMarchaVazio"
+        android:id="@+id/tampasolidarizada"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
@@ -64,7 +64,7 @@
          />
 
     <RadioButton
-        android:id="@+id/NaoRealizado"
+        android:id="@+id/sinaisCarbonizacao"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
@@ -76,7 +76,7 @@
         android:onClick="onCheckboxClicked"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AprovadoMarchaVazio"
+        app:layout_constraintTop_toBottomOf="@+id/tampasolidarizada"
         />
 
     <RadioButton
@@ -92,14 +92,14 @@
         android:onClick="onCheckboxClicked"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NaoRealizado"
+        app:layout_constraintTop_toBottomOf="@+id/sinaisCarbonizacao"
           />
 
     <Button
         android:id="@+id/NextFase5"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="220dp"
         android:background="@color/colorPrimaryDark"
@@ -120,15 +120,15 @@
         android:layout_marginStart="220dp"
         android:layout_marginTop="16dp"
         android:ems="10"
+        android:hint="Tempo *"
         android:inputType="time"
-        android:text="@string/tempo"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColorHighlight="@android:color/black"
-        android:textColorHint="@android:color/black"
-        android:textColorLink="@color/colorPrimaryDark"
+        android:textColorHint="@android:color/darker_gray"
+        android:textColorLink="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.901"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NaoRealizado" />
+        app:layout_constraintTop_toBottomOf="@+id/sinaisCarbonizacao" />
 
 </android.support.constraint.ConstraintLayout>

@@ -39,8 +39,8 @@ public class MarchaVazioActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                aprovado = findViewById(R.id.AprovadoMarchaVazio);
-                naoRealizado = findViewById(R.id.NaoRealizado);
+                aprovado = findViewById(R.id.tampasolidarizada);
+                naoRealizado = findViewById(R.id.sinaisCarbonizacao);
                 reprovado = findViewById(R.id.Reprovado);
 
 
@@ -76,18 +76,18 @@ public class MarchaVazioActivity extends AppCompatActivity {
     public void onCheckboxClicked(View view) {
 
         tempoReprovado = (findViewById(R.id.TempoMarchaVazio));
-        aprovado = findViewById(R.id.AprovadoMarchaVazio);
-        naoRealizado = findViewById(R.id.NaoRealizado);
+        aprovado = findViewById(R.id.tampasolidarizada);
+        naoRealizado = findViewById(R.id.sinaisCarbonizacao);
         reprovado = findViewById(R.id.Reprovado);
 
         switch (view.getId()) {
-            case R.id.AprovadoMarchaVazio:
+            case R.id.tampasolidarizada:
                 naoRealizado.setChecked(false);
                 reprovado.setChecked(false);
                 tempoReprovado.setEnabled(false);
                 break;
 
-            case R.id.NaoRealizado:
+            case R.id.sinaisCarbonizacao:
                 aprovado.setChecked(false);
                 reprovado.setChecked(false);
                 tempoReprovado.setEnabled(false);

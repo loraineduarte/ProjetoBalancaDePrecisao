@@ -1,9 +1,28 @@
 package com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.memtpadraomonofasico.apppadromonofsico.R;
+import com.orhanobut.hawk.Hawk;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class ConclusaoActivity extends AppCompatActivity {
 
@@ -12,7 +31,68 @@ public class ConclusaoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conclusao);
 
+        Log.d("CONCLUSAO", String.valueOf(Hawk.count()));
+        Log.d("1", String.valueOf(Hawk.get("statusConformidade")));
+
+
+        @SuppressLint("WrongViewCast") Button next = findViewById(R.id.gerarRelatorio);
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                gerarRelatorio();
+            }
+        });
 
     }
 
+    private void gerarRelatorio() {
+
+        Document document = new Document();
+        try {
+
+            File pdfFolder = new File(Environment.getExternalStoragePublicDirectory(
+                    Environment.DIRECTORY_DOWNLOADS), "RelatorioDeVerificacao");
+            if (!pdfFolder.exists()) {
+                pdfFolder.mkdir();
+                Log.i("Conclusao", "Pdf Directory created");
+            }
+
+            //Create time stamp
+            Date date = new Date() ;
+            String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmmss").format(date);
+
+            File myFile = new File(pdfFolder + timeStamp + ".pdf");
+
+            OutputStream output = new FileOutputStream(myFile);
+
+
+            //Step 2
+            PdfWriter.getInstance(document, output);
+
+            //Step 3
+            document.open();
+
+            //Step 4 Add content
+            document.add(new Paragraph(String.valueOf(Hawk.get("statusConformidade"))));
+
+            //Step 5: Close the document
+            document.close();
+
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setDataAndType(Uri.fromFile(myFile), "application/pdf");
+            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            startActivity(intent);
+
+        }
+        catch(DocumentException de) {
+            System.err.println(de.getMessage());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        document.close();
+
+
+    }
 }
+

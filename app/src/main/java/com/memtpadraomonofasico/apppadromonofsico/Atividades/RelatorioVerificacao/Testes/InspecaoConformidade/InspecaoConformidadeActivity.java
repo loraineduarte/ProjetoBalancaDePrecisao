@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.SituacoesObservadasActivity;
 import com.memtpadraomonofasico.apppadromonofsico.R;
@@ -42,8 +43,8 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
                 cargaPequenaErro = findViewById(R.id.CargaPequenaErro);
                 CargaPequenaErro = String.valueOf(cargaPequenaErro.getText());
 
-                Aprovado = findViewById(R.id.AprovadoMarchaVazio);
-                NaoPossibilitaTeste = findViewById(R.id.NaoRealizado);
+                Aprovado = findViewById(R.id.tampasolidarizada);
+                NaoPossibilitaTeste = findViewById(R.id.sinaisCarbonizacao);
                 VariacaoLeitura = findViewById(R.id.VariacaoLeitura);
                 Reprovado = findViewById(R.id.Reprovado);
 
@@ -65,7 +66,14 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
                 Hawk.put("CargaPequenaErroConformidade",CargaPequenaErro);
                 Hawk.put("statusConformidade",statusConformidade);
 
-                abrirSituacoesObservadas();
+
+                if ((!Aprovado.isChecked()) && (!NaoPossibilitaTeste.isChecked()) && (!VariacaoLeitura.isChecked()) && (!Reprovado.isChecked()))
+                {
+                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Não existe opção de status marcado. ", Toast.LENGTH_LONG).show();
+                } else{
+                    abrirSituacoesObservadas();
+                }
+
             }
         });
 
@@ -81,34 +89,34 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
 
     public void onCheckboxClicked(View view) {
 
-        Aprovado = findViewById(R.id.AprovadoMarchaVazio);
-        NaoPossibilitaTeste = findViewById(R.id.NaoRealizado);
+        Aprovado = findViewById(R.id.tampasolidarizada);
+        NaoPossibilitaTeste = findViewById(R.id.sinaisCarbonizacao);
         VariacaoLeitura = findViewById(R.id.VariacaoLeitura);
         Reprovado = findViewById(R.id.Reprovado);
 
         switch (view.getId()) {
-            case R.id.AprovadoMarchaVazio:
-                NaoPossibilitaTeste.setEnabled(false);
-                VariacaoLeitura.setEnabled(false);
-                Reprovado.setEnabled(false);
+            case R.id.tampasolidarizada:
+                NaoPossibilitaTeste.setChecked(false);
+                VariacaoLeitura.setChecked(false);
+                Reprovado.setChecked(false);
                 break;
 
-            case R.id.NaoRealizado:
-                Aprovado.setEnabled(false);
-                VariacaoLeitura.setEnabled(false);
-                Reprovado.setEnabled(false);
+            case R.id.sinaisCarbonizacao:
+                Aprovado.setChecked(false);
+                VariacaoLeitura.setChecked(false);
+                Reprovado.setChecked(false);
                 break;
 
             case R.id.VariacaoLeitura:
-                Aprovado.setEnabled(false);
-                NaoPossibilitaTeste.setEnabled(false);
-                Reprovado.setEnabled(false);
+                Aprovado.setChecked(false);
+                NaoPossibilitaTeste.setChecked(false);
+                Reprovado.setChecked(false);
                 break;
 
             case R.id.Reprovado:
-                Aprovado.setEnabled(false);
-                NaoPossibilitaTeste.setEnabled(false);
-                VariacaoLeitura.setEnabled(false);
+                Aprovado.setChecked(false);
+                NaoPossibilitaTeste.setChecked(false);
+                VariacaoLeitura.setChecked(false);
                 break;
 
         }

@@ -7,12 +7,12 @@
     tools:context="com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.ConclusaoActivity">
 
     <TextView
-        android:id="@+id/MarchaVazio"
-        android:layout_width="121dp"
+        android:id="@+id/Conclusao"
+        android:layout_width="113dp"
         android:layout_height="35dp"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="32dp"
         android:text="@string/conclus_o"
         android:textAppearance="@android:style/TextAppearance.Material.DialogWindowTitle"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,7 +21,7 @@
 
 
     <RadioButton
-        android:id="@+id/AprovadoMarchaVazio"
+        android:id="@+id/tampasolidarizada"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
@@ -32,10 +32,10 @@
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/MarchaVazio" />
+        app:layout_constraintTop_toBottomOf="@+id/Conclusao" />
 
     <RadioButton
-        android:id="@+id/NaoRealizado"
+        android:id="@+id/sinaisCarbonizacao"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
@@ -46,12 +46,12 @@
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AprovadoMarchaVazio" />
+        app:layout_constraintTop_toBottomOf="@+id/tampasolidarizada" />
 
     <RadioButton
-        android:id="@+id/Reprovado"
+        android:id="@+id/MedidorIrregularidade"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="34dp"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
@@ -60,10 +60,10 @@
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NaoRealizado" />
+        app:layout_constraintTop_toBottomOf="@+id/sinaisCarbonizacao" />
 
     <RadioButton
-        android:id="@+id/radioButton11"
+        android:id="@+id/elementoDescentralizado"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
@@ -72,10 +72,10 @@
         android:text="@string/reintegra_o"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Reprovado" />
+        app:layout_constraintTop_toBottomOf="@+id/MedidorIrregularidade" />
 
     <RadioButton
-        android:id="@+id/radioButton12"
+        android:id="@+id/RanhurasDisco"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
@@ -84,10 +84,10 @@
         android:text="@string/garantia"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioButton11" />
+        app:layout_constraintTop_toBottomOf="@+id/elementoDescentralizado" />
 
     <Button
-        android:id="@+id/GerarRelatorio"
+        android:id="@+id/adicionaObservacaoConclusao"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
@@ -96,6 +96,18 @@
         android:text="@string/adiciona_observa_o"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioButton12" />
+        app:layout_constraintTop_toBottomOf="@+id/RanhurasDisco" />
+
+    <Button
+        android:id="@+id/gerarRelatorio"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/gerar_relat_rio"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/adicionaObservacaoConclusao" />
 
 </android.support.constraint.ConstraintLayout>

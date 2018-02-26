@@ -13,7 +13,7 @@
         android:layout_height="35dp"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:text="@string/conformidade"
         android:textAppearance="@android:style/TextAppearance.Material.DialogWindowTitle"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,7 +35,7 @@
         app:layout_constraintTop_toBottomOf="@+id/button3" />
 
     <RadioButton
-        android:id="@+id/AprovadoMarchaVazio"
+        android:id="@+id/tampasolidarizada"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
@@ -50,7 +50,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <RadioButton
-        android:id="@+id/NaoRealizado"
+        android:id="@+id/sinaisCarbonizacao"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
@@ -62,7 +62,7 @@
         android:onClick="onCheckboxClicked"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AprovadoMarchaVazio"
+        app:layout_constraintTop_toBottomOf="@+id/tampasolidarizada"
         />
 
     <RadioButton
@@ -84,18 +84,18 @@
         android:id="@+id/NextFase7"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginStart="220dp"
-        android:layout_marginTop="32dp"
         android:background="@color/colorPrimaryDark"
         android:backgroundTint="?attr/colorPrimaryDark"
         android:elevation="2dp"
         android:text="Próximo"
         android:textColor="@android:color/background_light"
         android:textColorLink="@android:color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Reprovado" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <RadioButton
         android:id="@+id/VariacaoLeitura"
@@ -108,7 +108,7 @@
         android:onClick="onCheckboxClicked"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NaoRealizado" />
+        app:layout_constraintTop_toBottomOf="@+id/sinaisCarbonizacao" />
 
     <EditText
         android:id="@+id/CargaNominalErro"
@@ -118,8 +118,10 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="@string/carga_nominal_erro"
+        android:hint="Carga Nominal Erro (%)"
+        android:inputType="number"
+        android:maxLength="4"
+        android:singleLine="true"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -145,8 +147,9 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="@string/carga_pequena_erro"
+        android:hint="Carga Pequena Erro (%)"
+        android:inputType="number"
+        android:maxLength="4"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

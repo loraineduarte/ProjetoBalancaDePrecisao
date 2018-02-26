@@ -8,9 +8,12 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.MarchaVazio.MarchaVazioActivity;
@@ -24,9 +27,10 @@ public class RegistradorActivity extends AppCompatActivity {
     private static final int TIRAR_FOTO_DEPOIS = 10208;
     private static final int REQUEST_OBS = 0;
     Intent observacao = new Intent();
-    RadioButton aprovado, naoPossibilitaTeste, reprovado, naoRegistraConsumo, naoRegistraCorretamente, displayApagado;
+    RadioButton aprovado, naoPossibilitaTeste, reprovado;
     Bitmap fotoAntesRegistrador, fotoDepoisRegistrador;
     String status, observacaoRegistrador;
+    Spinner opcoesReprovados;
 
 
     @Override
@@ -41,6 +45,46 @@ public class RegistradorActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrador);
+
+        aprovado = findViewById(R.id.tampasolidarizada);
+        naoPossibilitaTeste = findViewById(R.id.sinaisCarbonizacao);
+        reprovado = findViewById(R.id.Reprovado);
+
+
+        if(aprovado.isChecked()){
+            status = "Aprovado";
+
+        } else if (naoPossibilitaTeste.isChecked()){
+            status = "Não Possibilita Testes";
+
+        } else if (reprovado.isChecked()){
+            status = "Reprovado";
+
+        }
+
+        observacaoRegistrador = observacao.getDataString();
+
+        opcoesReprovados = (Spinner) findViewById(R.id.RegistradorSpinner);
+        opcoesReprovados.setEnabled(false);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,  R.array.ReprovadoRegistrador, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        opcoesReprovados.setAdapter(adapter);
+        opcoesReprovados.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                status = parent.getItemAtPosition(position).toString();
+                Log.d("SELECIONADO", status);
+            }
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+
+            }
+        });
+
+        observacaoRegistrador = observacao.getDataString();
 
         @SuppressLint("WrongViewCast") Button addObs = findViewById(R.id.addObservacao);
         addObs.setOnClickListener(new View.OnClickListener() {
@@ -70,53 +114,15 @@ public class RegistradorActivity extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                aprovado = findViewById(R.id.AprovadoMarchaVazio);
-                naoPossibilitaTeste = findViewById(R.id.NaoRealizado);
-                reprovado = findViewById(R.id.Reprovado);
-                naoRegistraConsumo = findViewById(R.id.NaoregistraConsumo);
-                naoRegistraCorretamente = findViewById(R.id.NaoRegistraCorretamente);
-                displayApagado = findViewById(R.id.displayApagado);
-
-                if(aprovado.isChecked()){
-                    status = "Aprovado";
-
-                } else if (naoPossibilitaTeste.isChecked()){
-                    status = "Não Possibilita Testes";
-
-                } else if (reprovado.isChecked()){
-                    status = "Reprovado";
-
-                } else if (naoRegistraConsumo.isChecked()){
-                    status = "Não Registra Consumo";
-
-                } else if (naoRegistraCorretamente.isChecked()){
-                    status = "Não Registra Corretamente";
-
-                } else if (displayApagado.isChecked()){
-                    status = "Display Apagado";
-
-                }
-
-                observacaoRegistrador = observacao.getDataString();
+                Hawk.put("FotoPreTesteRegistrador",fotoAntesRegistrador);
+                Hawk.put("FotoPosTesteRegistrador", fotoDepoisRegistrador);
+                Hawk.put("statusRegistrador", status);
+                Hawk.put("ObservaçãoRegistrador", observacaoRegistrador);
 
                 abrirMarchaVazio();
             }
         });
 
-
-    }
-
-
-
-    private void abrirMarchaVazio() {
-
-        Hawk.put("FotoPreTesteRegistrador",fotoAntesRegistrador);
-        Hawk.put("FotoPosTesteRegistrador", fotoDepoisRegistrador);
-        Hawk.put("statusRegistrador", status);
-        Hawk.put("ObservaçãoRegistrador", observacaoRegistrador);
-
-        Intent intent = new Intent(this, MarchaVazioActivity.class);
-        startActivity(intent);
     }
 
     private void abrirAddObs() {
@@ -195,5 +201,36 @@ public class RegistradorActivity extends AppCompatActivity {
                 Log.d("Registrador", String.valueOf(observacao));
             }
         }
+    }
+
+    public void onCheckboxClicked(View view) {
+
+        switch (view.getId()) {
+            case R.id.tampasolidarizada:
+                naoPossibilitaTeste.setChecked(false);
+                reprovado.setChecked(false);
+                opcoesReprovados.setEnabled(false);
+                break;
+
+            case R.id.sinaisCarbonizacao:
+                aprovado.setChecked(false);
+                reprovado.setChecked(false);
+                opcoesReprovados.setEnabled(false);
+                break;
+
+            case R.id.Reprovado:
+                aprovado.setChecked(false);
+                naoPossibilitaTeste.setChecked(false);
+                opcoesReprovados.setEnabled(true);
+
+                break;
+
+        }
+    }
+
+    private void abrirMarchaVazio() {
+
+        Intent intent = new Intent(this, MarchaVazioActivity.class);
+        startActivity(intent);
     }
 }

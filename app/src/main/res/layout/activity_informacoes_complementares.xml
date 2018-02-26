@@ -9,12 +9,12 @@
 
     <TextView
         android:id="@+id/MarchaVazio"
-        android:layout_width="0dp"
-        android:layout_height="62dp"
+        android:layout_width="296dp"
+        android:layout_height="39dp"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/informa_es_complementares_e_desacordo_com_o_toi"
+        android:layout_marginTop="32dp"
+        android:text="Informações Complementares"
         android:textAppearance="@android:style/TextAppearance.Material.DialogWindowTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,12 +22,12 @@
 
 
     <RadioButton
-        android:id="@+id/AprovadoMarchaVazio"
+        android:id="@+id/tampasolidarizada"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:text="@string/tampa_do_medidor_solidarizada"
         android:textColorHint="@color/colorPrimaryDark"
         android:textColorLink="@color/colorPrimaryDark"
@@ -36,38 +36,38 @@
         app:layout_constraintTop_toBottomOf="@+id/MarchaVazio" />
 
     <RadioButton
-        android:id="@+id/NaoRealizado"
+        android:id="@+id/semTampa"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/tampa_do_medidor_danificada"
+        android:layout_marginTop="4dp"
+        android:text="Sem tampa do bloco de terminais"
         android:textColorHint="@color/colorPrimaryDark"
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AprovadoMarchaVazio" />
+        app:layout_constraintTop_toBottomOf="@+id/tampasolidarizada" />
 
     <RadioButton
-        android:id="@+id/Reprovado"
+        android:id="@+id/tampaQuebrada"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/tampa_do_bloco_ausente"
+        android:layout_marginTop="4dp"
+        android:text="Tampa quebrada"
         android:textColorHint="@color/colorPrimaryDark"
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NaoRealizado" />
+        app:layout_constraintTop_toBottomOf="@+id/semTampa" />
 
     <Button
         android:id="@+id/NextFase9"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="220dp"
         android:background="@color/colorPrimaryDark"
@@ -81,15 +81,51 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <RadioButton
-        android:id="@+id/radioButton11"
+        android:id="@+id/tampaQuebradaTransporte"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/selos_rompidos_no_labort_rio"
+        android:layout_marginTop="4dp"
+        android:text="Tampa quebrada no transporte"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Reprovado" />
+        app:layout_constraintTop_toBottomOf="@+id/tampaQuebrada" />
+
+    <RadioButton
+        android:id="@+id/seloRompido"
+        android:layout_width="0dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:text="Selo rompido no laboratório "
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tampaQuebradaTransporte" />
+
+    <RadioButton
+        android:id="@+id/terminaisOxidados"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:text="Terminais de corrente oxidados"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seloRompido" />
+
+    <RadioButton
+        android:id="@+id/leituraDivergente"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:text="Leitura divergente"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/terminaisOxidados" />
 
 </android.support.constraint.ConstraintLayout>

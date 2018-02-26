@@ -121,7 +121,6 @@
     <string name="medidor_com_irregularidade">Medidor com Irregularidade</string>
     <string name="reintegra_o">Reintegração</string>
     <string name="garantia">Garantia</string>
-    <string name="gerar_relat_rio">Gerar Relatório</string>
     <string name="informa_es_complementares_e_desacordo_com_o_toi">Informações Complementares e Desacordo com o TOI</string>
     <string name="tampa_do_medidor_solidarizada">Tampa do Medidor Solidarizada</string>
     <string name="tampa_do_medidor_danificada">Tampa do Medidor Danificada</string>
@@ -165,7 +164,6 @@
     <string name="n_de_elementos">Nº de Elementos</string>
     <string name="tens_o_nominal_v">Tensão Nominal (V)</string>
     <string name="eletr_nico">Eletrônico</string>
-    <string name="mec_nico">Mecânico</string>
     <string name="classe">Classe</string>
     <string name="reconstitu_dos">Reconstituídos</string>
     <string name="n_o_padronizados">Não Padronizados</string>
@@ -175,13 +173,11 @@
     <string name="status">Status</string>
     <string name="n_o_realizado">Não Realizado</string>
     <string name="reprovado">Reprovado</string>
-    <string name="pr_ximo">Próximo</string>
     <string name="tempo">Tempo</string>
     <string name="situa_es_observadas">Situações Observadas</string>
     <string name="sujeira_interna">Sujeira Interna</string>
     <string name="sinais_de_carboniza_o">Sinais de Carbonização</string>
     <string name="mancais_deslocados_elem_m_vel_comprimido">Mancais Deslocados / Elem. Móvel Comprimido</string>
-    <string name="pr_ximo">Próximo</string>
     <string name="elemento_m_vel_descentralizado">Elemento Móvel Descentralizado</string>
     <string name="ranhuras_no_disco_do_elemento_m_vel">Ranhuras no Disco do Elemento Móvel</string>
     <string name="marcas_nos_parafusos_do_mancais">Marcas nos Parafusos do Mancais</string>
@@ -190,6 +186,56 @@
     <string name="led_intermitente">Led Intermitente</string>
     <string name="led_apagado_n_o_emite_pulso">Led Apagado/ Não Emite Pulso</string>
     <string name="circuito_eletr_nico_defeituoso">Circuito Eletrônico Defeituoso</string>
+    <string name="gerar_relat_rio">Gerar Relatório</string>
+    <string name="relat_rio_de_verifica_o">Relatório de Verificação</string>
+    <string name="selecionar_avaliador">Selecionar Avaliador</string>
+    <string name="nome_do_avaliador">Nome do Avaliador</string>
+    <string name="dados_gerais">Dados Gerais</string>
+    <string name="toi">TOI</string>
+    <string name="pr_ximo">Próximo</string>
+    <string name="sem_solicita_o_do_consumidor">SEM (Solicitação do Consumidor)</string>
+    <string name="n">Nº</string>
+    <string name="matr_cula_do_avaliador">Matrícula do Avaliador</string>
+    <string name="medidor">Medidor</string>
+    <string name="mec_nico">Mecânico</string>
+
+    <string-array name="ReprovadoInspeçãoVisual">
+        <item>Base Perfurada</item>
+        <item>Dispositivo de Selagem Quebrado</item>
+        <item>Selo Ausente ou Outro nao Padronizados</item>
+        <item>Selo Ausente ou Outro Violado Reconstituído</item>
+        <item>Selo Ausente ou Outro Violado </item>
+        <item>Selo(s) Ausente(s)</item>
+        <item>Selo(s) Íntegro(s)</item>
+        <item>Selo(s) não Padronizado(s)</item>
+        <item>Selo(s) Policarbonato Íntegro(s)</item>
+        <item>Selo(s) PP Íntegro(s)</item>
+        <item>Selo(s) Reconstituído - Reapertado - Colado</item>
+        <item>Selo(s) SB Íntegro</item>
+        <item>Selo(s) Violado(s)</item>
+        <item>Tampa Solidarizada sem Selo</item>
+    </string-array>
+
+    <string-array name="ReprovadoRegistrador">
+        <item>Registrador não Registra Corretamente</item>
+        <item>Registrador não Registra Consumo</item>
+        <item>Registrador Defeituoso</item>
+        <item>Registrador Travado, Provocando Atrito Excessivo</item>
+        <item>Não Possibilita Teste de Registrador </item>
+        <item>Ponteiros Desalinhados</item>
+        <item>Ciclômetros Desalinhados</item>
+        <item>Display Apagado</item>
+        <item>Primeira Engrenagem Desacoplada</item>
+        <item>Primeira Engrenagem com Acoplamento Excessivo</item>
+        <item>Engrenagem com Acoplamento Intermitente</item>
+        <item>Primeira Engrenagem do Registrador Trocada</item>
+        <item>Engrenagem com Acoplamento Intermitente</item>
+        <item>Engrenagem Limada</item>
+        <item>Rosca Sem Fim Desgastada</item>
+        <item>Registrador Incorreto Constante Disco</item>
+        <item>Suporte de Fixação do Registrador Quebrado</item>
+        <item>THS/ Irrig-Erro Programação Constante e Med. com CEMIG</item>
+    </string-array>
 
 
 </resources>

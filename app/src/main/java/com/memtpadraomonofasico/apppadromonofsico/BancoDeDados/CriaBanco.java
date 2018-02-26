@@ -31,7 +31,9 @@ public class CriaBanco extends SQLiteOpenHelper {
     //tabela de medidor
     public static final String TABELA_MEDIDOR = "medidor";
     public static final String ID_MEDIDOR = "_id_medidor";
+    public static final String INSTALACAO = "medidor_instalacao";
     public static final String NUM_SERIE = "medidor_num_serie";
+    public static final String NUM_GERAL = "medidor_num_geral";
     public static final String FABRICANTE = "medidor_fabricante";
     public static final String NUM_ELEMENTOS = "medidor_num_elementos";
     public static final String MODELO = "medidor_modelo";
@@ -40,7 +42,9 @@ public class CriaBanco extends SQLiteOpenHelper {
     public static final String ANO_FABRICACAO = "medidor_ano_fabricacao";
     public static final String TENSAO_NOMINAL = "medidor_tensao_nominal";
     public static final String KDKE = "medidor_KdKe";
+    public static final String RR = "medidor_RR";
     public static final String PORT_INMETRO = "medidor_port_inmetro";
+    public static final String FIOS = "medidor_fios";
     public static final String TIPO_MEDIDOR = "medidor_tipo_medidor";
 
 
@@ -59,15 +63,19 @@ public class CriaBanco extends SQLiteOpenHelper {
 
         String sqlMedidor = "CREATE TABLE IF NOT EXISTS "+TABELA_MEDIDOR+" (  "
                 + ID_MEDIDOR + " INTEGER PRIMARY KEY AUTOINCREMENT , "
+                + INSTALACAO + " integer, "
                 + NUM_SERIE + " text, "
+                + NUM_GERAL + " text, "
                 + FABRICANTE + " text, "
-                + NUM_ELEMENTOS + " text, "
+                + NUM_ELEMENTOS + " integer, "
                 + MODELO + " text, "
-                + CORRENTE_NOMINAL + " text, "
+                + CORRENTE_NOMINAL + " integer, "
                 + CLASSE + " text, "
-                + ANO_FABRICACAO + " text, "
-                + TENSAO_NOMINAL + " text, "
-                + KDKE + " text, "
+                + ANO_FABRICACAO + " integer, "
+                + TENSAO_NOMINAL + " integer, "
+                + KDKE + " integer, "
+                + RR + " integer, "
+                + FIOS + " integer, "
                 + PORT_INMETRO + " text, "
                 + TIPO_MEDIDOR + " text "
                 +" )";

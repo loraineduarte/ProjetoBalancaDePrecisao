@@ -8,11 +8,13 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
-import android.widget.TextView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.Registrador.RegistradorActivity;
@@ -22,12 +24,13 @@ import com.orhanobut.hawk.Hawk;
 public class InspecaoVisualActivity extends AppCompatActivity {
 
     private static final String TAG = "Inspeção Visual";
-    private RadioButton VioladosInpecao, AusentesInspecao, ReconstituidosInspecao, NaoPadronizadosInpecao, Reprovado, Aprovado;
+    private RadioButton Reprovado, Aprovado;
     Intent observacao = new Intent();
     private static final int TIRAR_FOTO = 10207;
     private static final int REQUEST_OBS = 0;
-    String selo1, selo2, selo3, selo4, status, observacaoInspecao;
+    String selo1, selo2, selo3, status, observacaoInspecao;
     Bitmap fotoInspecao;
+    Spinner opcoesReprovados;
 
 
     @Override
@@ -36,7 +39,6 @@ public class InspecaoVisualActivity extends AppCompatActivity {
         Hawk.delete("Selo1");
         Hawk.delete("Selo2");
         Hawk.delete("Selo3");
-        Hawk.delete("Selo4");
         Hawk.delete("Status");
         Hawk.delete("FotoInspecaoVisual");
         Hawk.delete("ObservacaoInspecaoVisual");
@@ -46,89 +48,48 @@ public class InspecaoVisualActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inspecao_visual);
 
-        //clean the editText
         final EditText Selo1 = (EditText) findViewById(R.id.Selo1);
         selo1 = String.valueOf(Selo1.getText());
-        Selo1.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    Selo1.setText("", TextView.BufferType.EDITABLE);
-                }
-
-            }
-
-        });
 
         final EditText Selo2 = (EditText) findViewById(R.id.Selo2);
         selo2 = String.valueOf(Selo2.getText());
-        Selo2.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    Selo2.setText("", TextView.BufferType.EDITABLE);
-                }
-
-            }
-
-        });
 
         final EditText Selo3 = (EditText) findViewById(R.id.Selo3);
         selo3 = String.valueOf(Selo3.getText());
-        Selo3.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    Selo3.setText("", TextView.BufferType.EDITABLE);
-                }
-
-            }
-
-        });
-
-        final EditText Selo4 = (EditText) findViewById(R.id.Selo4);
-        selo4 = String.valueOf(Selo4.getText());
-        Selo4.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    Selo4.setText("", TextView.BufferType.EDITABLE);
-                }
-
-            }
-
-        });
-
-        VioladosInpecao = findViewById(R.id.VioladosInpecao);
-        AusentesInspecao = findViewById(R.id.AusentesInspecao);
-        ReconstituidosInspecao = findViewById(R.id.ReconstituidosInspecao);
-        NaoPadronizadosInpecao = findViewById(R.id.NaoPadronizadosInpecao);
         Reprovado = findViewById(R.id.ReprovadoInspecaoVisual);
         Aprovado = findViewById(R.id.AprovadoInspecaoVisual);
 
-        if(VioladosInpecao.isChecked()){
-            status = "Violados";
 
-        } else if (AusentesInspecao.isChecked()){
-            status = "Ausentes";
+        if (Aprovado.isChecked()){
+            status = "Selos íntegros";
 
-        } else if (ReconstituidosInspecao.isChecked()){
-            status = "Reconstituidos";
-
-        } else if (NaoPadronizadosInpecao.isChecked()){
-            status = "Não Padronizados";
-
-        } else if (Reprovado.isChecked()){
+        }else if (Reprovado.isChecked()){
             status = "Reprovado";
-
-        } else if (Aprovado.isChecked()){
-            status = "Aprovado";
 
         }
 
-        observacaoInspecao = observacao.getDataString();
-         //fotoInspecao
+        opcoesReprovados = (Spinner) findViewById(R.id.spinner);
+        opcoesReprovados.setEnabled(false);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,  R.array.ReprovadoInspeçãoVisual, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        opcoesReprovados.setAdapter(adapter);
+        opcoesReprovados.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                status = parent.getItemAtPosition(position).toString();
+                Log.d("SELECIONADO", status);
+            }
+            public void onNothingSelected(AdapterView<?> parent)
+            {
 
+            }
+        });
+
+        observacaoInspecao = observacao.getDataString();
 
         @SuppressLint("WrongViewCast") Button addObs = findViewById(R.id.addObservacao);
         addObs.setOnClickListener(new View.OnClickListener() {
@@ -173,7 +134,6 @@ public class InspecaoVisualActivity extends AppCompatActivity {
         Hawk.put("Selo1",selo1);
         Hawk.put("Selo2", selo2);
         Hawk.put("Selo3", selo3);
-        Hawk.put("Selo4", selo4);
         Hawk.put("Status", status);
         Hawk.put("FotoInspecaoVisual", fotoInspecao);
         Hawk.put("ObservacaoInspecaoVisual", observacaoInspecao);
@@ -188,19 +148,15 @@ public class InspecaoVisualActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.AprovadoInspecaoVisual:
                 Reprovado.setChecked(false);
-                VioladosInpecao.setEnabled(false);
-                AusentesInspecao.setEnabled(false);
-                ReconstituidosInspecao.setEnabled(false);
-                NaoPadronizadosInpecao.setEnabled(false);
+                opcoesReprovados.setEnabled(false);
+
 
                 break;
 
             case R.id.ReprovadoInspecaoVisual:
                 Aprovado.setChecked(false);
-                VioladosInpecao.setEnabled(true);
-                AusentesInspecao.setEnabled(true);
-                ReconstituidosInspecao.setEnabled(true);
-                NaoPadronizadosInpecao.setEnabled(true);
+                opcoesReprovados.setEnabled(true);
+
                 break;
 
         }
@@ -243,8 +199,5 @@ public class InspecaoVisualActivity extends AppCompatActivity {
             Log.d(TAG, String.valueOf(observacao));
         }
     }
-
-
-
 
 }

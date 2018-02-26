@@ -15,7 +15,7 @@
         android:layout_height="31dp"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="32dp"
         android:text="@string/inspe_o_visual"
         android:textAppearance="@android:style/TextAppearance.Material.DialogWindowTitle"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,12 +38,12 @@
         android:id="@+id/Selo1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="210dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:ems="10"
+        android:hint="1 - *"
         android:inputType="textPersonName"
-        android:text="@string/_1"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColorLink="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
@@ -56,27 +56,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:layout_marginStart="210dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="@string/_2"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textColorLink="@android:color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-    <EditText
-        android:id="@+id/Selo3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="210dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
         android:ems="10"
+        android:hint="2 - *"
         android:inputType="textPersonName"
-        android:text="@string/_3"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColorLink="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
@@ -84,15 +68,15 @@
         app:layout_constraintTop_toBottomOf="@+id/Selo1" />
 
     <EditText
-        android:id="@+id/Selo4"
+        android:id="@+id/Selo3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:layout_marginStart="210dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
+        android:hint="3 - *"
         android:inputType="textPersonName"
-        android:text="@string/_4"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColorLink="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
@@ -111,7 +95,7 @@
         android:textColorLink="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Selo4" />
+        app:layout_constraintTop_toBottomOf="@+id/Selo3" />
 
     <RadioButton
         android:id="@+id/AprovadoInspecaoVisual"
@@ -141,97 +125,38 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/AprovadoInspecaoVisual" />
 
-    <RadioButton
-        android:id="@+id/VioladosInpecao"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="200dp"
-        android:layout_marginTop="4dp"
-        android:text="@string/violados"
-        android:textColorLink="@color/colorPrimaryDark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ReprovadoInspecaoVisual"
-        android:onClick="onCheckboxClicked" />
-
     <Button
         android:id="@+id/addObservacao"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="57dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginStart="210dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="200dp"
+        android:layout_marginTop="8dp"
         android:text="@string/adicionar_observa_o"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NaoPadronizadosInpecao" />
-
-    <RadioButton
-        android:id="@+id/AusentesInspecao"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="200dp"
-        android:layout_marginTop="4dp"
-        android:text="@string/ausentes"
-        android:textColorLink="@color/colorPrimaryDark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.044"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/VioladosInpecao"
-        android:onClick="onCheckboxClicked" />
-
-    <RadioButton
-        android:id="@+id/ReconstituidosInspecao"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="200dp"
-        android:layout_marginTop="4dp"
-        android:text="@string/reconstitu_dos"
-        android:textColorLink="@color/colorPrimaryDark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AusentesInspecao"
-        android:onClick="onCheckboxClicked" />
-
-    <RadioButton
-        android:id="@+id/NaoPadronizadosInpecao"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="200dp"
-        android:layout_marginTop="4dp"
-        android:text="@string/n_o_padronizados"
-        android:textColorLink="@color/colorPrimaryDark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ReconstituidosInspecao"
-        android:onClick="onCheckboxClicked" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <Button
         android:id="@+id/tirarFotoInspecao"
         android:layout_width="0dp"
         android:layout_height="57dp"
-        android:layout_marginEnd="210dp"
+        android:layout_marginEnd="200dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="@string/adicionar_foto"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.864"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NaoPadronizadosInpecao" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <Button
         android:id="@+id/NextFase4"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginStart="210dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="220dp"
         android:background="@color/colorPrimaryDark"
         android:backgroundTint="?attr/colorPrimaryDark"
         android:elevation="2dp"
@@ -240,20 +165,31 @@
         android:textColorLink="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addObservacao" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="0dp"
-        android:layout_height="214dp"
+        android:layout_height="164dp"
         android:layout_marginEnd="220dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:contentDescription="TODO"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4"
-        app:srcCompat="@android:drawable/ic_menu_camera" android:contentDescription="TODO" />
+        app:srcCompat="@android:drawable/ic_menu_camera" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="0dp"
+        android:layout_height="28dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="200dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ReprovadoInspecaoVisual" />
 
 </android.support.constraint.ConstraintLayout>
