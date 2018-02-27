@@ -11,8 +11,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 
+import com.itextpdf.text.Chapter;
+import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.memtpadraomonofasico.apppadromonofsico.R;
@@ -115,9 +119,20 @@ public class ConclusaoActivity extends AppCompatActivity {
             PdfWriter.getInstance(document, output);
 
             //Step 3
+            document.setMargins(20, 20, 20, 20);
             document.open();
 
             //Step 4 Add content
+            Font chapterFont = FontFactory.getFont(FontFactory.HELVETICA, 16, Font.BOLDITALIC);
+            Font paragraphFont = FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL);
+
+            Chunk chunk = new Chunk("Relatório de Verificação", chapterFont);
+
+            Chapter chapter = new Chapter(new Paragraph(chunk), 1);
+            chapter.setNumberDepth(0);
+            chapter.add(new Paragraph("This is the paragraph", paragraphFont));
+            document.add(chapter);
+            document.close();
             document.add(new Paragraph(String.valueOf(Hawk.get("statusConformidade"))));
             document.add(new Paragraph(String.valueOf(Hawk.get("statusConformidade"))));
             document.add(new Paragraph(String.valueOf(Hawk.get("statusConformidade"))));
