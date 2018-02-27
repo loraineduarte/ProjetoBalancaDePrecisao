@@ -138,7 +138,7 @@
     <string name="_4">4 -</string>
     <string name="_1">1 -</string>
     <string name="_3">3 -</string>
-    <string name="string_aprovado" >Aprovado</string>
+    <string name="string_aprovado">Aprovado</string>
     <string name="violados">Violados</string>
     <string name="adicionar_observa_o">Adicionar Observação</string>
     <string name="ausentes">Ausentes</string>
@@ -237,5 +237,17 @@
         <item>THS/ Irrig-Erro Programação Constante e Med. com CEMIG</item>
     </string-array>
 
+
+    <string-array name="ReprovadoCircuitoPotencial">
+        <item>Circuito pot. interrompido - elo retirado</item>
+        <item>Circuito pot. interrompido - elo aberto/ desapertado</item>
+        <item>Circuito pot. interrompido - elo com cola</item>
+        <item>Elo com sinal de carbonização</item>
+        <item>Circuito pot. interrompido - elo retirado BLOCO </item>
+        <item>Circuito pot. interrompido - elo aberto/ desapertado BLOCO</item>
+        <item>Bobina interrompida sob tensão induzida</item>
+        <item>Bobina interrompida sem causa detectada</item>
+        <item>Circuito de potencial com a fiação cortada</item>
+    </string-array>
 
 </resources>

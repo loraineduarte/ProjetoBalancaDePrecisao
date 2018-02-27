@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
-import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.InspecaoConformidade.InspecaoConformidadeActivity;
+import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.CircuitoPotencial.CircuitoPotencialActivity;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
 
@@ -29,15 +29,17 @@ public class MarchaVazioActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_marcha_vazio);
 
-        Hawk.delete("statusMarchaVazio");
-        Hawk.delete("tempoReprovado");
-        Log.d("INSPEÇÃO VISUAL ", String.valueOf(Hawk.count()));
+
+        Log.d("MARCHA VAZIO ", String.valueOf(Hawk.count()));
 
 
         @SuppressLint("WrongViewCast") Button next = findViewById(R.id.NextFase5);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Hawk.delete("statusMarchaVazio");
+                Hawk.delete("tempoReprovadoMarchaVazio");
 
                 aprovado = findViewById(R.id.tampasolidarizada);
                 naoRealizado = findViewById(R.id.sinaisCarbonizacao);
@@ -59,16 +61,16 @@ public class MarchaVazioActivity extends AppCompatActivity {
 
                 }
 
-                abrirInspecaoConformidade();
+                Hawk.put("statusMarchaVazio", statusMarchaVazio);
+                Hawk.put("tempoReprovadoMarchaVazio", tempoReprovadoMarchaVazio);
+                abrirCircuitoPotencial();
             }
         });
 
     }
 
-    private void abrirInspecaoConformidade() {
-        Hawk.put("statusMarchaVazio",statusMarchaVazio);
-        Hawk.put("tempoReprovado", tempoReprovadoMarchaVazio);
-        Intent intent = new Intent(this, InspecaoConformidadeActivity.class);
+    private void abrirCircuitoPotencial() {
+        Intent intent = new Intent(this, CircuitoPotencialActivity.class);
         startActivity(intent);
     }
 

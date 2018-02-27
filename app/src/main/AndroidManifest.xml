@@ -4,9 +4,9 @@
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -44,30 +44,19 @@
         <activity
             android:name=".Atividades.RelatorioVerificacao.RelatorioVerificacaoActivity"
             android:parentActivityName=".MainActivity" />
-        <activity
-            android:name=".Atividades.RelatorioVerificacao.ServicoActivity" />
-        <activity
-            android:name=".Atividades.RelatorioVerificacao.SelecionarMedidorActivity"/>
-        <activity
-            android:name=".Atividades.RelatorioVerificacao.Testes.InspecaoVisual.InspecaoVisualActivity" />
-        <activity
-            android:name=".Atividades.RelatorioVerificacao.Testes.Registrador.RegistradorActivity" />
-        <activity
-            android:name=".Atividades.RelatorioVerificacao.Testes.MarchaVazio.MarchaVazioActivity" />
-        <activity
-            android:name=".Atividades.RelatorioVerificacao.Testes.InspecaoConformidade.InspecaoConformidadeActivity" />
-        <activity
-            android:name=".Atividades.RelatorioVerificacao.SituacoesObservadasActivity" />
-        <activity
-            android:name=".Atividades.RelatorioVerificacao.InformacoesComplementaresActivity" />
-        <activity
-            android:name=".Atividades.RelatorioVerificacao.ResultadosFinaisActivity" />
-        <activity
-            android:name=".Atividades.RelatorioVerificacao.ConclusaoActivity"/>
-
+        <activity android:name=".Atividades.RelatorioVerificacao.ServicoActivity" />
+        <activity android:name=".Atividades.RelatorioVerificacao.SelecionarMedidorActivity" />
+        <activity android:name=".Atividades.RelatorioVerificacao.Testes.InspecaoVisual.InspecaoVisualActivity" />
+        <activity android:name=".Atividades.RelatorioVerificacao.Testes.Registrador.RegistradorActivity" />
+        <activity android:name=".Atividades.RelatorioVerificacao.Testes.MarchaVazio.MarchaVazioActivity" />
+        <activity android:name=".Atividades.RelatorioVerificacao.Testes.InspecaoConformidade.InspecaoConformidadeActivity" />
+        <activity android:name=".Atividades.RelatorioVerificacao.SituacoesObservadasActivity" />
+        <activity android:name=".Atividades.RelatorioVerificacao.InformacoesComplementaresActivity" />
+        <activity android:name=".Atividades.RelatorioVerificacao.ResultadosFinaisActivity" />
+        <activity android:name=".Atividades.RelatorioVerificacao.ConclusaoActivity" />
         <activity android:name=".Atividades.RelatorioVerificacao.Testes.InspecaoVisual.ObservacaoInspecaoVisualActivity" />
-
-        <activity android:name=".Atividades.RelatorioVerificacao.Testes.Registrador.ObservacaoRegistradorActivity"></activity>
+        <activity android:name=".Atividades.RelatorioVerificacao.Testes.Registrador.ObservacaoRegistradorActivity" />
+        <activity android:name=".Atividades.RelatorioVerificacao.Testes.CircuitoPotencial.CircuitoPotencialActivity"></activity>
     </application>
 
 </manifest>

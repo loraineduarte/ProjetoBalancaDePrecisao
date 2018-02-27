@@ -21,13 +21,14 @@
 
 
     <RadioButton
-        android:id="@+id/tampasolidarizada"
+        android:id="@+id/FuncionandoCorretamente"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:text="@string/medidor_funcionando_corretamente"
+        android:onClick="onCheckboxClicked"
         android:textColorHint="@color/colorPrimaryDark"
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,18 +36,19 @@
         app:layout_constraintTop_toBottomOf="@+id/Conclusao" />
 
     <RadioButton
-        android:id="@+id/sinaisCarbonizacao"
+        android:id="@+id/ComDefeito"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:text="@string/medidor_com_defeito"
+        android:onClick="onCheckboxClicked"
         android:textColorHint="@color/colorPrimaryDark"
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tampasolidarizada" />
+        app:layout_constraintTop_toBottomOf="@+id/FuncionandoCorretamente" />
 
     <RadioButton
         android:id="@+id/MedidorIrregularidade"
@@ -56,35 +58,38 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:text="@string/medidor_com_irregularidade"
+        android:onClick="onCheckboxClicked"
         android:textColorHint="@color/colorPrimaryDark"
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sinaisCarbonizacao" />
+        app:layout_constraintTop_toBottomOf="@+id/ComDefeito" />
 
     <RadioButton
-        android:id="@+id/elementoDescentralizado"
+        android:id="@+id/Reintegracao"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:text="@string/reintegra_o"
+        android:onClick="onCheckboxClicked"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/MedidorIrregularidade" />
 
     <RadioButton
-        android:id="@+id/RanhurasDisco"
+        android:id="@+id/garantia"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:text="@string/garantia"
+        android:onClick="onCheckboxClicked"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/elementoDescentralizado" />
+        app:layout_constraintTop_toBottomOf="@+id/Reintegracao" />
 
     <Button
         android:id="@+id/adicionaObservacaoConclusao"
@@ -96,7 +101,7 @@
         android:text="@string/adiciona_observa_o"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/RanhurasDisco" />
+        app:layout_constraintTop_toBottomOf="@+id/garantia" />
 
     <Button
         android:id="@+id/gerarRelatorio"

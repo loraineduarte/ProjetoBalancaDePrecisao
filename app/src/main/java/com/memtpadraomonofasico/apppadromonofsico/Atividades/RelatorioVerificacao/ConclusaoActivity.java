@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -26,6 +27,9 @@ import java.util.Date;
 
 public class ConclusaoActivity extends AppCompatActivity {
 
+    RadioButton FuncionandoCorretamente, ComDefeito, MedidorIrregularidade, Reintegracao, garantia;
+    String FuncionandoCorretamenteStatus, ComDefeitoStatus, MedidorIrregularidadeStatus, ReintegracaoStatus, garantiaStatus;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +43,46 @@ public class ConclusaoActivity extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Hawk.delete("FuncionandoCorretamente");
+                Hawk.delete("ComDefeito");
+                Hawk.delete("MedidorIrregularidade");
+                Hawk.delete("Reintegracao");
+                Hawk.delete("garantia");
+
+                FuncionandoCorretamente = findViewById(R.id.FuncionandoCorretamente);
+                ComDefeito = findViewById(R.id.ComDefeito);
+                MedidorIrregularidade = findViewById(R.id.MedidorIrregularidade);
+                Reintegracao = findViewById(R.id.Reintegracao);
+                garantia = findViewById(R.id.garantia);
+
+
+
+                if(FuncionandoCorretamente.isChecked()){
+                    FuncionandoCorretamenteStatus = "Medidor funcionando corretamente";
+                    Hawk.put("FuncionandoCorretamente",FuncionandoCorretamenteStatus);
+
+                }
+                if (ComDefeito.isChecked()){
+                    ComDefeitoStatus = "Medidor com defeito";
+                    Hawk.put("ComDefeito",ComDefeitoStatus);
+
+                }
+                if (MedidorIrregularidade.isChecked()){
+                    MedidorIrregularidadeStatus = "Medidor com irregularidade";
+                    Hawk.put("MedidorIrregularidade",MedidorIrregularidadeStatus);
+
+                }
+                if (Reintegracao.isChecked()){
+                    ReintegracaoStatus = "Reintegração";
+                    Hawk.put("Reintegracao",ReintegracaoStatus);
+
+                }
+                if (garantia.isChecked()){
+                    garantiaStatus = "Garantia";
+                    Hawk.put("garantia",garantiaStatus);
+
+                }
 
                 gerarRelatorio();
             }
@@ -75,6 +119,26 @@ public class ConclusaoActivity extends AppCompatActivity {
 
             //Step 4 Add content
             document.add(new Paragraph(String.valueOf(Hawk.get("statusConformidade"))));
+            document.add(new Paragraph(String.valueOf(Hawk.get("statusConformidade"))));
+            document.add(new Paragraph(String.valueOf(Hawk.get("statusConformidade"))));
+            document.add(new Paragraph(String.valueOf(Hawk.get("statusConformidade"))));
+            document.add(new Paragraph(String.valueOf(Hawk.get("statusConformidade"))));
+            document.add(new Paragraph(String.valueOf(Hawk.get("statusConformidade"))));
+            document.add(new Paragraph(String.valueOf(Hawk.get("statusConformidade"))));
+            document.add(new Paragraph(String.valueOf(Hawk.get("statusConformidade"))));
+            document.add(new Paragraph(String.valueOf(Hawk.get("statusConformidade"))));
+            document.add(new Paragraph(String.valueOf(Hawk.get("statusConformidade"))));
+            document.add(new Paragraph(String.valueOf(Hawk.get("statusConformidade"))));
+            document.add(new Paragraph(String.valueOf(Hawk.get("statusConformidade"))));
+            document.add(new Paragraph(String.valueOf(Hawk.get("statusConformidade"))));
+            document.add(new Paragraph(String.valueOf(Hawk.get("statusConformidade"))));
+            document.add(new Paragraph(String.valueOf(Hawk.get("statusConformidade"))));
+            document.add(new Paragraph(String.valueOf(Hawk.get("statusConformidade"))));
+            document.add(new Paragraph(String.valueOf(Hawk.get("statusConformidade"))));
+
+
+
+
 
             //Step 5: Close the document
             document.close();
@@ -93,6 +157,54 @@ public class ConclusaoActivity extends AppCompatActivity {
         document.close();
 
 
+    }
+
+    public void onCheckboxClicked(View view) {
+
+        FuncionandoCorretamente = findViewById(R.id.FuncionandoCorretamente);
+        ComDefeito = findViewById(R.id.ComDefeito);
+        MedidorIrregularidade = findViewById(R.id.MedidorIrregularidade);
+        Reintegracao = findViewById(R.id.Reintegracao);
+        garantia = findViewById(R.id.garantia);
+
+
+        switch (view.getId()) {
+            case R.id.FuncionandoCorretamente:
+                ComDefeito.setChecked(false);
+                MedidorIrregularidade.setChecked(false);
+                Reintegracao.setChecked(false);
+                garantia.setChecked(false);
+                break;
+
+            case R.id.ComDefeito:
+                FuncionandoCorretamente.setChecked(false);
+                MedidorIrregularidade.setChecked(false);
+                Reintegracao.setChecked(false);
+                garantia.setChecked(false);
+                break;
+
+            case R.id.MedidorIrregularidade:
+                FuncionandoCorretamente.setChecked(false);
+                ComDefeito.setChecked(false);
+                Reintegracao.setChecked(false);
+                garantia.setChecked(false);
+                break;
+
+            case R.id.Reintegracao:
+                FuncionandoCorretamente.setChecked(false);
+                ComDefeito.setChecked(false);
+                MedidorIrregularidade.setChecked(false);
+                garantia.setChecked(false);
+                break;
+
+            case R.id.garantia:
+                FuncionandoCorretamente.setChecked(false);
+                ComDefeito.setChecked(false);
+                MedidorIrregularidade.setChecked(false);
+                Reintegracao.setChecked(false);
+                break;
+
+        }
     }
 }
 
