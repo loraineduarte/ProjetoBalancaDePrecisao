@@ -22,6 +22,13 @@ public class InformacoesComplementaresActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_informacoes_complementares);
 
+        Hawk.delete("tampasolidarizada");
+        Hawk.delete("semTampa");
+        Hawk.delete("tampaQuebrada");
+        Hawk.delete("tampaQuebradaTransporte");
+        Hawk.delete("seloRompido");
+        Hawk.delete("terminaisOxidados");
+        Hawk.delete("leituraDivergente");
 
         Log.d("INFORMAÇÕEs COMPLE", String.valueOf(Hawk.count()));
 
@@ -30,13 +37,7 @@ public class InformacoesComplementaresActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Hawk.delete("tampasolidarizada");
-                Hawk.delete("semTampa");
-                Hawk.delete("tampaQuebrada");
-                Hawk.delete("tampaQuebradaTransporte");
-                Hawk.delete("seloRompido");
-                Hawk.delete("terminaisOxidados");
-                Hawk.delete("leituraDivergente");
+
 
                 tampasolidarizada = findViewById(R.id.tampasolidarizada);
                 semTampa = findViewById(R.id.semTampa);

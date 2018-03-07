@@ -37,10 +37,7 @@ public class RegistradorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
 
-        Hawk.delete("FotoPreTesteRegistrador");
-        Hawk.delete("FotoPosTesteRegistrador");
-        Hawk.delete("statusRegistrador");
-        Hawk.delete("ObservaçãoRegistrador");
+
         Log.d("INSPEÇÃO VISUAL ", String.valueOf(Hawk.count()));
 
         super.onCreate(savedInstanceState);
@@ -114,6 +111,11 @@ public class RegistradorActivity extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Hawk.delete("FotoPreTesteRegistrador");
+                Hawk.delete("FotoPosTesteRegistrador");
+                Hawk.delete("statusRegistrador");
+                Hawk.delete("ObservaçãoRegistrador");
+
                 Hawk.put("FotoPreTesteRegistrador",fotoAntesRegistrador);
                 Hawk.put("FotoPosTesteRegistrador", fotoDepoisRegistrador);
                 Hawk.put("statusRegistrador", status);

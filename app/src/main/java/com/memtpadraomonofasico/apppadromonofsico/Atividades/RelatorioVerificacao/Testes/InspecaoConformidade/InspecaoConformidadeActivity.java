@@ -26,9 +26,7 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inspecao_conformidade);
 
-        Hawk.delete("CargaNominalErroConformidade");
-        Hawk.delete("CargaPequenaErroConformidade");
-        Hawk.delete("statusConformidade");
+
         Log.d("CONFORMIDADE", String.valueOf(Hawk.count()));
 
 
@@ -36,6 +34,9 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Hawk.delete("CargaNominalErroConformidade");
+                Hawk.delete("CargaPequenaErroConformidade");
+                Hawk.delete("statusConformidade");
 
                 cargaNominalErro =  findViewById(R.id.CargaNominalErro);
                 CargaNominalErro = String.valueOf(cargaNominalErro.getText());

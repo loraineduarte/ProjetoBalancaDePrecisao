@@ -19,13 +19,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/numSerie"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="80dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="Número de Série *"
         android:inputType="textPersonName"
@@ -54,6 +54,7 @@
         android:inputType="textPersonName"
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/NumGeral" />
@@ -72,7 +73,7 @@
         android:textColor="@android:color/black"
         android:textColorHighlight="@android:color/black"
         android:textColorHint="@android:color/darker_gray"
-        android:textColorLink="@android:color/black"
+        android:textColorLink="?attr/actionModeSplitBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Instalacao" />
@@ -227,7 +228,7 @@
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColorHint="@android:color/darker_gray"
-        android:textColorLink="@android:color/black"
+        android:textColorLink="?attr/actionModeSplitBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/numSerie" />
@@ -245,9 +246,9 @@
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColor="@android:color/black"
-        android:textColorHighlight="@android:color/black"
+        android:textColorHighlight="@android:color/transparent"
         android:textColorHint="@android:color/darker_gray"
-        android:textColorLink="@android:color/black"
+        android:textColorLink="?attr/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/numSerie" />
@@ -299,5 +300,22 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/ProcurarMedidor"
+        android:layout_width="61dp"
+        android:layout_height="51dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="330dp"
+        android:longClickable="false"
+        android:visibility="visible"
+        app:backgroundTint="@android:color/background_light"
+        app:elevation="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Medidor"
+        app:rippleColor="@android:color/background_light"
+        app:srcCompat="@android:drawable/ic_search_category_default" />
 
 </android.support.constraint.ConstraintLayout>

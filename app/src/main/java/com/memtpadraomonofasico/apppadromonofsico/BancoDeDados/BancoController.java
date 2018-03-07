@@ -65,8 +65,8 @@ public class BancoController {
 
         db = banco.getWritableDatabase();
         valores = new ContentValues();
-        valores.put(CriaBanco.INSTALACAO, medidor_instalacao);
         valores.put(CriaBanco.NUM_SERIE, medidor_num_serie);
+        valores.put(CriaBanco.INSTALACAO, medidor_instalacao);
         valores.put(CriaBanco.NUM_GERAL, medidor_num_geral);
         valores.put(CriaBanco.FABRICANTE, medidor_fabricante);
         valores.put(CriaBanco.NUM_ELEMENTOS, medidor_num_elementos);
@@ -95,7 +95,7 @@ public class BancoController {
 
     public Cursor pegaMedidores(){
         Cursor cursor;
-        String[] campos =  {banco.ID_MEDIDOR,banco.INSTALACAO,banco.NUM_SERIE,banco.NUM_GERAL, banco.FABRICANTE, banco.NUM_ELEMENTOS, banco.MODELO, banco.CORRENTE_NOMINAL,
+        String[] campos =  {banco.ID_MEDIDOR,banco.NUM_SERIE,banco.INSTALACAO, banco.NUM_GERAL, banco.FABRICANTE, banco.NUM_ELEMENTOS, banco.MODELO, banco.CORRENTE_NOMINAL,
                 banco.CLASSE, banco.RR, banco.ANO_FABRICACAO, banco.TENSAO_NOMINAL, banco.KDKE, banco.PORT_INMETRO, banco.FIOS, banco.TIPO_MEDIDOR};
         db = banco.getReadableDatabase();
         cursor = db.query(banco.TABELA_MEDIDOR, campos, null, null, null, null, null, null);

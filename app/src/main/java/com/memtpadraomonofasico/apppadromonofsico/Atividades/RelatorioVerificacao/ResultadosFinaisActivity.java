@@ -18,6 +18,9 @@ import java.util.Date;
 
 public class ResultadosFinaisActivity extends AppCompatActivity {
 
+    EditText leituraRetirada, leituraCalibracao, leituraPosCalibracao;
+
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,12 +30,12 @@ public class ResultadosFinaisActivity extends AppCompatActivity {
 
         SimpleDateFormat formataData = new SimpleDateFormat("dd/MM/yyyy");
         Date data = new Date();
-        String dataFormatada = formataData.format(data);
+        final String dataFormatada = formataData.format(data);
 
         Date hora = Calendar.getInstance().getTime(); // Ou qualquer outra forma que tem
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-        String horaFinalFormatada = sdf.format(hora);
-        String horaInicialFormatada = Hawk.get("HoraInicial");
+        final String horaFinalFormatada = sdf.format(hora);
+        final String horaInicialFormatada = Hawk.get("HoraInicial");
 
         Log.d("Data", dataFormatada);
         Log.d("Hora Inicial", horaInicialFormatada);
@@ -48,12 +51,31 @@ public class ResultadosFinaisActivity extends AppCompatActivity {
         final EditText HoraFinal = (EditText) findViewById(R.id.HoraFim);
         HoraFinal.setText(horaFinalFormatada);
 
+        leituraRetirada = findViewById(R.id.LeituraRetirada);
+        leituraCalibracao = findViewById(R.id.leituraCalibracao);
+        leituraPosCalibracao = findViewById(R.id.leituraPosCalibracao);
+
 
         @SuppressLint("WrongViewCast") Button next =  findViewById(R.id.NextFase10);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                Hawk.delete("DataInicial");
+                Hawk.delete("DataFinal");
+                Hawk.delete("HoraInicial");
+                Hawk.delete("HoraFinal");
+//                Hawk.delete("LeituraRetirada");
+//                Hawk.delete("LeitursCalibracao");
+//                Hawk.delete("LeituraPosCalibracao");
+
+                Hawk.put("DataInicial", dataFormatada);
+                Hawk.put("DataFinal", dataFormatada);
+                Hawk.put("HoraInicial", horaInicialFormatada);
+                Hawk.put("HoraFinal", horaFinalFormatada);
+//                Hawk.put("LeituraRetirada", leituraRetirada);
+//                Hawk.put("LeitursCalibracao");
+//                Hawk.put("LeituraPosCalibracao");
 
                 abrirConclusao();
             }

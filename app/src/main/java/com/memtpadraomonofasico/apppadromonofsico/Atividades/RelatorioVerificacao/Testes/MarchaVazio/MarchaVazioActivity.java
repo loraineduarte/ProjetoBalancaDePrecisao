@@ -24,12 +24,14 @@ public class MarchaVazioActivity extends AppCompatActivity {
     Time tempoReprovadoMarchaVazio;
 
 
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_marcha_vazio);
 
-
+        tempoReprovado = findViewById(R.id.TempoMarchaVazio);
+        tempoReprovado.setEnabled(false);
         Log.d("MARCHA VAZIO ", String.valueOf(Hawk.count()));
 
 
@@ -44,6 +46,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
                 aprovado = findViewById(R.id.tampasolidarizada);
                 naoRealizado = findViewById(R.id.sinaisCarbonizacao);
                 reprovado = findViewById(R.id.Reprovado);
+
 
 
                 if(aprovado.isChecked()){

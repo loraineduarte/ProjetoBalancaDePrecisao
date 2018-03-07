@@ -14,22 +14,11 @@ import com.orhanobut.hawk.Hawk;
 
 public class ServicoActivity extends AppCompatActivity {
 
-    private static final String TAG = "Serviço Activity";
     String numNotaServico, numInstalacao, nomeCliente, numDocumentoCliente, rua, numero, complemento, bairro, cep;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-
-        Hawk.delete("NumeroNotaServico");
-        Hawk.delete("NumeroInstalacaoServico");
-        Hawk.delete("NomeClienteServico");
-        Hawk.delete("NumDocumentoCliente");
-        Hawk.delete("RuaCliente");
-        Hawk.delete("NumeroCliente");
-        Hawk.delete("ComplementoCliente");
-        Hawk.delete("BairroCliente");
-        Hawk.delete("CepCliente");
 
         Log.d("SERVIÇO", String.valueOf(Hawk.count()));
 
@@ -71,7 +60,18 @@ public class ServicoActivity extends AppCompatActivity {
 //                if(numNotaServico.equals("") || numInstalacao.equals("") || nomeCliente.equals("") || numDocumentoCliente.equals("") ){
 //                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Campo em Branco! ", Toast.LENGTH_LONG).show();
 //                } else {
-                    abrirMedidor();
+
+                Hawk.delete("NumeroNotaServico");
+                Hawk.delete("NumeroInstalacaoServico");
+                Hawk.delete("NomeClienteServico");
+                Hawk.delete("NumDocumentoCliente");
+                Hawk.delete("RuaCliente");
+                Hawk.delete("NumeroCliente");
+                Hawk.delete("ComplementoCliente");
+                Hawk.delete("BairroCliente");
+                Hawk.delete("CepCliente");
+
+                abrirMedidor();
 //                }
 
             }

@@ -36,12 +36,7 @@ public class InspecaoVisualActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        Hawk.delete("Selo1");
-        Hawk.delete("Selo2");
-        Hawk.delete("Selo3");
-        Hawk.delete("Status");
-        Hawk.delete("FotoInspecaoVisual");
-        Hawk.delete("ObservacaoInspecaoVisual");
+
 
         Log.d("INSPEÇÃO VISUAL ", String.valueOf(Hawk.count()));
 
@@ -111,6 +106,20 @@ public class InspecaoVisualActivity extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Hawk.delete("Selo1");
+                Hawk.delete("Selo2");
+                Hawk.delete("Selo3");
+                Hawk.delete("Status");
+                Hawk.delete("FotoInspecaoVisual");
+                Hawk.delete("ObservacaoInspecaoVisual");
+
+                Hawk.put("Selo1",selo1);
+                Hawk.put("Selo2", selo2);
+                Hawk.put("Selo3", selo3);
+                Hawk.put("Status", status);
+                Hawk.put("FotoInspecaoVisual", fotoInspecao);
+                Hawk.put("ObservacaoInspecaoVisual", observacaoInspecao);
+
                 abrirRegistrador();
             }
         });
@@ -131,12 +140,7 @@ public class InspecaoVisualActivity extends AppCompatActivity {
 
     private void abrirRegistrador() {
 
-        Hawk.put("Selo1",selo1);
-        Hawk.put("Selo2", selo2);
-        Hawk.put("Selo3", selo3);
-        Hawk.put("Status", status);
-        Hawk.put("FotoInspecaoVisual", fotoInspecao);
-        Hawk.put("ObservacaoInspecaoVisual", observacaoInspecao);
+
 
         Log.d(TAG, "Teste de Registrador");
         Intent intent = new Intent(this, RegistradorActivity.class);
