@@ -38,7 +38,6 @@ public class SelecionarMedidorActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-
         Log.d("MEDIDOR", String.valueOf(Hawk.count()));
 
         super.onCreate(savedInstanceState);
@@ -58,34 +57,34 @@ public class SelecionarMedidorActivity extends AppCompatActivity {
 
         numSerie = findViewById( R.id.numSerie );
         numGeral = findViewById( R.id.NumGeral );
-        numGeral.setEnabled(false);
         instalacao = findViewById( R.id.Instalacao );
-        instalacao.setEnabled(false);
         ModeloMedidor = findViewById( R.id.ModeloMedidor );
-        ModeloMedidor.setEnabled(false);
         FabricanteMedidor = findViewById( R.id.fabricanteMedidor );
-        FabricanteMedidor.setEnabled(false);
         TensaoNominalMedidor = findViewById( R.id.TensaoNominal );
-        TensaoNominalMedidor.setEnabled(false);
         CorrenteNominalMedidor = findViewById( R.id.CorrenteNominal );
-        CorrenteNominalMedidor.setEnabled(false);
         eletronico = findViewById( R.id.radioButtonEletronico );
-        eletronico.setEnabled(false);
         mecanico = findViewById( R.id.RadioButtonMecanico );
-        mecanico.setEnabled(false);
         KDKE = findViewById( R.id.KdKe );
-        KDKE.setEnabled(false);
         RR = findViewById( R.id.RR );
-        RR.setEnabled(false);
         ClasseMedidor = findViewById( R.id.Classe);
-        ClasseMedidor.setEnabled(false);
         NumElementos = findViewById( R.id.NumElementos );
-        NumElementos.setEnabled(false);
         AnoFabricacao = findViewById( R.id.AnoFabricacao );
-        AnoFabricacao.setEnabled(false);
         Fios = findViewById( R.id.Fios );
-        Fios.setEnabled(false);
         PortariaInmetro = findViewById( R.id.PorInmetro );
+        numGeral.setEnabled(false);
+        instalacao.setEnabled(false);
+        ModeloMedidor.setEnabled(false);
+        FabricanteMedidor.setEnabled(false);
+        TensaoNominalMedidor.setEnabled(false);
+        CorrenteNominalMedidor.setEnabled(false);
+        eletronico.setEnabled(false);
+        mecanico.setEnabled(false);
+        KDKE.setEnabled(false);
+        RR.setEnabled(false);
+        ClasseMedidor.setEnabled(false);
+        NumElementos.setEnabled(false);
+        AnoFabricacao.setEnabled(false);
+        Fios.setEnabled(false);
         PortariaInmetro.setEnabled(false);
 
         botaoProcurar = findViewById(R.id.ProcurarMedidor);
@@ -100,6 +99,12 @@ public class SelecionarMedidorActivity extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+
+
+
+
                 if((numSerie.getText().length()==0)|| (numGeral.getText().length()==0) || (instalacao.getText().length()==0) || (ModeloMedidor.getText().length()==0) ||
                         (FabricanteMedidor.getText().length()==0) || (TensaoNominalMedidor.getText().length()==0) || (CorrenteNominalMedidor.getText().length()==0) ||
                         (KDKE.getText().length()==0) || (RR.getText().length()==0) || (ClasseMedidor.getText().length()==0) || ( NumElementos.getText().length()==0) ||
@@ -124,7 +129,13 @@ public class SelecionarMedidorActivity extends AppCompatActivity {
                     Hawk.delete("AnoFabricacaoMedidor");
                     Hawk.delete("FiosMedidor");
                     Hawk.delete("PortariaInmetroMedidor");
-                    Log.d(TAG, "Opção de serviços");
+
+                    if(eletronico.isChecked()){
+                        tipoMedidor = "Eletrônico";
+                    }
+                    if(mecanico.isChecked()){
+                        tipoMedidor = "Mecânico";
+                    }
 
                     Hawk.put("NumeroSerieMedidor", String.valueOf(numSerie.getText()));
                     Hawk.put("NumeroGeralMedidor", String.valueOf(numGeral.getText()));
@@ -141,6 +152,7 @@ public class SelecionarMedidorActivity extends AppCompatActivity {
                     Hawk.put("AnoFabricacaoMedidor", String.valueOf(AnoFabricacao.getText()));
                     Hawk.put("FiosMedidor", String.valueOf(Fios.getText()));
                     Hawk.put("PortariaInmetroMedidor", String.valueOf(PortariaInmetro.getText()));
+
                     abrirInspecaoVisual();
 
               }

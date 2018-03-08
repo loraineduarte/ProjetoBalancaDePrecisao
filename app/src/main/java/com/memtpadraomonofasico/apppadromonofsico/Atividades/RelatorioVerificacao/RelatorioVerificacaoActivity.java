@@ -118,6 +118,8 @@ public class RelatorioVerificacaoActivity extends AppCompatActivity  {
                     } else if(TOI.isChecked()){
                         Hawk.put("TipoSolicitação", "TOI");
                         Hawk.put("TOINumero", String.valueOf(ToiNumero.getText()));
+
+                        Log.d("TOI", String.valueOf(Hawk.get("TOINumero")));
                     }
 
                     abrirServicos();

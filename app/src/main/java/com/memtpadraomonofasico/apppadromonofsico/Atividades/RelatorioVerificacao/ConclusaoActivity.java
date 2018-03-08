@@ -151,9 +151,9 @@ public class ConclusaoActivity extends AppCompatActivity {
 
             //Tabela com Dados Gerais
             PdfPTable table = new PdfPTable(2);
-            table.setWidthPercentage(90);
+            table.setWidthPercentage(100);
 
-            PdfPCell c1 = new PdfPCell(new Phrase("Dados do Processo: ", subFont));
+            PdfPCell c1 = new PdfPCell(new Phrase("Dados do Processo ", subFont));
             c1.setHorizontalAlignment(Element.ALIGN_LEFT);
             c1.setBorder(PdfPCell.NO_BORDER);
             table.addCell(c1);
@@ -163,19 +163,34 @@ public class ConclusaoActivity extends AppCompatActivity {
             c1.setBorder(PdfPCell.NO_BORDER);
             table.addCell(c1);
 
-            Phrase p = new Phrase("Nome do Avaliador : " , smallBold);
-            p.add(new Chunk((String) Hawk.get("NomeAvaliador"), smallNormal));
+
+            Phrase p = new Phrase("Nome do Avaliador : " , smallNormal);
+            p.add(new Phrase  ((String) Hawk.get("NomeAvaliador"), smallNormal));
             c1 = new PdfPCell(p);
             c1.setHorizontalAlignment(Element.ALIGN_LEFT);
             c1.setBorder(PdfPCell.NO_BORDER);
             table.addCell(c1);
 
-            c1 = new PdfPCell(new Phrase("Matrícula : " + get("MatriculaAvaliador"),smallBold ));
+            p = new Phrase("Matrícula : " , smallNormal);
+            p.add(new Chunk((String) Hawk.get("MatriculaAvaliador"), smallNormal));
+            c1 = new PdfPCell(p);
             c1.setHorizontalAlignment(Element.ALIGN_LEFT);
             c1.setBorder(PdfPCell.NO_BORDER);
             table.addCell(c1);
 
-            c1 = new PdfPCell(new Phrase("Solicitação: " + get("TipoSolicitação") + " "+ get("TOINumbero"),smallBold ));
+            p = new Phrase("Solicitação da Verificação : " , smallNormal);
+            p.add(new Chunk((String) Hawk.get("TipoSolicitação") , smallNormal));
+
+            if(String.valueOf(Hawk.get("TOINumero")).equals("null")){
+            } else {
+                p.add(new Chunk(  " - " + (String) Hawk.get("TOINumero"), smallNormal));
+            }
+            c1 = new PdfPCell(p);
+            c1.setHorizontalAlignment(Element.ALIGN_LEFT);
+            c1.setBorder(PdfPCell.NO_BORDER);
+            table.addCell(c1);
+
+            c1 = new PdfPCell(new Phrase(" " ,smallNormal));
             c1.setHorizontalAlignment(Element.ALIGN_LEFT);
             c1.setBorder(PdfPCell.NO_BORDER);
             table.addCell(c1);
@@ -190,9 +205,10 @@ public class ConclusaoActivity extends AppCompatActivity {
 
             //tabela com dados do serviço
             PdfPTable tableServico = new PdfPTable(2);
-            tableServico.setWidthPercentage(90);
+            tableServico.setWidthPercentage(100);
 
-            PdfPCell servicoItem = new PdfPCell(new Phrase("Serviço:  ", subFont));
+            p = new Phrase("Serviço " , subFont);
+            PdfPCell servicoItem = new PdfPCell(p);
             servicoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             servicoItem.setBorder(PdfPCell.NO_BORDER);
             tableServico.addCell(servicoItem);
@@ -202,42 +218,72 @@ public class ConclusaoActivity extends AppCompatActivity {
             servicoItem.setBorder(PdfPCell.NO_BORDER);
             tableServico.addCell(servicoItem);
 
-            servicoItem = new PdfPCell(new Phrase("Nº da nota de Serviço: " , smallBold));
+            p = new Phrase("Nº da nota de Serviço: " , smallNormal);
+            p.add(new Chunk((String) Hawk.get("NumeroNotaServico"), smallNormal));
+            servicoItem = new PdfPCell(p);
             servicoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             servicoItem.setBorder(PdfPCell.NO_BORDER);
             tableServico.addCell(servicoItem);
 
-            servicoItem = new PdfPCell(new Phrase("Nº Invólucro:", smallBold));
+            p = new Phrase("Nº Invólucro: " , smallNormal);
+            p.add(new Chunk((String) Hawk.get("NumeroInvolucro"), smallNormal));
+            servicoItem = new PdfPCell(p);
             servicoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             servicoItem.setBorder(PdfPCell.NO_BORDER);
             tableServico.addCell(servicoItem);
 
-            servicoItem = new PdfPCell(new Phrase("Nº da Instalação:" , smallBold));
+            p = new Phrase("Nº da Instalação: " , smallNormal);
+            p.add(new Chunk((String) Hawk.get("NumeroInstalacaoServico"), smallNormal));
+            servicoItem = new PdfPCell(p);
             servicoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             servicoItem.setBorder(PdfPCell.NO_BORDER);
             tableServico.addCell(servicoItem);
 
-            servicoItem = new PdfPCell(new Phrase("Nome do Cliente: ", smallBold));
+            p = new Phrase("Nome do Cliente: " , smallNormal);
+            p.add(new Chunk((String) Hawk.get("NomeClienteServico"), smallNormal));
+            servicoItem = new PdfPCell(p);
             servicoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             servicoItem.setBorder(PdfPCell.NO_BORDER);
             tableServico.addCell(servicoItem);
 
-            servicoItem = new PdfPCell(new Phrase("Nº de Documento do Cliente: ", smallBold));
+            p = new Phrase("Nº de Documento do Cliente: " , smallNormal);
+            p.add(new Chunk((String) Hawk.get("NumDocumentoCliente"), smallNormal));
+            servicoItem = new PdfPCell(p);
             servicoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             servicoItem.setBorder(PdfPCell.NO_BORDER);
             tableServico.addCell(servicoItem);
 
-            servicoItem = new PdfPCell(new Phrase("Endereço : ", smallBold));
+            if ((String.valueOf(Hawk.get("RuaCliente")).isEmpty()) || (String.valueOf(Hawk.get("NumeroCliente")).isEmpty()) || (String.valueOf(Hawk.get("BairroCliente")).isEmpty())) {
+
+                servicoItem = new PdfPCell(new Phrase(" ", subFont));
+                servicoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
+                servicoItem.setBorder(PdfPCell.NO_BORDER);
+                tableServico.addCell(servicoItem);
+
+            } else {
+                p = new Phrase("Endereço: ", smallNormal);
+                if (String.valueOf(Hawk.get("ComplementoCliente")).isEmpty()) {
+                    p.add(new Chunk(( Hawk.get("RuaCliente")) + " " + ( Hawk.get("NumeroCliente")) + ",  " + ( Hawk.get("BairroCliente")) + " - " + ( Hawk.get("CepCliente")), smallNormal));
+                } else {
+                    p.add(new Chunk(( Hawk.get("RuaCliente")) + " " + ( Hawk.get("NumeroCliente")) + " - " + ( Hawk.get("ComplementoCliente")) + ", " + ( Hawk.get("BairroCliente")) + " - " + ( Hawk.get("CepCliente")), smallNormal));
+                }
+                servicoItem = new PdfPCell(p);
+                servicoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
+                servicoItem.setBorder(PdfPCell.NO_BORDER);
+                tableServico.addCell(servicoItem);
+            }
+
+
+            p = new Phrase("Data-Hora Início: " , smallNormal);
+            p.add(new Chunk(( Hawk.get("DataFinal")) +" "+ ( Hawk.get("HoraInicial")), smallNormal));
+            servicoItem = new PdfPCell(p);
             servicoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             servicoItem.setBorder(PdfPCell.NO_BORDER);
             tableServico.addCell(servicoItem);
 
-            servicoItem = new PdfPCell(new Phrase("Data-Hora Início : ", smallBold));
-            servicoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
-            servicoItem.setBorder(PdfPCell.NO_BORDER);
-            tableServico.addCell(servicoItem);
-
-            servicoItem = new PdfPCell(new Phrase("Data-Hora Fim : ", smallBold));
+            p = new Phrase("Data-Hora Fim : " , smallNormal );
+            p.add(new Chunk(( Hawk.get("DataFinal")) +" "+ ( Hawk.get("HoraFinal")), smallNormal));
+            servicoItem = new PdfPCell(p);
             servicoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             servicoItem.setBorder(PdfPCell.NO_BORDER);
             tableServico.addCell(servicoItem);
@@ -250,109 +296,145 @@ public class ConclusaoActivity extends AppCompatActivity {
 
             //tabela com dados do serviço
             PdfPTable tabelaMedidor = new PdfPTable(3);
-            tabelaMedidor.setWidthPercentage(90);
+            tabelaMedidor.setWidthPercentage(100);
 
-            PdfPCell medidorItem = new PdfPCell(new Phrase("Identificação do Medidor:  ", subFont));
+            PdfPCell medidorItem = new PdfPCell(new Phrase("Identificação do Medidor  ", subFont));
             medidorItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             medidorItem.setBorder(PdfPCell.NO_BORDER);
             tabelaMedidor.addCell(medidorItem);
 
-            medidorItem = new PdfPCell(new Phrase(" ", smallBold));
+            medidorItem = new PdfPCell(new Phrase(" ", smallNormal));
             medidorItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             medidorItem.setBorder(PdfPCell.NO_BORDER);
             tabelaMedidor.addCell(medidorItem);
 
-            medidorItem = new PdfPCell(new Phrase(" ", smallBold));
+            medidorItem = new PdfPCell(new Phrase(" ", smallNormal));
             medidorItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             medidorItem.setBorder(PdfPCell.NO_BORDER);
             tabelaMedidor.addCell(medidorItem);
 
-            medidorItem = new PdfPCell(new Phrase("Nº de Série: ", smallBold));
+            p = new Phrase("Nº de Série: " , smallNormal);
+            p.add(new Chunk((String) Hawk.get("NumeroSerieMedidor"), smallNormal));
+            medidorItem = new PdfPCell(p);
             medidorItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             medidorItem.setBorder(PdfPCell.NO_BORDER);
             tabelaMedidor.addCell(medidorItem);
 
-            medidorItem = new PdfPCell(new Phrase("Nº Geral:  ", smallBold));
+            p = new Phrase("Nº Geral:  " , smallNormal);
+            p.add(new Chunk((String) Hawk.get("NumeroGeralMedidor"), smallNormal));
+            medidorItem = new PdfPCell(p);
             medidorItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             medidorItem.setBorder(PdfPCell.NO_BORDER);
             tabelaMedidor.addCell(medidorItem);
 
-            medidorItem = new PdfPCell(new Phrase("Instalação: ", smallBold));
+            p = new Phrase("Instalação: " , smallNormal);
+            p.add(new Chunk((String) Hawk.get("InstalacaoMedidor"), smallNormal));
+            medidorItem = new PdfPCell(p);
             medidorItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             medidorItem.setBorder(PdfPCell.NO_BORDER);
             tabelaMedidor.addCell(medidorItem);
 
-            medidorItem = new PdfPCell(new Phrase("Modelo: ", smallBold));
+            p = new Phrase("Modelo: " , smallNormal);
+            p.add(new Chunk((String) Hawk.get("ModeloMedidor"), smallNormal));
+            medidorItem = new PdfPCell(p);
             medidorItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             medidorItem.setBorder(PdfPCell.NO_BORDER);
             tabelaMedidor.addCell(medidorItem);
 
-            medidorItem = new PdfPCell(new Phrase("Fabricante: ", smallBold));
+            p = new Phrase("Fabricante: " , smallNormal);
+            p.add(new Chunk((String) Hawk.get("FaricanteMedidor"), smallNormal));
+            medidorItem = new PdfPCell(p);
             medidorItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             medidorItem.setBorder(PdfPCell.NO_BORDER);
             tabelaMedidor.addCell(medidorItem);
 
-            medidorItem = new PdfPCell(new Phrase("Tensão Nominal (V): ", smallBold));
+            p = new Phrase("Tensão Nominal (V): " , smallNormal);
+            p.add(new Chunk((String) Hawk.get("TensaoNominalMedidor"), smallNormal));
+            medidorItem = new PdfPCell(p);
             medidorItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             medidorItem.setBorder(PdfPCell.NO_BORDER);
             tabelaMedidor.addCell(medidorItem);
 
-            medidorItem = new PdfPCell(new Phrase("Corrente Nominal (A): ", smallBold));
+            p = new Phrase("Corrente Nominal (A): " , smallNormal);
+            p.add(new Chunk((String) Hawk.get("CorrenteNominalMedidor"), smallNormal));
+            medidorItem = new PdfPCell(p);
             medidorItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             medidorItem.setBorder(PdfPCell.NO_BORDER);
             tabelaMedidor.addCell(medidorItem);
 
-            medidorItem = new PdfPCell(new Phrase("Tipo: ", smallBold));
+            p = new Phrase("Tipo: " , smallNormal);
+            p.add(new Chunk((String) Hawk.get("TipoMedidor"), smallNormal));
+            medidorItem = new PdfPCell(p);
             medidorItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             medidorItem.setBorder(PdfPCell.NO_BORDER);
             tabelaMedidor.addCell(medidorItem);
 
-            medidorItem = new PdfPCell(new Phrase("Kd/Ke: ", smallBold));
+            p = new Phrase("Kd/Ke: " , smallNormal);
+            p.add(new Chunk((String) Hawk.get("KdKeMedidor"), smallNormal));
+            medidorItem = new PdfPCell(p);
             medidorItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             medidorItem.setBorder(PdfPCell.NO_BORDER);
             tabelaMedidor.addCell(medidorItem);
 
-            medidorItem = new PdfPCell(new Phrase("RR: ", smallBold));
+            p = new Phrase("RR: " , smallNormal);
+            p.add(new Chunk((String) Hawk.get("rrMedidor"), smallNormal));
+            medidorItem = new PdfPCell(p);
             medidorItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             medidorItem.setBorder(PdfPCell.NO_BORDER);
             tabelaMedidor.addCell(medidorItem);
 
-            medidorItem = new PdfPCell(new Phrase("Nº Elementos: ", smallBold));
+            p = new Phrase("Nº Elementos: " , smallNormal);
+            p.add(new Chunk((String) Hawk.get("NumElementosMedidor"), smallNormal));
+            medidorItem = new PdfPCell(p);
             medidorItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             medidorItem.setBorder(PdfPCell.NO_BORDER);
             tabelaMedidor.addCell(medidorItem);
 
-            medidorItem = new PdfPCell(new Phrase("Ano de Fabricação: ", smallBold));
+            p = new Phrase("Ano de Fabricação: " , smallNormal);
+            p.add(new Chunk((String) Hawk.get("AnoFabricacaoMedidor"), smallNormal));
+            medidorItem = new PdfPCell(p);
             medidorItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             medidorItem.setBorder(PdfPCell.NO_BORDER);
             tabelaMedidor.addCell(medidorItem);
 
-            medidorItem = new PdfPCell(new Phrase("Classe: ", smallBold));
+            p = new Phrase("Classe: " , smallNormal);
+            p.add(new Chunk((String) Hawk.get("ClasseMedidor"), smallNormal));
+            medidorItem = new PdfPCell(p);
             medidorItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             medidorItem.setBorder(PdfPCell.NO_BORDER);
             tabelaMedidor.addCell(medidorItem);
 
-            medidorItem = new PdfPCell(new Phrase("Fios: ", smallBold));
+            p = new Phrase("Fios: " , smallNormal);
+            p.add(new Chunk((String) Hawk.get("FiosMedidor"), smallNormal));
+            medidorItem = new PdfPCell(p);
             medidorItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             medidorItem.setBorder(PdfPCell.NO_BORDER);
             tabelaMedidor.addCell(medidorItem);
 
-            medidorItem = new PdfPCell(new Phrase("Portaria Inmetro: ", smallBold));
+            p = new Phrase("Portaria Inmetro: " , smallNormal);
+            p.add(new Chunk((String) Hawk.get("PortariaInmetroMedidor"), smallNormal));
+            medidorItem = new PdfPCell(p);
             medidorItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             medidorItem.setBorder(PdfPCell.NO_BORDER);
             tabelaMedidor.addCell(medidorItem);
 
-            medidorItem = new PdfPCell(new Phrase("Leitura de Retirada", smallBold));
+            p = new Phrase("Leitura de Retirada: " , smallNormal);
+           // p.add(new Chunk((String) Hawk.get("LeituraRetirada"), smallNormal));
+            medidorItem = new PdfPCell(p);
             medidorItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             medidorItem.setBorder(PdfPCell.NO_BORDER);
             tabelaMedidor.addCell(medidorItem);
 
-            medidorItem = new PdfPCell(new Phrase("Leitura de Calibração ", smallBold));
+            p = new Phrase("Leitura de Calibração: " , smallNormal);
+          //  p.add(new Chunk((String) Hawk.get("LeitursCalibracao"), smallNormal));
+            medidorItem = new PdfPCell(p);
             medidorItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             medidorItem.setBorder(PdfPCell.NO_BORDER);
             tabelaMedidor.addCell(medidorItem);
 
-            medidorItem = new PdfPCell(new Phrase("Leitura Pós Calibração", smallBold));
+            p = new Phrase("Leitura Pós Calibração: " , smallNormal);
+          //  p.add(new Chunk((String) Hawk.get("LeituraPosCalibracao"), smallNormal));
+            medidorItem = new PdfPCell(p);
             medidorItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             medidorItem.setBorder(PdfPCell.NO_BORDER);
             tabelaMedidor.addCell(medidorItem);
@@ -390,7 +472,9 @@ public class ConclusaoActivity extends AppCompatActivity {
             inspecaoVisualItem.setBorder(PdfPCell.NO_BORDER);
             tabelaInspecaoVisual.addCell(inspecaoVisualItem);
 
-            inspecaoVisualItem = new PdfPCell(new Phrase("Status: " , smallBold));
+            p = new Phrase("Status: " , smallNormal);
+            p.add(new Chunk((String) Hawk.get("PortariaInmetroMedidor"), smallNormal));
+            inspecaoVisualItem = new PdfPCell(p);
             inspecaoVisualItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             inspecaoVisualItem.setBorder(PdfPCell.NO_BORDER);
             tabelaInspecaoVisual.addCell(inspecaoVisualItem);
