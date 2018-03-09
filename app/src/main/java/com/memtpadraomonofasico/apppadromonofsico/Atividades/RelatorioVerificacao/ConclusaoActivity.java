@@ -457,7 +457,7 @@ public class ConclusaoActivity extends AppCompatActivity {
             tabelaInspecaoVisual.setWidthPercentage(90);
             tabelaInspecaoVisual.setHorizontalAlignment(Element.ALIGN_LEFT);
 
-            PdfPCell inspecaoVisualItem = new PdfPCell(new Phrase("Inspeção Visual: ", subFont));
+            PdfPCell inspecaoVisualItem = new PdfPCell(new Phrase("Inspeção Visual ", subFont));
             inspecaoVisualItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             inspecaoVisualItem.setBorder(PdfPCell.NO_BORDER);
             tabelaInspecaoVisual.addCell(inspecaoVisualItem);
@@ -473,7 +473,7 @@ public class ConclusaoActivity extends AppCompatActivity {
             tabelaInspecaoVisual.addCell(inspecaoVisualItem);
 
             p = new Phrase("Status: " , smallNormal);
-            p.add(new Chunk((String) Hawk.get("PortariaInmetroMedidor"), smallNormal));
+            p.add(new Chunk((String) Hawk.get("Status"), smallNormal));
             inspecaoVisualItem = new PdfPCell(p);
             inspecaoVisualItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             inspecaoVisualItem.setBorder(PdfPCell.NO_BORDER);
@@ -489,22 +489,51 @@ public class ConclusaoActivity extends AppCompatActivity {
             inspecaoVisualItem.setBorder(PdfPCell.NO_BORDER);
             tabelaInspecaoVisual.addCell(inspecaoVisualItem);
 
-            inspecaoVisualItem = new PdfPCell(new Phrase("Selo nº1:  " , smallBold));
+            p = new Phrase("Selo nº1:  " , smallNormal);
+            p.add(new Chunk((String) Hawk.get("Selo1"), smallNormal));
+            inspecaoVisualItem = new PdfPCell(p);
             inspecaoVisualItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             inspecaoVisualItem.setBorder(PdfPCell.NO_BORDER);
             tabelaInspecaoVisual.addCell(inspecaoVisualItem);
 
-            inspecaoVisualItem = new PdfPCell(new Phrase("Selo nº2:  ", smallBold));
+            p = new Phrase("Selo nº2:  " , smallNormal);
+            p.add(new Chunk((String) Hawk.get("Selo2"), smallNormal));
+            inspecaoVisualItem = new PdfPCell(p);
             inspecaoVisualItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             inspecaoVisualItem.setBorder(PdfPCell.NO_BORDER);
             tabelaInspecaoVisual.addCell(inspecaoVisualItem);
 
-            inspecaoVisualItem = new PdfPCell(new Phrase("Selo nº3:  ", smallBold));
+            p = new Phrase("Selo nº3:  " , smallNormal);
+            p.add(new Chunk((String) Hawk.get("Selo3"), smallNormal));
+            inspecaoVisualItem = new PdfPCell(p);
             inspecaoVisualItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             inspecaoVisualItem.setBorder(PdfPCell.NO_BORDER);
             tabelaInspecaoVisual.addCell(inspecaoVisualItem);
 
-            inspecaoVisualItem = new PdfPCell(new Phrase("Observação:  ", smallBold));
+//            if (String.valueOf(Hawk.get("ObservacaoInspecaoVisual ")).isEmpty()) {
+
+                inspecaoVisualItem = new PdfPCell(new Phrase(" " , smallBold));
+                inspecaoVisualItem.setHorizontalAlignment(Element.ALIGN_LEFT);
+                inspecaoVisualItem.setBorder(PdfPCell.NO_BORDER);
+                tabelaInspecaoVisual.addCell(inspecaoVisualItem);
+
+//            } else {
+//
+//                p = new Phrase("Observação:  " , smallNormal);
+//                p.add(new Chunk((String) Hawk.get("ObservacaoInspecaoVisual"), smallNormal));
+//                inspecaoVisualItem = new PdfPCell(p);
+//                inspecaoVisualItem.setHorizontalAlignment(Element.ALIGN_LEFT);
+//                inspecaoVisualItem.setBorder(PdfPCell.NO_BORDER);
+//                tabelaInspecaoVisual.addCell(inspecaoVisualItem);
+//            }
+
+
+            inspecaoVisualItem = new PdfPCell(new Phrase(" " , smallBold));
+            inspecaoVisualItem.setHorizontalAlignment(Element.ALIGN_LEFT);
+            inspecaoVisualItem.setBorder(PdfPCell.NO_BORDER);
+            tabelaInspecaoVisual.addCell(inspecaoVisualItem);
+
+            inspecaoVisualItem = new PdfPCell(new Phrase(" " , smallBold));
             inspecaoVisualItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             inspecaoVisualItem.setBorder(PdfPCell.NO_BORDER);
             tabelaInspecaoVisual.addCell(inspecaoVisualItem);

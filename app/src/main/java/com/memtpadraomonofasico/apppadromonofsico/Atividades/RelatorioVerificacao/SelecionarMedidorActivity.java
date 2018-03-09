@@ -100,11 +100,6 @@ public class SelecionarMedidorActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-
-
-
-
-
                 if((numSerie.getText().length()==0)|| (numGeral.getText().length()==0) || (instalacao.getText().length()==0) || (ModeloMedidor.getText().length()==0) ||
                         (FabricanteMedidor.getText().length()==0) || (TensaoNominalMedidor.getText().length()==0) || (CorrenteNominalMedidor.getText().length()==0) ||
                         (KDKE.getText().length()==0) || (RR.getText().length()==0) || (ClasseMedidor.getText().length()==0) || ( NumElementos.getText().length()==0) ||

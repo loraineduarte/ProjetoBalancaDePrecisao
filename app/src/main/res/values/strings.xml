@@ -200,6 +200,7 @@
     <string name="mec_nico">Mecânico</string>
 
     <string-array name="ReprovadoInspeçãoVisual">
+        <item></item>
         <item>Base Perfurada</item>
         <item>Dispositivo de Selagem Quebrado</item>
         <item>Selo Ausente ou Outro nao Padronizados</item>
@@ -217,6 +218,7 @@
     </string-array>
 
     <string-array name="ReprovadoRegistrador">
+        <item></item>
         <item>Registrador não Registra Corretamente</item>
         <item>Registrador não Registra Consumo</item>
         <item>Registrador Defeituoso</item>
@@ -239,6 +241,7 @@
 
 
     <string-array name="ReprovadoCircuitoPotencial">
+        <item></item>
         <item>Circuito pot. interrompido - elo retirado</item>
         <item>Circuito pot. interrompido - elo aberto/ desapertado</item>
         <item>Circuito pot. interrompido - elo com cola</item>
