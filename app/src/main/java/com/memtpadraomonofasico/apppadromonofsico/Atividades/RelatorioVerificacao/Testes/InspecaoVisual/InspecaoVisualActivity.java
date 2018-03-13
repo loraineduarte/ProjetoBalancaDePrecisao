@@ -30,11 +30,9 @@ public class InspecaoVisualActivity extends AppCompatActivity {
     private static final int REQUEST_OBS = 0;
     String status, statusReprovado;
     static String observacaoInspecao = null;
-    Bitmap fotoInspecao;
+    Bitmap fotoInspecao, fotoResized;
     Spinner opcoesReprovados;
     EditText Selo1, Selo2, Selo3;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,10 +120,10 @@ public class InspecaoVisualActivity extends AppCompatActivity {
                 if((String.valueOf(Selo1.getText()).isEmpty())||(String.valueOf(Selo2.getText()).isEmpty())|| (String.valueOf(Selo3.getText()).isEmpty())){
                     Toast.makeText(getApplicationContext(), "Sessão incompleta - Completar os selos da inspeção visual! ", Toast.LENGTH_LONG).show();
                 }
-//                if(status==null){
-//                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Status não selecionado!", Toast.LENGTH_LONG).show();
-//                }
-                if(fotoInspecao==null){
+                if(status==null){
+                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Status não selecionado!", Toast.LENGTH_LONG).show();
+                }
+                if(fotoResized==null){
                     Toast.makeText(getApplicationContext(), "Sessão incompleta - Foto de inspeção não tirada!", Toast.LENGTH_LONG).show();
 
                 } else {
@@ -134,7 +132,7 @@ public class InspecaoVisualActivity extends AppCompatActivity {
                     Hawk.put("Selo2", String.valueOf(Selo2.getText()));
                     Hawk.put("Selo3", String.valueOf(Selo3.getText()));
                     Hawk.put("Status", status);
-                    Hawk.put("FotoInspecaoVisual", fotoInspecao);
+                    Hawk.put("FotoInspecaoVisual", fotoResized);
                     Hawk.put("ObservacaoInspecaoVisual", observacao.getDataString());
 
                     abrirRegistrador();
@@ -190,14 +188,13 @@ public class InspecaoVisualActivity extends AppCompatActivity {
                     Toast.makeText(getBaseContext(), "A imagem foi capturada", Toast.LENGTH_SHORT);
                     Bundle bundle = data.getExtras();
                     fotoInspecao = (Bitmap) bundle.get("data");
+                    fotoResized = Bitmap.createScaledBitmap(fotoInspecao, 100, 120, false);
 
-                    if(fotoInspecao!=null){
-                        ImageView imageView = (ImageView) findViewById(R.id.imageView);
-                        imageView.setImageBitmap(fotoInspecao);
+                    if(fotoResized !=null){
+                        ImageView imageView = findViewById(R.id.imageView);
+                        imageView.setImageBitmap(fotoResized);
                     }
-                    else{
 
-                    }
                 } else if (resultCode == RESULT_CANCELED) {
                     Toast.makeText(getBaseContext(), "A captura foi cancelada",
                             Toast.LENGTH_SHORT);
@@ -214,4 +211,9 @@ public class InspecaoVisualActivity extends AppCompatActivity {
         }
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }

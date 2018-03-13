@@ -28,15 +28,13 @@ public class RegistradorActivity extends AppCompatActivity {
     private static final int REQUEST_OBS = 0;
     Intent observacao = new Intent();
     RadioButton aprovado, naoPossibilitaTeste, reprovado;
-    Bitmap fotoAntesRegistrador, fotoDepoisRegistrador;
+    Bitmap fotoAntesRegistrador, fotoDepoisRegistrador, fotoResized1, fotoResized2;
     String status, observacaoRegistrador;
     Spinner opcoesReprovados;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
 
         Log.d("INSPEÇÃO VISUAL ", String.valueOf(Hawk.count()));
 
@@ -61,12 +59,10 @@ public class RegistradorActivity extends AppCompatActivity {
 
         observacaoRegistrador = observacao.getDataString();
 
-        opcoesReprovados = (Spinner) findViewById(R.id.RegistradorSpinner);
+        opcoesReprovados = findViewById(R.id.RegistradorSpinner);
         opcoesReprovados.setEnabled(false);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,  R.array.ReprovadoRegistrador, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
         opcoesReprovados.setAdapter(adapter);
         opcoesReprovados.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
@@ -116,12 +112,40 @@ public class RegistradorActivity extends AppCompatActivity {
                 Hawk.delete("statusRegistrador");
                 Hawk.delete("ObservaçãoRegistrador");
 
-                Hawk.put("FotoPreTesteRegistrador",fotoAntesRegistrador);
-                Hawk.put("FotoPosTesteRegistrador", fotoDepoisRegistrador);
-                Hawk.put("statusRegistrador", status);
-                Hawk.put("ObservaçãoRegistrador", observacaoRegistrador);
+                aprovado = findViewById(R.id.tampasolidarizada);
+                naoPossibilitaTeste = findViewById(R.id.sinaisCarbonizacao);
+                reprovado = findViewById(R.id.Reprovado);
 
-                abrirMarchaVazio();
+
+                if(aprovado.isChecked()){
+                    status = "Aprovado";
+
+                } else if (naoPossibilitaTeste.isChecked()){
+                    status = "Não Possibilita Testes";
+
+                } else if (reprovado.isChecked()){
+                    status = "Reprovado";
+
+                }
+
+                observacaoRegistrador = observacao.getDataString();
+                if(status.isEmpty()){
+                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Status não selecionado!", Toast.LENGTH_LONG).show();
+
+                }if((fotoResized1==null) || (fotoResized2==null)){
+                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Fotos não tiradas!", Toast.LENGTH_LONG).show();
+
+                } else {
+
+                    Hawk.put("FotoPreTesteRegistrador",fotoResized1);
+                    Hawk.put("FotoPosTesteRegistrador", fotoResized2);
+                    Hawk.put("statusRegistrador", status);
+                    Hawk.put("ObservaçãoRegistrador", observacaoRegistrador);
+
+                    abrirMarchaVazio();
+                }
+
+
             }
         });
 
@@ -154,11 +178,12 @@ public class RegistradorActivity extends AppCompatActivity {
                     Toast.makeText(getBaseContext(), "A imagem foi capturada", Toast.LENGTH_SHORT);
                     Bundle bundle = data.getExtras();
                     fotoAntesRegistrador = (Bitmap) bundle.get("data");
+                    fotoResized1 = Bitmap.createScaledBitmap(fotoAntesRegistrador, 100, 120,false);
 
-                    if (fotoAntesRegistrador != null) {
+                    if (fotoResized1 != null) {
 
-                        ImageView imageView = (ImageView) findViewById(R.id.FotoAntes);
-                        imageView.setImageBitmap(fotoAntesRegistrador);
+                        ImageView imageView = findViewById(R.id.FotoAntes);
+                        imageView.setImageBitmap(fotoResized1);
                     } else {
 
                     }
@@ -179,11 +204,12 @@ public class RegistradorActivity extends AppCompatActivity {
                     Toast.makeText(getBaseContext(), "A imagem foi capturada", Toast.LENGTH_SHORT);
                     Bundle bundle = data.getExtras();
                     fotoDepoisRegistrador = (Bitmap) bundle.get("data");
+                    fotoResized2 = Bitmap.createScaledBitmap(fotoDepoisRegistrador, 100, 120,false);
 
-                    if (fotoDepoisRegistrador != null) {
+                    if (fotoResized2 != null) {
 
-                        ImageView imageView = (ImageView) findViewById(R.id.FotoDepois);
-                        imageView.setImageBitmap(fotoDepoisRegistrador);
+                        ImageView imageView = findViewById(R.id.FotoDepois);
+                        imageView.setImageBitmap(fotoResized2);
                     } else {
 
                     }
@@ -234,5 +260,10 @@ public class RegistradorActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, MarchaVazioActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

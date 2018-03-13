@@ -26,9 +26,7 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inspecao_conformidade);
 
-
         Log.d("CONFORMIDADE", String.valueOf(Hawk.count()));
-
 
         @SuppressLint("WrongViewCast") Button next = findViewById(R.id.NextFase7);
         next.setOnClickListener(new View.OnClickListener() {
@@ -52,34 +50,29 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
                 if(Aprovado.isChecked()){
                     statusConformidade = "Aprovado";
 
-                } else if (NaoPossibilitaTeste.isChecked()){
+                } if (NaoPossibilitaTeste.isChecked()){
                     statusConformidade = "Não Possibilita Teste";
 
-                } else if (VariacaoLeitura.isChecked()){
+                }if (VariacaoLeitura.isChecked()){
                     statusConformidade = "Variação de Leitura";
 
-                } else if (Reprovado.isChecked()){
+                } if (Reprovado.isChecked()){
                     statusConformidade = "Reprovado";
-
                 }
-
-                Hawk.put("CargaNominalErroConformidade",CargaNominalErro);
-                Hawk.put("CargaPequenaErroConformidade",CargaPequenaErro);
-                Hawk.put("statusConformidade",statusConformidade);
-
 
                 if ((!Aprovado.isChecked()) && (!NaoPossibilitaTeste.isChecked()) && (!VariacaoLeitura.isChecked()) && (!Reprovado.isChecked()))
                 {
                     Toast.makeText(getApplicationContext(), "Sessão incompleta - Não existe opção de status marcado. ", Toast.LENGTH_LONG).show();
+
                 } else{
+                    Hawk.put("CargaNominalErroConformidade",CargaNominalErro);
+                    Hawk.put("CargaPequenaErroConformidade",CargaPequenaErro);
+                    Hawk.put("statusConformidade",statusConformidade);
+
                     abrirSituacoesObservadas();
                 }
-
             }
         });
-
-
-
     }
 
     private void abrirSituacoesObservadas() {
@@ -121,6 +114,11 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
                 break;
 
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }
 

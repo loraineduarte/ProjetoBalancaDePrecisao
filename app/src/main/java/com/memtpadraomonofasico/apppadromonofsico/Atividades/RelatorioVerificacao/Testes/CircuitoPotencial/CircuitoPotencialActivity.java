@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.InspecaoConformidade.InspecaoConformidadeActivity;
 import com.memtpadraomonofasico.apppadromonofsico.R;
@@ -19,7 +20,7 @@ import com.orhanobut.hawk.Hawk;
 public class CircuitoPotencialActivity extends AppCompatActivity {
 
     RadioButton normal, reprovado;
-    String status, observacaoRegistrador;
+    String status;
     Spinner opcoesReprovados;
 
     @Override
@@ -32,21 +33,10 @@ public class CircuitoPotencialActivity extends AppCompatActivity {
         normal = findViewById(R.id.normal);
         reprovado = findViewById(R.id.Reprovado);
 
-
-        if(normal.isChecked()){
-            status = "Normal/ Não Possui";
-
-        } else if (reprovado.isChecked()){
-            status = "Reprovado";
-
-        }
-
-        opcoesReprovados = (Spinner) findViewById(R.id.RegistradorSpinner);
+        opcoesReprovados = findViewById(R.id.RegistradorSpinner);
         opcoesReprovados.setEnabled(false);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,  R.array.ReprovadoCircuitoPotencial, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
         opcoesReprovados.setAdapter(adapter);
         opcoesReprovados.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
@@ -66,8 +56,25 @@ public class CircuitoPotencialActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Hawk.delete("statusCircuitoPotencial");
-                Hawk.put("statusCircuitoPotencial", status);
-                abrirInspecaoConformidade();
+
+                normal = findViewById(R.id.normal);
+                reprovado = findViewById(R.id.Reprovado);
+
+                if(normal.isChecked()){
+                    status = "Normal/ Não Possui";
+                }
+                if (reprovado.isChecked()){
+                    status = "Reprovado";
+                }
+
+                if ((!normal.isChecked()) &&  (!reprovado.isChecked())) {
+                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Não existe opção de status marcado. ", Toast.LENGTH_LONG).show();
+
+                } else {
+                    Hawk.put("statusCircuitoPotencial", status);
+                    abrirInspecaoConformidade();
+                }
+
 
             }
         });
@@ -94,5 +101,10 @@ public class CircuitoPotencialActivity extends AppCompatActivity {
                 break;
 
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

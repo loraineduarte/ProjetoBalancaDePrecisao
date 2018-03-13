@@ -92,27 +92,15 @@
         app:layout_constraintTop_toBottomOf="@+id/Reintegracao" />
 
     <Button
-        android:id="@+id/adicionaObservacaoConclusao"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
-        android:text="@string/adiciona_observa_o"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/garantia" />
-
-    <Button
         android:id="@+id/gerarRelatorio"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:text="@string/gerar_relat_rio"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/adicionaObservacaoConclusao" />
+        app:layout_constraintTop_toBottomOf="@+id/garantia" />
 
 </android.support.constraint.ConstraintLayout>

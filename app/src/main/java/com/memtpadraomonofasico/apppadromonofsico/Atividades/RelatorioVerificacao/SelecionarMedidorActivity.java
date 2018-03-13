@@ -50,7 +50,7 @@ public class SelecionarMedidorActivity extends AppCompatActivity {
         if (cursor.getCount() > 0) {
 
             final String[] myData = banco.SelectAllMedidores();
-            @SuppressLint("WrongViewCast") final AutoCompleteTextView autoCom = (AutoCompleteTextView) findViewById(R.id.numSerie);
+            @SuppressLint("WrongViewCast") final AutoCompleteTextView autoCom = findViewById(R.id.numSerie);
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, myData);
             autoCom.setAdapter(adapter);
         }
@@ -220,6 +220,11 @@ public class SelecionarMedidorActivity extends AppCompatActivity {
 
         }
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
 }

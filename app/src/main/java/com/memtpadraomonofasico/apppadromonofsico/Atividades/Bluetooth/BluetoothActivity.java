@@ -42,8 +42,8 @@ public class BluetoothActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bluetooth);
 
-        statusMessage = (TextView) findViewById(R.id.statusMessage);
-        textSpace = (TextView) findViewById(R.id.textSpace);
+        statusMessage = findViewById(R.id.statusMessage);
+        textSpace = findViewById(R.id.textSpace);
 
         // Início - verificando ativação do bluetooth
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -116,7 +116,7 @@ public class BluetoothActivity extends AppCompatActivity {
     }
 
     public void sendMessage(View view){
-        EditText messageBox = (EditText) findViewById(R.id.editText_MessageBox);
+        EditText messageBox = findViewById(R.id.editText_MessageBox);
         String messageBoxString = messageBox.getText().toString();
 
         byte[] pacote = new byte[10];

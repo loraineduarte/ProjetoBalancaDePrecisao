@@ -21,7 +21,7 @@ public class ObservacaoInspecaoVisualActivity extends AppCompatActivity {
         setContentView(R.layout.activity_observacao_inspecao_visual);
 
         //clean the editText
-        final EditText Observacao = (EditText) findViewById(R.id.Observacao);
+        final EditText Observacao = findViewById(R.id.Observacao);
         Observacao.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 
             public void onFocusChange(View v, boolean hasFocus) {
@@ -33,7 +33,7 @@ public class ObservacaoInspecaoVisualActivity extends AppCompatActivity {
 
         });
 
-        Button AdicionarObservacao = (Button)findViewById(R.id.AddObs);
+        Button AdicionarObservacao = findViewById(R.id.AddObs);
         AdicionarObservacao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,7 +46,7 @@ public class ObservacaoInspecaoVisualActivity extends AppCompatActivity {
             }
         });
 
-        Button limpar = (Button)findViewById(R.id.limpar);
+        Button limpar = findViewById(R.id.limpar);
         limpar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,4 +71,9 @@ public class ObservacaoInspecaoVisualActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }

@@ -186,4 +186,9 @@ public class RelatorioVerificacaoActivity extends AppCompatActivity  {
         }
 
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }

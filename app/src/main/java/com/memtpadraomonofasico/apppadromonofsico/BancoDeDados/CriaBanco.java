@@ -166,10 +166,10 @@ public class CriaBanco extends SQLiteOpenHelper {
         Cursor cursor;
         SQLiteDatabase db;
          db = this.getReadableDatabase();
-        String[] campos =  {this.INSTALACAO,this.NUM_GERAL, this.FABRICANTE, this.NUM_ELEMENTOS, this.MODELO, this.CORRENTE_NOMINAL, this.CLASSE, this.ANO_FABRICACAO, this.TENSAO_NOMINAL, this.KDKE,
-                this.RR, this.FIOS, this.PORT_INMETRO, this.TIPO_MEDIDOR};
+        String[] campos =  {INSTALACAO, NUM_GERAL, FABRICANTE, NUM_ELEMENTOS, MODELO, CORRENTE_NOMINAL, CLASSE, ANO_FABRICACAO, TENSAO_NOMINAL, KDKE,
+                RR, FIOS, PORT_INMETRO, TIPO_MEDIDOR};
 
-        cursor = db.query(this.TABELA_MEDIDOR , campos, this.NUM_SERIE +"= "+ codigo, null, null, null, null, null);
+        cursor = db.query(TABELA_MEDIDOR , campos, NUM_SERIE +"= "+ codigo, null, null, null, null, null);
 
         if(cursor!=null){
             if(cursor.moveToFirst()){

@@ -41,9 +41,9 @@ public class BancoController {
 
     public Cursor pegaAvaliadores(){
         Cursor cursor;
-        String[] campos =  {banco.ID_AVALIADOR,banco.NOME_AVALIADOR,banco.MATRICULA};
+        String[] campos =  {CriaBanco.ID_AVALIADOR, CriaBanco.NOME_AVALIADOR, CriaBanco.MATRICULA};
         db = banco.getReadableDatabase();
-        cursor = db.query(banco.TABELA_AVALIADOR, campos, null, null, null, null, null, null);
+        cursor = db.query(CriaBanco.TABELA_AVALIADOR, campos, null, null, null, null, null, null);
 
         if(cursor!=null){
             cursor.moveToFirst();
@@ -95,10 +95,10 @@ public class BancoController {
 
     public Cursor pegaMedidores(){
         Cursor cursor;
-        String[] campos =  {banco.ID_MEDIDOR,banco.NUM_SERIE,banco.INSTALACAO, banco.NUM_GERAL, banco.FABRICANTE, banco.NUM_ELEMENTOS, banco.MODELO, banco.CORRENTE_NOMINAL,
-                banco.CLASSE, banco.RR, banco.ANO_FABRICACAO, banco.TENSAO_NOMINAL, banco.KDKE, banco.PORT_INMETRO, banco.FIOS, banco.TIPO_MEDIDOR};
+        String[] campos =  {CriaBanco.ID_MEDIDOR, CriaBanco.NUM_SERIE, CriaBanco.INSTALACAO, CriaBanco.NUM_GERAL, CriaBanco.FABRICANTE, CriaBanco.NUM_ELEMENTOS, CriaBanco.MODELO, CriaBanco.CORRENTE_NOMINAL,
+                CriaBanco.CLASSE, CriaBanco.RR, CriaBanco.ANO_FABRICACAO, CriaBanco.TENSAO_NOMINAL, CriaBanco.KDKE, CriaBanco.PORT_INMETRO, CriaBanco.FIOS, CriaBanco.TIPO_MEDIDOR};
         db = banco.getReadableDatabase();
-        cursor = db.query(banco.TABELA_MEDIDOR, campos, null, null, null, null, null, null);
+        cursor = db.query(CriaBanco.TABELA_MEDIDOR, campos, null, null, null, null, null, null);
 
         if(cursor!=null){
             cursor.moveToFirst();

@@ -96,4 +96,8 @@ public class ServicoActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }

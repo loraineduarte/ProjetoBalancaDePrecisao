@@ -16,19 +16,12 @@ public class InformacoesComplementaresActivity extends AppCompatActivity {
 
     RadioButton tampasolidarizada, semTampa, tampaQuebrada, tampaQuebradaTransporte, seloRompido, terminaisOxidados, leituraDivergente;
     String tampasolidarizadaStatus, semTampaStatus, tampaQuebradaStatus, tampaQuebradaTransporteStatus, seloRompidoStatus, terminaisOxidadosStatus, leituraDivergenteStatus ;
+    String informacoesComplementares ="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_informacoes_complementares);
-
-        Hawk.delete("tampasolidarizada");
-        Hawk.delete("semTampa");
-        Hawk.delete("tampaQuebrada");
-        Hawk.delete("tampaQuebradaTransporte");
-        Hawk.delete("seloRompido");
-        Hawk.delete("terminaisOxidados");
-        Hawk.delete("leituraDivergente");
 
         Log.d("INFORMAÇÕEs COMPLE", String.valueOf(Hawk.count()));
 
@@ -37,7 +30,7 @@ public class InformacoesComplementaresActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-
+                Hawk.delete("InformacoesComplementares");
 
                 tampasolidarizada = findViewById(R.id.tampasolidarizada);
                 semTampa = findViewById(R.id.semTampa);
@@ -49,39 +42,40 @@ public class InformacoesComplementaresActivity extends AppCompatActivity {
 
                 if(tampasolidarizada.isChecked()){
                     tampasolidarizadaStatus = "Tampa do medidor solidarizada";
-                    Hawk.put("tampasolidarizada",tampasolidarizadaStatus);
+                    informacoesComplementares = informacoesComplementares + tampasolidarizadaStatus + " - ";
 
                 }
                 if (semTampa.isChecked()){
                     semTampaStatus = "Sem tampa do bloco de terminais";
-                    Hawk.put("semTampa",semTampaStatus);
+                    informacoesComplementares = informacoesComplementares + semTampaStatus + " - ";
 
                 }
                 if (tampaQuebrada.isChecked()){
                     tampaQuebradaStatus = "Tampa quebrada";
-                    Hawk.put("tampaQuebrada",tampaQuebradaStatus);
+                    informacoesComplementares = informacoesComplementares + tampaQuebradaStatus + " - ";
 
                 }
                 if (tampaQuebradaTransporte.isChecked()){
                     tampaQuebradaTransporteStatus = "Tampa quebrada no transporte";
-                    Hawk.put("tampaQuebradaTransporte",tampaQuebradaTransporteStatus);
+                    informacoesComplementares = informacoesComplementares + tampaQuebradaTransporteStatus + " - ";
 
                 }
                 if (seloRompido.isChecked()){
                     seloRompidoStatus = "Selo rompido no laboratório";
-                    Hawk.put("seloRompido",seloRompidoStatus);
+                    informacoesComplementares = informacoesComplementares + seloRompidoStatus + " - ";
 
                 }
                 if (terminaisOxidados.isChecked()){
                     terminaisOxidadosStatus = "Terminais de corrente oxidados";
-                    Hawk.put("terminaisOxidados",terminaisOxidadosStatus);
+                    informacoesComplementares = informacoesComplementares + terminaisOxidadosStatus + " - ";
 
                 }
                 if (leituraDivergente.isChecked()){
                     leituraDivergenteStatus = "Leitura Divergente";
-                    Hawk.put("leituraDivergente",leituraDivergenteStatus);
-
+                    informacoesComplementares = informacoesComplementares + leituraDivergenteStatus;
                 }
+
+                Hawk.put("InformacoesComplementares", informacoesComplementares);
 
                 abrirResultadosFinais();
             }
@@ -93,5 +87,10 @@ public class InformacoesComplementaresActivity extends AppCompatActivity {
     private void abrirResultadosFinais() {
         Intent intent = new Intent(this, ResultadosFinaisActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }
