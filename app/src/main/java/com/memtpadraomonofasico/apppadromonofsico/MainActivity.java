@@ -2,8 +2,6 @@ package com.memtpadraomonofasico.apppadromonofsico;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -12,18 +10,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.Avaliador.CriarAvaliadorActivity;
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.Bluetooth.BluetoothActivity;
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.Medidor.CriarMedidorActivity;
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.RelatorioVerificacaoActivity;
-import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.InspecaoVisual.InspecaoVisualActivity;
 
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final String TAG = "MainActivity";
 
 
     @Override
@@ -115,20 +112,16 @@ public class MainActivity extends AppCompatActivity
 
     //Views
     private void abrirAvaliador() {
-        Log.d(TAG, "Opção de avaliador");
         Intent intent = new Intent(this, CriarAvaliadorActivity.class);
         startActivity(intent);
     }
 
     private void abrirMedidores() {
-        Log.d(TAG, "Opção de medidores");
         Intent intent = new Intent(this, CriarMedidorActivity.class);
         startActivity(intent);
     }
 
     private void abrirRelatorio() {
-
-        Log.d(TAG, "Relatório");
         Intent intent = new Intent(this, RelatorioVerificacaoActivity.class);
         startActivity(intent);
     }

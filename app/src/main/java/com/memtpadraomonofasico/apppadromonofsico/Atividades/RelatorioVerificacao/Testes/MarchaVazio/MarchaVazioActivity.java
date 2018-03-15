@@ -60,7 +60,6 @@ public class MarchaVazioActivity extends AppCompatActivity {
                     statusMarchaVazio = "Reprovado";
                     tempoReprovado = (findViewById(R.id.TempoMarchaVazio));
                     tempoReprovadoMarchaVazio = " - Tempo: " + tempoReprovado.getText().toString();
-
                 }
 
                 if ((!aprovado.isChecked()) && (!naoRealizado.isChecked()) && (!reprovado.isChecked())) {
@@ -74,7 +73,6 @@ public class MarchaVazioActivity extends AppCompatActivity {
                     Hawk.put("tempoReprovadoMarchaVazio", tempoReprovadoMarchaVazio);
                     abrirCircuitoPotencial();
                 }
-
             }
         });
 

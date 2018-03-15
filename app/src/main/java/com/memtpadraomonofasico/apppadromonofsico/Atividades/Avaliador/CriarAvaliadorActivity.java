@@ -20,16 +20,12 @@ public class CriarAvaliadorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_criar_avaliador);
 
-        BancoController crud = new BancoController(getBaseContext());
-//        Cursor cursor = crud.pegaAvaliadores();
-//        Log.d("Avaliador", String.valueOf(cursor.getCount()));
-
+        final BancoController crud = new BancoController(getBaseContext());
         Button botaoCriarAvaliador = findViewById(R.id.buttonSalvarAvaliador);
 
         botaoCriarAvaliador.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BancoController crud = new BancoController(getBaseContext());
                 nome = findViewById(R.id.nomeAvaliador);
                 matricula = findViewById(R.id.numeroMatriculaAvaliador);
                 nomeString = nome.getText().toString();

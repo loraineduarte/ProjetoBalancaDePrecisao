@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -25,9 +24,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class RelatorioVerificacaoActivity extends AppCompatActivity  {
-
-    private static final String TAG = "RelatórioVerificação";
-
     String[] nome;
     String toiNumero , matricula, nomeAvaliadorString;
     private RadioButton SEM, TOI;
@@ -73,9 +69,6 @@ public class RelatorioVerificacaoActivity extends AppCompatActivity  {
             autoCom.setAdapter(adapter);
         }
 
-
-
-
         @SuppressLint("WrongViewCast") Button fab = findViewById(R.id.NextFase1);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,14 +96,9 @@ public class RelatorioVerificacaoActivity extends AppCompatActivity  {
                     TOI = findViewById(R.id.TOI);
                     ToiNumero = findViewById(R.id.ToiNumero);
 
-                    Log.d("Nome", String.valueOf(nomeAvaliador.getText()));
-                    Log.d("MATRICULA",String.valueOf(MatriculaAvaliador.getText()));
-
                     Hawk.put("HoraInicial",horaInicialFormatada);
                     Hawk.put("NomeAvaliador",String.valueOf(nomeAvaliador.getText()));
                     Hawk.put("MatriculaAvaliador", String.valueOf(MatriculaAvaliador.getText()));
-
-
 
                     if (SEM.isChecked()){
                         Hawk.put("TipoSolicitação", "SEM");
@@ -119,7 +107,6 @@ public class RelatorioVerificacaoActivity extends AppCompatActivity  {
                         Hawk.put("TipoSolicitação", "TOI");
                         Hawk.put("TOINumero", String.valueOf(ToiNumero.getText()));
 
-                        Log.d("TOI", String.valueOf(Hawk.get("TOINumero")));
                     }
 
                     abrirServicos();
@@ -136,9 +123,6 @@ public class RelatorioVerificacaoActivity extends AppCompatActivity  {
     }
 
     public void onCheckboxClicked(View view) {
-
-
-
         ToiNumero = findViewById(R.id.ToiNumero);
         switch (view.getId()) {
             case R.id.SEM:
@@ -169,8 +153,6 @@ public class RelatorioVerificacaoActivity extends AppCompatActivity  {
         super.onRestoreInstanceState(savedInstanceState);
 
     }
-
-
 
     public void doMyThing() {
 

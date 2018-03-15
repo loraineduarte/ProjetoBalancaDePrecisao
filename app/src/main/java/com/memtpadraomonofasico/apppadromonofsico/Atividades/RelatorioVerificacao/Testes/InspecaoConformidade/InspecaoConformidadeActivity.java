@@ -18,7 +18,7 @@ import com.orhanobut.hawk.Hawk;
 public class InspecaoConformidadeActivity extends AppCompatActivity {
 
     private RadioButton Aprovado, NaoPossibilitaTeste, VariacaoLeitura, Reprovado;
-    String statusConformidade, CargaNominalErro, CargaPequenaErro;
+    String statusConformidade;
     private EditText cargaNominalErro, cargaPequenaErro;
 
     @Override
@@ -32,15 +32,13 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Hawk.delete("CargaNominalErroConformidade");
                 Hawk.delete("CargaPequenaErroConformidade");
                 Hawk.delete("statusConformidade");
 
                 cargaNominalErro =  findViewById(R.id.CargaNominalErro);
-                CargaNominalErro = String.valueOf(cargaNominalErro.getText());
-
                 cargaPequenaErro = findViewById(R.id.CargaPequenaErro);
-                CargaPequenaErro = String.valueOf(cargaPequenaErro.getText());
 
                 Aprovado = findViewById(R.id.tampasolidarizada);
                 NaoPossibilitaTeste = findViewById(R.id.sinaisCarbonizacao);
@@ -65,8 +63,8 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Sessão incompleta - Não existe opção de status marcado. ", Toast.LENGTH_LONG).show();
 
                 } else{
-                    Hawk.put("CargaNominalErroConformidade",CargaNominalErro);
-                    Hawk.put("CargaPequenaErroConformidade",CargaPequenaErro);
+                    Hawk.put("CargaNominalErroConformidade",String.valueOf(cargaNominalErro.getText()));
+                    Hawk.put("CargaPequenaErroConformidade",String.valueOf(cargaPequenaErro.getText()));
                     Hawk.put("statusConformidade",statusConformidade);
 
                     abrirSituacoesObservadas();

@@ -53,11 +53,6 @@ public class ResultadosFinaisActivity extends AppCompatActivity {
         HoraFinal = findViewById(R.id.HoraFim);
         HoraFinal.setText(horaFinalFormatada);
 
-        leituraRetirada = findViewById(R.id.LeituraRetirada);
-        leituraCalibracao = findViewById(R.id.leituraCalibracao);
-        leituraPosCalibracao = findViewById(R.id.leituraPosCalibracao);
-
-
         @SuppressLint("WrongViewCast") Button next =  findViewById(R.id.NextFase10);
         next.setOnClickListener(new View.OnClickListener() {
             @Override

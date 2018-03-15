@@ -23,21 +23,17 @@ import com.orhanobut.hawk.Hawk;
 
 public class InspecaoVisualActivity extends AppCompatActivity {
 
-    private static final String TAG = "Inspeção Visual";
     private RadioButton Reprovado, Aprovado;
-    static Intent observacao = new Intent();
     private static final int TIRAR_FOTO = 10207;
-    private static final int REQUEST_OBS = 0;
+    private static final int REQUEST_OBS = 1000;
     String status, statusReprovado;
-    static String observacaoInspecao = null;
+    String observacaoInspecao = "";
     Bitmap fotoInspecao, fotoResized;
     Spinner opcoesReprovados;
     EditText Selo1, Selo2, Selo3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        Log.d("INSPEÇÃO VISUAL ", String.valueOf(Hawk.count()));
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inspecao_visual);
@@ -58,7 +54,6 @@ public class InspecaoVisualActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
                 statusReprovado = parent.getItemAtPosition(position).toString();
-                Log.d("SELECIONADO", statusReprovado);
             }
             public void onNothingSelected(AdapterView<?> parent)
             {
@@ -88,24 +83,12 @@ public class InspecaoVisualActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Selo1 =  findViewById(R.id.Selo1);
-                Selo2 =  findViewById(R.id.Selo2);
-                Selo3 =  findViewById(R.id.Selo3);
-                Reprovado = findViewById(R.id.ReprovadoInspecaoVisual);
-                Aprovado = findViewById(R.id.AprovadoInspecaoVisual);
-
-
                 if (Aprovado.isChecked()){
                     status = "Selos íntegros";
 
-                }else if (Reprovado.isChecked()){
+                } else if (Reprovado.isChecked()){
                     status = "Reprovado";
-
                 }
-
-                observacaoInspecao = observacao.getDataString();
-//                Log.d("STATUS", observacaoInspecao);
-//                Log.d("STATUS", observacao.getDataString());
 
                 Hawk.delete("Selo1");
                 Hawk.delete("Selo2");
@@ -133,14 +116,14 @@ public class InspecaoVisualActivity extends AppCompatActivity {
                     Hawk.put("Selo3", String.valueOf(Selo3.getText()));
                     Hawk.put("Status", status);
                     Hawk.put("FotoInspecaoVisual", fotoResized);
-                    Hawk.put("ObservacaoInspecaoVisual", observacao.getDataString());
+                    Hawk.put("ObservacaoInspecaoVisual", observacaoInspecao);
+
+                    Log.d("STATUS",observacaoInspecao);
 
                     abrirRegistrador();
                 }
-
             }
         });
-
     }
 
     private void tirarFoto() {
@@ -149,7 +132,6 @@ public class InspecaoVisualActivity extends AppCompatActivity {
     }
 
     private void abrirAddObs() {
-        Log.d(TAG, "Adicionar Observação - Inspeção Visual ");
         Intent intent = new Intent(this, ObservacaoInspecaoVisualActivity.class);
         startActivityForResult(intent, REQUEST_OBS);
     }
@@ -157,9 +139,6 @@ public class InspecaoVisualActivity extends AppCompatActivity {
 
     private void abrirRegistrador() {
 
-
-
-        Log.d(TAG, "Teste de Registrador");
         Intent intent = new Intent(this, RegistradorActivity.class);
         startActivity(intent);
     }
@@ -181,6 +160,7 @@ public class InspecaoVisualActivity extends AppCompatActivity {
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         if (requestCode == TIRAR_FOTO) {
             if (resultCode == RESULT_OK) {
 
@@ -205,9 +185,13 @@ public class InspecaoVisualActivity extends AppCompatActivity {
             }
         }
 
-        if(resultCode== RESULT_OK){ //add observação
-            observacao = data;
-            observacaoInspecao = observacao.getDataString();
+       if (requestCode == REQUEST_OBS) {
+            if (resultCode == RESULT_OK) {
+                if(data != null) {
+                    observacaoInspecao = data.getStringExtra("RESULT_STRING");
+                }
+
+            }
         }
     }
 
@@ -216,4 +200,5 @@ public class InspecaoVisualActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
+
 }

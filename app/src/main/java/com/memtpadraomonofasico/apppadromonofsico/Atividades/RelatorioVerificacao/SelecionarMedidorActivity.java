@@ -23,29 +23,23 @@ import com.orhanobut.hawk.Hawk;
 
 public class SelecionarMedidorActivity extends AppCompatActivity {
 
-
-    private static final String TAG = "Selecionar Medidor";
     final CriaBanco banco = new CriaBanco(this);
-    String tipoMedidor;
     String[] nome;
-    String NumSerie;
+    String NumSerie, tipoMedidor;
     private FloatingActionButton botaoProcurar;
-    EditText numSerie, numGeral, instalacao, ModeloMedidor, FabricanteMedidor, TensaoNominalMedidor, CorrenteNominalMedidor, KDKE, RR, ClasseMedidor, NumElementos
-            ,AnoFabricacao, Fios, PortariaInmetro;
+    EditText numSerie, numGeral, instalacao, ModeloMedidor, FabricanteMedidor, TensaoNominalMedidor, CorrenteNominalMedidor, KDKE, RR, ClasseMedidor, NumElementos,AnoFabricacao, Fios, PortariaInmetro;
     RadioButton eletronico, mecanico;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        Log.d("MEDIDOR", String.valueOf(Hawk.count()));
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selecionar_medidor);
 
         BancoController crud = new BancoController(getBaseContext());
         Cursor cursor = crud.pegaMedidores();
-        Log.d(TAG, String.valueOf(cursor.getCount()));
 
         if (cursor.getCount() > 0) {
 

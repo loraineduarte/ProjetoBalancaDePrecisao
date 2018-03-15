@@ -37,8 +37,7 @@ public class ObservacaoRegistradorActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent returnIntent = new Intent();
-                Log.d("Campo:", String.valueOf(Observacao.getText()));
-                returnIntent.putExtra("btDevName",  String.valueOf(Observacao.getText()));
+                returnIntent.putExtra("RESULT_STRING", Observacao.getText().toString());
                 setResult(RESULT_OK, returnIntent);
                 finish();
 

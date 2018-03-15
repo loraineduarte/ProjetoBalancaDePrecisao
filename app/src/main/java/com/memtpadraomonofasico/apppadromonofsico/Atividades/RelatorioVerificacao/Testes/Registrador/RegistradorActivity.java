@@ -25,18 +25,16 @@ public class RegistradorActivity extends AppCompatActivity {
 
     private static final int TIRAR_FOTO_ANTES = 10207;
     private static final int TIRAR_FOTO_DEPOIS = 10208;
-    private static final int REQUEST_OBS = 0;
+    private static final int REQUEST_OBS = 1000;
     Intent observacao = new Intent();
     RadioButton aprovado, naoPossibilitaTeste, reprovado;
     Bitmap fotoAntesRegistrador, fotoDepoisRegistrador, fotoResized1, fotoResized2;
-    String status, observacaoRegistrador;
+    String status, observacaoRegistrador = " ";
     Spinner opcoesReprovados;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        Log.d("INSPEÇÃO VISUAL ", String.valueOf(Hawk.count()));
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrador);
@@ -44,20 +42,6 @@ public class RegistradorActivity extends AppCompatActivity {
         aprovado = findViewById(R.id.tampasolidarizada);
         naoPossibilitaTeste = findViewById(R.id.sinaisCarbonizacao);
         reprovado = findViewById(R.id.Reprovado);
-
-
-        if(aprovado.isChecked()){
-            status = "Aprovado";
-
-        } else if (naoPossibilitaTeste.isChecked()){
-            status = "Não Possibilita Testes";
-
-        } else if (reprovado.isChecked()){
-            status = "Reprovado";
-
-        }
-
-        observacaoRegistrador = observacao.getDataString();
 
         opcoesReprovados = findViewById(R.id.RegistradorSpinner);
         opcoesReprovados.setEnabled(false);
@@ -69,15 +53,12 @@ public class RegistradorActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
                 status = parent.getItemAtPosition(position).toString();
-                Log.d("SELECIONADO", status);
             }
             public void onNothingSelected(AdapterView<?> parent)
             {
 
             }
         });
-
-        observacaoRegistrador = observacao.getDataString();
 
         @SuppressLint("WrongViewCast") Button addObs = findViewById(R.id.addObservacao);
         addObs.setOnClickListener(new View.OnClickListener() {
@@ -127,8 +108,6 @@ public class RegistradorActivity extends AppCompatActivity {
                     status = "Reprovado";
 
                 }
-
-                observacaoRegistrador = observacao.getDataString();
                 if(status.isEmpty()){
                     Toast.makeText(getApplicationContext(), "Sessão incompleta - Status não selecionado!", Toast.LENGTH_LONG).show();
 
@@ -137,6 +116,8 @@ public class RegistradorActivity extends AppCompatActivity {
 
                 } else {
 
+                    Log.d("OBSERVACAO", observacaoRegistrador);
+
                     Hawk.put("FotoPreTesteRegistrador",fotoResized1);
                     Hawk.put("FotoPosTesteRegistrador", fotoResized2);
                     Hawk.put("statusRegistrador", status);
@@ -144,11 +125,8 @@ public class RegistradorActivity extends AppCompatActivity {
 
                     abrirMarchaVazio();
                 }
-
-
             }
         });
-
     }
 
     private void abrirAddObs() {
@@ -168,8 +146,6 @@ public class RegistradorActivity extends AppCompatActivity {
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //trazer as observações que o usuário adicionou
-        //salvar a foto que foi tirada
 
         if (requestCode == TIRAR_FOTO_ANTES) {
             if (resultCode == RESULT_OK) {
@@ -181,12 +157,10 @@ public class RegistradorActivity extends AppCompatActivity {
                     fotoResized1 = Bitmap.createScaledBitmap(fotoAntesRegistrador, 100, 120,false);
 
                     if (fotoResized1 != null) {
-
                         ImageView imageView = findViewById(R.id.FotoAntes);
                         imageView.setImageBitmap(fotoResized1);
-                    } else {
-
                     }
+
                 } else if (resultCode == RESULT_CANCELED) {
                     Toast.makeText(getBaseContext(), "A captura foi cancelada",
                             Toast.LENGTH_SHORT);
@@ -210,9 +184,8 @@ public class RegistradorActivity extends AppCompatActivity {
 
                         ImageView imageView = findViewById(R.id.FotoDepois);
                         imageView.setImageBitmap(fotoResized2);
-                    } else {
-
                     }
+
                 } else if (resultCode == RESULT_CANCELED) {
                     Toast.makeText(getBaseContext(), "A captura foi cancelada",
                             Toast.LENGTH_SHORT);
@@ -223,10 +196,8 @@ public class RegistradorActivity extends AppCompatActivity {
             }
         }
         if(requestCode== REQUEST_OBS){
-
-            if (resultCode == RESULT_OK) { //add observação
-                observacao = data;
-                Log.d("Registrador", String.valueOf(observacao));
+            if (resultCode == RESULT_OK) {
+                observacaoRegistrador = data.getStringExtra("RESULT_STRING");
             }
         }
     }
@@ -252,12 +223,10 @@ public class RegistradorActivity extends AppCompatActivity {
                 opcoesReprovados.setEnabled(true);
 
                 break;
-
         }
     }
 
     private void abrirMarchaVazio() {
-
         Intent intent = new Intent(this, MarchaVazioActivity.class);
         startActivity(intent);
     }

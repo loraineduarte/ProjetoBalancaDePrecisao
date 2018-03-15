@@ -2,26 +2,25 @@ package com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificac
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import com.memtpadraomonofasico.apppadromonofsico.R;
 
 public class ObservacaoInspecaoVisualActivity extends AppCompatActivity {
 
-
+    EditText Observacao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_observacao_inspecao_visual);
 
-        //clean the editText
-        final EditText Observacao = findViewById(R.id.Observacao);
+        Observacao = findViewById(R.id.Observacao);
         Observacao.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 
             public void onFocusChange(View v, boolean hasFocus) {
@@ -38,8 +37,7 @@ public class ObservacaoInspecaoVisualActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent returnIntent = new Intent();
-                Log.d("Campo:", String.valueOf(Observacao.getText()));
-                returnIntent.putExtra("btDevName",  String.valueOf(Observacao.getText()));
+                returnIntent.putExtra("RESULT_STRING", Observacao.getText().toString());
                 setResult(RESULT_OK, returnIntent);
                 finish();
 
@@ -65,8 +63,6 @@ public class ObservacaoInspecaoVisualActivity extends AppCompatActivity {
     }
 
     private void retornarInspecaoVisual() {
-
-        Log.d("Adicionar Observação", "Retornando Para inspeção visual");
         Intent intent = new Intent(this, InspecaoVisualActivity.class);
         startActivity(intent);
     }

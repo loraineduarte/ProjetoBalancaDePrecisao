@@ -15,9 +15,9 @@ import com.orhanobut.hawk.Hawk;
 public class SituacoesObservadasActivity extends AppCompatActivity {
 
     RadioButton sujeiraInterna, sinaisCarbonizacao, ranhurasDisco, neutroCarbonizado, marcasParafusos, mancaisDeslocados, ledIntermitente, ledApagado, ledDisparado, ledAceso, elementoDescentralizado,
-        componentesQueimados, circuitoDefeituoso, bobinaInterrompida, blocoCarbonizados, placaSolta, placaAmassada;
+            componentesQueimados, circuitoDefeituoso, bobinaInterrompida, blocoCarbonizados, placaSolta, placaAmassada;
     String sujeiraInternaStatus, sinaisCarbonizacaoStatus, ranhurasDiscoStatus, neutroCarbonizadoStatus, marcasParafusosStatus, mancaisDeslocadosStatus, ledIntermitenteStatus, ledApagadoStatus, ledDisparadoStatus,
-            ledAcesoStatus, elementoDescentralizadoStatus, componentesQueimadosStatus, circuitoDefeituosoStatus, bobinaInterrompidaStatus, blocoCarbonizadosStatus, placaSoltaStatus, placaAmassadaStatus ;
+            ledAcesoStatus, elementoDescentralizadoStatus, componentesQueimadosStatus, circuitoDefeituosoStatus, bobinaInterrompidaStatus, blocoCarbonizadosStatus, placaSoltaStatus, placaAmassadaStatus;
     String todasObservacoes;
 
 
@@ -39,7 +39,7 @@ public class SituacoesObservadasActivity extends AppCompatActivity {
                 sinaisCarbonizacao = findViewById(R.id.sinaisCarbonizacao);
                 ranhurasDisco = findViewById(R.id.RanhurasDisco);
                 neutroCarbonizado = findViewById(R.id.NeutroCarbonizado);
-                marcasParafusos  = findViewById(R.id.MarcasParafusos);
+                marcasParafusos = findViewById(R.id.MarcasParafusos);
                 mancaisDeslocados = findViewById(R.id.MancaisDeslocados);
                 ledIntermitente = findViewById(R.id.ledIntermitente);
                 ledApagado = findViewById(R.id.LedApagado);
@@ -55,88 +55,88 @@ public class SituacoesObservadasActivity extends AppCompatActivity {
 
 
                 todasObservacoes = "";
-                if(sujeiraInterna.isChecked()){
+                if (sujeiraInterna.isChecked()) {
                     sujeiraInternaStatus = "Sujeira interna - atrito";
-                    todasObservacoes = todasObservacoes + sujeiraInternaStatus ;
+                    todasObservacoes = todasObservacoes + sujeiraInternaStatus;
 
                 }
-                if (sinaisCarbonizacao.isChecked()){
+                if (sinaisCarbonizacao.isChecked()) {
                     sinaisCarbonizacaoStatus = "Sinais de carbonização";
-                    todasObservacoes = todasObservacoes + " - "+ sinaisCarbonizacaoStatus ;
+                    todasObservacoes = todasObservacoes + " - " + sinaisCarbonizacaoStatus;
 
                 }
-                if (ranhurasDisco.isChecked()){
+                if (ranhurasDisco.isChecked()) {
                     ranhurasDiscoStatus = "Ranhuras no disco do elemento móvel";
-                    todasObservacoes = todasObservacoes + " - " + ranhurasDiscoStatus ;
+                    todasObservacoes = todasObservacoes + " - " + ranhurasDiscoStatus;
 
                 }
-                if (neutroCarbonizado.isChecked()){
+                if (neutroCarbonizado.isChecked()) {
                     neutroCarbonizadoStatus = "Neutro Carbonizado";
                     todasObservacoes = todasObservacoes + " - " + neutroCarbonizadoStatus;
 
                 }
-                if (marcasParafusos.isChecked()){
+                if (marcasParafusos.isChecked()) {
                     marcasParafusosStatus = "Marca nos parafusos dos mancais";
                     todasObservacoes = todasObservacoes + " - " + marcasParafusosStatus;
 
                 }
-                if (mancaisDeslocados.isChecked()){
+                if (mancaisDeslocados.isChecked()) {
                     mancaisDeslocadosStatus = "Mancais deslocados";
                     todasObservacoes = todasObservacoes + " - " + mancaisDeslocadosStatus;
 
                 }
-                if (ledIntermitente.isChecked()){
+                if (ledIntermitente.isChecked()) {
                     ledIntermitenteStatus = "LED intermitente";
                     todasObservacoes = todasObservacoes + " - " + ledIntermitenteStatus;
 
                 }
-                if (ledApagado.isChecked()){
+                if (ledApagado.isChecked()) {
                     ledApagadoStatus = "LED apagado/ não emite pulsos";
                     todasObservacoes = todasObservacoes + " - " + ledApagadoStatus;
 
                 }
-                if (ledDisparado.isChecked()){
+                if (ledDisparado.isChecked()) {
                     ledDisparadoStatus = "LED disparado";
                     todasObservacoes = todasObservacoes + " - " + ledDisparadoStatus;
 
                 }
-                if (ledAceso.isChecked()){
+                if (ledAceso.isChecked()) {
                     ledAcesoStatus = "LEd aceso direto";
                     todasObservacoes = todasObservacoes + " - " + ledAcesoStatus;
 
                 }
-                if (elementoDescentralizado.isChecked()){
+                if (elementoDescentralizado.isChecked()) {
                     elementoDescentralizadoStatus = "Elemento móvel descentralizado";
                     todasObservacoes = todasObservacoes + " - " + elementoDescentralizadoStatus;
 
                 }
-                if (componentesQueimados.isChecked()){
+                if (componentesQueimados.isChecked()) {
                     componentesQueimadosStatus = "Componentes eletrônicos queimados";
                     todasObservacoes = todasObservacoes + " - " + componentesQueimadosStatus;
 
                 }
-                if (circuitoDefeituoso.isChecked()){
+                if (circuitoDefeituoso.isChecked()) {
                     circuitoDefeituosoStatus = "Circuito eletrônico defeituoso";
                     todasObservacoes = todasObservacoes + " - " + circuitoDefeituosoStatus;
 
                 }
-                if (bobinaInterrompida.isChecked()){
+                if (bobinaInterrompida.isChecked()) {
                     bobinaInterrompidaStatus = "Bobina interrompida sem causa detectada";
                     todasObservacoes = todasObservacoes + " - " + bobinaInterrompidaStatus;
 
                 }
-                if (blocoCarbonizados.isChecked()){
+                if (blocoCarbonizados.isChecked()) {
                     blocoCarbonizadosStatus = "Bloco de terminais carbonizados";
                     todasObservacoes = todasObservacoes + " - " + blocoCarbonizadosStatus;
 
                 }
-                if (placaSolta.isChecked()){
+                if (placaSolta.isChecked()) {
                     placaSoltaStatus = "Placa solta";
-                    todasObservacoes = todasObservacoes + " - " + placaSoltaStatus ;
+                    todasObservacoes = todasObservacoes + " - " + placaSoltaStatus;
 
                 }
-                if (placaAmassada.isChecked()){
-                    placaAmassadaStatus  = "Placa de identificação amassada";
+                if (placaAmassada.isChecked()) {
+                    placaAmassadaStatus = "Placa de identificação amassada";
                     todasObservacoes = todasObservacoes + " - " + placaAmassadaStatus;
                 }
 
