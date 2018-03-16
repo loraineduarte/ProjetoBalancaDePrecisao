@@ -14,7 +14,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
-        android:text="Adicionar Observação"
+        android:text="@string/adicionar_observa_o"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,7 +31,8 @@
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AdicionarObser" />
+        app:layout_constraintTop_toBottomOf="@+id/AdicionarObser"
+        tools:ignore="LabelFor" />
 
     <Button
         android:id="@+id/AddObs"
@@ -40,7 +41,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginStart="210dp"
         android:layout_marginTop="32dp"
-        android:text="Adiciona Observação"
+        android:text="@string/adicionar_observa_o"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ObservacaoRegistrador" />

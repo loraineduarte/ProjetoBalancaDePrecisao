@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -23,12 +22,24 @@ import com.orhanobut.hawk.Hawk;
 
 public class SelecionarMedidorActivity extends AppCompatActivity {
 
-    final CriaBanco banco = new CriaBanco(this);
-    String[] nome;
-    String NumSerie, tipoMedidor;
-    private FloatingActionButton botaoProcurar;
-    EditText numSerie, numGeral, instalacao, ModeloMedidor, FabricanteMedidor, TensaoNominalMedidor, CorrenteNominalMedidor, KDKE, RR, ClasseMedidor, NumElementos,AnoFabricacao, Fios, PortariaInmetro;
-    RadioButton eletronico, mecanico;
+    private final CriaBanco banco = new CriaBanco(this);
+    private String tipoMedidor;
+    private EditText numSerie;
+    private EditText numGeral;
+    private EditText instalacao;
+    private EditText ModeloMedidor;
+    private EditText FabricanteMedidor;
+    private EditText TensaoNominalMedidor;
+    private EditText CorrenteNominalMedidor;
+    private EditText KDKE;
+    private EditText RR;
+    private EditText ClasseMedidor;
+    private EditText NumElementos;
+    private EditText AnoFabricacao;
+    private EditText Fios;
+    private EditText PortariaInmetro;
+    private RadioButton eletronico;
+    private RadioButton mecanico;
 
 
     @Override
@@ -40,14 +51,6 @@ public class SelecionarMedidorActivity extends AppCompatActivity {
 
         BancoController crud = new BancoController(getBaseContext());
         Cursor cursor = crud.pegaMedidores();
-
-        if (cursor.getCount() > 0) {
-
-            final String[] myData = banco.SelectAllMedidores();
-            @SuppressLint("WrongViewCast") final AutoCompleteTextView autoCom = findViewById(R.id.numSerie);
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, myData);
-            autoCom.setAdapter(adapter);
-        }
 
         numSerie = findViewById( R.id.numSerie );
         numGeral = findViewById( R.id.NumGeral );
@@ -65,6 +68,15 @@ public class SelecionarMedidorActivity extends AppCompatActivity {
         AnoFabricacao = findViewById( R.id.AnoFabricacao );
         Fios = findViewById( R.id.Fios );
         PortariaInmetro = findViewById( R.id.PorInmetro );
+
+        if (cursor.getCount() > 0) {
+
+            final String[] myData = banco.SelectAllMedidores();
+            @SuppressLint("WrongViewCast") final AutoCompleteTextView autoCom = (AutoCompleteTextView) numSerie;
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, myData);
+            autoCom.setAdapter(adapter);
+        }
+
         numGeral.setEnabled(false);
         instalacao.setEnabled(false);
         ModeloMedidor.setEnabled(false);
@@ -81,7 +93,7 @@ public class SelecionarMedidorActivity extends AppCompatActivity {
         Fios.setEnabled(false);
         PortariaInmetro.setEnabled(false);
 
-        botaoProcurar = findViewById(R.id.ProcurarMedidor);
+        FloatingActionButton botaoProcurar = findViewById(R.id.ProcurarMedidor);
         botaoProcurar.setClickable(true);
         botaoProcurar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -101,7 +113,7 @@ public class SelecionarMedidorActivity extends AppCompatActivity {
 
                     Toast.makeText(getApplicationContext(), "Sessão incompleta - Campo em Branco! ", Toast.LENGTH_LONG).show();
 
-                }else {
+                } else {
 
                     Hawk.delete("NumeroSerieMedidor");
                     Hawk.delete("NumeroGeralMedidor");
@@ -156,22 +168,22 @@ public class SelecionarMedidorActivity extends AppCompatActivity {
     }
 
 
-    public void doMyThing() {
+    private void doMyThing() {
 
         numSerie = findViewById( R.id.numSerie );
-        NumSerie = String.valueOf(numSerie.getText());
+        String numSerie1 = String.valueOf(numSerie.getText());
 
-        if (NumSerie.equals("")) {
+        if (numSerie1.equals("")) {
             Toast.makeText(getApplicationContext(), "Coloque um número de matrícula para a pesquisa. ", Toast.LENGTH_LONG).show();
         }
-        if (NumSerie.length()>0){
-             nome = banco.SelecionaMedidor(NumSerie);
+        if (numSerie1.length()>0){
+            String[] nome = banco.SelecionaMedidor(numSerie1);
 
             //vetor que vem do banco está na ordem :
             //medidor_num_geral, medidor_instalacao, medidor_modelo, medidor_fabricante, medidor_tensao_nominal, medidor_corrente_nominal, medidor_tipo_medidor, medidor_KdKe," +
                 //" medidor_RR, medidor_num_elementos, medidor_ano_fabricacao,  medidor_classe, medidor_fios, medidor_port_inmetro
 
-             numGeral.setText(nome[0]);
+            numGeral.setText(nome[0]);
             instalacao.setEnabled(true);
             instalacao.setText(nome[1]);
             ModeloMedidor.setEnabled(true);
@@ -186,8 +198,6 @@ public class SelecionarMedidorActivity extends AppCompatActivity {
             eletronico.setEnabled(true);
             mecanico = findViewById( R.id.RadioButtonMecanico );
             mecanico.setEnabled(true);
-
-            Log.d("NOME", nome[6]);
             if(nome[6].equals("Eletrônico")){
                 eletronico.setChecked(true);
                 mecanico.setChecked(false);
@@ -211,14 +221,29 @@ public class SelecionarMedidorActivity extends AppCompatActivity {
             PortariaInmetro.setEnabled(true);
             PortariaInmetro.setText(nome[13]);
 
-
         }
-
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+
+        savedInstanceState.putCharSequence("NumeroSerieMedidor", String.valueOf(numSerie.getText()));
+        savedInstanceState.putCharSequence("NumeroGeralMedidor", String.valueOf(numGeral.getText()));
+        savedInstanceState.putCharSequence("InstalacaoMedidor", String.valueOf(instalacao.getText()));
+        savedInstanceState.putCharSequence("ModeloMedidor", String.valueOf(ModeloMedidor.getText()));
+        savedInstanceState.putCharSequence("FaricanteMedidor", String.valueOf(FabricanteMedidor.getText()));
+        savedInstanceState.putCharSequence("TensaoNominalMedidor", String.valueOf(TensaoNominalMedidor.getText()));
+        savedInstanceState.putCharSequence("CorrenteNominalMedidor", String.valueOf(CorrenteNominalMedidor.getText()));
+        savedInstanceState.putCharSequence("TipoMedidor", tipoMedidor);
+        savedInstanceState.putCharSequence("KdKeMedidor", String.valueOf(KDKE.getText()));
+        savedInstanceState.putCharSequence("rrMedidor", String.valueOf(RR.getText()));
+        savedInstanceState.putCharSequence("ClasseMedidor", String.valueOf(ClasseMedidor.getText()));
+        savedInstanceState.putCharSequence("NumElementosMedidor", String.valueOf(NumElementos.getText()));
+        savedInstanceState.putCharSequence("AnoFabricacaoMedidor", String.valueOf(AnoFabricacao.getText()));
+        savedInstanceState.putCharSequence("FiosMedidor", String.valueOf(Fios.getText()));
+        savedInstanceState.putCharSequence("PortariaInmetroMedidor", String.valueOf(PortariaInmetro.getText()));
+
+        super.onSaveInstanceState(savedInstanceState);
     }
 
 }

@@ -69,8 +69,4 @@ public class ObservacaoRegistradorActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 }

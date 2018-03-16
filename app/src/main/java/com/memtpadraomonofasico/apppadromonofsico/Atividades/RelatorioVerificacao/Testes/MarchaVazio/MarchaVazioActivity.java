@@ -19,10 +19,12 @@ import java.sql.Time;
 
 public class MarchaVazioActivity extends AppCompatActivity {
 
-    RadioButton aprovado, naoRealizado, reprovado;
-    String statusMarchaVazio;
-    EditText tempoReprovado;
-    String tempoReprovadoMarchaVazio;
+    private RadioButton aprovado;
+    private RadioButton naoRealizado;
+    private RadioButton reprovado;
+    private String statusMarchaVazio;
+    private EditText tempoReprovado;
+    private String tempoReprovadoMarchaVazio;
 
 
     @SuppressLint("WrongViewCast")
@@ -113,8 +115,4 @@ public class MarchaVazioActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 }

@@ -21,16 +21,21 @@ import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificaca
 import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
 
+import java.util.Objects;
+
 public class InspecaoVisualActivity extends AppCompatActivity {
 
     private RadioButton Reprovado, Aprovado;
     private static final int TIRAR_FOTO = 10207;
     private static final int REQUEST_OBS = 1000;
-    String status, statusReprovado;
-    String observacaoInspecao = "";
-    Bitmap fotoInspecao, fotoResized;
-    Spinner opcoesReprovados;
-    EditText Selo1, Selo2, Selo3;
+    private String status;
+    private String statusReprovado;
+    private String observacaoInspecao = "";
+    private Bitmap fotoResized;
+    private Spinner opcoesReprovados;
+    private EditText Selo1;
+    private EditText Selo2;
+    private EditText Selo3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,6 +164,7 @@ public class InspecaoVisualActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("ShowToast")
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == TIRAR_FOTO) {
@@ -167,17 +173,15 @@ public class InspecaoVisualActivity extends AppCompatActivity {
                 if(data != null) {
                     Toast.makeText(getBaseContext(), "A imagem foi capturada", Toast.LENGTH_SHORT);
                     Bundle bundle = data.getExtras();
-                    fotoInspecao = (Bitmap) bundle.get("data");
-                    fotoResized = Bitmap.createScaledBitmap(fotoInspecao, 100, 120, false);
+                    assert bundle != null;
+                    Bitmap fotoInspecao = (Bitmap) bundle.get("data");
+                    fotoResized = Bitmap.createScaledBitmap(Objects.requireNonNull(fotoInspecao), 100, 120, false);
 
                     if(fotoResized !=null){
                         ImageView imageView = findViewById(R.id.imageView);
                         imageView.setImageBitmap(fotoResized);
                     }
 
-                } else if (resultCode == RESULT_CANCELED) {
-                    Toast.makeText(getBaseContext(), "A captura foi cancelada",
-                            Toast.LENGTH_SHORT);
                 } else {
                     Toast.makeText(getBaseContext(), "A câmera foi fechada",
                             Toast.LENGTH_SHORT);
@@ -195,10 +199,18 @@ public class InspecaoVisualActivity extends AppCompatActivity {
         }
     }
 
-
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+
+        savedInstanceState.putCharSequence("Selo1", String.valueOf(Selo1.getText()));
+        savedInstanceState.putCharSequence("Selo2", String.valueOf(Selo2.getText()));
+        savedInstanceState.putCharSequence("Selo3", String.valueOf(Selo3.getText()));
+        savedInstanceState.putCharSequence("Reprovado", String.valueOf(Reprovado.getText()));
+        savedInstanceState.putCharSequence("Aprovado", String.valueOf(Aprovado.getText()));
+        savedInstanceState.putCharSequence("opcoesReprovados", String.valueOf(opcoesReprovados));
+        savedInstanceState.putCharSequence("fotoResized", String.valueOf(fotoResized));
+
+        super.onSaveInstanceState(savedInstanceState);
     }
 
 }

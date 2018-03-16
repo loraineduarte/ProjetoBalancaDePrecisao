@@ -16,50 +16,53 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        tools:ignore="RtlHardcoded" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Dispositivos\n pareados"
+        android:text="@string/dispositivos_n_pareados"
         android:id="@+id/button_PairedDevices"
         android:layout_below="@+id/statusMessage"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="20dp"
-        android:onClick="searchPairedDevices"/>
+        android:onClick="searchPairedDevices"
+        tools:ignore="RtlHardcoded" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Iniciar descoberta\n de dispositivos"
-        android:id="@+id/button_DiscoveredDevices"
+        android:text="@string/iniciar_descoberta_n_de_dispositivos"
         android:layout_alignTop="@+id/button_PairedDevices"
         android:layout_toRightOf="@+id/button_PairedDevices"
         android:layout_toEndOf="@+id/button_PairedDevices"
         android:layout_marginLeft="5dp"
-        android:onClick="discoverDevices"/>
+        android:onClick="discoverDevices"
+        tools:ignore="RtlHardcoded" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Esperar\nconexão"
-        android:id="@+id/button_WaitConnection"
+        android:text="@string/esperar_nconex_o"
         android:layout_marginLeft="5dp"
         android:layout_alignBottom="@+id/button_Visibility"
         android:layout_toRightOf="@+id/button_Visibility"
         android:layout_toEndOf="@+id/button_Visibility"
-        android:onClick="waitConnection" />
+        android:onClick="waitConnection"
+        tools:ignore="RtlHardcoded" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Habilitar\nVisibilidade"
+        android:text="@string/habilitar_nvisibilidade"
         android:id="@+id/button_Visibility"
         android:layout_below="@+id/button_PairedDevices"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:onClick="enableVisibility" />
+        android:onClick="enableVisibility"
+        tools:ignore="RtlHardcoded" />
 
     <EditText
         android:layout_width="match_parent"
@@ -67,18 +70,20 @@
         android:id="@+id/editText_MessageBox"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:inputType=""
+        tools:ignore="LabelFor,RtlHardcoded" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Enviar"
-        android:id="@+id/button_Send"
+        android:text="@string/enviar"
         android:layout_above="@+id/editText_MessageBox"
         android:layout_alignRight="@+id/editText_MessageBox"
         android:layout_alignEnd="@+id/editText_MessageBox"
-        android:onClick="sendMessage" />
+        android:onClick="sendMessage"
+        tools:ignore="RtlHardcoded" />
 
     <TextView
         android:layout_width="wrap_content"

@@ -12,11 +12,26 @@ import android.widget.RadioButton;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
 
+/**
+ *
+ */
 public class InformacoesComplementaresActivity extends AppCompatActivity {
 
-    RadioButton tampasolidarizada, semTampa, tampaQuebrada, tampaQuebradaTransporte, seloRompido, terminaisOxidados, leituraDivergente;
-    String tampasolidarizadaStatus, semTampaStatus, tampaQuebradaStatus, tampaQuebradaTransporteStatus, seloRompidoStatus, terminaisOxidadosStatus, leituraDivergenteStatus ;
-    String informacoesComplementares ="";
+    private RadioButton tampasolidarizada;
+    private RadioButton semTampa;
+    private RadioButton tampaQuebrada;
+    private RadioButton tampaQuebradaTransporte;
+    private RadioButton seloRompido;
+    private RadioButton terminaisOxidados;
+    private RadioButton leituraDivergente;
+    private String tampasolidarizadaStatus;
+    private String semTampaStatus;
+    private String tampaQuebradaStatus;
+    private String tampaQuebradaTransporteStatus;
+    private String seloRompidoStatus;
+    private String terminaisOxidadosStatus;
+    private String leituraDivergenteStatus ;
+    private String informacoesComplementares ="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,8 +104,4 @@ public class InformacoesComplementaresActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 }

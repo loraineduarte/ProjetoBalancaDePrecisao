@@ -6,13 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-/**
- * Created by loraine.duarte on 03/02/2018.
- */
-
 public class BancoController {
     private SQLiteDatabase db;
-    private CriaBanco banco;
+    private final CriaBanco banco;
 
     public BancoController(Context context){
         banco = new CriaBanco(context);

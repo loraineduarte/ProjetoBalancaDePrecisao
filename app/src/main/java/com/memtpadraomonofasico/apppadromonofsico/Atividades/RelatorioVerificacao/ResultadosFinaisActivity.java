@@ -16,11 +16,16 @@ import com.orhanobut.hawk.Hawk;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class ResultadosFinaisActivity extends AppCompatActivity {
 
-    EditText leituraRetirada, leituraCalibracao, leituraPosCalibracao, DataInicial, DataFinal, HoraInicial, HoraFinal;
-    String dataFormatada, horaFinalFormatada, horaInicialFormatada;
+    private EditText leituraRetirada;
+    private EditText leituraCalibracao;
+    private EditText leituraPosCalibracao;
+    private String dataFormatada;
+    private String horaFinalFormatada;
+    private String horaInicialFormatada;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -30,12 +35,12 @@ public class ResultadosFinaisActivity extends AppCompatActivity {
 
         Log.d("RESULTADOS FINAIS", String.valueOf(Hawk.count()));
 
-        SimpleDateFormat formataData = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat formataData = new SimpleDateFormat("dd/MM/yyyy" , Locale.getDefault());
         Date data = new Date();
         dataFormatada = formataData.format(data);
 
         Date hora = Calendar.getInstance().getTime();
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss" , Locale.getDefault());
         horaFinalFormatada = sdf.format(hora);
         horaInicialFormatada = Hawk.get("HoraInicial");
 
@@ -43,15 +48,15 @@ public class ResultadosFinaisActivity extends AppCompatActivity {
         Log.d("Hora Inicial", horaInicialFormatada);
         Log.d("Hora Final", horaFinalFormatada);
 
-        DataInicial = findViewById(R.id.DataInicial);
-        DataInicial.setText(dataFormatada);
-        DataFinal = findViewById(R.id.DataFinal);
-        DataFinal.setText(dataFormatada);
+        EditText dataInicial = findViewById(R.id.DataInicial);
+        dataInicial.setText(dataFormatada);
+        EditText dataFinal = findViewById(R.id.DataFinal);
+        dataFinal.setText(dataFormatada);
 
-        HoraInicial = findViewById(R.id.HoraInicio);
-        HoraInicial.setText(horaInicialFormatada);
-        HoraFinal = findViewById(R.id.HoraFim);
-        HoraFinal.setText(horaFinalFormatada);
+        EditText horaInicial = findViewById(R.id.HoraInicio);
+        horaInicial.setText(horaInicialFormatada);
+        EditText horaFinal = findViewById(R.id.HoraFim);
+        horaFinal.setText(horaFinalFormatada);
 
         @SuppressLint("WrongViewCast") Button next =  findViewById(R.id.NextFase10);
         next.setOnClickListener(new View.OnClickListener() {
@@ -93,8 +98,4 @@ public class ResultadosFinaisActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 }

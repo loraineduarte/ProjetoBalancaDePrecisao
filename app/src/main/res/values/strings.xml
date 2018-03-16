@@ -1,116 +1,14 @@
+<!--suppress ALL -->
+
+
 <resources>
     <string name="app_name">Padrão Monofásico</string>
-
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="title_activity_relatorio_verificacao">RelatorioVerificacaoActivity</string>
-
-    <string name="action_settings">Settings</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
-    <string name="section_format">Hello World from section: %1$d</string>
-    <string name="title_activity_informacoes_complementares">InformacoesComplementaresActivity
-    </string>
-    <string name="title_activity_scrolling">ScrollingActivity</string>
-    <string name="large_text">
-        "Material is the metaphor.\n\n"
-
-        "A material metaphor is the unifying theory of a rationalized space and a system of motion."
-        "The material is grounded in tactile reality, inspired by the study of paper and ink, yet "
-        "technologically advanced and open to imagination and magic.\n"
-        "Surfaces and edges of the material provide visual cues that are grounded in reality. The "
-        "use of familiar tactile attributes helps users quickly understand affordances. Yet the "
-        "flexibility of the material creates new affordances that supercede those in the physical "
-        "world, without breaking the rules of physics.\n"
-        "The fundamentals of light, surface, and movement are key to conveying how objects move, "
-        "interact, and exist in space and in relation to each other. Realistic lighting shows "
-        "seams, divides space, and indicates moving parts.\n\n"
-
-        "Bold, graphic, intentional.\n\n"
-
-        "The foundational elements of print based design typography, grids, space, scale, color, "
-        "and use of imagery guide visual treatments. These elements do far more than please the "
-        "eye. They create hierarchy, meaning, and focus. Deliberate color choices, edge to edge "
-        "imagery, large scale typography, and intentional white space create a bold and graphic "
-        "interface that immerse the user in the experience.\n"
-        "An emphasis on user actions makes core functionality immediately apparent and provides "
-        "waypoints for the user.\n\n"
-
-        "Motion provides meaning.\n\n"
-
-        "Motion respects and reinforces the user as the prime mover. Primary user actions are "
-        "inflection points that initiate motion, transforming the whole design.\n"
-        "All action takes place in a single environment. Objects are presented to the user without "
-        "breaking the continuity of experience even as they transform and reorganize.\n"
-        "Motion is meaningful and appropriate, serving to focus attention and maintain continuity. "
-        "Feedback is subtle yet clear. Transitions are efﬁcient yet coherent.\n\n"
-
-        "3D world.\n\n"
-
-        "The material environment is a 3D space, which means all objects have x, y, and z "
-        "dimensions. The z-axis is perpendicularly aligned to the plane of the display, with the "
-        "positive z-axis extending towards the viewer. Every sheet of material occupies a single "
-        "position along the z-axis and has a standard 1dp thickness.\n"
-        "On the web, the z-axis is used for layering and not for perspective. The 3D world is "
-        "emulated by manipulating the y-axis.\n\n"
-
-        "Light and shadow.\n\n"
-
-        "Within the material environment, virtual lights illuminate the scene. Key lights create "
-        "directional shadows, while ambient light creates soft shadows from all angles.\n"
-        "Shadows in the material environment are cast by these two light sources. In Android "
-        "development, shadows occur when light sources are blocked by sheets of material at "
-        "various positions along the z-axis. On the web, shadows are depicted by manipulating the "
-        "y-axis only. The following example shows the card with a height of 6dp.\n\n"
-
-        "Resting elevation.\n\n"
-
-        "All material objects, regardless of size, have a resting elevation, or default elevation "
-        "that does not change. If an object changes elevation, it should return to its resting "
-        "elevation as soon as possible.\n\n"
-
-        "Component elevations.\n\n"
-
-        "The resting elevation for a component type is consistent across apps (e.g., FAB elevation "
-        "does not vary from 6dp in one app to 16dp in another app).\n"
-        "Components may have different resting elevations across platforms, depending on the depth "
-        "of the environment (e.g., TV has a greater depth than mobile or desktop).\n\n"
-
-        "Responsive elevation and dynamic elevation offsets.\n\n"
-
-        "Some component types have responsive elevation, meaning they change elevation in response "
-        "to user input (e.g., normal, focused, and pressed) or system events. These elevation "
-        "changes are consistently implemented using dynamic elevation offsets.\n"
-        "Dynamic elevation offsets are the goal elevation that a component moves towards, relative "
-        "to the component’s resting state. They ensure that elevation changes are consistent "
-        "across actions and component types. For example, all components that lift on press have "
-        "the same elevation change relative to their resting elevation.\n"
-        "Once the input event is completed or cancelled, the component will return to its resting "
-        "elevation.\n\n"
-
-        "Avoiding elevation interference.\n\n"
-
-        "Components with responsive elevations may encounter other components as they move between "
-        "their resting elevations and dynamic elevation offsets. Because material cannot pass "
-        "through other material, components avoid interfering with one another any number of ways, "
-        "whether on a per component basis or using the entire app layout.\n"
-        "On a component level, components can move or be removed before they cause interference. "
-        "For example, a floating action button (FAB) can disappear or move off screen before a "
-        "user picks up a card, or it can move if a snackbar appears.\n"
-        "On the layout level, design your app layout to minimize opportunities for interference. "
-        "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
-        "when a user tries to pick up one of cards.\n\n"
-    </string>
-    <string name="aprovado">Aprovado</string>
     <string name="n_o_possibilita_teste">Não Possibilita Teste</string>
     <string name="registrador">Registrador</string>
-    <string name="anterior">Anterior</string>
     <string name="foto_p_s_teste">Foto Pós Teste</string>
     <string name="foto_pr_teste">Foto Pré Teste</string>
-    <string name="n_o_registra_corretamente">Não Registra Corretamente</string>
-    <string name="n_o_registra_consumo">Não Registra Consumo</string>
-    <string name="display_apagado">Display Apagado</string>
     <string name="todo">TODO</string>
     <string name="limpar_campo">Limpar Campo</string>
     <string name="retornar_ao_teste_de_registrador">Retornar ao Teste de Registrador</string>
@@ -121,83 +19,121 @@
     <string name="medidor_com_irregularidade">Medidor com Irregularidade</string>
     <string name="reintegra_o">Reintegração</string>
     <string name="garantia">Garantia</string>
-    <string name="informa_es_complementares_e_desacordo_com_o_toi">Informações Complementares e Desacordo com o TOI</string>
     <string name="tampa_do_medidor_solidarizada">Tampa do Medidor Solidarizada</string>
-    <string name="tampa_do_medidor_danificada">Tampa do Medidor Danificada</string>
-    <string name="tampa_do_bloco_ausente">Tampa do Bloco Ausente</string>
-    <string name="selos_rompidos_no_labort_rio">Selos Rompidos No Labortório</string>
     <string name="conformidade">Conformidade</string>
     <string name="varia_o_de_leitura">Variação de Leitura</string>
-    <string name="carga_nominal_erro">Carga Nominal Erro (%)</string>
     <string name="aplicar_carga_nominal">Aplicar Carga Nominal</string>
-    <string name="carga_pequena_erro">Carga Pequena Erro (%)</string>
     <string name="aplicar_carga_pequena">Aplicar Carga Pequena</string>
     <string name="inspe_o_visual">Inspeção Visual</string>
-    <string name="_2">2 -</string>
     <string name="selos_de_calibra_o">Selos de Calibração</string>
-    <string name="_4">4 -</string>
-    <string name="_1">1 -</string>
-    <string name="_3">3 -</string>
     <string name="string_aprovado">Aprovado</string>
-    <string name="violados">Violados</string>
-    <string name="adicionar_observa_o">Adicionar Observação</string>
-    <string name="ausentes">Ausentes</string>
     <string name="servi_o">Serviço</string>
-    <string name="numero">Numero</string>
-    <string name="cep">CEP</string>
-    <string name="bairro">Bairro</string>
-    <string name="n_mero_da_nota_de_servi_o">Número da Nota de Serviço</string>
-    <string name="complemento">Complemento</string>
     <string name="endere_o">Endereço</string>
-    <string name="rua_avenida">Rua/Avenida</string>
-    <string name="n_mero_do_documento_do_cliente">Número do documento do Cliente</string>
-    <string name="n_mero_da_instala_o">Número da Instalação</string>
-    <string name="nome_do_cliente">Nome do Cliente</string>
-    <string name="selecionar_medidor">Selecionar Medidor</string>
-    <string name="corrente_nominal_a">Corrente Nominal (A)</string>
-    <string name="portaria_inmetro">Portaria Inmetro</string>
-    <string name="kd_ke">Kd/Ke</string>
-    <string name="ano_de_fabrica_o">Ano de Fabricação</string>
-    <string name="fabricante">Fabricante</string>
-    <string name="n_mero_de_s_rie">Número de Série</string>
-    <string name="modelo">Modelo</string>
-    <string name="n_de_elementos">Nº de Elementos</string>
-    <string name="tens_o_nominal_v">Tensão Nominal (V)</string>
-    <string name="eletr_nico">Eletrônico</string>
-    <string name="classe">Classe</string>
-    <string name="reconstitu_dos">Reconstituídos</string>
-    <string name="n_o_padronizados">Não Padronizados</string>
     <string name="adicionar_foto">Adicionar Foto</string>
     <string name="marcha_em_vazio">Marcha em Vazio</string>
     <string name="aplicar_tens_o">Aplicar Tensão</string>
     <string name="status">Status</string>
     <string name="n_o_realizado">Não Realizado</string>
     <string name="reprovado">Reprovado</string>
-    <string name="tempo">Tempo</string>
     <string name="situa_es_observadas">Situações Observadas</string>
-    <string name="sujeira_interna">Sujeira Interna</string>
     <string name="sinais_de_carboniza_o">Sinais de Carbonização</string>
-    <string name="mancais_deslocados_elem_m_vel_comprimido">Mancais Deslocados / Elem. Móvel Comprimido</string>
-    <string name="elemento_m_vel_descentralizado">Elemento Móvel Descentralizado</string>
-    <string name="ranhuras_no_disco_do_elemento_m_vel">Ranhuras no Disco do Elemento Móvel</string>
-    <string name="marcas_nos_parafusos_do_mancais">Marcas nos Parafusos do Mancais</string>
-    <string name="led_disparado">Led Disparado</string>
-    <string name="led_aceso_direto">Led Aceso Direto</string>
     <string name="led_intermitente">Led Intermitente</string>
     <string name="led_apagado_n_o_emite_pulso">Led Apagado/ Não Emite Pulso</string>
-    <string name="circuito_eletr_nico_defeituoso">Circuito Eletrônico Defeituoso</string>
     <string name="gerar_relat_rio">Gerar Relatório</string>
     <string name="relat_rio_de_verifica_o">Relatório de Verificação</string>
     <string name="selecionar_avaliador">Selecionar Avaliador</string>
-    <string name="nome_do_avaliador">Nome do Avaliador</string>
     <string name="dados_gerais">Dados Gerais</string>
     <string name="toi">TOI</string>
     <string name="pr_ximo">Próximo</string>
     <string name="sem_solicita_o_do_consumidor">SEM (Solicitação do Consumidor)</string>
-    <string name="n">Nº</string>
-    <string name="matr_cula_do_avaliador">Matrícula do Avaliador</string>
+    <string name="normal_n_o_possui">Normal/ Não possui</string>
+    <string name="circuito_de_potencial_elo_de_calibra_o">Circuito de Potencial / Elo de Calibração</string>
+    <string name="salvar">Salvar</string>
+    <string name="limpar">Limpar</string>
+    <string name="criar_avaliador">Criar Avaliador</string>
+    <string name="nome_do_avaliador">Nome do Avaliador *</string>
+    <string name="n_mero_de_matr_cula">Número de Matrícula *</string>
+    <string name="informa_es_complementares">Informações Complementares</string>
+    <string name="sem_tampa_do_bloco_de_terminais">Sem tampa do bloco de terminais</string>
+    <string name="tampa_quebrada">Tampa quebrada</string>
+    <string name="tampa_quebrada_no_transporte">Tampa quebrada no transporte</string>
+    <string name="selo_rompido_no_laborat_rio">Selo rompido no laboratório</string>
+    <string name="terminais_de_corrente_oxidados">Terminais de corrente oxidados</string>
+    <string name="leitura_divergente">Leitura divergente</string>
+    <string name="carga_nominal_erro">Carga Nominal Erro (%)</string>
+    <string name="carga_pequena_erro">Carga Pequena Erro (%)</string>
+    <string name="imagem_da_inspe_o_visual">Imagem da Inspeção Visual</string>
+    <string name="_3">3 - *</string>
+    <string name="_2">2 - *</string>
+    <string name="_1">1 - *</string>
+    <string name="tempo">Tempo *</string>
     <string name="medidor">Medidor</string>
+    <string name="n_mero_de_s_rie">Número de Série *</string>
+    <string name="modelo">Modelo *</string>
+    <string name="eletr_nico">Eletrônico</string>
     <string name="mec_nico">Mecânico</string>
+    <string name="rr">RR</string>
+    <string name="n_de_elementos">Nº de Elementos *</string>
+    <string name="ano_de_fabrica_o">Ano de Fabricação *</string>
+    <string name="portaria_inmetro">Portaria Inmetro *</string>
+    <string name="instala_o">Instalação *</string>
+    <string name="n_geral">Nº Geral</string>
+    <string name="classe">Classe *</string>
+    <string name="adicionar_observa_o">Adicionar Observação</string>
+    <string name="retornar_inspe_o_visual">Retornar á Inspeção Visual</string>
+    <string name="executar_teste">Executar Teste</string>
+    <string name="matr_cula_do_avaliador">Matrícula do Avaliador *</string>
+    <string name="n">Nº</string>
+    <string name="resultados_finais">Resultados Finais</string>
+    <string name="data_in_cio">Data Início</string>
+    <string name="hora_in_cio">Hora Início</string>
+    <string name="data_fim">Data Fim</string>
+    <string name="hora_fim">Hora Fim</string>
+    <string name="leitura_de_retirada">Leitura de Retirada*</string>
+    <string name="leitura_de_calibra_o">Leitura de Calibração*</string>
+    <string name="leitura_p_s_calibra_o">Leitura Pós Calibração*</string>
+    <string name="selecionar_medidor">Selecionar Medidor</string>
+    <string name="num_serie">Número de Série *</string>
+    <string name="fabricante">Fabricante *</string>
+    <string name="tens_o_nominal_v">Tensão Nominal (V) *</string>
+    <string name="corrente_nominal_a">Corrente Nominal (A) *</string>
+    <string name="kd_ke">Kd/Ke *</string>
+    <string name="fios">Fios*</string>
+    <string name="n_da_nota_de_servi_o">Nº da Nota de Serviço *</string>
+    <string name="n_da_instala_o">Nº da Instalação *</string>
+    <string name="nome_do_cliente">Nome do Cliente *</string>
+    <string name="n_do_documento_do_cliente">Nº do Documento do Cliente *</string>
+    <string name="rua_avenida">Rua/ Avenida</string>
+    <string name="complemento">Complemento</string>
+    <string name="bairro">Bairro</string>
+    <string name="cep">CEP</string>
+    <string name="n_inv_lucro">Nº Invólucro *</string>
+    <string name="sujeira_interna_atrito">Sujeira interna - atrito</string>
+    <string name="ranhuras_no_disco_do_elemento_m_vel">Ranhuras no disco do elemento móvel</string>
+    <string name="placa_solta">Placa solta</string>
+    <string name="placa_de_identifica_o_amassada">Placa de identificação amassada</string>
+    <string name="neutro_carbonizado">Neutro carbonizado</string>
+    <string name="marcas_nos_parafusos_dos_mancais">Marcas nos parafusos dos mancais</string>
+    <string name="mancais_deslocados">Mancais deslocados</string>
+    <string name="led_disparado">Led disparado</string>
+    <string name="led_aceso_direto">Led aceso direto</string>
+    <string name="elemento_m_vel_descentralizado">Elemento móvel descentralizado</string>
+    <string name="componentes_eletr_nicos_queimados">Componentes eletrõnicos queimados</string>
+    <string name="circuito_eletr_nico_defeituoso">Circuito eletrônico defeituoso</string>
+    <string name="bobina_interrompida_sem_causa_detectada">Bobina interrompida sem causa detectada</string>
+    <string name="bloco_de_terminais_carbonizados">Bloco de terminais carbonizados</string>
+    <string name="navheader">NavHeader</string>
+    <string name="padr_o_monof_sico">Padrão Monofásico</string>
+    <string name="po">...</string>
+    <string name="dispositivos_n_pareados">Dispositivos  pareados</string>
+    <string name="iniciar_descoberta_n_de_dispositivos">Iniciar descoberta  de dispositivos</string>
+    <string name="esperar_nconex_o">Esperar conexão</string>
+    <string name="habilitar_nvisibilidade">Habilitar Visibilidade</string>
+    <string name="enviar">Enviar</string>
+    <string name="cadastros">Cadastros</string>
+    <string name="avaliador">Avaliador</string>
+    <string name="medidores">Medidores</string>
+    <string name="testes">Testes</string>
 
     <string-array name="ReprovadoInspeçãoVisual">
         <item></item>

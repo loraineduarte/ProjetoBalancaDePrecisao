@@ -14,17 +14,25 @@ import com.orhanobut.hawk.Hawk;
 
 public class ServicoActivity extends AppCompatActivity {
 
-    String numNotaServico, NumInvolucro, numInstalacao, nomeCliente, numDocumentoCliente, rua, numero, complemento, bairro, cep;
-    EditText NumNotaServico, numInvolucro, NumInstalacao, NomeCliente, NumDocumentoCliente, Rua, Numero, Complemento, Bairro, CEP;
+    private EditText numNotaServico;
+    private EditText numInvolucro;
+    private EditText numInstalacao;
+    private EditText NomeCliente;
+    private EditText NumDocumentoCliente;
+    private EditText Rua;
+    private EditText Numero;
+    private EditText Complemento;
+    private EditText Bairro;
+    private EditText CEP;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_servico);
 
-        NumNotaServico = findViewById( R.id.NumNotaServico );
+        numNotaServico = findViewById( R.id.NumNotaServico );
         numInvolucro = findViewById( R.id.numInvolucro );
-        NumInstalacao = findViewById( R.id.NumInstalacao );
+        numInstalacao = findViewById( R.id.NumInstalacao );
         NomeCliente = findViewById( R.id.NomeCliente );
         NumDocumentoCliente = findViewById( R.id.NumDocumentoCliente );
         Rua = findViewById( R.id.Rua );
@@ -49,54 +57,52 @@ public class ServicoActivity extends AppCompatActivity {
                 Hawk.delete("BairroCliente");
                 Hawk.delete("CepCliente");
 
-
-                numNotaServico = String.valueOf(NumNotaServico.getText());
-                NumInvolucro = String.valueOf(numInvolucro.getText());
-                numInstalacao = String.valueOf(NumInstalacao.getText());
-                nomeCliente = String.valueOf(NomeCliente.getText());
-                numDocumentoCliente = String.valueOf(NumDocumentoCliente.getText());
-                rua = String.valueOf(Rua.getText());
-                numero = String.valueOf(Numero.getText());
-                complemento = String.valueOf(Complemento.getText());
-                bairro = String.valueOf(Bairro.getText());
-                cep = String.valueOf(CEP.getText());
-
-                if(numNotaServico.isEmpty() || NumInvolucro.isEmpty()|| numInstalacao.isEmpty() || nomeCliente.isEmpty() || numDocumentoCliente.isEmpty() ){
+                if(numNotaServico.getText().toString().isEmpty() || numInvolucro.getText().toString().isEmpty()|| numInstalacao.getText().toString().isEmpty() ||
+                        NomeCliente.getText().toString().isEmpty() || NumDocumentoCliente.getText().toString().isEmpty() ){
                     Toast.makeText(getApplicationContext(), "Sessão incompleta - Campo em Branco! ", Toast.LENGTH_LONG).show();
+
                 } else {
 
+                    Hawk.put("NumeroNotaServico",String.valueOf(numNotaServico.getText()));
+                    Hawk.put("NumeroInvolucro",String.valueOf(numInvolucro.getText()));
+                    Hawk.put("NumeroInstalacaoServico", String.valueOf(numInstalacao.getText()));
+                    Hawk.put("NomeClienteServico", String.valueOf(NomeCliente.getText()));
+                    Hawk.put("NumDocumentoCliente", String.valueOf(NumDocumentoCliente.getText()));
+                    Hawk.put("RuaCliente", String.valueOf(Rua.getText()));
+                    Hawk.put("NumeroCliente", String.valueOf(Numero.getText()));
+                    Hawk.put("ComplementoCliente", String.valueOf(Complemento.getText()));
+                    Hawk.put("BairroCliente", String.valueOf(Bairro.getText()));
+                    Hawk.put("CepCliente", String.valueOf(CEP.getText()));
 
-
-                    Hawk.put("NumeroNotaServico",numNotaServico);
-                    Hawk.put("NumeroInvolucro",NumInvolucro);
-                    Hawk.put("NumeroInstalacaoServico", numInstalacao);
-                    Hawk.put("NomeClienteServico", nomeCliente);
-                    Hawk.put("NumDocumentoCliente", numDocumentoCliente);
-                    Hawk.put("RuaCliente", rua);
-                    Hawk.put("NumeroCliente", numero);
-                    Hawk.put("ComplementoCliente", complemento);
-                    Hawk.put("BairroCliente", bairro);
-                    Hawk.put("CepCliente", cep);
-                abrirMedidor();
+                    abrirMedidor();
                 }
-
             }
         });
     }
 
     private void abrirMedidor() {
 
-
-
-
-
-
         Intent intent = new Intent(this, SelecionarMedidorActivity.class);
         startActivity(intent);
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+
+
+        savedInstanceState.putCharSequence("NumNotaServico", String.valueOf(numNotaServico.getText()));
+        savedInstanceState.putCharSequence("numInvolucro", String.valueOf(numInvolucro.getText()));
+        savedInstanceState.putCharSequence("NumInstalacao", String.valueOf(numInstalacao.getText()));
+        savedInstanceState.putCharSequence("NomeCliente", String.valueOf(NomeCliente.getText()));
+        savedInstanceState.putCharSequence("NumDocumentoCliente", String.valueOf(NumDocumentoCliente.getText()));
+        savedInstanceState.putCharSequence("Rua", String.valueOf(Rua.getText()));
+        savedInstanceState.putCharSequence("Numero", String.valueOf(Numero.getText()));
+        savedInstanceState.putCharSequence("Complemento", String.valueOf(Complemento.getText()));
+        savedInstanceState.putCharSequence("Bairro", String.valueOf(Bairro.getText()));
+        savedInstanceState.putCharSequence("CEP", String.valueOf(CEP.getText()));
+
+        super.onSaveInstanceState(savedInstanceState);
     }
+
+
 }

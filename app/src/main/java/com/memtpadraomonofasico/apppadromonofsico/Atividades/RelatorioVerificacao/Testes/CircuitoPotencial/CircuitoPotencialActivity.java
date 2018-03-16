@@ -17,11 +17,16 @@ import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificaca
 import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
 
+/**
+ *
+ */
+@SuppressWarnings("ALL")
 public class CircuitoPotencialActivity extends AppCompatActivity {
 
-    RadioButton normal, reprovado;
-    String status;
-    Spinner opcoesReprovados;
+    private RadioButton normal;
+    private RadioButton reprovado;
+    private String status;
+    private Spinner opcoesReprovados;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +45,8 @@ public class CircuitoPotencialActivity extends AppCompatActivity {
         opcoesReprovados.setAdapter(adapter);
         opcoesReprovados.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-            {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 status = parent.getItemAtPosition(position).toString();
-                Log.d("SELECIONADO", status);
             }
             public void onNothingSelected(AdapterView<?> parent)
             {
@@ -86,6 +89,9 @@ public class CircuitoPotencialActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * @param view
+     */
     public void onCheckboxClicked(View view) {
 
         switch (view.getId()) {
@@ -103,8 +109,4 @@ public class CircuitoPotencialActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 }

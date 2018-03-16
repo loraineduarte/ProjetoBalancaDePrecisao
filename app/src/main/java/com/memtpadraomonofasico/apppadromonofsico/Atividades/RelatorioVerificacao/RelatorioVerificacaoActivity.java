@@ -22,14 +22,17 @@ import com.orhanobut.hawk.Hawk;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class RelatorioVerificacaoActivity extends AppCompatActivity  {
-    String[] nome;
-    String toiNumero , matricula, nomeAvaliadorString;
+    private String toiNumero;
+    private String matricula;
+    private String nomeAvaliadorString;
     private RadioButton SEM, TOI;
-    private FloatingActionButton botaoProcurar;
-    EditText MatriculaAvaliador, nomeAvaliador, ToiNumero;
-    final CriaBanco banco = new CriaBanco(this);
+    private EditText MatriculaAvaliador;
+    private EditText nomeAvaliador;
+    private EditText ToiNumero;
+    private final CriaBanco banco = new CriaBanco(this);
 
 
     @SuppressLint("WrongViewCast")
@@ -40,7 +43,7 @@ public class RelatorioVerificacaoActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_relatorio_verificacao);
 
         Date hora = Calendar.getInstance().getTime();
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
         final String horaInicialFormatada = sdf.format(hora);
 
         Hawk.init(this).build();
@@ -54,7 +57,7 @@ public class RelatorioVerificacaoActivity extends AppCompatActivity  {
         TOI = findViewById(R.id.TOI);
         ToiNumero = findViewById(R.id.ToiNumero);
 
-        botaoProcurar = findViewById(R.id.ProcurarAvaliador);
+        FloatingActionButton botaoProcurar = findViewById(R.id.ProcurarAvaliador);
         botaoProcurar.setClickable(true);
         botaoProcurar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -64,8 +67,8 @@ public class RelatorioVerificacaoActivity extends AppCompatActivity  {
 
         if (cursor.getCount() > 0) {
             final String[] myData = banco.SelectAllAvaliadores();
-            final AutoCompleteTextView autoCom = findViewById(R.id.MatriculaAvaliador);
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, myData);
+            final AutoCompleteTextView autoCom = (AutoCompleteTextView) MatriculaAvaliador;
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, myData);
             autoCom.setAdapter(adapter);
         }
 
@@ -89,12 +92,6 @@ public class RelatorioVerificacaoActivity extends AppCompatActivity  {
                     Toast.makeText(getApplicationContext(), "Sessão incompleta - Colocar o número do TOI ! ", Toast.LENGTH_LONG).show();
 
                 } else{
-
-                    MatriculaAvaliador = findViewById(R.id.MatriculaAvaliador);
-                    nomeAvaliador= findViewById(R.id.NomeAvaliador);
-                    SEM = findViewById(R.id.SEM);
-                    TOI = findViewById(R.id.TOI);
-                    ToiNumero = findViewById(R.id.ToiNumero);
 
                     Hawk.put("HoraInicial",horaInicialFormatada);
                     Hawk.put("NomeAvaliador",String.valueOf(nomeAvaliador.getText()));
@@ -123,7 +120,7 @@ public class RelatorioVerificacaoActivity extends AppCompatActivity  {
     }
 
     public void onCheckboxClicked(View view) {
-        ToiNumero = findViewById(R.id.ToiNumero);
+
         switch (view.getId()) {
             case R.id.SEM:
                 TOI.setChecked(false);
@@ -148,29 +145,18 @@ public class RelatorioVerificacaoActivity extends AppCompatActivity  {
         super.onSaveInstanceState(savedInstanceState);
     }
 
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
+    private void doMyThing() {
 
-    }
-
-    public void doMyThing() {
-
-        MatriculaAvaliador = findViewById(R.id.MatriculaAvaliador);
         matricula = String.valueOf(MatriculaAvaliador.getText());
 
         if (matricula.equals("")) {
             Toast.makeText(getApplicationContext(), "Coloque um número de matrícula para a pesquisa. ", Toast.LENGTH_LONG).show();
         }
         if (matricula.length()>0){
-            nome = banco.SelecionaAvaliador(matricula);
+            String[] nome = banco.SelecionaAvaliador(matricula);
             nomeAvaliador.setText(nome[0]);
         }
 
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 }

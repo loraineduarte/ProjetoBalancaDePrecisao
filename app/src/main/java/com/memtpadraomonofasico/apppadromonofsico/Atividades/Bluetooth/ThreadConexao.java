@@ -13,16 +13,12 @@ import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.UUID;
 
-public class ThreadConexao extends Thread {
+class ThreadConexao extends Thread {
 
-    BluetoothSocket btSocket = null;
-    BluetoothServerSocket btServerSocket = null;
-    InputStream input = null;
-    OutputStream output = null;
-    String btDevAddress = null;
-    String myUUID = "00001101-0000-1000-8000-00805F9B34FB";
-    boolean server;
-    boolean running = false;
+    private BluetoothSocket btSocket = null;
+    private OutputStream output = null;
+    private String btDevAddress = null;
+    private final boolean server;
 
     /*  Este construtor prepara o dispositivo para atuar como servidor.
      */
@@ -47,12 +43,13 @@ public class ThreadConexao extends Thread {
         /*  Anuncia que a thread está sendo executada.
             Pega uma referência para o adaptador Bluetooth padrão.
          */
-        this.running = true;
+        boolean running = true;
         BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
 
         /*  Determina que ações executar dependendo se a thread está configurada
         para atuar como servidor ou cliente.
          */
+        String myUUID = "00001101-0000-1000-8000-00805F9B34FB";
         if(this.server) {
 
             /*  Servidor.
@@ -64,7 +61,7 @@ public class ThreadConexao extends Thread {
                     Permanece em estado de espera até que algum cliente
                 estabeleça uma conexão.
                  */
-                btServerSocket = btAdapter.listenUsingRfcommWithServiceRecord("Super Bluetooth", UUID.fromString(myUUID));
+                BluetoothServerSocket btServerSocket = btAdapter.listenUsingRfcommWithServiceRecord("Super Bluetooth", UUID.fromString(myUUID));
                 btSocket = btServerSocket.accept();
 
                 /*  Se a conexão foi estabelecida corretamente, o socket
@@ -141,7 +138,7 @@ public class ThreadConexao extends Thread {
                 /*  Obtem referências para os fluxos de entrada e saída do
                 socket Bluetooth.
                  */
-                input = btSocket.getInputStream();
+                InputStream input = btSocket.getInputStream();
                 output = btSocket.getOutputStream();
 
                 /*  Cria um byte array para armazenar temporariamente uma
@@ -217,19 +214,4 @@ public class ThreadConexao extends Thread {
         }
     }
 
-    /*  Método utilizado pela Activity principal para encerrar a conexão
-     */
-    public void cancel() {
-
-        try {
-
-            running = false;
-            btServerSocket.close();
-            btSocket.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        running = false;
-    }
 }

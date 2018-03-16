@@ -20,17 +20,22 @@ import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificaca
 import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
 
+import java.util.Objects;
+
 public class RegistradorActivity extends AppCompatActivity {
 
 
     private static final int TIRAR_FOTO_ANTES = 10207;
     private static final int TIRAR_FOTO_DEPOIS = 10208;
     private static final int REQUEST_OBS = 1000;
-    Intent observacao = new Intent();
-    RadioButton aprovado, naoPossibilitaTeste, reprovado;
-    Bitmap fotoAntesRegistrador, fotoDepoisRegistrador, fotoResized1, fotoResized2;
-    String status, observacaoRegistrador = " ";
-    Spinner opcoesReprovados;
+    private RadioButton aprovado;
+    private RadioButton naoPossibilitaTeste;
+    private RadioButton reprovado;
+    private Bitmap fotoResized1;
+    private Bitmap fotoResized2;
+    private String status;
+    private String observacaoRegistrador = " ";
+    private Spinner opcoesReprovados;
 
 
     @Override
@@ -153,17 +158,15 @@ public class RegistradorActivity extends AppCompatActivity {
                 if (data != null) {
                     Toast.makeText(getBaseContext(), "A imagem foi capturada", Toast.LENGTH_SHORT);
                     Bundle bundle = data.getExtras();
-                    fotoAntesRegistrador = (Bitmap) bundle.get("data");
-                    fotoResized1 = Bitmap.createScaledBitmap(fotoAntesRegistrador, 100, 120,false);
+                    assert bundle != null;
+                    Bitmap fotoAntesRegistrador = (Bitmap) bundle.get("data");
+                    fotoResized1 = Bitmap.createScaledBitmap(Objects.requireNonNull(fotoAntesRegistrador), 100, 120,false);
 
                     if (fotoResized1 != null) {
                         ImageView imageView = findViewById(R.id.FotoAntes);
                         imageView.setImageBitmap(fotoResized1);
                     }
 
-                } else if (resultCode == RESULT_CANCELED) {
-                    Toast.makeText(getBaseContext(), "A captura foi cancelada",
-                            Toast.LENGTH_SHORT);
                 } else {
                     Toast.makeText(getBaseContext(), "A câmera foi fechada",
                             Toast.LENGTH_SHORT);
@@ -177,8 +180,9 @@ public class RegistradorActivity extends AppCompatActivity {
                 if (data != null) {
                     Toast.makeText(getBaseContext(), "A imagem foi capturada", Toast.LENGTH_SHORT);
                     Bundle bundle = data.getExtras();
-                    fotoDepoisRegistrador = (Bitmap) bundle.get("data");
-                    fotoResized2 = Bitmap.createScaledBitmap(fotoDepoisRegistrador, 100, 120,false);
+                    assert bundle != null;
+                    Bitmap fotoDepoisRegistrador = (Bitmap) bundle.get("data");
+                    fotoResized2 = Bitmap.createScaledBitmap(Objects.requireNonNull(fotoDepoisRegistrador), 100, 120,false);
 
                     if (fotoResized2 != null) {
 
@@ -186,12 +190,8 @@ public class RegistradorActivity extends AppCompatActivity {
                         imageView.setImageBitmap(fotoResized2);
                     }
 
-                } else if (resultCode == RESULT_CANCELED) {
-                    Toast.makeText(getBaseContext(), "A captura foi cancelada",
-                            Toast.LENGTH_SHORT);
-                } else {
-                    Toast.makeText(getBaseContext(), "A câmera foi fechada",
-                            Toast.LENGTH_SHORT);
+                }  else {
+                    Toast.makeText(getBaseContext(), "A câmera foi fechada", Toast.LENGTH_SHORT);
                 }
             }
         }
@@ -231,8 +231,4 @@ public class RegistradorActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 }

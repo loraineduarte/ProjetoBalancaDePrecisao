@@ -18,7 +18,7 @@ import com.orhanobut.hawk.Hawk;
 public class InspecaoConformidadeActivity extends AppCompatActivity {
 
     private RadioButton Aprovado, NaoPossibilitaTeste, VariacaoLeitura, Reprovado;
-    String statusConformidade;
+    private String statusConformidade;
     private EditText cargaNominalErro, cargaPequenaErro;
 
     @Override
@@ -114,9 +114,5 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 }
 

@@ -12,10 +12,28 @@ import android.widget.Toast;
 import com.memtpadraomonofasico.apppadromonofsico.BancoDeDados.BancoController;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 
+/**
+ *
+ */
+@SuppressWarnings("ALL")
 public class CriarMedidorActivity extends AppCompatActivity {
 
-    RadioButton checkEletronico, checkMecanico;
-    EditText instalacao, numSerie, numGeral, fabricante, numElementos, modelo, correnteNominal, classe, RR, anoFabricacao, tensaoNominal, KdKe, porInmetro, fios;
+    private RadioButton checkEletronico;
+    private RadioButton checkMecanico;
+    private EditText instalacao;
+    private EditText numSerie;
+    private EditText numGeral;
+    private EditText fabricante;
+    private EditText numElementos;
+    private EditText modelo;
+    private EditText correnteNominal;
+    private EditText classe;
+    private EditText RR;
+    private EditText anoFabricacao;
+    private EditText tensaoNominal;
+    private EditText KdKe;
+    private EditText porInmetro;
+    private EditText fios;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -132,6 +150,9 @@ public class CriarMedidorActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * @param view
+     */
     public void onCheckboxClicked(View view) {
 
         switch(view.getId()) {
@@ -146,8 +167,4 @@ public class CriarMedidorActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 }

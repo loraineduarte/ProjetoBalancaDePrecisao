@@ -14,11 +14,41 @@ import com.orhanobut.hawk.Hawk;
 
 public class SituacoesObservadasActivity extends AppCompatActivity {
 
-    RadioButton sujeiraInterna, sinaisCarbonizacao, ranhurasDisco, neutroCarbonizado, marcasParafusos, mancaisDeslocados, ledIntermitente, ledApagado, ledDisparado, ledAceso, elementoDescentralizado,
-            componentesQueimados, circuitoDefeituoso, bobinaInterrompida, blocoCarbonizados, placaSolta, placaAmassada;
-    String sujeiraInternaStatus, sinaisCarbonizacaoStatus, ranhurasDiscoStatus, neutroCarbonizadoStatus, marcasParafusosStatus, mancaisDeslocadosStatus, ledIntermitenteStatus, ledApagadoStatus, ledDisparadoStatus,
-            ledAcesoStatus, elementoDescentralizadoStatus, componentesQueimadosStatus, circuitoDefeituosoStatus, bobinaInterrompidaStatus, blocoCarbonizadosStatus, placaSoltaStatus, placaAmassadaStatus;
-    String todasObservacoes;
+    private RadioButton sujeiraInterna;
+    private RadioButton sinaisCarbonizacao;
+    private RadioButton ranhurasDisco;
+    private RadioButton neutroCarbonizado;
+    private RadioButton marcasParafusos;
+    private RadioButton mancaisDeslocados;
+    private RadioButton ledIntermitente;
+    private RadioButton ledApagado;
+    private RadioButton ledDisparado;
+    private RadioButton ledAceso;
+    private RadioButton elementoDescentralizado;
+    private RadioButton componentesQueimados;
+    private RadioButton circuitoDefeituoso;
+    private RadioButton bobinaInterrompida;
+    private RadioButton blocoCarbonizados;
+    private RadioButton placaSolta;
+    private RadioButton placaAmassada;
+    private String sujeiraInternaStatus;
+    private String sinaisCarbonizacaoStatus;
+    private String ranhurasDiscoStatus;
+    private String neutroCarbonizadoStatus;
+    private String marcasParafusosStatus;
+    private String mancaisDeslocadosStatus;
+    private String ledIntermitenteStatus;
+    private String ledApagadoStatus;
+    private String ledDisparadoStatus;
+    private String ledAcesoStatus;
+    private String elementoDescentralizadoStatus;
+    private String componentesQueimadosStatus;
+    private String circuitoDefeituosoStatus;
+    private String bobinaInterrompidaStatus;
+    private String blocoCarbonizadosStatus;
+    private String placaSoltaStatus;
+    private String placaAmassadaStatus;
+    private String todasObservacoes;
 
 
     @Override
@@ -154,8 +184,4 @@ public class SituacoesObservadasActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 }

@@ -10,10 +10,15 @@ import android.widget.Toast;
 import com.memtpadraomonofasico.apppadromonofsico.BancoDeDados.BancoController;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 
+/**
+ *
+ */
 public class CriarAvaliadorActivity extends AppCompatActivity {
 
-    EditText nome, matricula;
-    String nomeString, matriculaString;
+    private EditText nome;
+    private EditText matricula;
+    private String nomeString;
+    private String matriculaString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,10 +62,5 @@ public class CriarAvaliadorActivity extends AppCompatActivity {
 
     }
 
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 
 }

@@ -5,9 +5,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-/**
- * Created by loraine.duarte on 03/02/2018.
- */
 
 public class CriaBanco extends SQLiteOpenHelper {
 
@@ -99,6 +96,7 @@ public class CriaBanco extends SQLiteOpenHelper {
                 }
             }
 
+            assert cursor != null;
             cursor.close();
             return arrData;
 
@@ -125,6 +123,7 @@ public class CriaBanco extends SQLiteOpenHelper {
                     } while (cursor.moveToNext());
                 }
             }
+            assert cursor != null;
             cursor.close();
             return arrData;
 
@@ -152,6 +151,7 @@ public class CriaBanco extends SQLiteOpenHelper {
                 }
             }
 
+            assert cursor != null;
             cursor.close();
             return arrData;
 
@@ -191,6 +191,7 @@ public class CriaBanco extends SQLiteOpenHelper {
 
             }
         }
+        assert cursor != null;
         cursor.close();
         return arrData;
     }

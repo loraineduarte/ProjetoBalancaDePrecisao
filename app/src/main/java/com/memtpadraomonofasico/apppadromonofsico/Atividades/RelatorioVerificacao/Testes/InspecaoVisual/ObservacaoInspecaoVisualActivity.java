@@ -13,7 +13,7 @@ import com.memtpadraomonofasico.apppadromonofsico.R;
 
 public class ObservacaoInspecaoVisualActivity extends AppCompatActivity {
 
-    EditText Observacao;
+    private EditText Observacao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +68,4 @@ public class ObservacaoInspecaoVisualActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 }

@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -29,19 +28,25 @@ import com.orhanobut.hawk.Hawk;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
+/**
+ *
+ */
+@SuppressWarnings("ALL")
 public class ConclusaoActivity extends AppCompatActivity {
 
-    RadioButton FuncionandoCorretamente, ComDefeito, MedidorIrregularidade, Reintegracao, garantia;
-    String FuncionandoCorretamenteStatus, ComDefeitoStatus, MedidorIrregularidadeStatus, ReintegracaoStatus, garantiaStatus;
-    String conclusão = "";
+    private RadioButton FuncionandoCorretamente;
+    private RadioButton ComDefeito;
+    private RadioButton MedidorIrregularidade;
+    private RadioButton Reintegracao;
+    private RadioButton garantia;
+    private String conclusão = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,12 +120,11 @@ public class ConclusaoActivity extends AppCompatActivity {
                     Environment.DIRECTORY_DOWNLOADS), "RelatorioDeVerificacao");
             if (!pdfFolder.exists()) {
                 pdfFolder.mkdir();
-                Log.i("Conclusao", "Pdf Directory created");
             }
 
             //Create time stamp
             Date date = new Date();
-            String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmmss").format(date);
+            String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmmss", Locale.getDefault()).format(date);
             File myFile = new File(pdfFolder + timeStamp + ".pdf");
             OutputStream output = new FileOutputStream(myFile);
 
@@ -186,8 +190,7 @@ public class ConclusaoActivity extends AppCompatActivity {
             p = new Phrase("Solicitação da Verificação : ", smallNormal);
             p.add(new Chunk((String) Hawk.get("TipoSolicitação"), smallNormal));
 
-            if (String.valueOf(Hawk.get("TOINumero")).equals("null")) {
-            } else {
+            if (!(String.valueOf(Hawk.get("TOINumero")).equals("null"))) {
                 p.add(new Chunk(" - " + Hawk.get("TOINumero"), smallNormal));
             }
             c1 = new PdfPCell(p);
@@ -838,10 +841,6 @@ public class ConclusaoActivity extends AppCompatActivity {
 
         } catch (DocumentException de) {
             System.err.println(de.getMessage());
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -855,6 +854,9 @@ public class ConclusaoActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * @param view
+     */
     public void onCheckboxClicked(View view) {
 
         FuncionandoCorretamente = findViewById(R.id.FuncionandoCorretamente);
@@ -903,9 +905,5 @@ public class ConclusaoActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 }
 
