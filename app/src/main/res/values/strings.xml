@@ -134,6 +134,7 @@
     <string name="avaliador">Avaliador</string>
     <string name="medidores">Medidores</string>
     <string name="testes">Testes</string>
+    <string name="avaliadores">Avaliadores</string>
 
     <string-array name="ReprovadoInspeçãoVisual">
         <item></item>

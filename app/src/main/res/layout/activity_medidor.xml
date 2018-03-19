@@ -286,6 +286,7 @@
 
     <Button
         android:id="@+id/buttonSalvarMedidor"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="0dp"
         android:layout_height="55dp"
         android:layout_marginEnd="24dp"
@@ -293,12 +294,14 @@
         android:layout_marginTop="16dp"
         android:text="@string/salvar"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/PorInmetro" />
 
     <Button
         android:id="@+id/buttonLimparCamposMedidor"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="0dp"
         android:layout_height="54dp"
         android:layout_marginEnd="220dp"
@@ -306,6 +309,7 @@
         android:layout_marginTop="16dp"
         android:text="@string/limpar"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/PorInmetro" />

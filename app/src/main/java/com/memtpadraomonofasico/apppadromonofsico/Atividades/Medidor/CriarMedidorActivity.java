@@ -167,4 +167,27 @@ public class CriarMedidorActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+
+        savedInstanceState.putCharSequence("instalacao", String.valueOf(instalacao.getText()));
+        savedInstanceState.putCharSequence("numSerie", String.valueOf(numSerie.getText()));
+        savedInstanceState.putCharSequence("numGeral", String.valueOf(numGeral.getText()));
+        savedInstanceState.putCharSequence("fabricante", String.valueOf(fabricante.getText()));
+        savedInstanceState.putCharSequence("numElementos", String.valueOf(numElementos.getText()));
+        savedInstanceState.putCharSequence("modelo", String.valueOf(modelo.getText()));
+        savedInstanceState.putCharSequence("correnteNominal", String.valueOf(correnteNominal.getText()));
+        savedInstanceState.putCharSequence("classe", String.valueOf(classe.getText()));
+        savedInstanceState.putCharSequence("RR", String.valueOf(RR.getText()));
+        savedInstanceState.putCharSequence("anoFabricacao", String.valueOf(anoFabricacao.getText()));
+        savedInstanceState.putCharSequence("tensaoNominal", String.valueOf(tensaoNominal.getText()));
+        savedInstanceState.putCharSequence("KdKe", String.valueOf(KdKe.getText()));
+        savedInstanceState.putCharSequence("porInmetro", String.valueOf(porInmetro.getText()));
+        savedInstanceState.putCharSequence("fios", String.valueOf(fios.getText()));
+        savedInstanceState.putCharSequence("checkEletronico", String.valueOf(checkEletronico.getText()));
+        savedInstanceState.putCharSequence("checkMecanico", String.valueOf(checkMecanico.getText()));
+
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
 }

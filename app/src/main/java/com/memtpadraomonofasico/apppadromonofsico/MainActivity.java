@@ -1,6 +1,8 @@
 package com.memtpadraomonofasico.apppadromonofsico;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -12,16 +14,24 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.Avaliador.CriarAvaliadorActivity;
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.Bluetooth.BluetoothActivity;
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.Medidor.CriarMedidorActivity;
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.RelatorioVerificacaoActivity;
+import com.memtpadraomonofasico.apppadromonofsico.BancoDeDados.BancoController;
 
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    ProgressBar myprogressBarAvaliadores, myprogressBarMedidores;
+    TextView progressingTextViewAvaliadores, progressingTextViewmedidores;
+    Handler progressHandler = new Handler();
+    int i = 0;
 
 
     @Override
@@ -31,11 +41,39 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        final BancoController crud = new BancoController(getBaseContext());
+        final Cursor cursorMedidor = crud.pegaMedidores();
+        final Cursor cursorAvaliador = crud.pegaMedidores();
+
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 callBluetooth();
+            }
+        });
+
+        Button avaliadores = findViewById(R.id.Avaliador);
+        avaliadores.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                abrirAvaliador();
+            }
+        });
+
+        Button medidores = findViewById(R.id.Medidor);
+        medidores.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                abrirMedidores();
+            }
+        });
+
+        Button teste = findViewById(R.id.Teste);
+        teste.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                abrirRelatorio();
             }
         });
 
@@ -47,6 +85,40 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        myprogressBarAvaliadores = findViewById(R.id.progressBarAvaliadores);
+        myprogressBarMedidores = findViewById(R.id.progressBarMedidores);
+        progressingTextViewAvaliadores = findViewById(R.id.progress_circle_textAvaliadores);
+        progressingTextViewmedidores = findViewById(R.id.progress_circle_textMedidores);
+
+        new Thread(new Runnable() {
+            public void run() {
+                while (i < 100) {
+                    i += 2;
+                    progressHandler.post(new Runnable() {
+                        public void run() {
+                            myprogressBarAvaliadores.setProgress(i);
+                            myprogressBarMedidores.setProgress(i);
+
+                            progressingTextViewmedidores.setText(String.valueOf(cursorMedidor.getCount()));
+                            progressingTextViewAvaliadores.setText(String.valueOf(cursorAvaliador .getCount()));
+                        }
+                    });
+                    try {
+                        Thread.sleep(300);
+
+
+
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+
+
+
+
     }
 
     private void callBluetooth() {

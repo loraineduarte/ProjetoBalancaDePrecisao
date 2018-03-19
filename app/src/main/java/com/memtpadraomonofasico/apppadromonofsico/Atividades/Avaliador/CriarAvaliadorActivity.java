@@ -62,5 +62,14 @@ public class CriarAvaliadorActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+
+        savedInstanceState.putCharSequence("nome", String.valueOf(nome.getText()));
+        savedInstanceState.putCharSequence("matricula", String.valueOf(matricula.getText()));
+
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
 
 }
