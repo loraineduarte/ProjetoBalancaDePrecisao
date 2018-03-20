@@ -15,6 +15,8 @@
         android:layout_marginEnd="24dp"
         android:layout_marginStart="220dp"
         android:layout_marginTop="32dp"
+        android:background="@color/colorPrimaryDark"
+        android:backgroundTint="@color/colorPrimaryDark"
         android:text="@string/salvar"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@android:color/white"
@@ -30,12 +32,14 @@
         android:layout_marginEnd="220dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="32dp"
+        android:background="@color/colorPrimaryDark"
         android:text="@string/limpar"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/numeroMatriculaAvaliador" />
+        app:layout_constraintTop_toBottomOf="@+id/numeroMatriculaAvaliador"
+        tools:background="@color/colorPrimaryDark" />
 
     <TextView
         android:id="@+id/CriarAvaliador"
@@ -44,7 +48,8 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
         android:text="@string/criar_avaliador"
         android:textAppearance="@android:style/TextAppearance.Material.DialogWindowTitle"
         app:layout_constraintBottom_toBottomOf="parent"

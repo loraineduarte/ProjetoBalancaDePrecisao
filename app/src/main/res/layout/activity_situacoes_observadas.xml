@@ -13,6 +13,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
+        android:gravity="center"
         android:text="@string/situa_es_observadas"
         android:textAppearance="@android:style/TextAppearance.Material.DialogWindowTitle"
         app:layout_constraintEnd_toEndOf="parent"

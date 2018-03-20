@@ -18,12 +18,11 @@
         android:layout_marginStart="80dp"
         android:layout_marginTop="24dp"
         android:gravity="center"
-        android:text="@string/padr_o_monof_sico"
+        android:text="Dashboard"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Padrão Monofásico" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -76,7 +75,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="16dp"
-                        android:text="@string/medidores"
+                        android:text="Medidores"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
@@ -159,9 +158,10 @@
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="0dp"
         android:layout_height="55dp"
-        android:layout_marginEnd="210dp"
+        android:layout_marginEnd="200dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:background="@color/colorPrimaryDark"
         android:text="Cadastrar Medidor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -173,8 +173,10 @@
         android:layout_width="0dp"
         android:layout_height="54dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginStart="210dp"
+        android:layout_marginStart="200dp"
         android:layout_marginTop="8dp"
+        android:background="@color/colorPrimaryDark"
+        android:backgroundTint="@color/colorPrimaryDark"
         android:text="Cadastrar Avaliador"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -188,6 +190,8 @@
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:background="@color/colorPrimaryDark"
+        android:backgroundTint="@color/colorPrimaryDark"
         android:text="Realizar Testes"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
