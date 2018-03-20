@@ -11,16 +11,22 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.InspecaoConformidade.InspecaoConformidadeActivity;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
 
+/**
+ *
+ */
+@SuppressWarnings("ALL")
 public class CircuitoPotencialActivity extends AppCompatActivity {
 
-    RadioButton normal, reprovado;
-    String status, observacaoRegistrador;
-    Spinner opcoesReprovados;
+    private RadioButton normal;
+    private RadioButton reprovado;
+    private String status;
+    private Spinner opcoesReprovados;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,28 +38,15 @@ public class CircuitoPotencialActivity extends AppCompatActivity {
         normal = findViewById(R.id.normal);
         reprovado = findViewById(R.id.Reprovado);
 
-
-        if(normal.isChecked()){
-            status = "Normal/ Não Possui";
-
-        } else if (reprovado.isChecked()){
-            status = "Reprovado";
-
-        }
-
-        opcoesReprovados = (Spinner) findViewById(R.id.RegistradorSpinner);
+        opcoesReprovados = findViewById(R.id.RegistradorSpinner);
         opcoesReprovados.setEnabled(false);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,  R.array.ReprovadoCircuitoPotencial, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
         opcoesReprovados.setAdapter(adapter);
         opcoesReprovados.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-            {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 status = parent.getItemAtPosition(position).toString();
-                Log.d("SELECIONADO", status);
             }
             public void onNothingSelected(AdapterView<?> parent)
             {
@@ -66,8 +59,25 @@ public class CircuitoPotencialActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Hawk.delete("statusCircuitoPotencial");
-                Hawk.put("statusCircuitoPotencial", status);
-                abrirInspecaoConformidade();
+
+                normal = findViewById(R.id.normal);
+                reprovado = findViewById(R.id.Reprovado);
+
+                if(normal.isChecked()){
+                    status = "Normal/ Não Possui";
+                }
+                if (reprovado.isChecked()){
+                    status = "Reprovado";
+                }
+
+                if ((!normal.isChecked()) &&  (!reprovado.isChecked())) {
+                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Não existe opção de status marcado. ", Toast.LENGTH_LONG).show();
+
+                } else {
+                    Hawk.put("statusCircuitoPotencial", status);
+                    abrirInspecaoConformidade();
+                }
+
 
             }
         });
@@ -79,6 +89,9 @@ public class CircuitoPotencialActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * @param view
+     */
     public void onCheckboxClicked(View view) {
 
         switch (view.getId()) {
@@ -95,4 +108,5 @@ public class CircuitoPotencialActivity extends AppCompatActivity {
 
         }
     }
+
 }

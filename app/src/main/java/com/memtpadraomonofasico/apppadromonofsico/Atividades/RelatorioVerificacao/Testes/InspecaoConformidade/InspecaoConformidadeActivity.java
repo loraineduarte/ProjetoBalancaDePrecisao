@@ -18,7 +18,7 @@ import com.orhanobut.hawk.Hawk;
 public class InspecaoConformidadeActivity extends AppCompatActivity {
 
     private RadioButton Aprovado, NaoPossibilitaTeste, VariacaoLeitura, Reprovado;
-    String statusConformidade, CargaNominalErro, CargaPequenaErro;
+    private String statusConformidade;
     private EditText cargaNominalErro, cargaPequenaErro;
 
     @Override
@@ -26,22 +26,19 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inspecao_conformidade);
 
-        Hawk.delete("CargaNominalErroConformidade");
-        Hawk.delete("CargaPequenaErroConformidade");
-        Hawk.delete("statusConformidade");
         Log.d("CONFORMIDADE", String.valueOf(Hawk.count()));
-
 
         @SuppressLint("WrongViewCast") Button next = findViewById(R.id.NextFase7);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                cargaNominalErro =  findViewById(R.id.CargaNominalErro);
-                CargaNominalErro = String.valueOf(cargaNominalErro.getText());
+                Hawk.delete("CargaNominalErroConformidade");
+                Hawk.delete("CargaPequenaErroConformidade");
+                Hawk.delete("statusConformidade");
 
+                cargaNominalErro =  findViewById(R.id.CargaNominalErro);
                 cargaPequenaErro = findViewById(R.id.CargaPequenaErro);
-                CargaPequenaErro = String.valueOf(cargaPequenaErro.getText());
 
                 Aprovado = findViewById(R.id.tampasolidarizada);
                 NaoPossibilitaTeste = findViewById(R.id.sinaisCarbonizacao);
@@ -51,34 +48,29 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
                 if(Aprovado.isChecked()){
                     statusConformidade = "Aprovado";
 
-                } else if (NaoPossibilitaTeste.isChecked()){
+                } if (NaoPossibilitaTeste.isChecked()){
                     statusConformidade = "Não Possibilita Teste";
 
-                } else if (VariacaoLeitura.isChecked()){
+                }if (VariacaoLeitura.isChecked()){
                     statusConformidade = "Variação de Leitura";
 
-                } else if (Reprovado.isChecked()){
+                } if (Reprovado.isChecked()){
                     statusConformidade = "Reprovado";
-
                 }
-
-                Hawk.put("CargaNominalErroConformidade",CargaNominalErro);
-                Hawk.put("CargaPequenaErroConformidade",CargaPequenaErro);
-                Hawk.put("statusConformidade",statusConformidade);
-
 
                 if ((!Aprovado.isChecked()) && (!NaoPossibilitaTeste.isChecked()) && (!VariacaoLeitura.isChecked()) && (!Reprovado.isChecked()))
                 {
                     Toast.makeText(getApplicationContext(), "Sessão incompleta - Não existe opção de status marcado. ", Toast.LENGTH_LONG).show();
+
                 } else{
+                    Hawk.put("CargaNominalErroConformidade",String.valueOf(cargaNominalErro.getText()));
+                    Hawk.put("CargaPequenaErroConformidade",String.valueOf(cargaPequenaErro.getText()));
+                    Hawk.put("statusConformidade",statusConformidade);
+
                     abrirSituacoesObservadas();
                 }
-
             }
         });
-
-
-
     }
 
     private void abrirSituacoesObservadas() {
@@ -121,5 +113,6 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
 
         }
     }
+
 }
 

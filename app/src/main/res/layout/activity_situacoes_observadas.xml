@@ -27,7 +27,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
-        android:text="Sujeira interna - atrito"
+        android:text="@string/sujeira_interna_atrito"
         android:textColorHint="@color/colorPrimaryDark"
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
@@ -53,7 +53,7 @@
         android:layout_height="29dp"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:text="Ranhuras no disco do elemento móvel"
+        android:text="@string/ranhuras_no_disco_do_elemento_m_vel"
         android:textColorHint="@color/colorPrimaryDark"
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
@@ -83,7 +83,7 @@
         android:layout_height="27dp"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:text="Placa solta"
+        android:text="@string/placa_solta"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.166"
         app:layout_constraintStart_toStartOf="parent"
@@ -95,7 +95,7 @@
         android:layout_height="28dp"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:text="Placa de identificação amassada"
+        android:text="@string/placa_de_identifica_o_amassada"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/PlacaSolta" />
@@ -106,7 +106,7 @@
         android:layout_height="29dp"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:text="Neutro carbonizado"
+        android:text="@string/neutro_carbonizado"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/RanhurasDisco" />
@@ -117,7 +117,7 @@
         android:layout_height="29dp"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:text="Marcas nos parafusos dos mancais "
+        android:text="@string/marcas_nos_parafusos_dos_mancais"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/NeutroCarbonizado" />
@@ -128,7 +128,7 @@
         android:layout_height="27dp"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:text="Mancais deslocados "
+        android:text="@string/mancais_deslocados"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/MarcasParafusos" />
@@ -161,7 +161,7 @@
         android:layout_height="27dp"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:text="Led disparado "
+        android:text="@string/led_disparado"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/LedApagado" />
@@ -172,7 +172,7 @@
         android:layout_height="28dp"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:text="Led aceso direto "
+        android:text="@string/led_aceso_direto"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/LedDisparado" />
@@ -183,7 +183,7 @@
         android:layout_height="27dp"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:text="Elemento móvel descentralizado "
+        android:text="@string/elemento_m_vel_descentralizado"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/LedAcesoDireto" />
@@ -194,7 +194,7 @@
         android:layout_height="29dp"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:text="Componentes eletrõnicos queimados"
+        android:text="@string/componentes_eletr_nicos_queimados"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/elementoDescentralizado" />
@@ -205,7 +205,7 @@
         android:layout_height="29dp"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:text="Circuito eletrônico defeituoso "
+        android:text="@string/circuito_eletr_nico_defeituoso"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ComponenteQueimado" />
@@ -216,7 +216,7 @@
         android:layout_height="31dp"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:text="Bobina interrompida sem causa detectada "
+        android:text="@string/bobina_interrompida_sem_causa_detectada"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/CircuitoDefeituoso" />
@@ -227,7 +227,7 @@
         android:layout_height="32dp"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:text="Bloco de terminais carbonizados "
+        android:text="@string/bloco_de_terminais_carbonizados"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/BobinaInterrompida" />

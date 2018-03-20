@@ -1,40 +1,42 @@
 package com.memtpadraomonofasico.apppadromonofsico.Atividades.Bluetooth;
 
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
-import static java.lang.System.out;
-import com.memtpadraomonofasico.apppadromonofsico.R;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import com.memtpadraomonofasico.apppadromonofsico.R;
+
+import java.util.Arrays;
+
+import static java.lang.System.out;
+
+@SuppressWarnings({"ALL", "StringConcatenationInLoop"})
 public class BluetoothActivity extends AppCompatActivity {
 
     private static final String TAG = "Bluetooth";
-    private static String dadosRecebidos="";
-    private static StringBuffer stringCompleta = new StringBuffer();
 
-    public static int ENABLE_BLUETOOTH = 1;
-    public static int SELECT_PAIRED_DEVICE = 2;
-    public static int SELECT_DISCOVERED_DEVICE = 3;
+    private static final int ENABLE_BLUETOOTH = 1;
+    private static final int SELECT_PAIRED_DEVICE = 2;
+    private static final int SELECT_DISCOVERED_DEVICE = 3;
     private static final int REQUEST_ENABLE_BT = 4;
 
-    private static String dados;
     private static String res;
 
-    static TextView statusMessage;
-    static TextView textSpace;
+    private static TextView statusMessage;
+    private static TextView textSpace;
 
-    private static byte[] pacote = new  byte[10];
+    private static final byte[] pacote = new  byte[10];
 
-    ThreadConexao conexao;
-    String enderecoDispositivo = "";
+    private ThreadConexao conexao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +44,8 @@ public class BluetoothActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bluetooth);
 
-        statusMessage = (TextView) findViewById(R.id.statusMessage);
-        textSpace = (TextView) findViewById(R.id.textSpace);
+        statusMessage = findViewById(R.id.statusMessage);
+        textSpace = findViewById(R.id.textSpace);
 
         // Início - verificando ativação do bluetooth
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -94,6 +96,9 @@ public class BluetoothActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * @param view
+     */
     public void searchPairedDevices(View view){
         Intent searchPairedDevicesIntent = new Intent(this, PairedDevices.class);
         startActivityForResult(searchPairedDevicesIntent, SELECT_PAIRED_DEVICE);
@@ -116,7 +121,7 @@ public class BluetoothActivity extends AppCompatActivity {
     }
 
     public void sendMessage(View view){
-        EditText messageBox = (EditText) findViewById(R.id.editText_MessageBox);
+        EditText messageBox = findViewById(R.id.editText_MessageBox);
         String messageBoxString = messageBox.getText().toString();
 
         byte[] pacote = new byte[10];
@@ -146,85 +151,75 @@ public class BluetoothActivity extends AppCompatActivity {
             pacote[9] = (byte)(0 & 0xFF);
         }
 
-        statusMessage.setText(pacote.toString());
+        statusMessage.setText(Arrays.toString(pacote));
         conexao.write(pacote);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-    private static int cont = 0;
-    public static Handler handler = new Handler() {
+    @SuppressLint("HandlerLeak")
+    public static final Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            dados = "";
-            cont = 0;
+            String dados;
+            int cont = 0;
             Bundle bundle = msg.getData();
             byte[] data = bundle.getByteArray("data");
 
-            String dataString= new String(data);
+            String dataString= new String(data != null ? data : new byte[0]);
 
-            if(dataString.equals("---N"))
-                statusMessage.setText("Ocorreu um erro durante a conexão.");
-            else if(dataString.equals("---S"))
-                statusMessage.setText("Conectado.");
-            else {
-                cont = cont + 1;
-                dados = dataString;
-                //byte[] dado0255 = new byte[10];
-                //int contar = 0;
+            switch (dataString) {
+                case "---N":
+                    statusMessage.setText("Ocorreu um erro durante a conexão.");
+                    break;
+                case "---S":
+                    statusMessage.setText("Conectado.");
+                    break;
+                default:
+                    cont = cont + 1;
+                    dados = dataString;
+                    //byte[] dado0255 = new byte[10];
+                    //int contar = 0;
 
-                //for (byte dado :data) {
-                //    dado0255[contar] = (byte) (dado & 0xFF);
-                //    contar = contar + 1;
-                //}
+                    //for (byte dado :data) {
+                    //    dado0255[contar] = (byte) (dado & 0xFF);
+                    //    contar = contar + 1;
+                    //}
 
-                //int a = dado0255[2] << 24 | dado0255[3] << 16 | dado0255[4] << 8 | dado0255[5];
-                //int b = dado0255[6] << 24 | dado0255[7] << 16 | dado0255[8] << 8 | dado0255[9];
-                //dados = dados+Integer.toString((dado0255[0] & 0xFF))+", "+Integer.toString((dado0255[1] & 0xFF))+"||||"+Integer.toString((dado0255[2] & 0xFF))+", "+Integer.toString((dado0255[3] & 0xFF))+", "+Integer.toString((dado0255[4] & 0xFF))+", "+Integer.toString((dado0255[5] & 0xFF))+"||||"+Integer.toString((dado0255[6] & 0xFF))+", "+Integer.toString((dado0255[7] & 0xFF))+", "+Integer.toString((dado0255[8] & 0xFF))+", "+Integer.toString((dado0255[9] & 0xFF));
-                //String teste = new String(dado0255);
-                //dados = dados+Integer.toString(bundle.getByteArray("data").length)+ " : ";
-                //textSpace.setText(dados);
-                double a = 0;
-                double b = 0;
-                res = res + Integer.toString(data.length)+"\n";
-                if(dados.length() == 1) {
-                    pacote[0] = (byte)(data[0] & 0xFF);
-                }
-                if(dados.length() == 9){
-                    pacote[1] = (byte)(data[0] & 0xFF);
-                    pacote[2] = (byte)(data[1] & 0xFF);
-                    pacote[3] = (byte)(data[2] & 0xFF);
-                    pacote[4] = (byte)(data[3] & 0xFF);
-                    pacote[5] = (byte)(data[4] & 0xFF);
-                    pacote[6] = (byte)(data[5] & 0xFF);
-                    pacote[7] = (byte)(data[6] & 0xFF);
-                    pacote[8] = (byte)(data[7] & 0xFF);
-                    pacote[9] = (byte)(data[8] & 0xFF);
-                    a = (pacote[2] ) * Math.pow(256,3) + (pacote[3] & 0xFF) * Math.pow(256,2) + (pacote[4] & 0xFF) * 256 + (pacote[5] & 0xFF);
-                    b = (pacote[6] & 0xFF) * Math.pow(256,3) + (pacote[7] & 0xFF) * Math.pow(256,2) + (pacote[8] & 0xFF) * 256 + (pacote[9] & 0xFF);
-                }
-                res = res + Integer.toString((pacote[0] & 0xFF))+", "+Integer.toString((pacote[1] & 0xFF))+"  ||||  "+Integer.toString((int)a)+"  ||||  "+Integer.toString((int)b)+"\n";
-                for(byte d: pacote){
-                    res = res + "[" + Integer.toString((d & 0xFF)) + "]";
-                }
-                res = res + "\n";
-                textSpace.setText(res);
-                if (cont>=2){
-                    res = "";
-                    cont = 0;
-                }
+                    //int a = dado0255[2] << 24 | dado0255[3] << 16 | dado0255[4] << 8 | dado0255[5];
+                    //int b = dado0255[6] << 24 | dado0255[7] << 16 | dado0255[8] << 8 | dado0255[9];
+                    //dados = dados+Integer.toString((dado0255[0] & 0xFF))+", "+Integer.toString((dado0255[1] & 0xFF))+"||||"+Integer.toString((dado0255[2] & 0xFF))+", "+Integer.toString((dado0255[3] & 0xFF))+", "+Integer.toString((dado0255[4] & 0xFF))+", "+Integer.toString((dado0255[5] & 0xFF))+"||||"+Integer.toString((dado0255[6] & 0xFF))+", "+Integer.toString((dado0255[7] & 0xFF))+", "+Integer.toString((dado0255[8] & 0xFF))+", "+Integer.toString((dado0255[9] & 0xFF));
+                    //String teste = new String(dado0255);
+                    //dados = dados+Integer.toString(bundle.getByteArray("data").length)+ " : ";
+                    //textSpace.setText(dados);
+                    double a = 0;
+                    double b = 0;
+                    res = res + Integer.toString(data.length) + "\n";
+                    if (dados.length() == 1) {
+                        pacote[0] = (byte) (data[0] & 0xFF);
+                    }
+                    if (dados.length() == 9) {
+                        pacote[1] = (byte) (data[0] & 0xFF);
+                        pacote[2] = (byte) (data[1] & 0xFF);
+                        pacote[3] = (byte) (data[2] & 0xFF);
+                        pacote[4] = (byte) (data[3] & 0xFF);
+                        pacote[5] = (byte) (data[4] & 0xFF);
+                        pacote[6] = (byte) (data[5] & 0xFF);
+                        pacote[7] = (byte) (data[6] & 0xFF);
+                        pacote[8] = (byte) (data[7] & 0xFF);
+                        pacote[9] = (byte) (data[8] & 0xFF);
+                        a = (pacote[2]) * Math.pow(256, 3) + (pacote[3] & 0xFF) * Math.pow(256, 2) + (pacote[4] & 0xFF) * 256 + (pacote[5] & 0xFF);
+                        b = (pacote[6] & 0xFF) * Math.pow(256, 3) + (pacote[7] & 0xFF) * Math.pow(256, 2) + (pacote[8] & 0xFF) * 256 + (pacote[9] & 0xFF);
+                    }
+                    res = res + Integer.toString((pacote[0] & 0xFF)) + ", " + Integer.toString((pacote[1] & 0xFF)) + "  ||||  " + Integer.toString((int) a) + "  ||||  " + Integer.toString((int) b) + "\n";
+                    for (byte d : pacote) {
+                        //noinspection StringConcatenationInLoop
+                        res = res + "[" + Integer.toString((d & 0xFF)) + "]";
+                    }
+                    res = res + "\n";
+                    textSpace.setText(res);
+                    if (cont >= 2) {
+                        res = "";
+                    }
+                    break;
             }
         }
     };

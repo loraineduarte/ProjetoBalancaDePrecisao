@@ -6,13 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-/**
- * Created by loraine.duarte on 03/02/2018.
- */
-
 public class BancoController {
     private SQLiteDatabase db;
-    private CriaBanco banco;
+    private final CriaBanco banco;
 
     public BancoController(Context context){
         banco = new CriaBanco(context);
@@ -41,9 +37,9 @@ public class BancoController {
 
     public Cursor pegaAvaliadores(){
         Cursor cursor;
-        String[] campos =  {banco.ID_AVALIADOR,banco.NOME_AVALIADOR,banco.MATRICULA};
+        String[] campos =  {CriaBanco.ID_AVALIADOR, CriaBanco.NOME_AVALIADOR, CriaBanco.MATRICULA};
         db = banco.getReadableDatabase();
-        cursor = db.query(banco.TABELA_AVALIADOR, campos, null, null, null, null, null, null);
+        cursor = db.query(CriaBanco.TABELA_AVALIADOR, campos, null, null, null, null, null, null);
 
         if(cursor!=null){
             cursor.moveToFirst();
@@ -65,8 +61,8 @@ public class BancoController {
 
         db = banco.getWritableDatabase();
         valores = new ContentValues();
-        valores.put(CriaBanco.INSTALACAO, medidor_instalacao);
         valores.put(CriaBanco.NUM_SERIE, medidor_num_serie);
+        valores.put(CriaBanco.INSTALACAO, medidor_instalacao);
         valores.put(CriaBanco.NUM_GERAL, medidor_num_geral);
         valores.put(CriaBanco.FABRICANTE, medidor_fabricante);
         valores.put(CriaBanco.NUM_ELEMENTOS, medidor_num_elementos);
@@ -95,10 +91,10 @@ public class BancoController {
 
     public Cursor pegaMedidores(){
         Cursor cursor;
-        String[] campos =  {banco.ID_MEDIDOR,banco.INSTALACAO,banco.NUM_SERIE,banco.NUM_GERAL, banco.FABRICANTE, banco.NUM_ELEMENTOS, banco.MODELO, banco.CORRENTE_NOMINAL,
-                banco.CLASSE, banco.RR, banco.ANO_FABRICACAO, banco.TENSAO_NOMINAL, banco.KDKE, banco.PORT_INMETRO, banco.FIOS, banco.TIPO_MEDIDOR};
+        String[] campos =  {CriaBanco.ID_MEDIDOR, CriaBanco.NUM_SERIE, CriaBanco.INSTALACAO, CriaBanco.NUM_GERAL, CriaBanco.FABRICANTE, CriaBanco.NUM_ELEMENTOS, CriaBanco.MODELO, CriaBanco.CORRENTE_NOMINAL,
+                CriaBanco.CLASSE, CriaBanco.RR, CriaBanco.ANO_FABRICACAO, CriaBanco.TENSAO_NOMINAL, CriaBanco.KDKE, CriaBanco.PORT_INMETRO, CriaBanco.FIOS, CriaBanco.TIPO_MEDIDOR};
         db = banco.getReadableDatabase();
-        cursor = db.query(banco.TABELA_MEDIDOR, campos, null, null, null, null, null, null);
+        cursor = db.query(CriaBanco.TABELA_MEDIDOR, campos, null, null, null, null, null, null);
 
         if(cursor!=null){
             cursor.moveToFirst();

@@ -22,13 +22,10 @@ import android.widget.TextView;
 
 import com.memtpadraomonofasico.apppadromonofsico.R;
 
-/**
- * Created by loraine.duarte on 05/02/2018.
- */
 
 public class DiscoveredDevices extends ListActivity {
 
-    ArrayAdapter<String> arrayAdapter;
+    private ArrayAdapter<String> arrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

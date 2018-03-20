@@ -14,7 +14,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="32dp"
-        android:text="Resultados Finais"
+        android:text="@string/resultados_finais"
         android:textAppearance="@android:style/TextAppearance.Material.DialogWindowTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,13 +32,12 @@
         android:background="@color/colorPrimaryDark"
         android:backgroundTint="?attr/colorPrimaryDark"
         android:elevation="2dp"
-        android:text="Próximo"
+        android:text="@string/pr_ximo"
         android:textColor="@android:color/background_light"
         android:textColorLink="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/elementoDescentralizado" />
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <EditText
         android:id="@+id/DataInicial"
@@ -48,7 +47,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:ems="10"
-        android:hint="Data Início"
+        android:hint="@string/data_in_cio"
         android:inputType="date"
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
@@ -64,7 +63,7 @@
         android:layout_marginStart="220dp"
         android:layout_marginTop="24dp"
         android:ems="10"
-        android:hint="Hora Início"
+        android:hint="@string/hora_in_cio"
         android:inputType="time"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintEnd_toEndOf="parent"
@@ -79,7 +78,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:hint="Data Fim"
+        android:hint="@string/data_fim"
         android:inputType="date"
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
@@ -95,7 +94,7 @@
         android:layout_marginStart="220dp"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:hint="Hora Fim"
+        android:hint="@string/hora_fim"
         android:inputType="time"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintEnd_toEndOf="parent"
@@ -103,14 +102,14 @@
         app:layout_constraintTop_toBottomOf="@+id/HoraInicio" />
 
     <EditText
-        android:id="@+id/editText20"
+        android:id="@+id/LeituraRetirada"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="Leitura de Retirada*"
+        android:hint="@string/leitura_de_retirada"
         android:inputType="number"
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
@@ -119,36 +118,36 @@
         app:layout_constraintTop_toBottomOf="@+id/HoraFim" />
 
     <EditText
-        android:id="@+id/editText21"
+        android:id="@+id/leituraCalibracao"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="Leitura de Calibração*"
-        android:inputType="textPersonName"
+        android:hint="@string/leitura_de_calibra_o"
+        android:inputType="number"
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText20" />
+        app:layout_constraintTop_toBottomOf="@+id/LeituraRetirada" />
 
     <EditText
-        android:id="@+id/editText22"
+        android:id="@+id/leituraPosCalibracao"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="Leitura Pós Calibração*"
-        android:inputType="textPersonName"
+        android:hint="@string/leitura_p_s_calibra_o"
+        android:inputType="number"
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText21" />
+        app:layout_constraintTop_toBottomOf="@+id/leituraCalibracao" />
 
 
 </android.support.constraint.ConstraintLayout>

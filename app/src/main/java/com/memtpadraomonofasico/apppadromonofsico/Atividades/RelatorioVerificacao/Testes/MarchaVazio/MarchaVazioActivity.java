@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.CircuitoPotencial.CircuitoPotencialActivity;
 import com.memtpadraomonofasico.apppadromonofsico.R;
@@ -18,18 +19,22 @@ import java.sql.Time;
 
 public class MarchaVazioActivity extends AppCompatActivity {
 
-    RadioButton aprovado, naoRealizado, reprovado;
-    String statusMarchaVazio;
-    EditText tempoReprovado;
-    Time tempoReprovadoMarchaVazio;
+    private RadioButton aprovado;
+    private RadioButton naoRealizado;
+    private RadioButton reprovado;
+    private String statusMarchaVazio;
+    private EditText tempoReprovado;
+    private String tempoReprovadoMarchaVazio;
 
 
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_marcha_vazio);
 
-
+        tempoReprovado = findViewById(R.id.TempoMarchaVazio);
+        tempoReprovado.setEnabled(false);
         Log.d("MARCHA VAZIO ", String.valueOf(Hawk.count()));
 
 
@@ -45,25 +50,31 @@ public class MarchaVazioActivity extends AppCompatActivity {
                 naoRealizado = findViewById(R.id.sinaisCarbonizacao);
                 reprovado = findViewById(R.id.Reprovado);
 
-
                 if(aprovado.isChecked()){
                     statusMarchaVazio = "Aprovado";
-                    tempoReprovadoMarchaVazio = Time.valueOf("00:00:00");
+                    tempoReprovadoMarchaVazio = Time.valueOf("00:00:00").toString();
 
                 } else if (naoRealizado.isChecked()){
                     statusMarchaVazio = "Não Realizado";
-                    tempoReprovadoMarchaVazio = Time.valueOf("00:00:00");
+                    tempoReprovadoMarchaVazio = Time.valueOf("00:00:00").toString();
 
                 } else if (reprovado.isChecked()){
                     statusMarchaVazio = "Reprovado";
                     tempoReprovado = (findViewById(R.id.TempoMarchaVazio));
-                    tempoReprovadoMarchaVazio = (Time) tempoReprovado.getText();
-
+                    tempoReprovadoMarchaVazio = " - Tempo: " + tempoReprovado.getText().toString();
                 }
 
-                Hawk.put("statusMarchaVazio", statusMarchaVazio);
-                Hawk.put("tempoReprovadoMarchaVazio", tempoReprovadoMarchaVazio);
-                abrirCircuitoPotencial();
+                if ((!aprovado.isChecked()) && (!naoRealizado.isChecked()) && (!reprovado.isChecked())) {
+                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Não existe opção de status marcado. ", Toast.LENGTH_LONG).show();
+                }
+                if ((reprovado.isChecked())&& (tempoReprovadoMarchaVazio.equals("00:00:00"))) {
+                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Colocar o tempo de reprovação do teste ", Toast.LENGTH_LONG).show();
+
+                }else {
+                    Hawk.put("statusMarchaVazio", statusMarchaVazio);
+                    Hawk.put("tempoReprovadoMarchaVazio", tempoReprovadoMarchaVazio);
+                    abrirCircuitoPotencial();
+                }
             }
         });
 

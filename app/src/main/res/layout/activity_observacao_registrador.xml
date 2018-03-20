@@ -14,7 +14,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
-        android:text="Adicionar Observação"
+        android:text="@string/adicionar_observa_o"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,22 +31,25 @@
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AdicionarObser" />
+        app:layout_constraintTop_toBottomOf="@+id/AdicionarObser"
+        tools:ignore="LabelFor" />
 
     <Button
         android:id="@+id/AddObs"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="0dp"
         android:layout_height="52dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="210dp"
         android:layout_marginTop="32dp"
-        android:text="Adiciona Observação"
+        android:text="@string/adicionar_observa_o"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ObservacaoRegistrador" />
 
     <Button
         android:id="@+id/limpar"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="0dp"
         android:layout_height="53dp"
         android:layout_marginEnd="210dp"
@@ -60,6 +63,7 @@
 
     <Button
         android:id="@+id/RetornarInspecao"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"

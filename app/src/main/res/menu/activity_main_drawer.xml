@@ -2,38 +2,33 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
+    <item android:checkableBehavior="single"
+        android:title="@string/cadastros"
+        android:visible="true">
 
-    <item android:checkableBehavior="single">
-        <item
-            android:title="Cadastros"
-            android:visible="true">
+        <menu>
+            <item
+                android:id="@+id/nav_avaliador"
+                android:icon="@android:drawable/ic_menu_my_calendar"
+                android:title="@string/avaliador"
+                android:visible="true" />
 
-            <menu>
-                <item
-                    android:id="@+id/nav_avaliador"
-                    android:icon="@android:drawable/ic_menu_my_calendar"
-                    android:title="Avaliador"
-                    android:visible="true" />
-                <item
-                    android:id="@+id/nav_medidores"
-                    android:icon="@android:drawable/ic_menu_set_as"
-                    android:title="Medidores"
-                    android:visible="true" />
+            <item android:id="@+id/nav_medidores"
+                android:icon="@android:drawable/ic_menu_set_as"
+                android:title="@string/medidores"
+                android:visible="true" />
 
-            </menu>
-        </item>
-        <item
-            android:title="Testes"
-            android:visible="true">
+        </menu>
+    </item>
+    <item android:title="@string/testes"
+        android:visible="true">
 
-            <menu>
-                <item
-                    android:id="@+id/nav_relatorioVerificação"
-                    android:icon="@android:drawable/ic_menu_preferences"
-                    android:title="Relatório de Verificação"
-                    android:visible="true" />
-            </menu>
+        <menu>
+            <item android:id="@+id/nav_relatorioVerificação"
+                android:icon="@android:drawable/ic_menu_preferences"
+                android:title="@string/relat_rio_de_verifica_o"
+                android:visible="true" />
+        </menu>
 
-        </item>
     </item>
 </menu>

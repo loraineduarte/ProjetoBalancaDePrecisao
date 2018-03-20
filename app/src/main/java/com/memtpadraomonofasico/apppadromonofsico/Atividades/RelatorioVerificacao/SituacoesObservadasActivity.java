@@ -14,18 +14,47 @@ import com.orhanobut.hawk.Hawk;
 
 public class SituacoesObservadasActivity extends AppCompatActivity {
 
-    RadioButton sujeiraInterna, sinaisCarbonizacao, ranhurasDisco, neutroCarbonizado, marcasParafusos, mancaisDeslocados, ledIntermitente, ledApagado, ledDisparado, ledAceso, elementoDescentralizado,
-        componentesQueimados, circuitoDefeituoso, bobinaInterrompida, blocoCarbonizados, placaSolta, placaAmassada;
-    String sujeiraInternaStatus, sinaisCarbonizacaoStatus, ranhurasDiscoStatus, neutroCarbonizadoStatus, marcasParafusosStatus, mancaisDeslocadosStatus, ledIntermitenteStatus, ledApagadoStatus, ledDisparadoStatus,
-            ledAcesoStatus, elementoDescentralizadoStatus, componentesQueimadosStatus, circuitoDefeituosoStatus, bobinaInterrompidaStatus, blocoCarbonizadosStatus, placaSoltaStatus, placaAmassadaStatus ;
+    private RadioButton sujeiraInterna;
+    private RadioButton sinaisCarbonizacao;
+    private RadioButton ranhurasDisco;
+    private RadioButton neutroCarbonizado;
+    private RadioButton marcasParafusos;
+    private RadioButton mancaisDeslocados;
+    private RadioButton ledIntermitente;
+    private RadioButton ledApagado;
+    private RadioButton ledDisparado;
+    private RadioButton ledAceso;
+    private RadioButton elementoDescentralizado;
+    private RadioButton componentesQueimados;
+    private RadioButton circuitoDefeituoso;
+    private RadioButton bobinaInterrompida;
+    private RadioButton blocoCarbonizados;
+    private RadioButton placaSolta;
+    private RadioButton placaAmassada;
+    private String sujeiraInternaStatus;
+    private String sinaisCarbonizacaoStatus;
+    private String ranhurasDiscoStatus;
+    private String neutroCarbonizadoStatus;
+    private String marcasParafusosStatus;
+    private String mancaisDeslocadosStatus;
+    private String ledIntermitenteStatus;
+    private String ledApagadoStatus;
+    private String ledDisparadoStatus;
+    private String ledAcesoStatus;
+    private String elementoDescentralizadoStatus;
+    private String componentesQueimadosStatus;
+    private String circuitoDefeituosoStatus;
+    private String bobinaInterrompidaStatus;
+    private String blocoCarbonizadosStatus;
+    private String placaSoltaStatus;
+    private String placaAmassadaStatus;
+    private String todasObservacoes;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_situacoes_observadas);
-
-
 
         Log.d("SITUAÇÕES OBSERVADAS", String.valueOf(Hawk.count()));
 
@@ -34,29 +63,13 @@ public class SituacoesObservadasActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Hawk.delete("sujeiraInterna");
-                Hawk.delete("sinaisCarbonizacao");
-                Hawk.delete("ranhurasDisco");
-                Hawk.delete("neutroCarbonizado");
-                Hawk.delete("marcasParafusos");
-                Hawk.delete("mancaisDeslocados");
-                Hawk.delete("ledIntermitente");
-                Hawk.delete("ledApagado");
-                Hawk.delete("ledDisparado");
-                Hawk.delete("ledAceso");
-                Hawk.delete("elementoDescentralizado");
-                Hawk.delete("componentesQueimados");
-                Hawk.delete("circuitoDefeituoso");
-                Hawk.delete("bobinaInterrompida");
-                Hawk.delete("blocoCarbonizados");
-                Hawk.delete("placaSolta");
-                Hawk.delete("placaAmassada");
+                Hawk.delete("SituacoesObservadas");
 
                 sujeiraInterna = findViewById(R.id.SujeiraInterna);
                 sinaisCarbonizacao = findViewById(R.id.sinaisCarbonizacao);
                 ranhurasDisco = findViewById(R.id.RanhurasDisco);
                 neutroCarbonizado = findViewById(R.id.NeutroCarbonizado);
-                marcasParafusos  = findViewById(R.id.MarcasParafusos);
+                marcasParafusos = findViewById(R.id.MarcasParafusos);
                 mancaisDeslocados = findViewById(R.id.MancaisDeslocados);
                 ledIntermitente = findViewById(R.id.ledIntermitente);
                 ledApagado = findViewById(R.id.LedApagado);
@@ -71,90 +84,93 @@ public class SituacoesObservadasActivity extends AppCompatActivity {
                 placaAmassada = findViewById(R.id.PlacaAmassada);
 
 
-                if(sujeiraInterna.isChecked()){
+                todasObservacoes = "";
+                if (sujeiraInterna.isChecked()) {
                     sujeiraInternaStatus = "Sujeira interna - atrito";
-                    Hawk.put("sujeiraInterna",sujeiraInternaStatus);
+                    todasObservacoes = todasObservacoes + sujeiraInternaStatus;
 
                 }
-                if (sinaisCarbonizacao.isChecked()){
+                if (sinaisCarbonizacao.isChecked()) {
                     sinaisCarbonizacaoStatus = "Sinais de carbonização";
-                    Hawk.put("sinaisCarbonizacao",sinaisCarbonizacaoStatus);
+                    todasObservacoes = todasObservacoes + " - " + sinaisCarbonizacaoStatus;
 
                 }
-                if (ranhurasDisco.isChecked()){
+                if (ranhurasDisco.isChecked()) {
                     ranhurasDiscoStatus = "Ranhuras no disco do elemento móvel";
-                    Hawk.put("ranhurasDisco",ranhurasDiscoStatus);
+                    todasObservacoes = todasObservacoes + " - " + ranhurasDiscoStatus;
 
                 }
-                if (neutroCarbonizado.isChecked()){
+                if (neutroCarbonizado.isChecked()) {
                     neutroCarbonizadoStatus = "Neutro Carbonizado";
-                    Hawk.put("neutroCarbonizado",neutroCarbonizadoStatus);
+                    todasObservacoes = todasObservacoes + " - " + neutroCarbonizadoStatus;
 
                 }
-                if (marcasParafusos.isChecked()){
+                if (marcasParafusos.isChecked()) {
                     marcasParafusosStatus = "Marca nos parafusos dos mancais";
-                    Hawk.put("marcasParafusos",marcasParafusosStatus);
+                    todasObservacoes = todasObservacoes + " - " + marcasParafusosStatus;
 
                 }
-                if (mancaisDeslocados.isChecked()){
+                if (mancaisDeslocados.isChecked()) {
                     mancaisDeslocadosStatus = "Mancais deslocados";
-                    Hawk.put("mancaisDeslocados",mancaisDeslocadosStatus);
+                    todasObservacoes = todasObservacoes + " - " + mancaisDeslocadosStatus;
 
                 }
-                if (ledIntermitente.isChecked()){
+                if (ledIntermitente.isChecked()) {
                     ledIntermitenteStatus = "LED intermitente";
-                    Hawk.put("ledIntermitente",ledIntermitenteStatus);
+                    todasObservacoes = todasObservacoes + " - " + ledIntermitenteStatus;
 
                 }
-                if (ledApagado.isChecked()){
+                if (ledApagado.isChecked()) {
                     ledApagadoStatus = "LED apagado/ não emite pulsos";
-                    Hawk.put("ledApagado",ledApagadoStatus);
+                    todasObservacoes = todasObservacoes + " - " + ledApagadoStatus;
 
                 }
-                if (ledDisparado.isChecked()){
+                if (ledDisparado.isChecked()) {
                     ledDisparadoStatus = "LED disparado";
-                    Hawk.put("ledDisparado",ledDisparadoStatus);
+                    todasObservacoes = todasObservacoes + " - " + ledDisparadoStatus;
 
                 }
-                if (ledAceso.isChecked()){
+                if (ledAceso.isChecked()) {
                     ledAcesoStatus = "LEd aceso direto";
-                    Hawk.put("ledAceso",ledAcesoStatus);
+                    todasObservacoes = todasObservacoes + " - " + ledAcesoStatus;
 
                 }
-                if (elementoDescentralizado.isChecked()){
+                if (elementoDescentralizado.isChecked()) {
                     elementoDescentralizadoStatus = "Elemento móvel descentralizado";
-                    Hawk.put("elementoDescentralizado",elementoDescentralizadoStatus);
+                    todasObservacoes = todasObservacoes + " - " + elementoDescentralizadoStatus;
 
                 }
-                if (componentesQueimados.isChecked()){
+                if (componentesQueimados.isChecked()) {
                     componentesQueimadosStatus = "Componentes eletrônicos queimados";
-                    Hawk.put("componentesQueimados",componentesQueimadosStatus);
+                    todasObservacoes = todasObservacoes + " - " + componentesQueimadosStatus;
 
                 }
-                if (circuitoDefeituoso.isChecked()){
+                if (circuitoDefeituoso.isChecked()) {
                     circuitoDefeituosoStatus = "Circuito eletrônico defeituoso";
-                    Hawk.put("circuitoDefeituoso",circuitoDefeituosoStatus);
+                    todasObservacoes = todasObservacoes + " - " + circuitoDefeituosoStatus;
 
                 }
-                if (bobinaInterrompida.isChecked()){
+                if (bobinaInterrompida.isChecked()) {
                     bobinaInterrompidaStatus = "Bobina interrompida sem causa detectada";
-                    Hawk.put("bobinaInterrompida",bobinaInterrompidaStatus);
+                    todasObservacoes = todasObservacoes + " - " + bobinaInterrompidaStatus;
 
                 }
-                if (blocoCarbonizados.isChecked()){
+                if (blocoCarbonizados.isChecked()) {
                     blocoCarbonizadosStatus = "Bloco de terminais carbonizados";
-                    Hawk.put("blocoCarbonizados",blocoCarbonizadosStatus);
+                    todasObservacoes = todasObservacoes + " - " + blocoCarbonizadosStatus;
 
                 }
-                if (placaSolta.isChecked()){
+                if (placaSolta.isChecked()) {
                     placaSoltaStatus = "Placa solta";
-                    Hawk.put("placaSolta",placaSoltaStatus);
+                    todasObservacoes = todasObservacoes + " - " + placaSoltaStatus;
 
                 }
-                if (placaAmassada.isChecked()){
-                    placaAmassadaStatus  = "Placa de identificação amassada";
-                    Hawk.put("placaAmassada",placaAmassadaStatus);
+                if (placaAmassada.isChecked()) {
+                    placaAmassadaStatus = "Placa de identificação amassada";
+                    todasObservacoes = todasObservacoes + " - " + placaAmassadaStatus;
                 }
+
+                Hawk.put("SituacoesObservadas", todasObservacoes);
 
                 abrirInformacoesComplementares();
             }
@@ -167,4 +183,5 @@ public class SituacoesObservadasActivity extends AppCompatActivity {
         Intent intent = new Intent(this, InformacoesComplementaresActivity.class);
         startActivity(intent);
     }
+
 }

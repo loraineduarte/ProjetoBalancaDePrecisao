@@ -22,6 +22,7 @@
 
     <Button
         android:id="@+id/buttonFotoDepois"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="0dp"
         android:layout_height="44dp"
         android:layout_marginEnd="16dp"
@@ -29,7 +30,7 @@
         android:layout_marginTop="8dp"
         android:text="@string/foto_p_s_teste"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@android:color/black"
+        android:textColor="@android:color/white"
         android:textColorLink="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -38,6 +39,7 @@
 
     <Button
         android:id="@+id/buttonFotoAntes"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="0dp"
         android:layout_height="44dp"
         android:layout_marginEnd="200dp"
@@ -45,7 +47,7 @@
         android:layout_marginTop="8dp"
         android:text="@string/foto_pr_teste"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@android:color/black"
+        android:textColor="@android:color/white"
         android:textColorLink="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -109,6 +111,7 @@
 
     <Button
         android:id="@+id/addObservacao"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -175,17 +178,14 @@
         app:layout_constraintTop_toBottomOf="@+id/Reprovado" />
 
     <Button
-        android:id="@+id/buttonExecutarTeste"
+        android:id="@+id/executarTeste"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="0dp"
         android:layout_height="44dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginStart="200dp"
-        android:layout_marginTop="8dp"
-        android:onClick="executarTeste"
-        android:text="Executar Teste"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@android:color/black"
-        android:textColorLink="@android:color/black"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/executar_teste"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
