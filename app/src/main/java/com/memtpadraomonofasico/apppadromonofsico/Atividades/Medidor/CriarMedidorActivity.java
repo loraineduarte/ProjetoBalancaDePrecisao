@@ -41,7 +41,7 @@ public class CriarMedidorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medidor);
 
-        BancoController crud = new BancoController(getBaseContext());
+        final BancoController crud = new BancoController(getBaseContext());
         //Cursor cursor = crud.pegaMedidores();
         //Log.d(TAG, String.valueOf(cursor.getCount()));
 
