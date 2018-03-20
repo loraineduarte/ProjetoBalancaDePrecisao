@@ -50,6 +50,7 @@ public class SelecionarMedidorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_selecionar_medidor);
 
         BancoController crud = new BancoController(getBaseContext());
+
         Cursor cursor = crud.pegaMedidores();
 
         numSerie = findViewById( R.id.numSerie );
