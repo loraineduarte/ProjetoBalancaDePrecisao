@@ -13,7 +13,7 @@
         android:layout_height="30dp"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:text="@string/registrador"
         android:textAppearance="@android:style/TextAppearance.Material.DialogWindowTitle"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,7 +23,7 @@
     <Button
         android:id="@+id/buttonFotoDepois"
         android:layout_width="0dp"
-        android:layout_height="69dp"
+        android:layout_height="44dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="200dp"
         android:layout_marginTop="8dp"
@@ -39,7 +39,7 @@
     <Button
         android:id="@+id/buttonFotoAntes"
         android:layout_width="0dp"
-        android:layout_height="68dp"
+        android:layout_height="44dp"
         android:layout_marginEnd="200dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
@@ -58,12 +58,12 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:text="@string/status"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/executarTeste" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonConectarDispositivo" />
 
     <RadioButton
         android:id="@+id/tampasolidarizada"
@@ -113,7 +113,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:text="@string/adiciona_observa_o"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -175,16 +175,37 @@
         app:layout_constraintTop_toBottomOf="@+id/Reprovado" />
 
     <Button
-        android:id="@+id/executarTeste"
+        android:id="@+id/buttonExecutarTeste"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="44dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="200dp"
+        android:layout_marginTop="8dp"
+        android:onClick="executarTeste"
         android:text="Executar Teste"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@android:color/black"
+        android:textColorLink="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonFotoDepois" />
+
+    <Button
+        android:id="@+id/buttonConectarDispositivo"
+        android:layout_width="0dp"
+        android:layout_height="44dp"
+        android:layout_marginEnd="200dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:onClick="conectarDispositivo"
+        android:text="Conectar"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@android:color/black"
+        android:textColorLink="@android:color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonFotoAntes" />
 
 </android.support.constraint.ConstraintLayout>

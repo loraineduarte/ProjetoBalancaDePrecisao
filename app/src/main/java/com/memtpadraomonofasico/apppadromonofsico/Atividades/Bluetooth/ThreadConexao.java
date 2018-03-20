@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.os.Bundle;
+import android.os.Looper;
 import android.os.Message;
 
 import java.io.IOException;
@@ -43,7 +44,7 @@ public class ThreadConexao extends Thread {
     em uma nova thread.
      */
     public void run() {
-
+        Looper.prepare();
         /*  Anuncia que a thread está sendo executada.
             Pega uma referência para o adaptador Bluetooth padrão.
          */
@@ -110,6 +111,9 @@ public class ThreadConexao extends Thread {
                 estabelecida.
                  */
                 if (btSocket != null){
+                    if(btSocket.isConnected()){
+                        btSocket.close();
+                    }
                     btSocket.connect();
                 }
 
@@ -177,6 +181,7 @@ public class ThreadConexao extends Thread {
                 toMainActivity("---N".getBytes());
             }
         }
+        Looper.loop();
 
     }
 

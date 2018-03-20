@@ -1,10 +1,13 @@
 package com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.Registrador;
 
 import android.annotation.SuppressLint;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -14,14 +17,24 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
-
+import com.memtpadraomonofasico.apppadromonofsico.Atividades.Bluetooth.PairedDevices;
+import com.memtpadraomonofasico.apppadromonofsico.Atividades.Bluetooth.ThreadConexao;
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.MarchaVazio.MarchaVazioActivity;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
 
+import static java.lang.System.out;
+
 public class RegistradorActivity extends AppCompatActivity {
 
+    private static final String TAG = "Bluetooth";
+    private static String macAddress = "";
+
+    public static int ENABLE_BLUETOOTH = 1;
+    public static int SELECT_PAIRED_DEVICE = 2;
+    private static final int REQUEST_ENABLE_BT = 4;
 
     private static final int TIRAR_FOTO_ANTES = 10207;
     private static final int TIRAR_FOTO_DEPOIS = 10208;
@@ -30,12 +43,18 @@ public class RegistradorActivity extends AppCompatActivity {
     RadioButton aprovado, naoPossibilitaTeste, reprovado;
     Bitmap fotoAntesRegistrador, fotoDepoisRegistrador;
     String status, observacaoRegistrador;
-    Spinner opcoesReprovados;
+    Spinner opcoesReprovados, dispositivos;
+    private AlertDialog dialogRegistrador;
+    static TextView textMessage;
+    ThreadConexao conexao;
 
+    private static String dados;
+    private static String res;
+
+    private static byte[] pacote = new  byte[10];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
 
         Hawk.delete("FotoPreTesteRegistrador");
         Hawk.delete("FotoPosTesteRegistrador");
@@ -45,11 +64,10 @@ public class RegistradorActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrador);
-
+        textMessage = (TextView) findViewById(R.id.textView6);
         aprovado = findViewById(R.id.tampasolidarizada);
         naoPossibilitaTeste = findViewById(R.id.sinaisCarbonizacao);
         reprovado = findViewById(R.id.Reprovado);
-
 
         if(aprovado.isChecked()){
             status = "Aprovado";
@@ -85,6 +103,27 @@ public class RegistradorActivity extends AppCompatActivity {
         });
 
         observacaoRegistrador = observacao.getDataString();
+
+        // Início - verificando ativação do bluetooth
+        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+        if (mBluetoothAdapter == null) {
+            textMessage.setText("Bluetooth não está funcionando.");
+            out.append("device not supported");
+        }
+        else{
+            textMessage.setText("Bluetooth está funcionando.");
+            if (!mBluetoothAdapter.isEnabled()) {
+                Log.d(TAG, "ATIVANDO BLUETOOTH");
+                Intent enableBtIntent  = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+                textMessage.setText("Solicitando ativação do Bluetooth...");
+            }
+            else{
+                textMessage.setText("Bluetooth Ativado.");
+            }
+        }
+        // Fim - verificando ativação do bluetooth
 
         @SuppressLint("WrongViewCast") Button addObs = findViewById(R.id.addObservacao);
         addObs.setOnClickListener(new View.OnClickListener() {
@@ -125,6 +164,37 @@ public class RegistradorActivity extends AppCompatActivity {
 
     }
 
+    public void executarTeste(View view){
+
+        if (conexao.isAlive()){
+            textMessage.setText(".. Conectado ..");
+        }
+
+        byte[] pacote = new byte[10];
+
+        pacote[0] = ('I' & 0xFF);
+        pacote[1] = ('B' & 0xFF);
+        pacote[2] = (byte)(0 & 0xFF);
+        pacote[3] = (byte)(0 & 0xFF);
+        pacote[4] = (byte)(90 & 0xFF);
+        pacote[5] = (byte)(175 & 0xFF);
+        pacote[6] = (byte)(0 & 0xFF);
+        pacote[7] = (byte)(10 & 0xFF);
+        pacote[8] = (byte)(0 & 0xFF);
+        pacote[9] = (byte)(0 & 0xFF);
+
+        conexao.write(pacote);
+    }
+
+    public void turnOfDialogFragment(){
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        RegistradorDialogFragment rdf = (RegistradorDialogFragment) getSupportFragmentManager().findFragmentByTag("dialog");
+        if(rdf != null){
+            rdf.dismiss();
+            ft.remove(rdf);
+        }
+    }
+
     private void abrirAddObs() {
 
         Intent intent = new Intent(this, ObservacaoRegistradorActivity.class);
@@ -139,6 +209,11 @@ public class RegistradorActivity extends AppCompatActivity {
     private void tirarFotoDepois() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, TIRAR_FOTO_DEPOIS);
+    }
+
+    public void conectarDispositivo(View view){
+        Intent searchPairedDevicesIntent = new Intent(this, PairedDevices.class);
+        startActivityForResult(searchPairedDevicesIntent, SELECT_PAIRED_DEVICE);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -201,6 +276,32 @@ public class RegistradorActivity extends AppCompatActivity {
                 Log.d("Registrador", String.valueOf(observacao));
             }
         }
+
+        if(requestCode == ENABLE_BLUETOOTH) {
+            if(resultCode == RESULT_OK) {
+                textMessage.setText("Bluetooth ativado.");
+            }
+            else {
+                textMessage.setText("Bluetooth não ativado.");
+            }
+        }
+        else if(requestCode == SELECT_PAIRED_DEVICE) {
+            if(resultCode == RESULT_OK) {
+                textMessage.setText("Você selecionou " + data.getStringExtra("btDevName") + "\n"
+                        + data.getStringExtra("btDevAddress"));
+                macAddress = data.getStringExtra("btDevAddress");
+
+                conexao = new ThreadConexao(macAddress);
+
+                if (conexao.isAlive()){
+                    conexao.cancel();
+                }
+                conexao.start();
+            }
+            else {
+                textMessage.setText("Nenhum dispositivo selecionado.");
+            }
+        }
     }
 
     public void onCheckboxClicked(View view) {
@@ -229,7 +330,6 @@ public class RegistradorActivity extends AppCompatActivity {
     }
 
     private void abrirMarchaVazio() {
-
         Intent intent = new Intent(this, MarchaVazioActivity.class);
         startActivity(intent);
     }

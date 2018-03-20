@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="102dp">
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/status"
+            android:id="@+id/tvStatus"/>
+        <Spinner
+            android:id="@+id/dispositivos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/btnTesteRegistrador"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Teste Registrador" />
+        <Button
+            android:id="@+id/btnCancelarTeste"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Cancelar Teste" />
+        <Button
+            android:id="@+id/btnSair"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Sair" />
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

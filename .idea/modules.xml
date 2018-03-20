@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/AppPadroMonofsico.iml" filepath="$PROJECT_DIR$/AppPadroMonofsico.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:\Users\loraine.duarte\AndroidStudioProjects\AppPadroMonofsico\apppadraomonofasico.iml" filepath="C:\Users\loraine.duarte\AndroidStudioProjects\AppPadroMonofsico\apppadraomonofasico.iml" />
+      <module fileurl="file://$PROJECT_DIR$/apppadraomonofasico.iml" filepath="$PROJECT_DIR$/apppadraomonofasico.iml" />
     </modules>
   </component>
 </project>

@@ -53,16 +53,16 @@ public class SelecionarMedidorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_selecionar_medidor);
 
         BancoController crud = new BancoController(getBaseContext());
-        Cursor cursor = crud.pegaMedidores();
-        Log.d(TAG, String.valueOf(cursor.getCount()));
+//        Cursor cursor = crud.pegaMedidores();
+//        Log.d(TAG, String.valueOf(cursor.getCount()));
 
-        if (cursor.getCount() > 0) {
-
-            final String[] myData = banco.SelectAllMedidores();
-            @SuppressLint("WrongViewCast") final AutoCompleteTextView autoCom = (AutoCompleteTextView) findViewById(R.id.numSerie);
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, myData);
-            autoCom.setAdapter(adapter);
-        }
+//        if (cursor.getCount() > 0) {
+//
+//            final String[] myData = banco.SelectAllMedidores();
+//            @SuppressLint("WrongViewCast") final AutoCompleteTextView autoCom = (AutoCompleteTextView) findViewById(R.id.numSerie);
+//            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, myData);
+//            autoCom.setAdapter(adapter);
+//        }
 
         final EditText numSerie = (EditText) findViewById( R.id.numSerie );
         numeroSerieMedidor = String.valueOf(numSerie.getText());

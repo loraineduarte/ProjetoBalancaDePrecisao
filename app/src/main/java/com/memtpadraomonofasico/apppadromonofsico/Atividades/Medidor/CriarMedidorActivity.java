@@ -26,8 +26,8 @@ public class CriarMedidorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_medidor);
 
         BancoController crud = new BancoController(getBaseContext());
-        Cursor cursor = crud.pegaMedidores();
-        Log.d(TAG, String.valueOf(cursor.getCount()));
+        //Cursor cursor = crud.pegaMedidores();
+        //Log.d(TAG, String.valueOf(cursor.getCount()));
 
         checkEletronico = findViewById(R.id.radioButtonEletronico);
         checkMecanico = findViewById(R.id.RadioButtonMecanico);
