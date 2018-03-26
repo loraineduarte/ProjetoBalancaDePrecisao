@@ -41,7 +41,6 @@ public class RegistradorActivity extends AppCompatActivity {
     private static final int TIRAR_FOTO_ANTES = 10207;
     private static final int TIRAR_FOTO_DEPOIS = 10208;
 
-    Intent observacao = new Intent();
     private AlertDialog dialogRegistrador;
     public static TextView textMessage;
 
@@ -56,12 +55,6 @@ public class RegistradorActivity extends AppCompatActivity {
     private String status;
     private String observacaoRegistrador = " ";
     private Spinner opcoesReprovados;
-    private Spinner dispositivos;
-
-    private static String dados;
-    private static String res;
-
-    private static byte[] pacote = new byte[10];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,11 +132,10 @@ public class RegistradorActivity extends AppCompatActivity {
                 Hawk.delete("statusRegistrador");
                 Hawk.delete("ObservaçãoRegistrador");
 
-//                aprovado = findViewById(R.id.tampasolidarizada);
-//                naoPossibilitaTeste = findViewById(R.id.sinaisCarbonizacao);
-//                reprovado = findViewById(R.id.Reprovado);
-//
-//
+                aprovado = findViewById(R.id.tampasolidarizada);
+                naoPossibilitaTeste = findViewById(R.id.sinaisCarbonizacao);
+                reprovado = findViewById(R.id.Reprovado);
+
                 if (aprovado.isChecked()) {
                     status = "Aprovado";
 
@@ -326,8 +318,7 @@ public class RegistradorActivity extends AppCompatActivity {
             }
         } else if (requestCode == SELECT_PAIRED_DEVICE) {
             if (resultCode == RESULT_OK) {
-                textMessage.setText("Você selecionou " + data.getStringExtra("btDevName") + "\n"
-                        + data.getStringExtra("btDevAddress"));
+                textMessage.setText("Você selecionou " + data.getStringExtra("btDevName") + "\n" + data.getStringExtra("btDevAddress"));
                 macAddress = data.getStringExtra("btDevAddress");
 
                 conexao = new ThreadConexao(macAddress);

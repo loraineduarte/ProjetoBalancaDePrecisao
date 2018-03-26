@@ -50,10 +50,10 @@ public class RegistradorDialogFragment extends DialogFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         Log.i("Script", "onCreaate");
         View view = inflater.inflate(R.layout.registrador_dialog_fragment, container);
-        tvStatus = (TextView) view.findViewById(R.id.tvStatus);
+        tvStatus = view.findViewById(R.id.tvStatus);
 
         /* Início - Botão de sair.*/
-        Button btnSair = (Button) view.findViewById(R.id.btnSair);
+        Button btnSair = view.findViewById(R.id.btnSair);
         btnSair.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -63,7 +63,7 @@ public class RegistradorDialogFragment extends DialogFragment {
         /* Fim - Botão de sair.*/
 
         /* Início - Botão conectar.*/
-        Button btnTesteRegistrador = (Button) view.findViewById(R.id.btnTesteRegistrador);
+        Button btnTesteRegistrador = view.findViewById(R.id.btnTesteRegistrador);
         btnTesteRegistrador.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -79,7 +79,7 @@ public class RegistradorDialogFragment extends DialogFragment {
         /* Fim - Botão conectar.*/
 
         /* Início - Botão Cancelar Teste.*/
-        Button btnCancelarTeste = (Button) view.findViewById(R.id.btnCancelarTeste);
+        Button btnCancelarTeste = view.findViewById(R.id.btnCancelarTeste);
         btnCancelarTeste.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -105,7 +105,7 @@ public class RegistradorDialogFragment extends DialogFragment {
             }
         }
 
-        sp = (Spinner) view.findViewById(R.id.dispositivos);
+        sp = view.findViewById(R.id.dispositivos);
         sp.setAdapter(adapter);
         /* Fim - Spinner dos dispositivos bluetooth encontrados.*/
 

@@ -24,12 +24,13 @@
         android:id="@+id/buttonAplicarTensao"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="0dp"
-        android:layout_height="55dp"
+        android:layout_height="43dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="200dp"
         android:layout_marginTop="16dp"
-        android:background="@color/colorPrimaryDark"
+        android:background="@drawable/botao_arredondado"
         android:backgroundTint="@color/colorPrimaryDark"
+        android:onClick="executarTeste"
         android:text="@string/aplicar_tens_o"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@android:color/white"
@@ -41,18 +42,21 @@
 
     <TextView
         android:id="@+id/textView6"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
         android:text="@string/status"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonAplicarTensao" />
 
+
     <RadioButton
-        android:id="@+id/tampasolidarizada"
+        android:id="@+id/aprovado"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
@@ -68,7 +72,7 @@
          />
 
     <RadioButton
-        android:id="@+id/sinaisCarbonizacao"
+        android:id="@+id/naoRealizado"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
@@ -80,7 +84,7 @@
         android:onClick="onCheckboxClicked"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tampasolidarizada"
+        app:layout_constraintTop_toBottomOf="@+id/aprovado"
         />
 
     <RadioButton
@@ -96,7 +100,7 @@
         android:onClick="onCheckboxClicked"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sinaisCarbonizacao"
+        app:layout_constraintTop_toBottomOf="@+id/naoRealizado"
           />
 
     <Button
@@ -106,11 +110,12 @@
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="220dp"
-        android:background="@color/colorPrimaryDark"
+        android:background="@drawable/botao_arredondado"
         android:backgroundTint="?attr/colorPrimaryDark"
         android:elevation="2dp"
         android:text="@string/pr_ximo"
-        android:textColor="@android:color/background_light"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@android:color/white"
         android:textColorLink="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -133,6 +138,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.901"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sinaisCarbonizacao" />
+        app:layout_constraintTop_toBottomOf="@+id/naoRealizado" />
+
+    <Button
+        android:id="@+id/buttonConectarDispositivo"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="0dp"
+        android:layout_height="43dp"
+        android:layout_marginEnd="200dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/botao_arredondado"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:onClick="conectarDispositivo"
+        android:text="Conectar"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@android:color/white"
+        android:textColorLink="@android:color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/MarchaVazio" />
 
 </android.support.constraint.ConstraintLayout>

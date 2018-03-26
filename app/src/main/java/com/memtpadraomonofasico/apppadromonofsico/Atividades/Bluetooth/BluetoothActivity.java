@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.MarchaVazio.MarchaVazioActivity;
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.Registrador.RegistradorActivity;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 
@@ -173,9 +174,11 @@ public class BluetoothActivity extends AppCompatActivity {
             switch (dataString) {
                 case "---N":
                     RegistradorActivity.escreverTela("Ocorreu um erro durante a conexão.");
+                    MarchaVazioActivity.escreverTela("Ocorreu um erro durante a conexão.");
                     break;
                 case "---S":
                     RegistradorActivity.escreverTela("Conectado.");
+                    MarchaVazioActivity.escreverTela("Conectado.");
                     break;
 
                 default:
@@ -201,39 +204,83 @@ public class BluetoothActivity extends AppCompatActivity {
                     if (dados.length() == 1) {
                         pacote[0] = (byte) (data[0] & 0xFF);
                     }
-                    if (dados.length() == 9) {
-                        pacote[1] = (byte) (data[0] & 0xFF);
-                        pacote[2] = (byte) (data[1] & 0xFF);
-                        pacote[3] = (byte) (data[2] & 0xFF);
-                        pacote[4] = (byte) (data[3] & 0xFF);
-                        pacote[5] = (byte) (data[4] & 0xFF);
-                        pacote[6] = (byte) (data[5] & 0xFF);
-                        pacote[7] = (byte) (data[6] & 0xFF);
-                        pacote[8] = (byte) (data[7] & 0xFF);
-                        pacote[9] = (byte) (data[8] & 0xFF);
-                        a = (pacote[2]) * Math.pow(256, 3) + (pacote[3] & 0xFF) * Math.pow(256, 2) + (pacote[4] & 0xFF) * 256 + (pacote[5] & 0xFF);
-                        b = (pacote[6] & 0xFF) * Math.pow(256, 3) + (pacote[7] & 0xFF) * Math.pow(256, 2) + (pacote[8] & 0xFF) * 256 + (pacote[9] & 0xFF);
+
+                    Log.d("RECEBIDO", dataString);
+
+
+
+                    if((dataString.startsWith("D"))){
+                        tipoTeste="";
                     }
-                    res = "  Tensão:   " + Integer.toString((int) a) + "  Corrente:  " + Integer.toString((int) b) + "\n";
-                    // Integer.toString((pacote[0] & 0xFF)) + ", " + Integer.toString((pacote[1] & 0xFF)) +
+
+                    if(dataString.startsWith("R")){
+                        tipoTeste = tipoTeste + dataString;
+
+                        if (dados.length() == 9) {
+                            pacote[1] = (byte) (data[0] & 0xFF);
+                            pacote[2] = (byte) (data[1] & 0xFF);
+                            pacote[3] = (byte) (data[2] & 0xFF);
+                            pacote[4] = (byte) (data[3] & 0xFF);
+                            pacote[5] = (byte) (data[4] & 0xFF);
+                            pacote[6] = (byte) (data[5] & 0xFF);
+                            pacote[7] = (byte) (data[6] & 0xFF);
+                            pacote[8] = (byte) (data[7] & 0xFF);
+                            pacote[9] = (byte) (data[8] & 0xFF);
+                            a = (pacote[2]) * Math.pow(256, 3) + (pacote[3] & 0xFF) * Math.pow(256, 2) + (pacote[4] & 0xFF) * 256 + (pacote[5] & 0xFF);
+                            b = (pacote[6] & 0xFF) * Math.pow(256, 3) + (pacote[7] & 0xFF) * Math.pow(256, 2) + (pacote[8] & 0xFF) * 256 + (pacote[9] & 0xFF);
+                        }
+                        res = "  Tensão:   " + Integer.toString((int) a) + " uV   Corrente:  " + Integer.toString((int) b) + " uA \n";
+
+                        // Integer.toString((pacote[0] & 0xFF)) + ", " + Integer.toString((pacote[1] & 0xFF)) +
 //                    for (byte d : pacote) {
 //                        res = res + "[" + Integer.toString((d & 0xFF)) + "]";
 //                    }
 //                    res = res + "\n";
 
-                    if((dataString.startsWith("D"))){
-                        tipoTeste="";
-                    }
-                    if(dataString.startsWith("R")){
-                        tipoTeste = tipoTeste + dataString;
-                        Log.d("RECEBIDO", res);
-                        if(tipoTeste.contains("F")){
-                            RegistradorActivity.escreverTela("Teste sendo finalizado ... \n" + res);
-                        }else {
-                            RegistradorActivity.escreverTela("Recebendo dados do padrão \n" + res);
-                        }
+                      RegistradorActivity.escreverTela("Recebendo dados do padrão \n" + res);
 
                     }
+
+                    if(dataString.startsWith("M")){
+                        tipoTeste = tipoTeste + dataString;
+
+                        if (dados.length() == 9) {
+                            pacote[1] = (byte) (data[0] & 0xFF);
+                            pacote[2] = (byte) (data[1] & 0xFF);
+                            pacote[3] = (byte) (data[2] & 0xFF);
+                            pacote[4] = (byte) (data[3] & 0xFF);
+                            pacote[5] = (byte) (data[4] & 0xFF);
+                            pacote[6] = (byte) (data[5] & 0xFF);
+                            pacote[7] = (byte) (data[6] & 0xFF);
+                            pacote[8] = (byte) (data[7] & 0xFF);
+                            pacote[9] = (byte) (data[8] & 0xFF);
+
+                            a = (pacote[2]) * Math.pow(256, 3) + (pacote[3] & 0xFF) * Math.pow(256, 2) + (pacote[4] & 0xFF) * 256 + (pacote[5] & 0xFF);
+                            b = (pacote[6] & 0xFF) * Math.pow(256, 3) + (pacote[7] & 0xFF) * Math.pow(256, 2) + (pacote[8] & 0xFF) * 256 + (pacote[9] & 0xFF);
+                        }
+                        res = "  Tensão:   " + Integer.toString((int) a) + " uV   Corrente:  " + Integer.toString((int) b) + " uA \n";
+                        MarchaVazioActivity.escreverTela("Recebendo dados do padrão \n" + res);
+
+                    }
+
+                    if(dataString.contains("F")){
+                        tipoTeste = tipoTeste + dataString;
+
+                        if(tipoTeste.contains("R")){
+                            RegistradorActivity.escreverTela("Teste sendo finalizado ... \n" + res);
+
+                        } if(tipoTeste.contains("M")){
+                            a = ((pacote[2]) * 256) + (pacote[3] & 0xFF);
+                            res = "  Número de pulsos :   " + Integer.toString((int) a) + "\n";
+                            MarchaVazioActivity.escreverTela("Teste sendo finalizado ... \n" + res);
+                            MarchaVazioActivity.selecionarStatus(a);
+
+
+                        }
+                        break;
+                    }
+
+
 
 
                     if (cont >= 2) {
