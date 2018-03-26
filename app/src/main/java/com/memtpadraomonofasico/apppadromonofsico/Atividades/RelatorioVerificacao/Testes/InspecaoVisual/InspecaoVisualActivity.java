@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -43,25 +42,23 @@ public class InspecaoVisualActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inspecao_visual);
 
-        Selo1 =  findViewById(R.id.Selo1);
-        Selo2 =  findViewById(R.id.Selo2);
-        Selo3 =  findViewById(R.id.Selo3);
+        Selo1 = findViewById(R.id.Selo1);
+        Selo2 = findViewById(R.id.Selo2);
+        Selo3 = findViewById(R.id.Selo3);
         Reprovado = findViewById(R.id.ReprovadoInspecaoVisual);
         Aprovado = findViewById(R.id.AprovadoInspecaoVisual);
 
-        opcoesReprovados =  findViewById(R.id.spinner);
+        opcoesReprovados = findViewById(R.id.spinner);
         opcoesReprovados.setEnabled(false);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,  R.array.ReprovadoInspeçãoVisual, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.ReprovadoInspeçãoVisual, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         opcoesReprovados.setAdapter(adapter);
-        opcoesReprovados.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-            {
+        opcoesReprovados.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 statusReprovado = parent.getItemAtPosition(position).toString();
             }
-            public void onNothingSelected(AdapterView<?> parent)
-            {
+
+            public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
@@ -88,10 +85,10 @@ public class InspecaoVisualActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (Aprovado.isChecked()){
+                if (Aprovado.isChecked()) {
                     status = "Selos íntegros";
 
-                } else if (Reprovado.isChecked()){
+                } else if (Reprovado.isChecked()) {
                     status = "Reprovado";
                 }
 
@@ -101,32 +98,33 @@ public class InspecaoVisualActivity extends AppCompatActivity {
                 Hawk.delete("Status");
                 Hawk.delete("FotoInspecaoVisual");
                 Hawk.delete("ObservacaoInspecaoVisual");
+//
+//                if(!statusReprovado.isEmpty()){
+//                    status = status +" - "+ statusReprovado;
+//                }
+//                if((String.valueOf(Selo1.getText()).isEmpty())||(String.valueOf(Selo2.getText()).isEmpty())|| (String.valueOf(Selo3.getText()).isEmpty())){
+//                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Completar os selos da inspeção visual! ", Toast.LENGTH_LONG).show();
+//                }
+//                if(status==null){
+//                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Status não selecionado!", Toast.LENGTH_LONG).show();
+//                }
+//                if(fotoResized==null){
+//                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Foto de inspeção não tirada!", Toast.LENGTH_LONG).show();
+//
+//                } else {
+//
+                Hawk.put("Selo1", String.valueOf(Selo1.getText()));
+                Hawk.put("Selo2", String.valueOf(Selo2.getText()));
+                Hawk.put("Selo3", String.valueOf(Selo3.getText()));
+                Hawk.put("Status", status);
+                Hawk.put("StatusReprovado", statusReprovado);
+                Hawk.put("FotoInspecaoVisual", fotoResized);
+                Hawk.put("ObservacaoInspecaoVisual", observacaoInspecao);
 
-                if(!statusReprovado.isEmpty()){
-                    status = status +" - "+ statusReprovado;
-                }
-                if((String.valueOf(Selo1.getText()).isEmpty())||(String.valueOf(Selo2.getText()).isEmpty())|| (String.valueOf(Selo3.getText()).isEmpty())){
-                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Completar os selos da inspeção visual! ", Toast.LENGTH_LONG).show();
-                }
-                if(status==null){
-                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Status não selecionado!", Toast.LENGTH_LONG).show();
-                }
-                if(fotoResized==null){
-                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Foto de inspeção não tirada!", Toast.LENGTH_LONG).show();
+//                    Log.d("STATUS",observacaoInspecao);
 
-                } else {
-
-                    Hawk.put("Selo1",String.valueOf(Selo1.getText()));
-                    Hawk.put("Selo2", String.valueOf(Selo2.getText()));
-                    Hawk.put("Selo3", String.valueOf(Selo3.getText()));
-                    Hawk.put("Status", status);
-                    Hawk.put("FotoInspecaoVisual", fotoResized);
-                    Hawk.put("ObservacaoInspecaoVisual", observacaoInspecao);
-
-                    Log.d("STATUS",observacaoInspecao);
-
-                    abrirRegistrador();
-                }
+                abrirRegistrador();
+//                }
             }
         });
     }
@@ -170,14 +168,14 @@ public class InspecaoVisualActivity extends AppCompatActivity {
         if (requestCode == TIRAR_FOTO) {
             if (resultCode == RESULT_OK) {
 
-                if(data != null) {
+                if (data != null) {
                     Toast.makeText(getBaseContext(), "A imagem foi capturada", Toast.LENGTH_SHORT);
                     Bundle bundle = data.getExtras();
                     assert bundle != null;
                     Bitmap fotoInspecao = (Bitmap) bundle.get("data");
                     fotoResized = Bitmap.createScaledBitmap(Objects.requireNonNull(fotoInspecao), 100, 120, false);
 
-                    if(fotoResized !=null){
+                    if (fotoResized != null) {
                         ImageView imageView = findViewById(R.id.imageView);
                         imageView.setImageBitmap(fotoResized);
                     }
@@ -189,9 +187,9 @@ public class InspecaoVisualActivity extends AppCompatActivity {
             }
         }
 
-       if (requestCode == REQUEST_OBS) {
+        if (requestCode == REQUEST_OBS) {
             if (resultCode == RESULT_OK) {
-                if(data != null) {
+                if (data != null) {
                     observacaoInspecao = data.getStringExtra("RESULT_STRING");
                 }
 

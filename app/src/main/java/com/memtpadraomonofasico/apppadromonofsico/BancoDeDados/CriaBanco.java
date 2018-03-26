@@ -61,7 +61,7 @@ public class CriaBanco extends SQLiteOpenHelper {
                 + CLASSE + " text, "
                 + ANO_FABRICACAO + " integer, "
                 + TENSAO_NOMINAL + " integer, "
-                + KDKE + " integer, "
+                + KDKE + " double, "
                 + RR + " integer, "
                 + FIOS + " integer, "
                 + PORT_INMETRO + " text, "
@@ -166,10 +166,12 @@ public class CriaBanco extends SQLiteOpenHelper {
         Cursor cursor;
         SQLiteDatabase db;
          db = this.getReadableDatabase();
+        String[] selectionArgs = new String[1];
+        selectionArgs[0] = codigo;
         String[] campos =  {INSTALACAO, NUM_GERAL, FABRICANTE, NUM_ELEMENTOS, MODELO, CORRENTE_NOMINAL, CLASSE, ANO_FABRICACAO, TENSAO_NOMINAL, KDKE,
                 RR, FIOS, PORT_INMETRO, TIPO_MEDIDOR};
 
-        cursor = db.query(TABELA_MEDIDOR , campos, NUM_SERIE +"= "+ codigo, null, null, null, null, null);
+        cursor = db.query(TABELA_MEDIDOR , campos, NUM_SERIE + " = ?", selectionArgs, null, null, null, null);
 
         if(cursor!=null){
             if(cursor.moveToFirst()){
@@ -181,7 +183,7 @@ public class CriaBanco extends SQLiteOpenHelper {
                 arrData[4] = cursor.getString(cursor.getColumnIndexOrThrow(TENSAO_NOMINAL));
                 arrData[5] = cursor.getString(cursor.getColumnIndexOrThrow(CORRENTE_NOMINAL));
                 arrData[6] = cursor.getString(cursor.getColumnIndexOrThrow(TIPO_MEDIDOR));
-                arrData[7] = cursor.getString(cursor.getColumnIndexOrThrow(KDKE));
+                arrData[7] = String.valueOf(cursor.getDouble(cursor.getColumnIndexOrThrow(KDKE)));
                 arrData[8] = cursor.getString(cursor.getColumnIndexOrThrow(RR));
                 arrData[9] = cursor.getString(cursor.getColumnIndexOrThrow(NUM_ELEMENTOS));
                 arrData[10] = cursor.getString(cursor.getColumnIndexOrThrow(ANO_FABRICACAO));

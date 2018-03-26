@@ -53,9 +53,9 @@ public class BancoController {
 
 
 
-    public String insereNovoMedidor(int medidor_instalacao, String medidor_num_serie , String medidor_num_geral ,String medidor_fabricante, int medidor_num_elementos, String medidor_modelo,
-                                    int medidor_corrente_nominal, String medidor_classe, int medidor_RR, int medidor_ano_fabricacao,
-                                    int medidor_tensao_nominal, int medidor_KdKe, String medidor_port_inmetro, int medidor_fios, String medidor_tipo_medidor){
+    public String insereNovoMedidor(int medidor_instalacao, String medidor_num_serie , String medidor_num_geral , String medidor_fabricante, int medidor_num_elementos, String medidor_modelo,
+                                    int medidor_corrente_nominal, String medidor_classe, String medidor_RR, int medidor_ano_fabricacao,
+                                    int medidor_tensao_nominal, Double medidor_KdKe, String medidor_port_inmetro, int medidor_fios, String medidor_tipo_medidor){
         ContentValues valores;
         long resultado;
 

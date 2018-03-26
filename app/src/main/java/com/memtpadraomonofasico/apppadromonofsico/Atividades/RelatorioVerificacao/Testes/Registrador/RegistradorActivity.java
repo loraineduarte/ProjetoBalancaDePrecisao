@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
@@ -23,7 +24,7 @@ import android.widget.Toast;
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.Bluetooth.PairedDevices;
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.Bluetooth.ThreadConexao;
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.MarchaVazio.MarchaVazioActivity;
-
+import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.Objects;
@@ -42,7 +43,7 @@ public class RegistradorActivity extends AppCompatActivity {
 
     Intent observacao = new Intent();
     private AlertDialog dialogRegistrador;
-    static TextView textMessage;
+    public static TextView textMessage;
 
     ThreadConexao conexao;
 
@@ -60,72 +61,46 @@ public class RegistradorActivity extends AppCompatActivity {
     private static String dados;
     private static String res;
 
-    private static byte[] pacote = new  byte[10];
+    private static byte[] pacote = new byte[10];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        Hawk.delete("FotoPreTesteRegistrador");
-        Hawk.delete("FotoPosTesteRegistrador");
-        Hawk.delete("statusRegistrador");
-        Hawk.delete("ObservaçãoRegistrador");
-        Log.d("INSPEÇÃO VISUAL ", String.valueOf(Hawk.count()));
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrador);
-        textMessage = (TextView) findViewById(R.id.textView6);
+        textMessage = findViewById(R.id.textView6);
         aprovado = findViewById(R.id.tampasolidarizada);
         naoPossibilitaTeste = findViewById(R.id.sinaisCarbonizacao);
         reprovado = findViewById(R.id.Reprovado);
 
-        if(aprovado.isChecked()){
-            status = "Aprovado";
 
-        } else if (naoPossibilitaTeste.isChecked()){
-            status = "Não Possibilita Testes";
-
-        } else if (reprovado.isChecked()){
-            status = "Reprovado";
-
-        }
-
-        observacaoRegistrador = observacao.getDataString();
-
-        opcoesReprovados = (Spinner) findViewById(R.id.RegistradorSpinner);
-
+        opcoesReprovados = findViewById(R.id.RegistradorSpinner);
         opcoesReprovados.setEnabled(false);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,  R.array.ReprovadoRegistrador, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.ReprovadoRegistrador, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         opcoesReprovados.setAdapter(adapter);
-        opcoesReprovados.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-            {
+        opcoesReprovados.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 status = parent.getItemAtPosition(position).toString();
             }
-            public void onNothingSelected(AdapterView<?> parent)
-            {
+
+            public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
 
-        observacaoRegistrador = observacao.getDataString();
-
-        // Início - verificando ativação do bluetooth
+        // verificando ativação do bluetooth
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         if (mBluetoothAdapter == null) {
             textMessage.setText("Bluetooth não está funcionando.");
-        }
-        else{
+        } else {
             textMessage.setText("Bluetooth está funcionando.");
             if (!mBluetoothAdapter.isEnabled()) {
                 Log.d(TAG, "ATIVANDO BLUETOOTH");
-                Intent enableBtIntent  = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
                 textMessage.setText("Solicitando ativação do Bluetooth...");
-            }
-            else{
+            } else {
                 textMessage.setText("Bluetooth Ativado.");
             }
         }
@@ -164,68 +139,108 @@ public class RegistradorActivity extends AppCompatActivity {
                 Hawk.delete("statusRegistrador");
                 Hawk.delete("ObservaçãoRegistrador");
 
-                aprovado = findViewById(R.id.tampasolidarizada);
-                naoPossibilitaTeste = findViewById(R.id.sinaisCarbonizacao);
-                reprovado = findViewById(R.id.Reprovado);
-
-
-                if(aprovado.isChecked()){
+//                aprovado = findViewById(R.id.tampasolidarizada);
+//                naoPossibilitaTeste = findViewById(R.id.sinaisCarbonizacao);
+//                reprovado = findViewById(R.id.Reprovado);
+//
+//
+                if (aprovado.isChecked()) {
                     status = "Aprovado";
 
-                } else if (naoPossibilitaTeste.isChecked()){
+                } else if (naoPossibilitaTeste.isChecked()) {
                     status = "Não Possibilita Testes";
 
-                } else if (reprovado.isChecked()){
+                } else if (reprovado.isChecked()) {
                     status = "Reprovado";
 
                 }
-                if(status.isEmpty()){
-                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Status não selecionado!", Toast.LENGTH_LONG).show();
 
-                }if((fotoResized1==null) || (fotoResized2==null)){
-                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Fotos não tiradas!", Toast.LENGTH_LONG).show();
+//                if(status.isEmpty()){
+//                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Status não selecionado!", Toast.LENGTH_LONG).show();
+//
+//                }if((fotoResized1==null) || (fotoResized2==null)){
+//                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Fotos não tiradas!", Toast.LENGTH_LONG).show();
+//
+//                } else {
+//
+//                    Log.d("OBSERVACAO", observacaoRegistrador);
 
-                } else {
 
-                    Log.d("OBSERVACAO", observacaoRegistrador);
+                Log.d("status", String.valueOf(Hawk.get("statusRegistrador")));
 
-                    Hawk.put("FotoPreTesteRegistrador",fotoResized1);
-                    Hawk.put("FotoPosTesteRegistrador", fotoResized2);
-                    Hawk.put("statusRegistrador", status);
-                    Hawk.put("ObservaçãoRegistrador", observacaoRegistrador);
+                Hawk.put("FotoPreTesteRegistrador", fotoResized1);
+                Hawk.put("FotoPosTesteRegistrador", fotoResized2);
+                Hawk.put("statusRegistrador", status);
+                Hawk.put("ObservaçãoRegistrador", observacaoRegistrador);
 
-                    abrirMarchaVazio();
-                }
+                abrirMarchaVazio();
+//                }
             }
         });
     }
 
-    public void executarTeste(View view){
+    public void executarTeste(View view) {
 
-        if (conexao.isAlive()){
+        if (conexao.isAlive()) {
             textMessage.setText(".. Conectado ..");
         }
 
         byte[] pacote = new byte[10];
 
+        //pegando valores do medidor
+
+        float  kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
+        Log.d("KD medidor", String.valueOf(kdMedidor));// valor maximo 4.294,96 que ten que ser e o mínimo 0,000001
+
+        byte[] bytes = new byte[4];
+        int valorMultiplicado = (int) (kdMedidor*1000000);
+        Log.d("VALOR", String.valueOf((valorMultiplicado)));
+
+        bytes[0]= (byte) (valorMultiplicado/ (Math.pow(256, 3)));
+        bytes[1]= (byte) ((valorMultiplicado - (bytes[0]* (Math.pow(256, 3))))/ Math.pow(256, 2));
+        bytes[2]= (byte) ((valorMultiplicado - ((bytes[0]* (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2)))))/ Math.pow(256, 1));
+        bytes[3]= (byte) ((valorMultiplicado - ((bytes[0]* (Math.pow(256, 3) ) ) + (bytes[1] * (Math.pow(256, 2))) + (bytes[2]* Math.pow(256, 1))) ));
+
         pacote[0] = ('I' & 0xFF);
-        pacote[1] = ('B' & 0xFF);
-        pacote[2] = (byte)(0 & 0xFF);
-        pacote[3] = (byte)(0 & 0xFF);
-        pacote[4] = (byte)(90 & 0xFF);
-        pacote[5] = (byte)(175 & 0xFF);
-        pacote[6] = (byte)(0 & 0xFF);
-        pacote[7] = (byte)(10 & 0xFF);
-        pacote[8] = (byte)(0 & 0xFF);
-        pacote[9] = (byte)(0 & 0xFF);
+        pacote[1] = ('R' & 0xFF);
+        pacote[2] = (byte) (bytes[0] & 0xFF);
+        pacote[3] = (byte) (bytes[1]  & 0xFF);
+        pacote[4] = (byte) (bytes[2]  & 0xFF);
+        pacote[5] = (byte) (bytes[3]  & 0xFF);
+
+        Log.d("KD medidor2", String.valueOf(pacote[2]));
+        Log.d("KD medidor2", String.valueOf(pacote[3]));
+        Log.d("KD medidor2", String.valueOf(pacote[4]));
+        Log.d("KD medidor2", String.valueOf(pacote[5]));
+
+        pacote[6] = (byte) (0 & 0xFF);
+        pacote[7] = (byte) (0 & 0xFF);
+        pacote[8] = (byte) (4 & 0xFF);
+        pacote[9] = (byte) (76 & 0xFF);
 
         conexao.write(pacote);
     }
 
-    public void turnOfDialogFragment(){
+    @SuppressLint("HandlerLeak")
+    public static final Handler handler = new Handler() {
+    };
+
+    public static void escreverTela(final String res) {
+
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                textMessage.clearComposingText();
+                textMessage.setText(res);
+            }
+        });
+
+    }
+
+    public void turnOfDialogFragment() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         RegistradorDialogFragment rdf = (RegistradorDialogFragment) getSupportFragmentManager().findFragmentByTag("dialog");
-        if(rdf != null){
+        if (rdf != null) {
             rdf.dismiss();
             ft.remove(rdf);
         }
@@ -247,7 +262,7 @@ public class RegistradorActivity extends AppCompatActivity {
         startActivityForResult(intent, TIRAR_FOTO_DEPOIS);
     }
 
-    public void conectarDispositivo(View view){
+    public void conectarDispositivo(View view) {
         Intent searchPairedDevicesIntent = new Intent(this, PairedDevices.class);
         startActivityForResult(searchPairedDevicesIntent, SELECT_PAIRED_DEVICE);
     }
@@ -262,7 +277,7 @@ public class RegistradorActivity extends AppCompatActivity {
                     Bundle bundle = data.getExtras();
                     assert bundle != null;
                     Bitmap fotoAntesRegistrador = (Bitmap) bundle.get("data");
-                    fotoResized1 = Bitmap.createScaledBitmap(Objects.requireNonNull(fotoAntesRegistrador), 100, 120,false);
+                    fotoResized1 = Bitmap.createScaledBitmap(Objects.requireNonNull(fotoAntesRegistrador), 100, 120, false);
 
                     if (fotoResized1 != null) {
                         ImageView imageView = findViewById(R.id.FotoAntes);
@@ -284,7 +299,7 @@ public class RegistradorActivity extends AppCompatActivity {
                     Bundle bundle = data.getExtras();
                     assert bundle != null;
                     Bitmap fotoDepoisRegistrador = (Bitmap) bundle.get("data");
-                    fotoResized2 = Bitmap.createScaledBitmap(Objects.requireNonNull(fotoDepoisRegistrador), 100, 120,false);
+                    fotoResized2 = Bitmap.createScaledBitmap(Objects.requireNonNull(fotoDepoisRegistrador), 100, 120, false);
 
                     if (fotoResized2 != null) {
 
@@ -292,39 +307,36 @@ public class RegistradorActivity extends AppCompatActivity {
                         imageView.setImageBitmap(fotoResized2);
                     }
 
-                }  else {
+                } else {
                     Toast.makeText(getBaseContext(), "A câmera foi fechada", Toast.LENGTH_SHORT);
                 }
             }
         }
-        if(requestCode== REQUEST_OBS){
+        if (requestCode == REQUEST_OBS) {
             if (resultCode == RESULT_OK) {
                 observacaoRegistrador = data.getStringExtra("RESULT_STRING");
             }
         }
 
-        if(requestCode == ENABLE_BLUETOOTH) {
-            if(resultCode == RESULT_OK) {
+        if (requestCode == ENABLE_BLUETOOTH) {
+            if (resultCode == RESULT_OK) {
                 textMessage.setText("Bluetooth ativado.");
-            }
-            else {
+            } else {
                 textMessage.setText("Bluetooth não ativado.");
             }
-        }
-        else if(requestCode == SELECT_PAIRED_DEVICE) {
-            if(resultCode == RESULT_OK) {
+        } else if (requestCode == SELECT_PAIRED_DEVICE) {
+            if (resultCode == RESULT_OK) {
                 textMessage.setText("Você selecionou " + data.getStringExtra("btDevName") + "\n"
                         + data.getStringExtra("btDevAddress"));
                 macAddress = data.getStringExtra("btDevAddress");
 
                 conexao = new ThreadConexao(macAddress);
 
-                if (conexao.isAlive()){
-                    conexao.cancel();
+                if (conexao.isAlive()) {
+                    dialogRegistrador.cancel();
                 }
                 conexao.start();
-            }
-            else {
+            } else {
                 textMessage.setText("Nenhum dispositivo selecionado.");
             }
         }

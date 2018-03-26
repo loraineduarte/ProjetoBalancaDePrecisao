@@ -192,7 +192,8 @@ public class ThreadConexao extends Thread {
         Bundle bundle = new Bundle();
         bundle.putByteArray("data", data);
         message.setData(bundle);
-        BluetoothActivity.handler.sendMessage(message);
+      //  Log.d("TOMAIN", String.valueOf(message.getData()));
+        BluetoothActivity.handler.handleMessage(message);
     }
 
     /*  Método utilizado pela Activity principal para transmitir uma mensagem ao

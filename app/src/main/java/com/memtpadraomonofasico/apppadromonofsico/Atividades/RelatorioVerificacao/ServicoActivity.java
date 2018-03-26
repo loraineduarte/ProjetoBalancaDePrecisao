@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
@@ -56,13 +55,13 @@ public class ServicoActivity extends AppCompatActivity {
                 Hawk.delete("ComplementoCliente");
                 Hawk.delete("BairroCliente");
                 Hawk.delete("CepCliente");
-
-                if(numNotaServico.getText().toString().isEmpty() || numInvolucro.getText().toString().isEmpty()|| numInstalacao.getText().toString().isEmpty() ||
-                        NomeCliente.getText().toString().isEmpty() || NumDocumentoCliente.getText().toString().isEmpty() ){
-                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Campo em Branco! ", Toast.LENGTH_LONG).show();
-
-                } else {
-
+//
+//                if(numNotaServico.getText().toString().isEmpty() || numInvolucro.getText().toString().isEmpty()|| numInstalacao.getText().toString().isEmpty() ||
+//                        NomeCliente.getText().toString().isEmpty() || NumDocumentoCliente.getText().toString().isEmpty() ){
+//                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Campo em Branco! ", Toast.LENGTH_LONG).show();
+//
+//                } else {
+//
                     Hawk.put("NumeroNotaServico",String.valueOf(numNotaServico.getText()));
                     Hawk.put("NumeroInvolucro",String.valueOf(numInvolucro.getText()));
                     Hawk.put("NumeroInstalacaoServico", String.valueOf(numInstalacao.getText()));
@@ -75,7 +74,7 @@ public class ServicoActivity extends AppCompatActivity {
                     Hawk.put("CepCliente", String.valueOf(CEP.getText()));
 
                     abrirMedidor();
-                }
+//                }
             }
         });
     }

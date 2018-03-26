@@ -116,16 +116,19 @@
 
     <Button
         android:id="@+id/NextFase1"
+        style="@android:style/Widget.Holo.Button.Toggle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginStart="230dp"
-        android:background="@color/colorPrimaryDark"
         android:backgroundTint="@color/colorPrimaryDark"
+        android:elevation="2dp"
         android:text="@string/pr_ximo"
-        android:textColor="@android:color/background_light"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@android:color/white"
         android:textColorLink="@android:color/black"
+        android:background="@drawable/botao_arredondado"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

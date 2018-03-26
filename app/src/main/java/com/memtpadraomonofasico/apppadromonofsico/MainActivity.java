@@ -4,7 +4,6 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -43,15 +42,8 @@ public class MainActivity extends AppCompatActivity
 
         final BancoController crud = new BancoController(getBaseContext());
         final Cursor cursorMedidor = crud.pegaMedidores();
-        final Cursor cursorAvaliador = crud.pegaMedidores();
+        final Cursor cursorAvaliador = crud.pegaAvaliadores();
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                callBluetooth();
-            }
-        });
 
         Button avaliadores = findViewById(R.id.Avaliador);
         avaliadores.setOnClickListener(new View.OnClickListener() {

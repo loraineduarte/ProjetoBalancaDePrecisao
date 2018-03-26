@@ -76,10 +76,10 @@ public class CriarMedidorActivity extends AppCompatActivity {
                 String modeloString = modelo.getText().toString();
                 int correnteNominalString = Integer.parseInt(correnteNominal.getText().toString());
                 String classeString = classe.getText().toString();
-                int RRString = Integer.parseInt(RR.getText().toString());
+                String RRString =RR.getText().toString();
                 int anoFabricacaoString = Integer.parseInt(anoFabricacao.getText().toString());
                 int tensaoNominalString = Integer.parseInt(tensaoNominal.getText().toString());
-                int KdKeString = Integer.parseInt(KdKe.getText().toString());
+                Double KdKeString = Double.valueOf(KdKe.getText().toString());
                 String porInmetroString = porInmetro.getText().toString();
                 int fiosString = Integer.parseInt(fios.getText().toString());
                 String tipoMedidorString = " ";

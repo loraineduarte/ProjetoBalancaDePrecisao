@@ -81,18 +81,18 @@ public class RelatorioVerificacaoActivity extends AppCompatActivity  {
                 matricula = String.valueOf(MatriculaAvaliador.getText());
                 nomeAvaliadorString = String.valueOf(nomeAvaliador.getText());
                 toiNumero = String.valueOf(ToiNumero.getText());
-
-                if(matricula.length()==0 || nomeAvaliadorString.length()==0){
-                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Selecionar o avaliador! ", Toast.LENGTH_LONG).show();
-                } else
-                if((!SEM.isChecked() )&& ( !TOI.isChecked()) ){
-                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Marcar o tipo de relatório! ", Toast.LENGTH_LONG).show();
-
-                } else if (((TOI.isChecked()) && (toiNumero.length()==0) )){
-                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Colocar o número do TOI ! ", Toast.LENGTH_LONG).show();
-
-                } else{
-
+//
+//                if(matricula.length()==0 || nomeAvaliadorString.length()==0){
+//                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Selecionar o avaliador! ", Toast.LENGTH_LONG).show();
+//                } else
+//                if((!SEM.isChecked() )&& ( !TOI.isChecked()) ){
+//                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Marcar o tipo de relatório! ", Toast.LENGTH_LONG).show();
+//
+//                } else if (((TOI.isChecked()) && (toiNumero.length()==0) )){
+//                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Colocar o número do TOI ! ", Toast.LENGTH_LONG).show();
+//
+//                } else{
+//
                     Hawk.put("HoraInicial",horaInicialFormatada);
                     Hawk.put("NomeAvaliador",String.valueOf(nomeAvaliador.getText()));
                     Hawk.put("MatriculaAvaliador", String.valueOf(MatriculaAvaliador.getText()));
@@ -107,7 +107,7 @@ public class RelatorioVerificacaoActivity extends AppCompatActivity  {
                     }
 
                     abrirServicos();
-                }
+               // }
             }
         });
 
