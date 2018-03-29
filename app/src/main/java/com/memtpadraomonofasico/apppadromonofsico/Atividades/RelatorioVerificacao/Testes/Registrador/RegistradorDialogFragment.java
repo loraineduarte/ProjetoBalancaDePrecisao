@@ -1,5 +1,6 @@
 package com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.Registrador;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -35,6 +36,7 @@ public class RegistradorDialogFragment extends DialogFragment {
     private final static int REQUEST_ENABLE_BT = 1;
     private List<BluetoothDevice> listaDispositivos = new ArrayList();
 
+    @SuppressLint("StaticFieldLeak")
     static TextView tvStatus;
     ThreadConexao conexao;
 

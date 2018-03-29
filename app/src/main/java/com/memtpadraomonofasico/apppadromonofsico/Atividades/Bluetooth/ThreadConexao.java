@@ -192,7 +192,6 @@ public class ThreadConexao extends Thread {
         Bundle bundle = new Bundle();
         bundle.putByteArray("data", data);
         message.setData(bundle);
-      //  Log.d("TOMAIN", String.valueOf(message.getData()));
         BluetoothActivity.handler.handleMessage(message);
     }
 
@@ -219,5 +218,9 @@ public class ThreadConexao extends Thread {
             toMainActivity("---N".getBytes());
         }
     }
+
+    /*  O método stop() contem as instruções que serão efetivamente realizadas
+   em uma nova  para parar a conexão.
+    */
 
 }

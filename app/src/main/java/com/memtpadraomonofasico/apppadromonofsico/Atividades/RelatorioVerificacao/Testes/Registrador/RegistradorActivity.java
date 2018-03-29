@@ -37,11 +37,11 @@ public class RegistradorActivity extends AppCompatActivity {
     public static int ENABLE_BLUETOOTH = 1;
     public static int SELECT_PAIRED_DEVICE = 2;
     private static final int REQUEST_ENABLE_BT = 4;
-
     private static final int TIRAR_FOTO_ANTES = 10207;
     private static final int TIRAR_FOTO_DEPOIS = 10208;
 
     private AlertDialog dialogRegistrador;
+    @SuppressLint("StaticFieldLeak")
     public static TextView textMessage;
 
     ThreadConexao conexao;
@@ -55,16 +55,19 @@ public class RegistradorActivity extends AppCompatActivity {
     private String status;
     private String observacaoRegistrador = " ";
     private Spinner opcoesReprovados;
+    BluetoothAdapter mBluetoothAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrador);
+
+
+
         textMessage = findViewById(R.id.textView6);
         aprovado = findViewById(R.id.tampasolidarizada);
         naoPossibilitaTeste = findViewById(R.id.sinaisCarbonizacao);
         reprovado = findViewById(R.id.Reprovado);
-
 
         opcoesReprovados = findViewById(R.id.RegistradorSpinner);
         opcoesReprovados.setEnabled(false);
@@ -82,7 +85,7 @@ public class RegistradorActivity extends AppCompatActivity {
         });
 
         // verificando ativação do bluetooth
-        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         if (mBluetoothAdapter == null) {
             textMessage.setText("Bluetooth não está funcionando.");
@@ -158,12 +161,18 @@ public class RegistradorActivity extends AppCompatActivity {
 //                    Log.d("OBSERVACAO", observacaoRegistrador);
 
 
-                Log.d("status", String.valueOf(Hawk.get("statusRegistrador")));
+            //    Log.d("status", String.valueOf(Hawk.get("statusRegistrador")));
 
                 Hawk.put("FotoPreTesteRegistrador", fotoResized1);
                 Hawk.put("FotoPosTesteRegistrador", fotoResized2);
                 Hawk.put("statusRegistrador", status);
                 Hawk.put("ObservaçãoRegistrador", observacaoRegistrador);
+
+                mBluetoothAdapter.disable();
+//                if(conexao!=null){
+//                    conexao.interrupt();
+//                }
+
 
                 abrirMarchaVazio();
 //                }
@@ -180,13 +189,9 @@ public class RegistradorActivity extends AppCompatActivity {
         byte[] pacote = new byte[10];
 
         //pegando valores do medidor
-
         float  kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
-        Log.d("KD medidor", String.valueOf(kdMedidor));// valor maximo 4.294,96 que ten que ser e o mínimo 0,000001
-
         byte[] bytes = new byte[4];
         int valorMultiplicado = (int) (kdMedidor*1000000);
-        Log.d("VALOR", String.valueOf((valorMultiplicado)));
 
         bytes[0]= (byte) (valorMultiplicado/ (Math.pow(256, 3)));
         bytes[1]= (byte) ((valorMultiplicado - (bytes[0]* (Math.pow(256, 3))))/ Math.pow(256, 2));
@@ -199,16 +204,10 @@ public class RegistradorActivity extends AppCompatActivity {
         pacote[3] = (byte) (bytes[1]  & 0xFF);
         pacote[4] = (byte) (bytes[2]  & 0xFF);
         pacote[5] = (byte) (bytes[3]  & 0xFF);
-
-        Log.d("KD medidor2", String.valueOf(pacote[2]));
-        Log.d("KD medidor2", String.valueOf(pacote[3]));
-        Log.d("KD medidor2", String.valueOf(pacote[4]));
-        Log.d("KD medidor2", String.valueOf(pacote[5]));
-
         pacote[6] = (byte) (0 & 0xFF);
         pacote[7] = (byte) (0 & 0xFF);
-        pacote[8] = (byte) (4 & 0xFF);
-        pacote[9] = (byte) (76 & 0xFF);
+        pacote[8] = (byte) (3 & 0xFF);
+        pacote[9] = (byte) (232 & 0xFF);
 
         conexao.write(pacote);
     }
@@ -230,7 +229,7 @@ public class RegistradorActivity extends AppCompatActivity {
     }
 
     public void turnOfDialogFragment() {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        @SuppressLint("CommitTransaction") FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         RegistradorDialogFragment rdf = (RegistradorDialogFragment) getSupportFragmentManager().findFragmentByTag("dialog");
         if (rdf != null) {
             rdf.dismiss();
@@ -316,8 +315,11 @@ public class RegistradorActivity extends AppCompatActivity {
             } else {
                 textMessage.setText("Bluetooth não ativado.");
             }
+
         } else if (requestCode == SELECT_PAIRED_DEVICE) {
             if (resultCode == RESULT_OK) {
+
+
                 textMessage.setText("Você selecionou " + data.getStringExtra("btDevName") + "\n" + data.getStringExtra("btDevAddress"));
                 macAddress = data.getStringExtra("btDevAddress");
 

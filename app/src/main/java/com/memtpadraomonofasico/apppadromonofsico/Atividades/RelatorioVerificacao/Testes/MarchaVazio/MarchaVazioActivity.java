@@ -24,13 +24,18 @@ import java.sql.Time;
 
 public class MarchaVazioActivity extends AppCompatActivity {
 
+    @SuppressLint("StaticFieldLeak")
     private static RadioButton aprovado;
+    @SuppressLint("StaticFieldLeak")
     private static RadioButton naoRealizado;
+    @SuppressLint("StaticFieldLeak")
     private static RadioButton reprovado;
     private String statusMarchaVazio;
+    @SuppressLint("StaticFieldLeak")
     private static EditText tempoReprovado;
     private String tempoReprovadoMarchaVazio;
     private static String macAddress = "";
+    BluetoothAdapter mBluetoothAdapter;
 
     private AlertDialog dialogMarchaVazio;
 
@@ -38,6 +43,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
     public static int SELECT_PAIRED_DEVICE = 2;
     private static final int REQUEST_ENABLE_BT = 4;
 
+    @SuppressLint("StaticFieldLeak")
     public static TextView textMessage;
     ThreadConexao conexao;
 
@@ -48,6 +54,8 @@ public class MarchaVazioActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_marcha_vazio);
 
+
+
         textMessage = findViewById(R.id.textView6);
         aprovado = findViewById(R.id.aprovado);
         naoRealizado = findViewById(R.id.naoRealizado);
@@ -55,8 +63,9 @@ public class MarchaVazioActivity extends AppCompatActivity {
         tempoReprovado = findViewById(R.id.TempoMarchaVazio);
         tempoReprovado.setEnabled(false);
 
+
         // verificando ativação do bluetooth
-        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         if (mBluetoothAdapter == null) {
             textMessage.setText("Bluetooth não está funcionando.");
@@ -70,6 +79,9 @@ public class MarchaVazioActivity extends AppCompatActivity {
             } else {
                 textMessage.setText("Bluetooth Ativado.");
             }
+
+
+
         }
         // Fim - verificando ativação do bluetooth
 
@@ -106,6 +118,12 @@ public class MarchaVazioActivity extends AppCompatActivity {
 //                }else {
                 Hawk.put("statusMarchaVazio", statusMarchaVazio);
                 Hawk.put("tempoReprovadoMarchaVazio", tempoReprovadoMarchaVazio);
+
+                mBluetoothAdapter.disable();
+                if(conexao!=null){
+                    conexao.interrupt();
+                }
+
                 abrirCircuitoPotencial();
 //                }
             }
@@ -119,6 +137,8 @@ public class MarchaVazioActivity extends AppCompatActivity {
     }
 
     public void executarTeste(View view) {
+
+
 
         if (conexao.isAlive()) {
             textMessage.setText(".. Conectado ..");
@@ -196,6 +216,8 @@ public class MarchaVazioActivity extends AppCompatActivity {
                 }
             }
         });
+
+
     }
 
     public void conectarDispositivo(View view) {

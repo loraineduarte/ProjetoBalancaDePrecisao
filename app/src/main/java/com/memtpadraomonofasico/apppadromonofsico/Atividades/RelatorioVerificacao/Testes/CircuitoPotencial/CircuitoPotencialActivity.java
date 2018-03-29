@@ -2,16 +2,14 @@ package com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificac
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.InspecaoConformidade.InspecaoConformidadeActivity;
 import com.memtpadraomonofasico.apppadromonofsico.R;
@@ -32,8 +30,6 @@ public class CircuitoPotencialActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_circuito_potencial);
-
-        Log.d("Circuito Potencial ", String.valueOf(Hawk.count()));
 
         normal = findViewById(R.id.normal);
         reprovado = findViewById(R.id.Reprovado);
@@ -70,13 +66,13 @@ public class CircuitoPotencialActivity extends AppCompatActivity {
                     status = "Reprovado";
                 }
 
-                if ((!normal.isChecked()) &&  (!reprovado.isChecked())) {
-                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Não existe opção de status marcado. ", Toast.LENGTH_LONG).show();
-
-                } else {
+//                if ((!normal.isChecked()) &&  (!reprovado.isChecked())) {
+//                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Não existe opção de status marcado. ", Toast.LENGTH_LONG).show();
+//
+//                } else {
                     Hawk.put("statusCircuitoPotencial", status);
                     abrirInspecaoConformidade();
-                }
+//                }
 
 
             }
