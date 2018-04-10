@@ -4,13 +4,13 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 
 import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
+import com.orhanobut.hawk.NoEncryption;
 
 /**
  *
@@ -38,7 +38,9 @@ public class InformacoesComplementaresActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_informacoes_complementares);
 
-        Log.d("INFORMAÇÕEs COMPLE", String.valueOf(Hawk.count()));
+        NoEncryption encryption = new NoEncryption();
+        Hawk.init(this).setEncryption(encryption).build();
+
 
         @SuppressLint("WrongViewCast") Button next = findViewById(R.id.NextFase9);
         next.setOnClickListener(new View.OnClickListener() {

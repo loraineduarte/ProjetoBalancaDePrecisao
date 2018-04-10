@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.Registrador.RegistradorActivity;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
+import com.orhanobut.hawk.NoEncryption;
 
 import java.util.Objects;
 
@@ -27,20 +28,21 @@ public class InspecaoVisualActivity extends AppCompatActivity {
     private RadioButton Reprovado, Aprovado;
     private static final int TIRAR_FOTO = 10207;
     private static final int REQUEST_OBS = 1000;
-    private String status;
-    private String statusReprovado;
+    private String status, statusReprovado;
     private String observacaoInspecao = "";
     private Bitmap fotoResized;
     private Spinner opcoesReprovados;
-    private EditText Selo1;
-    private EditText Selo2;
-    private EditText Selo3;
+    private EditText Selo1, Selo2, Selo3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inspecao_visual);
+
+        NoEncryption encryption = new NoEncryption();
+        Hawk.init(this).setEncryption(encryption).build();
+
 
         Selo1 = findViewById(R.id.Selo1);
         Selo2 = findViewById(R.id.Selo2);
@@ -98,21 +100,21 @@ public class InspecaoVisualActivity extends AppCompatActivity {
                 Hawk.delete("Status");
                 Hawk.delete("FotoInspecaoVisual");
                 Hawk.delete("ObservacaoInspecaoVisual");
-//
-//                if(!statusReprovado.isEmpty()){
-//                    status = status +" - "+ statusReprovado;
-//                }
-//                if((String.valueOf(Selo1.getText()).isEmpty())||(String.valueOf(Selo2.getText()).isEmpty())|| (String.valueOf(Selo3.getText()).isEmpty())){
-//                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Completar os selos da inspeção visual! ", Toast.LENGTH_LONG).show();
-//                }
-//                if(status==null){
-//                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Status não selecionado!", Toast.LENGTH_LONG).show();
-//                }
-//                if(fotoResized==null){
-//                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Foto de inspeção não tirada!", Toast.LENGTH_LONG).show();
-//
-//                } else {
-//
+
+                if(!statusReprovado.isEmpty()){
+                    status = status +" - "+ statusReprovado;
+                }
+                if((String.valueOf(Selo1.getText()).isEmpty())||(String.valueOf(Selo2.getText()).isEmpty())|| (String.valueOf(Selo3.getText()).isEmpty())){
+                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Completar os selos da inspeção visual! ", Toast.LENGTH_LONG).show();
+                }
+                if(status==null){
+                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Status não selecionado!", Toast.LENGTH_LONG).show();
+                }
+                if(fotoResized==null){
+                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Foto de inspeção não tirada!", Toast.LENGTH_LONG).show();
+
+                } else {
+
                 Hawk.put("Selo1", String.valueOf(Selo1.getText()));
                 Hawk.put("Selo2", String.valueOf(Selo2.getText()));
                 Hawk.put("Selo3", String.valueOf(Selo3.getText()));
@@ -121,10 +123,9 @@ public class InspecaoVisualActivity extends AppCompatActivity {
                 Hawk.put("FotoInspecaoVisual", fotoResized);
                 Hawk.put("ObservacaoInspecaoVisual", observacaoInspecao);
 
-//                    Log.d("STATUS",observacaoInspecao);
 
                 abrirRegistrador();
-//                }
+                }
             }
         });
     }

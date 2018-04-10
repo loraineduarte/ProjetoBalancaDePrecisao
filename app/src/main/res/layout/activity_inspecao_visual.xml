@@ -161,13 +161,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
+    <!--suppress AndroidDomInspection -->
     <Button
         android:id="@+id/NextFase4"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginStart="220dp"
+        android:layout_marginStart="200dp"
         android:background="@drawable/botao_arredondado"
         android:backgroundTint="?attr/colorPrimaryDark"
         android:elevation="2dp"
@@ -183,7 +184,7 @@
         android:id="@+id/imageView"
         android:layout_width="0dp"
         android:layout_height="164dp"
-        android:layout_marginEnd="220dp"
+        android:layout_marginEnd="200dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:contentDescription="@string/imagem_da_inspe_o_visual"

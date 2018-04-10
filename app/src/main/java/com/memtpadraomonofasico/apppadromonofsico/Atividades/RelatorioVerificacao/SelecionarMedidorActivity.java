@@ -19,27 +19,14 @@ import com.memtpadraomonofasico.apppadromonofsico.BancoDeDados.BancoController;
 import com.memtpadraomonofasico.apppadromonofsico.BancoDeDados.CriaBanco;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
+import com.orhanobut.hawk.NoEncryption;
 
 public class SelecionarMedidorActivity extends AppCompatActivity {
 
     private final CriaBanco banco = new CriaBanco(this);
     private String tipoMedidor;
-    private EditText numSerie;
-    private EditText numGeral;
-    private EditText instalacao;
-    private EditText ModeloMedidor;
-    private EditText FabricanteMedidor;
-    private EditText TensaoNominalMedidor;
-    private EditText CorrenteNominalMedidor;
-    private EditText KDKE;
-    private EditText RR;
-    private EditText ClasseMedidor;
-    private EditText NumElementos;
-    private EditText AnoFabricacao;
-    private EditText Fios;
-    private EditText PortariaInmetro;
-    private RadioButton eletronico;
-    private RadioButton mecanico;
+    private EditText numSerie, numGeral, instalacao, ModeloMedidor, FabricanteMedidor, TensaoNominalMedidor, CorrenteNominalMedidor, KDKE, RR, ClasseMedidor, NumElementos, AnoFabricacao, Fios, PortariaInmetro;
+    private RadioButton eletronico, mecanico;
 
 
     @Override
@@ -49,8 +36,11 @@ public class SelecionarMedidorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selecionar_medidor);
 
-        BancoController crud = new BancoController(getBaseContext());
+        NoEncryption encryption = new NoEncryption();
+        Hawk.init(this).setEncryption(encryption).build();
 
+
+        BancoController crud = new BancoController(getBaseContext());
         Cursor cursor = crud.pegaMedidores();
 
         numSerie = findViewById( R.id.numSerie );

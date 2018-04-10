@@ -61,6 +61,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/NumGeral" />
 
+    <!--suppress AndroidDomInspection -->
     <EditText
         android:id="@+id/fabricanteMedidor"
         android:layout_width="0dp"
@@ -215,6 +216,7 @@
         app:layout_constraintTop_toBottomOf="@+id/Classe" />
 
 
+    <!--suppress AndroidDomInspection -->
     <EditText
         android:id="@+id/Instalacao"
         android:layout_width="0dp"
@@ -234,6 +236,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/numSerie" />
 
+    <!--suppress AndroidDomInspection -->
     <EditText
         android:id="@+id/NumGeral"
         android:layout_width="0dp"
@@ -285,6 +288,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/AnoFabricacao" />
 
+    <!--suppress AndroidDomInspection -->
     <Button
         android:id="@+id/NextFase3"
         android:layout_width="0dp"

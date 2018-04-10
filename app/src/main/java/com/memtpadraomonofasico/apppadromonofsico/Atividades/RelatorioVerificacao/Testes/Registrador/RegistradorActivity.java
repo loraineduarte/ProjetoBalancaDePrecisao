@@ -7,8 +7,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -23,45 +21,37 @@ import android.widget.Toast;
 
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.Bluetooth.PairedDevices;
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.Bluetooth.ThreadConexao;
-import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.MarchaVazio.MarchaVazioActivity;
+import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.CircuitoPotencial.CircuitoPotencialActivity;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
+import com.orhanobut.hawk.NoEncryption;
 
 import java.util.Objects;
 
 public class RegistradorActivity extends AppCompatActivity {
 
     private static final String TAG = "Bluetooth";
-    private static String macAddress = "";
-
-    public static int ENABLE_BLUETOOTH = 1;
-    public static int SELECT_PAIRED_DEVICE = 2;
+    private static final int ENABLE_BLUETOOTH = 1;
+    private static final int SELECT_PAIRED_DEVICE = 2;
     private static final int REQUEST_ENABLE_BT = 4;
     private static final int TIRAR_FOTO_ANTES = 10207;
     private static final int TIRAR_FOTO_DEPOIS = 10208;
-
-    private AlertDialog dialogRegistrador;
-    @SuppressLint("StaticFieldLeak")
-    public static TextView textMessage;
-
-    ThreadConexao conexao;
-
     private static final int REQUEST_OBS = 1000;
-    private RadioButton aprovado;
-    private RadioButton naoPossibilitaTeste;
-    private RadioButton reprovado;
-    private Bitmap fotoResized1;
-    private Bitmap fotoResized2;
-    private String status;
-    private String observacaoRegistrador = " ";
+    @SuppressLint("StaticFieldLeak")
+    private static TextView textMessage;
+    private ThreadConexao conexao;
+    private RadioButton aprovado, naoPossibilitaTeste, reprovado;
+    private Bitmap fotoResized1, fotoResized2;
+    private String status, observacaoRegistrador = " ";
     private Spinner opcoesReprovados;
-    BluetoothAdapter mBluetoothAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrador);
 
+        NoEncryption encryption = new NoEncryption();
+        Hawk.init(this).setEncryption(encryption).build();
 
 
         textMessage = findViewById(R.id.textView6);
@@ -85,7 +75,7 @@ public class RegistradorActivity extends AppCompatActivity {
         });
 
         // verificando ativação do bluetooth
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        final BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         if (mBluetoothAdapter == null) {
             textMessage.setText("Bluetooth não está funcionando.");
@@ -150,32 +140,26 @@ public class RegistradorActivity extends AppCompatActivity {
 
                 }
 
-//                if(status.isEmpty()){
-//                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Status não selecionado!", Toast.LENGTH_LONG).show();
-//
-//                }if((fotoResized1==null) || (fotoResized2==null)){
-//                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Fotos não tiradas!", Toast.LENGTH_LONG).show();
-//
-//                } else {
-//
-//                    Log.d("OBSERVACAO", observacaoRegistrador);
+                if (status.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Status não selecionado!", Toast.LENGTH_LONG).show();
+
+                }
+                if ((fotoResized1 == null) || (fotoResized2 == null)) {
+                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Fotos não tiradas!", Toast.LENGTH_LONG).show();
+
+                } else {
 
 
-            //    Log.d("status", String.valueOf(Hawk.get("statusRegistrador")));
-
-                Hawk.put("FotoPreTesteRegistrador", fotoResized1);
-                Hawk.put("FotoPosTesteRegistrador", fotoResized2);
-                Hawk.put("statusRegistrador", status);
-                Hawk.put("ObservaçãoRegistrador", observacaoRegistrador);
-
-                mBluetoothAdapter.disable();
-//                if(conexao!=null){
-//                    conexao.interrupt();
-//                }
+                    Hawk.put("FotoPreTesteRegistrador", fotoResized1);
+                    Hawk.put("FotoPosTesteRegistrador", fotoResized2);
+                    Hawk.put("statusRegistrador", status);
+                    Hawk.put("ObservaçãoRegistrador", observacaoRegistrador);
 
 
-                abrirMarchaVazio();
-//                }
+
+                    mBluetoothAdapter.disable();
+                    abrirCircuitoPotencial();
+                }
             }
         });
     }
@@ -189,21 +173,21 @@ public class RegistradorActivity extends AppCompatActivity {
         byte[] pacote = new byte[10];
 
         //pegando valores do medidor
-        float  kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
+        float kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
         byte[] bytes = new byte[4];
-        int valorMultiplicado = (int) (kdMedidor*1000000);
+        int valorMultiplicado = (int) (kdMedidor * 1000000);
 
-        bytes[0]= (byte) (valorMultiplicado/ (Math.pow(256, 3)));
-        bytes[1]= (byte) ((valorMultiplicado - (bytes[0]* (Math.pow(256, 3))))/ Math.pow(256, 2));
-        bytes[2]= (byte) ((valorMultiplicado - ((bytes[0]* (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2)))))/ Math.pow(256, 1));
-        bytes[3]= (byte) ((valorMultiplicado - ((bytes[0]* (Math.pow(256, 3) ) ) + (bytes[1] * (Math.pow(256, 2))) + (bytes[2]* Math.pow(256, 1))) ));
+        bytes[0] = (byte) (valorMultiplicado / (Math.pow(256, 3)));
+        bytes[1] = (byte) ((valorMultiplicado - (bytes[0] * (Math.pow(256, 3)))) / Math.pow(256, 2));
+        bytes[2] = (byte) ((valorMultiplicado - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))))) / Math.pow(256, 1));
+        bytes[3] = (byte) ((valorMultiplicado - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))) + (bytes[2] * Math.pow(256, 1)))));
 
         pacote[0] = ('I' & 0xFF);
         pacote[1] = ('R' & 0xFF);
         pacote[2] = (byte) (bytes[0] & 0xFF);
-        pacote[3] = (byte) (bytes[1]  & 0xFF);
-        pacote[4] = (byte) (bytes[2]  & 0xFF);
-        pacote[5] = (byte) (bytes[3]  & 0xFF);
+        pacote[3] = (byte) (bytes[1] & 0xFF);
+        pacote[4] = (byte) (bytes[2] & 0xFF);
+        pacote[5] = (byte) (bytes[3] & 0xFF);
         pacote[6] = (byte) (0 & 0xFF);
         pacote[7] = (byte) (0 & 0xFF);
         pacote[8] = (byte) (3 & 0xFF);
@@ -213,7 +197,8 @@ public class RegistradorActivity extends AppCompatActivity {
     }
 
     @SuppressLint("HandlerLeak")
-    public static final Handler handler = new Handler() {
+    private static final Handler handler = new Handler() {
+
     };
 
     public static void escreverTela(final String res) {
@@ -228,14 +213,14 @@ public class RegistradorActivity extends AppCompatActivity {
 
     }
 
-    public void turnOfDialogFragment() {
-        @SuppressLint("CommitTransaction") FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        RegistradorDialogFragment rdf = (RegistradorDialogFragment) getSupportFragmentManager().findFragmentByTag("dialog");
-        if (rdf != null) {
-            rdf.dismiss();
-            ft.remove(rdf);
-        }
-    }
+//    public void turnOfDialogFragment() {
+//        @SuppressLint("CommitTransaction") FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//        RegistradorDialogFragment rdf = (RegistradorDialogFragment) getSupportFragmentManager().findFragmentByTag("dialog");
+//        if (rdf != null) {
+//            rdf.dismiss();
+//            ft.remove(rdf);
+//        }
+//    }
 
     private void abrirAddObs() {
 
@@ -258,6 +243,7 @@ public class RegistradorActivity extends AppCompatActivity {
         startActivityForResult(searchPairedDevicesIntent, SELECT_PAIRED_DEVICE);
     }
 
+    @SuppressLint("SetTextI18n")
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == TIRAR_FOTO_ANTES) {
@@ -320,13 +306,15 @@ public class RegistradorActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
 
 
+                assert data != null;
                 textMessage.setText("Você selecionou " + data.getStringExtra("btDevName") + "\n" + data.getStringExtra("btDevAddress"));
-                macAddress = data.getStringExtra("btDevAddress");
+                String macAddress = data.getStringExtra("btDevAddress");
 
                 conexao = new ThreadConexao(macAddress);
 
                 if (conexao.isAlive()) {
-                    dialogRegistrador.cancel();
+//                    RegistradorDialogFragment dialogRegistrador;
+//                    dialogRegistrador.cancel();
                 }
                 conexao.start();
             } else {
@@ -359,8 +347,8 @@ public class RegistradorActivity extends AppCompatActivity {
         }
     }
 
-    private void abrirMarchaVazio() {
-        Intent intent = new Intent(this, MarchaVazioActivity.class);
+    private void abrirCircuitoPotencial() {
+        Intent intent = new Intent(this, CircuitoPotencialActivity.class);
         startActivity(intent);
     }
 }

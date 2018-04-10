@@ -92,6 +92,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Reintegracao" />
 
+    <!--suppress AndroidDomInspection -->
     <Button
         android:id="@+id/gerarRelatorio"
         style="@style/Widget.AppCompat.Button.Colored"
@@ -100,8 +101,8 @@
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="32dp"
-        android:background="@color/colorPrimaryDark"
-        android:backgroundTint="@color/colorPrimaryDark"
+        android:background="@drawable/botao_arredondado"
+        android:backgroundTint="?attr/colorPrimaryDark"
         android:text="@string/gerar_relat_rio"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -18,19 +18,22 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.Avaliador.CriarAvaliadorActivity;
-import com.memtpadraomonofasico.apppadromonofsico.Atividades.Bluetooth.BluetoothActivity;
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.Medidor.CriarMedidorActivity;
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.RelatorioVerificacaoActivity;
 import com.memtpadraomonofasico.apppadromonofsico.BancoDeDados.BancoController;
+import com.orhanobut.hawk.Hawk;
+import com.orhanobut.hawk.NoEncryption;
 
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    ProgressBar myprogressBarAvaliadores, myprogressBarMedidores;
-    TextView progressingTextViewAvaliadores, progressingTextViewmedidores;
-    Handler progressHandler = new Handler();
-    int i = 0;
+    private ProgressBar myprogressBarAvaliadores;
+    private ProgressBar myprogressBarMedidores;
+    private TextView progressingTextViewAvaliadores;
+    private TextView progressingTextViewmedidores;
+    private final Handler progressHandler = new Handler();
+    private int i = 0;
 
 
     @Override
@@ -39,6 +42,9 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        NoEncryption encryption = new NoEncryption();
+        Hawk.init(this).setEncryption(encryption).build();
 
         final BancoController crud = new BancoController(getBaseContext());
         final Cursor cursorMedidor = crud.pegaMedidores();
@@ -111,11 +117,6 @@ public class MainActivity extends AppCompatActivity
 
 
 
-    }
-
-    private void callBluetooth() {
-        Intent intent = new Intent(this, BluetoothActivity.class);
-        startActivity(intent);
     }
 
     @Override

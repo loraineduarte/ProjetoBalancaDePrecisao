@@ -12,8 +12,10 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.InspecaoConformidade.InspecaoConformidadeActivity;
+import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.MarchaVazio.MarchaVazioActivity;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
+import com.orhanobut.hawk.NoEncryption;
 
 /**
  *
@@ -30,6 +32,10 @@ public class CircuitoPotencialActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_circuito_potencial);
+
+        NoEncryption encryption = new NoEncryption();
+        Hawk.init(this).setEncryption(encryption).build();
+
 
         normal = findViewById(R.id.normal);
         reprovado = findViewById(R.id.Reprovado);
@@ -71,13 +77,20 @@ public class CircuitoPotencialActivity extends AppCompatActivity {
 //
 //                } else {
                     Hawk.put("statusCircuitoPotencial", status);
-                    abrirInspecaoConformidade();
+                   // abrirInspecaoConformidade();
+                abrirMarchaVazio();
 //                }
 
 
             }
         });
     }
+
+    private void abrirMarchaVazio() {
+        Intent intent = new Intent(this, MarchaVazioActivity.class);
+        startActivity(intent);
+    }
+
 
     private void abrirInspecaoConformidade() {
 

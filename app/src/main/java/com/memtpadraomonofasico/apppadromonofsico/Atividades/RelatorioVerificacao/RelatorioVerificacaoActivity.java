@@ -18,6 +18,7 @@ import com.memtpadraomonofasico.apppadromonofsico.BancoDeDados.BancoController;
 import com.memtpadraomonofasico.apppadromonofsico.BancoDeDados.CriaBanco;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
+import com.orhanobut.hawk.NoEncryption;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -25,28 +26,26 @@ import java.util.Date;
 import java.util.Locale;
 
 public class RelatorioVerificacaoActivity extends AppCompatActivity  {
-    private String toiNumero;
-    private String matricula;
-    private String nomeAvaliadorString;
+    private String toiNumero, matricula, nomeAvaliadorString;
     private RadioButton SEM, TOI;
-    private EditText MatriculaAvaliador;
-    private EditText nomeAvaliador;
-    private EditText ToiNumero;
+    private EditText MatriculaAvaliador, nomeAvaliador, ToiNumero;
     private final CriaBanco banco = new CriaBanco(this);
+    private String horaInicialFormatada = null;
 
 
     @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_relatorio_verificacao);
 
+        NoEncryption encryption = new NoEncryption();
+        Hawk.init(this).setEncryption(encryption).build();
+
+
         Date hora = Calendar.getInstance().getTime();
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
-        final String horaInicialFormatada = sdf.format(hora);
-
-        Hawk.init(this).build();
+        horaInicialFormatada = sdf.format(hora);
 
         BancoController crud = new BancoController(getBaseContext());
         Cursor cursor = crud.pegaAvaliadores();
@@ -81,39 +80,42 @@ public class RelatorioVerificacaoActivity extends AppCompatActivity  {
                 matricula = String.valueOf(MatriculaAvaliador.getText());
                 nomeAvaliadorString = String.valueOf(nomeAvaliador.getText());
                 toiNumero = String.valueOf(ToiNumero.getText());
-//
-//                if(matricula.length()==0 || nomeAvaliadorString.length()==0){
-//                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Selecionar o avaliador! ", Toast.LENGTH_LONG).show();
-//                } else
-//                if((!SEM.isChecked() )&& ( !TOI.isChecked()) ){
-//                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Marcar o tipo de relatório! ", Toast.LENGTH_LONG).show();
-//
-//                } else if (((TOI.isChecked()) && (toiNumero.length()==0) )){
-//                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Colocar o número do TOI ! ", Toast.LENGTH_LONG).show();
-//
-//                } else{
-//
-                    Hawk.put("HoraInicial",horaInicialFormatada);
-                    Hawk.put("NomeAvaliador",String.valueOf(nomeAvaliador.getText()));
-                    Hawk.put("MatriculaAvaliador", String.valueOf(MatriculaAvaliador.getText()));
 
-                    if (SEM.isChecked()){
-                        Hawk.put("TipoSolicitação", "SEM");
+                if(matricula.length()==0 || nomeAvaliadorString.length()==0){
+                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Selecionar o avaliador! ", Toast.LENGTH_LONG).show();
+                } else
+                if((!SEM.isChecked() )&& ( !TOI.isChecked()) ){
+                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Marcar o tipo de relatório! ", Toast.LENGTH_LONG).show();
 
-                    } else if(TOI.isChecked()){
-                        Hawk.put("TipoSolicitação", "TOI");
-                        Hawk.put("TOINumero", String.valueOf(ToiNumero.getText()));
+                } else if (((TOI.isChecked()) && (toiNumero.length()==0) )){
+                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Colocar o número do TOI ! ", Toast.LENGTH_LONG).show();
 
-                    }
+                } else{
+
+
 
                     abrirServicos();
-               // }
+                }
             }
         });
 
     }
 
     private void abrirServicos() {
+
+        Hawk.put("HoraInicial",horaInicialFormatada);
+        Hawk.put("NomeAvaliador",String.valueOf(nomeAvaliador.getText()));
+        Hawk.put("MatriculaAvaliador", String.valueOf(MatriculaAvaliador.getText()));
+
+        if (SEM.isChecked()){
+            Hawk.put("TipoSolicitação", "SEM");
+            Hawk.put("TOINumero", "");
+
+        } else if(TOI.isChecked()){
+            Hawk.put("TipoSolicitação", "TOI");
+            Hawk.put("TOINumero", String.valueOf(ToiNumero.getText()));
+
+        }
 
         Intent intent = new Intent(this, ServicoActivity.class);
         startActivity(intent);
@@ -142,7 +144,41 @@ public class RelatorioVerificacaoActivity extends AppCompatActivity  {
         savedInstanceState.putCharSequence("nomeAvaliador", String.valueOf(nomeAvaliador.getText()));
         savedInstanceState.putCharSequence("numeroTOI", String.valueOf(ToiNumero.getText()));
 
+        //salvando o Hawk
+        savedInstanceState.putCharSequence("HoraInicial",horaInicialFormatada);
+        savedInstanceState.putCharSequence("NomeAvaliador",String.valueOf(nomeAvaliador.getText()));
+        savedInstanceState.putCharSequence("MatriculaAvaliador", String.valueOf(MatriculaAvaliador.getText()));
+
+        if (SEM.isChecked()){
+            savedInstanceState.putCharSequence("TipoSolicitação", "SEM");
+
+        } else if(TOI.isChecked()){
+            savedInstanceState.putCharSequence("TipoSolicitação", "TOI");
+            savedInstanceState.putCharSequence("TOINumero", String.valueOf(ToiNumero.getText()));
+
+        }
+
         super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        // Restore UI state from the savedInstanceState.
+        // This bundle has also been passed to onCreate.
+
+        toiNumero = savedInstanceState.getString("matricula");
+        matricula = savedInstanceState.getString("nomeAvaliador");
+        nomeAvaliadorString = savedInstanceState.getString("numeroTOI");
+
+        //restoring hawk
+        Hawk.put("HoraInicial", savedInstanceState.getString("HoraInicial"));
+        Hawk.put("NomeAvaliador", savedInstanceState.getString("NomeAvaliador"));
+        Hawk.put("MatriculaAvaliador", savedInstanceState.getString("MatriculaAvaliador"));
+        Hawk.put("TipoSolicitação", savedInstanceState.getString("TipoSolicitação"));
+        Hawk.put("TOINumero", savedInstanceState.getString("TOINumero"));
+
+
     }
 
     private void doMyThing() {

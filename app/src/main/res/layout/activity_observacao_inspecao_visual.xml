@@ -34,21 +34,23 @@
         app:layout_constraintTop_toBottomOf="@+id/AdicionarObser"
         tools:ignore="LabelFor" />
 
+    <!--suppress AndroidDomInspection -->
     <Button
         android:id="@+id/AddObs"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="53dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="210dp"
         android:layout_marginTop="32dp"
-        android:background="@color/colorPrimaryDark"
-        android:backgroundTint="@color/colorPrimaryDark"
+        android:background="@drawable/botao_arredondado"
+        android:backgroundTint="?attr/colorPrimaryDark"
         android:text="@string/adicionar_observa_o"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Observacao" />
 
+    <!--suppress AndroidDomInspection -->
     <Button
         android:id="@+id/limpar"
         style="@style/Widget.AppCompat.Button.Colored"
@@ -57,14 +59,15 @@
         android:layout_marginEnd="210dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
-        android:background="@color/colorPrimaryDark"
-        android:backgroundTint="@color/colorPrimaryDark"
+        android:background="@drawable/botao_arredondado"
+        android:backgroundTint="?attr/colorPrimaryDark"
         android:text="@string/limpar_campo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.306"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Observacao" />
 
+    <!--suppress AndroidDomInspection -->
     <Button
         android:id="@+id/RetornarInspecao"
         style="@style/Widget.AppCompat.Button.Colored"
@@ -73,8 +76,8 @@
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
-        android:background="@color/colorPrimaryDark"
-        android:backgroundTint="@color/colorPrimaryDark"
+        android:background="@drawable/botao_arredondado"
+        android:backgroundTint="?attr/colorPrimaryDark"
         android:text="@string/retornar_inspe_o_visual"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

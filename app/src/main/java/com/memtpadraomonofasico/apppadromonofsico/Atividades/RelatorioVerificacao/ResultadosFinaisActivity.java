@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
+import com.orhanobut.hawk.NoEncryption;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -33,7 +34,9 @@ public class ResultadosFinaisActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resultados_finais);
 
-        Log.d("RESULTADOS FINAIS", String.valueOf(Hawk.count()));
+        NoEncryption encryption = new NoEncryption();
+        Hawk.init(this).setEncryption(encryption).build();
+
 
         SimpleDateFormat formataData = new SimpleDateFormat("dd/MM/yyyy" , Locale.getDefault());
         Date data = new Date();

@@ -62,6 +62,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/normal" />
 
+    <!--suppress AndroidDomInspection -->
     <Button
         android:id="@+id/NextFase4"
         android:layout_width="0dp"

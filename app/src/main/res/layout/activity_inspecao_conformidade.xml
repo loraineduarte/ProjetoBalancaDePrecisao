@@ -23,13 +23,13 @@
 
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="@string/status"
+        android:text="Status"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -48,7 +48,7 @@
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
     <RadioButton
         android:id="@+id/sinaisCarbonizacao"
@@ -81,6 +81,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/VariacaoLeitura" />
 
+    <!--suppress AndroidDomInspection -->
     <Button
         android:id="@+id/NextFase7"
         android:layout_width="0dp"

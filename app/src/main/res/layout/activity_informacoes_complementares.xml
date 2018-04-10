@@ -64,6 +64,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/semTampa" />
 
+    <!--suppress AndroidDomInspection -->
     <Button
         android:id="@+id/NextFase9"
         android:layout_width="0dp"
@@ -71,7 +72,7 @@
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="220dp"
-        android:background="@color/colorPrimaryDark"
+        android:background="@drawable/botao_arredondado"
         android:backgroundTint="?attr/colorPrimaryDark"
         android:elevation="2dp"
         android:text="@string/pr_ximo"

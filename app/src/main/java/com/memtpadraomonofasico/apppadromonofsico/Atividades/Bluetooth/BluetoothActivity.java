@@ -116,6 +116,10 @@ public class BluetoothActivity extends AppCompatActivity {
         conexao.start();
     }
 
+    public static void stopConnection() {
+        conexao.interrupt();
+    }
+
     public void enableVisibility(View view) {
         Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
         discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 30);
@@ -201,8 +205,9 @@ public class BluetoothActivity extends AppCompatActivity {
                     //textSpace.setText(dados);
                     double a = 0;
                     double b = 0;
-                    res = res + Integer.toString(data.length) + "\n";
+                    finalDeTeste= false;
                     Log.d("RECEBIDO", dataString);
+                    Log.d("RECEBIDO", String.valueOf(dados.length()));
                     if (dados.length() == 1) {
                         pacote[0] = (byte) (data[0] & 0xFF);
                     }
@@ -220,21 +225,21 @@ public class BluetoothActivity extends AppCompatActivity {
                         a = (pacote[2]) * Math.pow(256, 3) + (pacote[3] & 0xFF) * Math.pow(256, 2) + (pacote[4] & 0xFF) * 256 + (pacote[5] & 0xFF);
                         b = (pacote[6] & 0xFF) * Math.pow(256, 3) + (pacote[7] & 0xFF) * Math.pow(256, 2) + (pacote[8] & 0xFF) * 256 + (pacote[9] & 0xFF);
                     }
-                    res = "  Tensão:   " + Integer.toString((int) a) + " uV   Corrente:  " + Integer.toString((int) b) + " uA \n";
+                    res = "  Tensão:   " + Integer.toString((int) a) + " mV   Corrente:  " + Integer.toString((int) b) + " mA \n";
 
                     if ((dataString.startsWith("D"))) {
 
                     }
                     if (dataString.startsWith("F")) {
                         finalDeTeste = true;
-                        Log.d("FINAL DE TESTE", String.valueOf(finalDeTeste));
                     }
 
                     if (dataString.contains("R")) {
                         if(finalDeTeste) {
                             RegistradorActivity.escreverTela("Teste sendo finalizado ... \n" + res);
-                            finalDeTeste= false;
+                       //     stopConnection();
                             break;
+
                         } else {
                             RegistradorActivity.escreverTela("Recebendo dados do padrão \n" + res);
                         }
@@ -244,13 +249,13 @@ public class BluetoothActivity extends AppCompatActivity {
                         if(finalDeTeste) {
                             a = ((pacote[2]) * 256) + (pacote[3] & 0xFF);
                             res = "  Número de pulsos :   " + Integer.toString((int) a) + "\n";
-                            MarchaVazioActivity.escreverTela("Teste sendo finalizado ... \n" + res);
+                            MarchaVazioActivity.escreverTelaMarchaVazio("Teste sendo finalizado ... \n" + res);
                             MarchaVazioActivity.selecionarStatus(a);
-                            finalDeTeste= false;
+
                             break;
 
                         } else {
-                            MarchaVazioActivity.escreverTela("Recebendo dados do padrão \n" + res);
+                            MarchaVazioActivity.escreverTelaMarchaVazio("Recebendo dados do padrão \n" + res);
                         }
 
                     }
@@ -260,14 +265,13 @@ public class BluetoothActivity extends AppCompatActivity {
                             a = (pacote[2]) * Math.pow(256, 3) + (pacote[3] & 0xFF) * Math.pow(256, 2) + (pacote[4] & 0xFF) * 256 + (pacote[5] & 0xFF);
                             Log.d("RESULTADO", String.valueOf(a));
                             res = Double.toString((double) (a / 1000));
-                            InspecaoConformidadeActivity.escreverTela("Teste sendo finalizado ... \n" + res + "%");
+                            InspecaoConformidadeActivity.escreverTelaInspecaoConformidade("Teste sendo finalizado ... \n" + res + "%");
                             InspecaoConformidadeActivity.escreverTelaCargaNominal(res + "%");
 
-                            finalDeTeste= false;
                             break;
 
                         } else {
-                            InspecaoConformidadeActivity.escreverTela("Recebendo dados do padrão \n" + res);
+                            InspecaoConformidadeActivity.escreverTelaInspecaoConformidade("Recebendo dados do padrão \n" + res);
                         }
 
                     }
@@ -276,13 +280,13 @@ public class BluetoothActivity extends AppCompatActivity {
                         if((b==0) && (finalDeTeste==true)){
                             a = ((pacote[2]) * Math.pow(256, 3) + (pacote[3] & 0xFF) * Math.pow(256, 2) + (pacote[4] & 0xFF) * 256 + (pacote[5] & 0xFF));
                             res = Double.toString((double) (a / 1000));
-                            InspecaoConformidadeActivity.escreverTela("Teste sendo finalizado ... \n" + res + "%");
+                            InspecaoConformidadeActivity.escreverTelaInspecaoConformidade("Teste sendo finalizado ... \n" + res + "%");
                             InspecaoConformidadeActivity.escreverTelaCargaPequena(res + "%");
-                            finalDeTeste= false;
+
                             break;
 
                         } else {
-                            InspecaoConformidadeActivity.escreverTela("Recebendo dados do padrão \n" + res);
+                            InspecaoConformidadeActivity.escreverTelaInspecaoConformidade("Recebendo dados do padrão \n" + res);
                         }
 
                     }

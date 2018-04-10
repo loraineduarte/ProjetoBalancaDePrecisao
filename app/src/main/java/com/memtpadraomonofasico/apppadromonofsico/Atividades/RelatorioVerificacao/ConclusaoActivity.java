@@ -25,6 +25,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
+import com.orhanobut.hawk.NoEncryption;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -52,6 +53,9 @@ public class ConclusaoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conclusao);
+
+        NoEncryption encryption = new NoEncryption();
+        Hawk.init(this).setEncryption(encryption).build();
 
 
         FuncionandoCorretamente = findViewById(R.id.FuncionandoCorretamente);

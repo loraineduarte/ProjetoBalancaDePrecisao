@@ -5,7 +5,6 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -13,39 +12,42 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.Bluetooth.PairedDevices;
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.Bluetooth.ThreadConexao;
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.SituacoesObservadasActivity;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
+import com.orhanobut.hawk.NoEncryption;
 
 public class InspecaoConformidadeActivity extends AppCompatActivity {
 
     private RadioButton Aprovado, NaoPossibilitaTeste, VariacaoLeitura, Reprovado;
     private String statusConformidade;
-    private static EditText cargaNominalErro;
-    private static EditText cargaPequenaErro;
-    private static String macAddress = "";
-    BluetoothAdapter mBluetoothAdapter;
-    private AlertDialog dialogConformidade;
+    @SuppressLint("StaticFieldLeak")
+    private static EditText cargaNominalErro, cargaPequenaErro;
+    private BluetoothAdapter mBluetoothAdapter;
 
-    public static int ENABLE_BLUETOOTH = 1;
-    public static int SELECT_PAIRED_DEVICE = 2;
+    private static final int ENABLE_BLUETOOTH = 1;
+    private static final int SELECT_PAIRED_DEVICE = 2;
     private static final int REQUEST_ENABLE_BT = 4;
 
     @SuppressLint("StaticFieldLeak")
-    public static TextView textMessage;
-    ThreadConexao conexao;
+    private static TextView textMessageInspecaoConformidade;
+    private ThreadConexao conexao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inspecao_conformidade);
 
+        NoEncryption encryption = new NoEncryption();
+        Hawk.init(this).setEncryption(encryption).build();
 
 
-        textMessage = findViewById(R.id.textView6);
+        textMessageInspecaoConformidade = findViewById(R.id.textView7);
+        textMessageInspecaoConformidade.setText("  ");
         cargaNominalErro =  findViewById(R.id.CargaNominalErro);
         cargaPequenaErro = findViewById(R.id.CargaPequenaErro);
         Aprovado = findViewById(R.id.tampasolidarizada);
@@ -57,19 +59,17 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         if (mBluetoothAdapter == null) {
-            textMessage.setText("Bluetooth não está funcionando.");
+            textMessageInspecaoConformidade.setText("Bluetooth não está funcionando.");
         } else {
-            textMessage.setText("Bluetooth está funcionando.");
+            textMessageInspecaoConformidade.setText("Bluetooth está funcionando.");
             if (!mBluetoothAdapter.isEnabled()) {
                 Log.d("Bluetooth", "ATIVANDO BLUETOOTH");
                 Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-                textMessage.setText("Solicitando ativação do Bluetooth...");
+                textMessageInspecaoConformidade.setText("Solicitando ativação do Bluetooth...");
             } else {
-                textMessage.setText("Bluetooth Ativado.");
+                textMessageInspecaoConformidade.setText("Bluetooth Ativado.");
             }
-
-
 
         }
         // Fim - verificando ativação do bluetooth
@@ -82,7 +82,6 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
                 Hawk.delete("CargaNominalErroConformidade");
                 Hawk.delete("CargaPequenaErroConformidade");
                 Hawk.delete("statusConformidade");
-
 
 
                 if(Aprovado.isChecked()){
@@ -98,22 +97,20 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
                     statusConformidade = "Reprovado";
                 }
 
-//                if ((!Aprovado.isChecked()) && (!NaoPossibilitaTeste.isChecked()) && (!VariacaoLeitura.isChecked()) && (!Reprovado.isChecked()))
-//                {
-//                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Não existe opção de status marcado. ", Toast.LENGTH_LONG).show();
-//
-//                } else{
+                if ((!Aprovado.isChecked()) && (!NaoPossibilitaTeste.isChecked()) && (!VariacaoLeitura.isChecked()) && (!Reprovado.isChecked()))
+                {
+                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Não existe opção de status marcado. ", Toast.LENGTH_LONG).show();
+
+                } else{
                     Hawk.put("CargaNominalErroConformidade",String.valueOf(cargaNominalErro.getText()));
                     Hawk.put("CargaPequenaErroConformidade",String.valueOf(cargaPequenaErro.getText()));
                     Hawk.put("statusConformidade",statusConformidade);
 
                 mBluetoothAdapter.disable();
-                if(conexao!=null){
-                    conexao.interrupt();
-                }
+
 
                     abrirSituacoesObservadas();
-//                }
+                }
             }
         });
     }
@@ -121,7 +118,7 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
     public void aplicarCargaNominal(View view) {
 
         if (conexao.isAlive()) {
-            textMessage.setText(".. Conectado ..");
+            textMessageInspecaoConformidade.setText(".. Conectado ..");
         }
 
         byte[] pacote = new byte[10];
@@ -155,7 +152,7 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
     public void aplicarCargaPequena(View view) {
 
         if (conexao.isAlive()) {
-            textMessage.setText(".. Conectado ..");
+            textMessageInspecaoConformidade.setText(".. Conectado ..");
         }
 
         byte[] pacote = new byte[10];
@@ -187,16 +184,19 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
     }
 
     @SuppressLint("HandlerLeak")
-    public static final Handler handler = new Handler() {
+    private static final Handler handlerInspecaoConformidade = new Handler() {
     };
 
-    public static void escreverTela(final String res) {
-
-        handler.post(new Runnable() {
+    public static void escreverTelaInspecaoConformidade(final String res) {
+        handlerInspecaoConformidade.post(new Runnable() {
             @Override
             public void run() {
-                textMessage.clearComposingText();
-                textMessage.setText(res);
+
+                if(!(textMessageInspecaoConformidade==null)){
+                    textMessageInspecaoConformidade.clearComposingText();
+                    textMessageInspecaoConformidade.setText(res);
+                }
+
             }
         });
 
@@ -204,11 +204,14 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
 
     public static void escreverTelaCargaNominal(final String res) {
 
-        handler.post(new Runnable() {
+        handlerInspecaoConformidade.post(new Runnable() {
             @Override
             public void run() {
-                cargaNominalErro.clearComposingText();
-                cargaNominalErro.setText(res);
+                if(!(cargaNominalErro==null)){
+                    cargaNominalErro.clearComposingText();
+                    cargaNominalErro.setText(res);
+                }
+
             }
         });
 
@@ -216,11 +219,13 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
 
     public static void escreverTelaCargaPequena(final String res) {
 
-        handler.post(new Runnable() {
+        handlerInspecaoConformidade.post(new Runnable() {
             @Override
             public void run() {
-                cargaPequenaErro.clearComposingText();
-                cargaPequenaErro.setText(res);
+
+                    cargaPequenaErro.clearComposingText();
+                    cargaPequenaErro.setText(res);
+
             }
         });
 
@@ -235,23 +240,23 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
 
         if (requestCode == ENABLE_BLUETOOTH) {
             if (resultCode == RESULT_OK) {
-                textMessage.setText("Bluetooth ativado.");
+                textMessageInspecaoConformidade.setText("Bluetooth ativado.");
             } else {
-                textMessage.setText("Bluetooth não ativado.");
+                textMessageInspecaoConformidade.setText("Bluetooth não ativado.");
             }
         } else if (requestCode == SELECT_PAIRED_DEVICE) {
             if (resultCode == RESULT_OK) {
-                textMessage.setText("Você selecionou " + data.getStringExtra("btDevName") + "\n" + data.getStringExtra("btDevAddress"));
-                macAddress = data.getStringExtra("btDevAddress");
+                textMessageInspecaoConformidade.setText("Você selecionou " + data.getStringExtra("btDevName") + "\n" + data.getStringExtra("btDevAddress"));
+                String macAddress = data.getStringExtra("btDevAddress");
 
                 conexao = new ThreadConexao(macAddress);
 
                 if (conexao.isAlive()) {
-                    dialogConformidade.cancel();
+                  //  dialogConformidade.cancel();
                 }
                 conexao.start();
             } else {
-                textMessage.setText("Nenhum dispositivo selecionado.");
+                textMessageInspecaoConformidade.setText("Nenhum dispositivo selecionado.");
             }
         }
     }

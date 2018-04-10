@@ -15,10 +15,8 @@ import com.memtpadraomonofasico.apppadromonofsico.R;
  */
 public class CriarAvaliadorActivity extends AppCompatActivity {
 
-    private EditText nome;
-    private EditText matricula;
-    private String nomeString;
-    private String matriculaString;
+    private EditText nome, matricula;
+    private String nomeString, matriculaString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
