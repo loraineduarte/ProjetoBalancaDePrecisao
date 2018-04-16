@@ -44,6 +44,7 @@ public class RegistradorActivity extends AppCompatActivity {
     private Bitmap fotoResized1, fotoResized2;
     private String status, observacaoRegistrador = " ";
     private Spinner opcoesReprovados;
+    @SuppressLint("WrongViewCast") Button fotoDepois, fotoAntes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +59,10 @@ public class RegistradorActivity extends AppCompatActivity {
         aprovado = findViewById(R.id.tampasolidarizada);
         naoPossibilitaTeste = findViewById(R.id.sinaisCarbonizacao);
         reprovado = findViewById(R.id.Reprovado);
+        fotoAntes = findViewById(R.id.buttonFotoAntes);
+        fotoDepois = findViewById(R.id.buttonFotoDepois);
+        fotoDepois.setEnabled(false);
+        
 
         opcoesReprovados = findViewById(R.id.RegistradorSpinner);
         opcoesReprovados.setEnabled(false);
@@ -100,7 +105,7 @@ public class RegistradorActivity extends AppCompatActivity {
             }
         });
 
-        @SuppressLint("WrongViewCast") Button fotoAntes = findViewById(R.id.buttonFotoAntes);
+
         fotoAntes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -108,7 +113,7 @@ public class RegistradorActivity extends AppCompatActivity {
             }
         });
 
-        @SuppressLint("WrongViewCast") Button fotoDepois = findViewById(R.id.buttonFotoDepois);
+
         fotoDepois.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -167,34 +172,47 @@ public class RegistradorActivity extends AppCompatActivity {
 
     public void executarTeste(View view) {
 
-        if (conexao.isAlive()) {
-            textMessage.setText(".. Conectado ..");
+        if (fotoResized1 == null) {
+            Toast.makeText(getApplicationContext(), "O teste não pode ser inicializado sem a foto pré-teste.", Toast.LENGTH_LONG).show();
+
+        } if(conexao == null){
+            Toast.makeText(getApplicationContext(), "O teste não pode ser inicializado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
+
+        } else {
+
+            if (conexao.isAlive()) {
+                textMessage.setText(".. Conectado ..");
+            }
+
+            byte[] pacote = new byte[10];
+
+            //pegando valores do medidor
+            float kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
+            byte[] bytes = new byte[4];
+            int valorMultiplicado = (int) (kdMedidor * 1000000);
+
+            bytes[0] = (byte) (valorMultiplicado / (Math.pow(256, 3)));
+            bytes[1] = (byte) ((valorMultiplicado - (bytes[0] * (Math.pow(256, 3)))) / Math.pow(256, 2));
+            bytes[2] = (byte) ((valorMultiplicado - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))))) / Math.pow(256, 1));
+            bytes[3] = (byte) ((valorMultiplicado - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))) + (bytes[2] * Math.pow(256, 1)))));
+
+            pacote[0] = ('I' & 0xFF);
+            pacote[1] = ('R' & 0xFF);
+            pacote[2] = (byte) (bytes[0] & 0xFF);
+            pacote[3] = (byte) (bytes[1] & 0xFF);
+            pacote[4] = (byte) (bytes[2] & 0xFF);
+            pacote[5] = (byte) (bytes[3] & 0xFF);
+            pacote[6] = (byte) (0 & 0xFF);
+            pacote[7] = (byte) (0 & 0xFF);
+            pacote[8] = (byte) (3 & 0xFF);
+            pacote[9] = (byte) (232 & 0xFF);
+
+            conexao.write(pacote);
+
+            fotoDepois.setEnabled(true);
         }
 
-        byte[] pacote = new byte[10];
 
-        //pegando valores do medidor
-        float kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
-        byte[] bytes = new byte[4];
-        int valorMultiplicado = (int) (kdMedidor * 1000000);
-
-        bytes[0] = (byte) (valorMultiplicado / (Math.pow(256, 3)));
-        bytes[1] = (byte) ((valorMultiplicado - (bytes[0] * (Math.pow(256, 3)))) / Math.pow(256, 2));
-        bytes[2] = (byte) ((valorMultiplicado - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))))) / Math.pow(256, 1));
-        bytes[3] = (byte) ((valorMultiplicado - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))) + (bytes[2] * Math.pow(256, 1)))));
-
-        pacote[0] = ('I' & 0xFF);
-        pacote[1] = ('R' & 0xFF);
-        pacote[2] = (byte) (bytes[0] & 0xFF);
-        pacote[3] = (byte) (bytes[1] & 0xFF);
-        pacote[4] = (byte) (bytes[2] & 0xFF);
-        pacote[5] = (byte) (bytes[3] & 0xFF);
-        pacote[6] = (byte) (0 & 0xFF);
-        pacote[7] = (byte) (0 & 0xFF);
-        pacote[8] = (byte) (3 & 0xFF);
-        pacote[9] = (byte) (232 & 0xFF);
-
-        conexao.write(pacote);
     }
 
     @SuppressLint("HandlerLeak")
