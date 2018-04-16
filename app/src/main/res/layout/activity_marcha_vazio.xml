@@ -31,7 +31,7 @@
         android:background="@drawable/botao_arredondado"
         android:backgroundTint="@color/colorPrimaryDark"
         android:onClick="executarTeste"
-        android:text="@string/aplicar_tens_o"
+        android:text="Iniciar Teste"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@android:color/white"
         android:textColorLink="@android:color/black"
