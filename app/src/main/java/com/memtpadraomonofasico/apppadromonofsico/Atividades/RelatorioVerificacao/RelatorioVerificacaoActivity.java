@@ -185,14 +185,18 @@ public class RelatorioVerificacaoActivity extends AppCompatActivity  {
 
         matricula = String.valueOf(MatriculaAvaliador.getText());
 
-        if (matricula.equals("")) {
+        if ((matricula.equals(""))|| (matricula.isEmpty())) {
             Toast.makeText(getApplicationContext(), "Coloque um número de matrícula para a pesquisa. ", Toast.LENGTH_LONG).show();
         }
         if (matricula.length()>0){
             String[] nome = banco.SelecionaAvaliador(matricula);
-            nomeAvaliador.setText(nome[0]);
-        }
 
+            if(nome == null){
+                Toast.makeText(getApplicationContext(), "Coloque um número de matrícula válido para a pesquisa. ", Toast.LENGTH_LONG).show();
+            } else {
+                nomeAvaliador.setText(nome[0]);
+            }
+        }
     }
 
 }

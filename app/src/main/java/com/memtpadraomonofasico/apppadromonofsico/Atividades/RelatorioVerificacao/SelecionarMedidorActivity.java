@@ -164,54 +164,59 @@ public class SelecionarMedidorActivity extends AppCompatActivity {
         numSerie = findViewById( R.id.numSerie );
         String numSerie1 = String.valueOf(numSerie.getText());
 
-        if (numSerie1.equals("")) {
+        if ((numSerie1.equals("")) || (numSerie1.isEmpty())) {
             Toast.makeText(getApplicationContext(), "Coloque um número de matrícula para a pesquisa. ", Toast.LENGTH_LONG).show();
         }
         if (numSerie1.length()>0){
             String[] nome = banco.SelecionaMedidor(numSerie1);
 
-            //vetor que vem do banco está na ordem :
-            //medidor_num_geral, medidor_instalacao, medidor_modelo, medidor_fabricante, medidor_tensao_nominal, medidor_corrente_nominal, medidor_tipo_medidor, medidor_KdKe," +
+            if(nome == null){
+                Toast.makeText(getApplicationContext(), "Coloque um número de matrícula válido para a pesquisa. ", Toast.LENGTH_LONG).show();
+            } else {
+
+                //vetor que vem do banco está na ordem :
+                //medidor_num_geral, medidor_instalacao, medidor_modelo, medidor_fabricante, medidor_tensao_nominal, medidor_corrente_nominal, medidor_tipo_medidor, medidor_KdKe," +
                 //" medidor_RR, medidor_num_elementos, medidor_ano_fabricacao,  medidor_classe, medidor_fios, medidor_port_inmetro
 
-            numGeral.setText(nome[0]);
-            instalacao.setEnabled(true);
-            instalacao.setText(nome[1]);
-            ModeloMedidor.setEnabled(true);
-            ModeloMedidor.setText(nome[2]);
-            FabricanteMedidor.setEnabled(true);
-            FabricanteMedidor.setText(nome[3]);
-            TensaoNominalMedidor.setEnabled(true);
-            TensaoNominalMedidor.setText(nome[4]);
-            CorrenteNominalMedidor.setEnabled(true);
-            CorrenteNominalMedidor.setText(nome[5]);
-            eletronico = findViewById( R.id.radioButtonEletronico );
-            eletronico.setEnabled(true);
-            mecanico = findViewById( R.id.RadioButtonMecanico );
-            mecanico.setEnabled(true);
-            if(nome[6].equals("Eletrônico")){
-                eletronico.setChecked(true);
-                mecanico.setChecked(false);
-            }
-            if(nome[6].equals("Mecânico")){
-                mecanico.setChecked(true);
-                eletronico.setChecked(false);
-            }
-            KDKE.setEnabled(true);
-            KDKE.setText(nome[7]);
-            RR.setEnabled(true);
-            RR.setText(nome[8]);
-            NumElementos.setEnabled(true);
-            NumElementos.setText(nome[9]);
-            AnoFabricacao.setEnabled(true);
-            AnoFabricacao.setText(nome[10]);
-            ClasseMedidor.setEnabled(true);
-            ClasseMedidor.setText(nome[11]);
-            Fios.setEnabled(true);
-            Fios.setText(nome[12]);
-            PortariaInmetro.setEnabled(true);
-            PortariaInmetro.setText(nome[13]);
+                numGeral.setText(nome[0]);
+                instalacao.setEnabled(true);
+                instalacao.setText(nome[1]);
+                ModeloMedidor.setEnabled(true);
+                ModeloMedidor.setText(nome[2]);
+                FabricanteMedidor.setEnabled(true);
+                FabricanteMedidor.setText(nome[3]);
+                TensaoNominalMedidor.setEnabled(true);
+                TensaoNominalMedidor.setText(nome[4]);
+                CorrenteNominalMedidor.setEnabled(true);
+                CorrenteNominalMedidor.setText(nome[5]);
+                eletronico = findViewById(R.id.radioButtonEletronico);
+                eletronico.setEnabled(true);
+                mecanico = findViewById(R.id.RadioButtonMecanico);
+                mecanico.setEnabled(true);
+                if (nome[6].equals("Eletrônico")) {
+                    eletronico.setChecked(true);
+                    mecanico.setChecked(false);
+                }
+                if (nome[6].equals("Mecânico")) {
+                    mecanico.setChecked(true);
+                    eletronico.setChecked(false);
+                }
+                KDKE.setEnabled(true);
+                KDKE.setText(nome[7]);
+                RR.setEnabled(true);
+                RR.setText(nome[8]);
+                NumElementos.setEnabled(true);
+                NumElementos.setText(nome[9]);
+                AnoFabricacao.setEnabled(true);
+                AnoFabricacao.setText(nome[10]);
+                ClasseMedidor.setEnabled(true);
+                ClasseMedidor.setText(nome[11]);
+                Fios.setEnabled(true);
+                Fios.setText(nome[12]);
+                PortariaInmetro.setEnabled(true);
+                PortariaInmetro.setText(nome[13]);
 
+            }
         }
     }
 
