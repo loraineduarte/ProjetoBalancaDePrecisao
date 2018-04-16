@@ -120,6 +120,7 @@ public class RegistradorActivity extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Hawk.delete("FotoPreTesteRegistrador");
                 Hawk.delete("FotoPosTesteRegistrador");
                 Hawk.delete("statusRegistrador");
@@ -144,7 +145,7 @@ public class RegistradorActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Sessão incompleta - Status não selecionado!", Toast.LENGTH_LONG).show();
 
                 }
-                if ((fotoResized1 == null) || (fotoResized2 == null)) {
+                if (((status.equals("Aprovado"))||(status.equals("Reprovado"))) && ((fotoResized1 == null) || (fotoResized2 == null))){
                     Toast.makeText(getApplicationContext(), "Sessão incompleta - Fotos não tiradas!", Toast.LENGTH_LONG).show();
 
                 } else {
