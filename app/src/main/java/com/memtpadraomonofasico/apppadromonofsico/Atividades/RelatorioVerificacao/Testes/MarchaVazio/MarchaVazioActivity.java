@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,17 +29,18 @@ public class MarchaVazioActivity extends AppCompatActivity {
     private String statusMarchaVazio, tempoReprovadoMarchaVazio;
     @SuppressLint("StaticFieldLeak")
     private static EditText tempoReprovado;
-    private BluetoothAdapter mBluetoothAdapter;
-
     private static final int ENABLE_BLUETOOTH = 1;
     private static final int SELECT_PAIRED_DEVICE = 2;
     private static final int REQUEST_ENABLE_BT = 4;
-
     @SuppressLint("StaticFieldLeak")
     private static TextView textMessageMarchaVazio;
     private ThreadConexao conexao;
-
+    @SuppressLint("WrongViewCast") Button conectar;
+    BluetoothAdapter mBluetoothAdapter = null;
     private static Runnable handlerTask;
+    @SuppressLint("HandlerLeak")
+    private static final Handler handlerMarchaVazio = new Handler() {
+    };
 
 
     @Override
@@ -55,29 +55,16 @@ public class MarchaVazioActivity extends AppCompatActivity {
         textMessageMarchaVazio = findViewById(R.id.textView5);
         textMessageMarchaVazio.setText("");
         aprovado = findViewById(R.id.aprovado);
+        aprovado.setEnabled(false);
         naoRealizado = findViewById(R.id.naoRealizado);
+        naoRealizado.setEnabled(false);
         reprovado = findViewById(R.id.Reprovado);
+        reprovado.setEnabled(false);
         tempoReprovado = findViewById(R.id.TempoMarchaVazio);
         tempoReprovado.setEnabled(false);
+        conectar = findViewById(R.id.buttonConectarDispositivo);
 
-        // verificando ativação do bluetooth
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
-        if (mBluetoothAdapter == null) {
-            textMessageMarchaVazio.setText("Bluetooth não está funcionando.");
-        } else {
-            textMessageMarchaVazio.setText("Bluetooth está funcionando.");
-            if (!mBluetoothAdapter.isEnabled()) {
-                Log.d("Bluetooth", "ATIVANDO BLUETOOTH");
-                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-                textMessageMarchaVazio.setText("Solicitando ativação do Bluetooth...");
-            } else {
-                textMessageMarchaVazio.setText("Bluetooth Ativado.");
-            }
-
-        }
-        // Fim - verificando ativação do bluetooth
+        ativarBluetooth();
 
 
         @SuppressLint("WrongViewCast") Button next = findViewById(R.id.NextFase5);
@@ -112,14 +99,35 @@ public class MarchaVazioActivity extends AppCompatActivity {
                     Hawk.put("statusMarchaVazio", statusMarchaVazio);
                     Hawk.put("tempoReprovadoMarchaVazio", tempoReprovadoMarchaVazio);
 
+                    if(conexao.isAlive()){
+                        conexao.interrupt();
+                    }
                     mBluetoothAdapter.disable();
-                    // abrirCircuitoPotencial();
                     abrirInspecaoConformidade();
 
                 }
             }
         });
 
+    }
+
+    private void ativarBluetooth() {
+        // verificando ativação do bluetooth
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+        if (mBluetoothAdapter == null) {
+            textMessageMarchaVazio.setText("Bluetooth não está funcionando.");
+        } else {
+            textMessageMarchaVazio.setText("Bluetooth está funcionando.");
+            if (!mBluetoothAdapter.isEnabled()) {
+                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+                textMessageMarchaVazio.setText("Solicitando ativação do Bluetooth...");
+            } else {
+                textMessageMarchaVazio.setText("Bluetooth Ativado.");
+            }
+        }
+        // Fim - verificando ativação do bluetooth
     }
 
 
@@ -132,75 +140,84 @@ public class MarchaVazioActivity extends AppCompatActivity {
     public void executarTeste(View view) {
 
 
-        if (conexao.isAlive()) {
-            textMessageMarchaVazio.setText(".. Conectado ..");
+        if(conexao == null){
+            Toast.makeText(getApplicationContext(), "O teste não pode ser inicializado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
+
+        } else {
+            byte[] pacote = new byte[10];
+
+            //pegando valores do medidor
+
+            float kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
+
+            byte[] bytes = new byte[4];
+            int valorMultiplicado = (int) (kdMedidor * 1000000);
+
+            bytes[0] = (byte) (valorMultiplicado / (Math.pow(256, 3)));
+            bytes[1] = (byte) ((valorMultiplicado - (bytes[0] * (Math.pow(256, 3)))) / Math.pow(256, 2));
+            bytes[2] = (byte) ((valorMultiplicado - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))))) / Math.pow(256, 1));
+            bytes[3] = (byte) ((valorMultiplicado - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))) + (bytes[2] * Math.pow(256, 1)))));
+
+            pacote[0] = ('I' & 0xFF);
+            pacote[1] = ('M' & 0xFF);
+            pacote[2] = (byte) (bytes[0] & 0xFF);
+            pacote[3] = (byte) (bytes[1] & 0xFF);
+            pacote[4] = (byte) (bytes[2] & 0xFF);
+            pacote[5] = (byte) (bytes[3] & 0xFF);
+            pacote[6] = (byte) (0 & 0xFF);
+            pacote[7] = (byte) (0 & 0xFF);
+            pacote[8] = (byte) (0 & 0xFF);
+            pacote[9] = (byte) (60 & 0xFF);
+
+            conexao.write(pacote);
         }
 
-        byte[] pacote = new byte[10];
 
-        //pegando valores do medidor
-
-        float kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
-
-        byte[] bytes = new byte[4];
-        int valorMultiplicado = (int) (kdMedidor * 1000000);
-
-        bytes[0] = (byte) (valorMultiplicado / (Math.pow(256, 3)));
-        bytes[1] = (byte) ((valorMultiplicado - (bytes[0] * (Math.pow(256, 3)))) / Math.pow(256, 2));
-        bytes[2] = (byte) ((valorMultiplicado - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))))) / Math.pow(256, 1));
-        bytes[3] = (byte) ((valorMultiplicado - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))) + (bytes[2] * Math.pow(256, 1)))));
-
-        pacote[0] = ('I' & 0xFF);
-        pacote[1] = ('M' & 0xFF);
-        pacote[2] = (byte) (bytes[0] & 0xFF);
-        pacote[3] = (byte) (bytes[1] & 0xFF);
-        pacote[4] = (byte) (bytes[2] & 0xFF);
-        pacote[5] = (byte) (bytes[3] & 0xFF);
-        pacote[6] = (byte) (0 & 0xFF);
-        pacote[7] = (byte) (0 & 0xFF);
-        pacote[8] = (byte) (0 & 0xFF);
-        pacote[9] = (byte) (60 & 0xFF);
-
-        conexao.write(pacote);
     }
 
-    @SuppressLint("HandlerLeak")
-    private static final Handler handlerMarchaVazio = new Handler() {
-    };
 
     public static void escreverTelaMarchaVazio(final String res) {
 
-        handlerMarchaVazio.post(new Runnable() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
-//                if(!(textMessageMarchaVazio==null)){
-//                    textMessageMarchaVazio.clearComposingText();
-//                    textMessageMarchaVazio.setText(res);
-//                }
-
-                handlerTask = new Runnable() {
+                handlerMarchaVazio.post(new Runnable() {
                     @Override
                     public void run() {
                         if (!(textMessageMarchaVazio == null)) {
-                            textMessageMarchaVazio.clearComposingText();
-                            textMessageMarchaVazio.setText(res);
+                            if(res.startsWith("T")){
+                                textMessageMarchaVazio.clearComposingText();
+                                textMessageMarchaVazio.setText("Teste Concluído!");
+                                textMessageMarchaVazio.setText(res);
+
+
+                            } else {
+                                textMessageMarchaVazio.clearComposingText();
+                                textMessageMarchaVazio.setText(res);
+                            }
+
                         }
-                        handlerMarchaVazio.postDelayed(handlerTask, 1000);
                     }
-                };
-                handlerTask.run();
-
-
+                });
             }
-        });
+        }).start();
+
 
     }
 
     public static void selecionarStatus(final double a) {
 
-        handlerMarchaVazio.post(new Runnable() {
+
+        new Thread(new Runnable() {
             @Override
             public void run() {
+                handlerMarchaVazio.post(new Runnable() {
+                    @Override
+                    public void run() {
+                aprovado.setEnabled(true);
+                reprovado.setEnabled(true);
+                naoRealizado.setEnabled(true);
+
                 if ((a == 1) || (a == 0)) {
                     aprovado.setChecked(true);
                     reprovado.setEnabled(false);
@@ -222,14 +239,25 @@ public class MarchaVazioActivity extends AppCompatActivity {
 
                 }
             }
-        });
+                });
+            }
+        }).start();
 
 
     }
 
     public void conectarDispositivo(View view) {
-        Intent searchPairedDevicesIntent = new Intent(this, PairedDevices.class);
-        startActivityForResult(searchPairedDevicesIntent, SELECT_PAIRED_DEVICE);
+        ativarBluetooth();
+
+        if(conexao != null){
+            Toast.makeText(getApplicationContext(), "Dispositivo já conectado.", Toast.LENGTH_LONG).show();
+
+        }
+            Intent searchPairedDevicesIntent = new Intent(this, PairedDevices.class);
+            startActivityForResult(searchPairedDevicesIntent, SELECT_PAIRED_DEVICE);
+
+
+
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -246,45 +274,18 @@ public class MarchaVazioActivity extends AppCompatActivity {
                 String macAddress = data.getStringExtra("btDevAddress");
 
                 conexao = new ThreadConexao(macAddress);
-
-                if (conexao.isAlive()) {
-                    //dialogMarchaVazio.cancel();
-                }
                 conexao.start();
+
+                if(conexao!= null){
+                    textMessageMarchaVazio.setText("Conectado com: " + data.getStringExtra("btDevName") + "\n" + data.getStringExtra("btDevAddress"));
+                }
+
             } else {
                 textMessageMarchaVazio.setText("Nenhum dispositivo selecionado.");
             }
         }
     }
 
-//    public void onCheckboxClicked(View view) {
-//
-//        tempoReprovado = (findViewById(R.id.TempoMarchaVazio));
-//        aprovado = findViewById(R.id.tampasolidarizada);
-//        naoRealizado = findViewById(R.id.sinaisCarbonizacao);
-//        reprovado = findViewById(R.id.Reprovado);
-//
-//        switch (view.getId()) {
-//            case R.id.tampasolidarizada:
-//                naoRealizado.setChecked(false);
-//                reprovado.setChecked(false);
-//                tempoReprovado.setEnabled(false);
-//                break;
-//
-//            case R.id.sinaisCarbonizacao:
-//                aprovado.setChecked(false);
-//                reprovado.setChecked(false);
-//                tempoReprovado.setEnabled(false);
-//                break;
-//
-//            case R.id.Reprovado:
-//                aprovado.setChecked(false);
-//                naoRealizado.setChecked(false);
-//                tempoReprovado.setEnabled(true);
-//                break;
-//
-//        }
-//    }
 
 
 }

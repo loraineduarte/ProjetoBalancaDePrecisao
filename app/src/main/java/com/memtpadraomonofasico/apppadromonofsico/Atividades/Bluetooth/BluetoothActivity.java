@@ -205,7 +205,7 @@ public class BluetoothActivity extends AppCompatActivity {
                     //textSpace.setText(dados);
                     double a = 0;
                     double b = 0;
-                    finalDeTeste= false;
+
                     Log.d("RECEBIDO", dataString);
                     Log.d("RECEBIDO", String.valueOf(dados.length()));
                     if (dados.length() == 1) {
@@ -237,7 +237,7 @@ public class BluetoothActivity extends AppCompatActivity {
                     if (dataString.contains("R")) {
                         if(finalDeTeste) {
                             RegistradorActivity.escreverTela("Teste sendo finalizado ... \n" + res);
-                       //     stopConnection();
+                            finalDeTeste= false;
                             break;
 
                         } else {
@@ -251,7 +251,7 @@ public class BluetoothActivity extends AppCompatActivity {
                             res = "  Número de pulsos :   " + Integer.toString((int) a) + "\n";
                             MarchaVazioActivity.escreverTelaMarchaVazio("Teste sendo finalizado ... \n" + res);
                             MarchaVazioActivity.selecionarStatus(a);
-
+                            finalDeTeste= false;
                             break;
 
                         } else {
@@ -267,7 +267,7 @@ public class BluetoothActivity extends AppCompatActivity {
                             res = Double.toString((double) (a / 1000));
                             InspecaoConformidadeActivity.escreverTelaInspecaoConformidade("Teste sendo finalizado ... \n" + res + "%");
                             InspecaoConformidadeActivity.escreverTelaCargaNominal(res + "%");
-
+                            finalDeTeste= false;
                             break;
 
                         } else {
@@ -282,7 +282,7 @@ public class BluetoothActivity extends AppCompatActivity {
                             res = Double.toString((double) (a / 1000));
                             InspecaoConformidadeActivity.escreverTelaInspecaoConformidade("Teste sendo finalizado ... \n" + res + "%");
                             InspecaoConformidadeActivity.escreverTelaCargaPequena(res + "%");
-
+                            finalDeTeste= false;
                             break;
 
                         } else {

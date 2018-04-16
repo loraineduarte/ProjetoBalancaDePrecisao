@@ -37,6 +37,8 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
     private static TextView textMessageInspecaoConformidade;
     private ThreadConexao conexao;
 
+    @SuppressLint("WrongViewCast") Button  conectar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,24 +57,11 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
         VariacaoLeitura = findViewById(R.id.VariacaoLeitura);
         Reprovado = findViewById(R.id.Reprovado);
 
-        // verificando ativação do bluetooth
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        conectar = findViewById(R.id.buttonConectarDispositivo);
 
-        if (mBluetoothAdapter == null) {
-            textMessageInspecaoConformidade.setText("Bluetooth não está funcionando.");
-        } else {
-            textMessageInspecaoConformidade.setText("Bluetooth está funcionando.");
-            if (!mBluetoothAdapter.isEnabled()) {
-                Log.d("Bluetooth", "ATIVANDO BLUETOOTH");
-                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-                textMessageInspecaoConformidade.setText("Solicitando ativação do Bluetooth...");
-            } else {
-                textMessageInspecaoConformidade.setText("Bluetooth Ativado.");
-            }
+        ativarBluetooth();
 
-        }
-        // Fim - verificando ativação do bluetooth
+
 
         @SuppressLint("WrongViewCast") Button next = findViewById(R.id.NextFase7);
         next.setOnClickListener(new View.OnClickListener() {
@@ -106,7 +95,10 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
                     Hawk.put("CargaPequenaErroConformidade",String.valueOf(cargaPequenaErro.getText()));
                     Hawk.put("statusConformidade",statusConformidade);
 
-                mBluetoothAdapter.disable();
+                    if(conexao!= null){
+                        conexao.interrupt();
+                    }
+                    mBluetoothAdapter.disable();
 
 
                     abrirSituacoesObservadas();
@@ -115,72 +107,103 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
         });
     }
 
+    private void ativarBluetooth() {
+        // verificando ativação do bluetooth
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+        if (mBluetoothAdapter == null) {
+            textMessageInspecaoConformidade.setText("Bluetooth não está funcionando.");
+        } else {
+            textMessageInspecaoConformidade.setText("Bluetooth está funcionando.");
+            if (!mBluetoothAdapter.isEnabled()) {
+                Log.d("Bluetooth", "ATIVANDO BLUETOOTH");
+                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+                textMessageInspecaoConformidade.setText("Solicitando ativação do Bluetooth...");
+            } else {
+                textMessageInspecaoConformidade.setText("Bluetooth Ativado.");
+            }
+
+        }
+        // Fim - verificando ativação do bluetooth
+
+    }
+
     public void aplicarCargaNominal(View view) {
 
-        if (conexao.isAlive()) {
-            textMessageInspecaoConformidade.setText(".. Conectado ..");
+        if(conexao == null){
+            Toast.makeText(getApplicationContext(), "O teste não pode ser inicializado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
+
+        } else {
+            byte[] pacote = new byte[10];
+
+            //pegando valores do medidor
+
+            float kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
+
+            byte[] bytes = new byte[4];
+            int valorMultiplicado = (int) (kdMedidor * 1000000);
+
+            bytes[0] = (byte) (valorMultiplicado / (Math.pow(256, 3)));
+            bytes[1] = (byte) ((valorMultiplicado - (bytes[0] * (Math.pow(256, 3)))) / Math.pow(256, 2));
+            bytes[2] = (byte) ((valorMultiplicado - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))))) / Math.pow(256, 1));
+            bytes[3] = (byte) ((valorMultiplicado - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))) + (bytes[2] * Math.pow(256, 1)))));
+
+            pacote[0] = ('I' & 0xFF);
+            pacote[1] = ('N' & 0xFF);
+            pacote[2] = (byte) (bytes[0] & 0xFF);
+            pacote[3] = (byte) (bytes[1] & 0xFF);
+            pacote[4] = (byte) (bytes[2] & 0xFF);
+            pacote[5] = (byte) (bytes[3] & 0xFF);
+            pacote[6] = (byte) (0 & 0xFF);
+            pacote[7] = (byte) (5 & 0xFF);
+            pacote[8] = (byte) (0 & 0xFF);
+            pacote[9] = (byte) (0 & 0xFF);
+
+            conexao.write(pacote);
         }
 
-        byte[] pacote = new byte[10];
 
-        //pegando valores do medidor
 
-        float kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
 
-        byte[] bytes = new byte[4];
-        int valorMultiplicado = (int) (kdMedidor * 1000000);
-
-        bytes[0] = (byte) (valorMultiplicado / (Math.pow(256, 3)));
-        bytes[1] = (byte) ((valorMultiplicado - (bytes[0] * (Math.pow(256, 3)))) / Math.pow(256, 2));
-        bytes[2] = (byte) ((valorMultiplicado - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))))) / Math.pow(256, 1));
-        bytes[3] = (byte) ((valorMultiplicado - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))) + (bytes[2] * Math.pow(256, 1)))));
-
-        pacote[0] = ('I' & 0xFF);
-        pacote[1] = ('N' & 0xFF);
-        pacote[2] = (byte) (bytes[0] & 0xFF);
-        pacote[3] = (byte) (bytes[1] & 0xFF);
-        pacote[4] = (byte) (bytes[2] & 0xFF);
-        pacote[5] = (byte) (bytes[3] & 0xFF);
-        pacote[6] = (byte) (0 & 0xFF);
-        pacote[7] = (byte) (5 & 0xFF);
-        pacote[8] = (byte) (0 & 0xFF);
-        pacote[9] = (byte) (0 & 0xFF);
-
-        conexao.write(pacote);
     }
 
     public void aplicarCargaPequena(View view) {
 
-        if (conexao.isAlive()) {
-            textMessageInspecaoConformidade.setText(".. Conectado ..");
+        if(conexao == null){
+            Toast.makeText(getApplicationContext(), "O teste não pode ser inicializado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
+
+        } else {
+
+            byte[] pacote = new byte[10];
+
+            //pegando valores do medidor
+
+            float kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
+
+            byte[] bytes = new byte[4];
+            int valorMultiplicado = (int) (kdMedidor * 1000000);
+
+            bytes[0] = (byte) (valorMultiplicado / (Math.pow(256, 3)));
+            bytes[1] = (byte) ((valorMultiplicado - (bytes[0] * (Math.pow(256, 3)))) / Math.pow(256, 2));
+            bytes[2] = (byte) ((valorMultiplicado - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))))) / Math.pow(256, 1));
+            bytes[3] = (byte) ((valorMultiplicado - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))) + (bytes[2] * Math.pow(256, 1)))));
+
+            pacote[0] = ('I' & 0xFF);
+            pacote[1] = ('B' & 0xFF);
+            pacote[2] = (byte) (bytes[0] & 0xFF);
+            pacote[3] = (byte) (bytes[1] & 0xFF);
+            pacote[4] = (byte) (bytes[2] & 0xFF);
+            pacote[5] = (byte) (bytes[3] & 0xFF);
+            pacote[6] = (byte) (0 & 0xFF);
+            pacote[7] = (byte) (5 & 0xFF);
+            pacote[8] = (byte) (0 & 0xFF);
+            pacote[9] = (byte) (0 & 0xFF);
+
+            conexao.write(pacote);
         }
 
-        byte[] pacote = new byte[10];
 
-        //pegando valores do medidor
-
-        float kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
-
-        byte[] bytes = new byte[4];
-        int valorMultiplicado = (int) (kdMedidor * 1000000);
-
-        bytes[0] = (byte) (valorMultiplicado / (Math.pow(256, 3)));
-        bytes[1] = (byte) ((valorMultiplicado - (bytes[0] * (Math.pow(256, 3)))) / Math.pow(256, 2));
-        bytes[2] = (byte) ((valorMultiplicado - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))))) / Math.pow(256, 1));
-        bytes[3] = (byte) ((valorMultiplicado - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))) + (bytes[2] * Math.pow(256, 1)))));
-
-        pacote[0] = ('I' & 0xFF);
-        pacote[1] = ('B' & 0xFF);
-        pacote[2] = (byte) (bytes[0] & 0xFF);
-        pacote[3] = (byte) (bytes[1] & 0xFF);
-        pacote[4] = (byte) (bytes[2] & 0xFF);
-        pacote[5] = (byte) (bytes[3] & 0xFF);
-        pacote[6] = (byte) (0 & 0xFF);
-        pacote[7] = (byte) (5 & 0xFF);
-        pacote[8] = (byte) (0 & 0xFF);
-        pacote[9] = (byte) (0 & 0xFF);
-
-        conexao.write(pacote);
     }
 
     @SuppressLint("HandlerLeak")
@@ -193,8 +216,15 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
             public void run() {
 
                 if(!(textMessageInspecaoConformidade==null)){
-                    textMessageInspecaoConformidade.clearComposingText();
-                    textMessageInspecaoConformidade.setText(res);
+                    if(res.startsWith("F")){
+                        textMessageInspecaoConformidade.clearComposingText();
+                        textMessageInspecaoConformidade.setText("Teste Concluído!");
+
+                    } else {
+                        textMessageInspecaoConformidade.clearComposingText();
+                        textMessageInspecaoConformidade.setText(res);
+                    }
+
                 }
 
             }
@@ -208,8 +238,15 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if(!(cargaNominalErro==null)){
-                    cargaNominalErro.clearComposingText();
-                    cargaNominalErro.setText(res);
+                    if(res.startsWith("F")){
+                        cargaNominalErro.clearComposingText();
+                        cargaNominalErro.setText("Teste Concluído!");
+
+                    } else {
+                        cargaNominalErro.clearComposingText();
+                        cargaNominalErro.setText(res);
+                    }
+
                 }
 
             }
@@ -222,9 +259,16 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
         handlerInspecaoConformidade.post(new Runnable() {
             @Override
             public void run() {
+                if(!(cargaPequenaErro==null)) {
+                    if (res.startsWith("F")) {
+                        cargaPequenaErro.clearComposingText();
+                        cargaPequenaErro.setText("Teste Concluído!");
 
-                    cargaPequenaErro.clearComposingText();
-                    cargaPequenaErro.setText(res);
+                    } else {
+                        cargaPequenaErro.clearComposingText();
+                        cargaPequenaErro.setText(res);
+                    }
+                }
 
             }
         });
@@ -232,8 +276,16 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
     }
 
     public void conectarDispositivo(View view) {
-        Intent searchPairedDevicesIntent = new Intent(this, PairedDevices.class);
-        startActivityForResult(searchPairedDevicesIntent, SELECT_PAIRED_DEVICE);
+        ativarBluetooth();
+
+        if(conexao != null){
+            Toast.makeText(getApplicationContext(), "Dispositivo já conectado.", Toast.LENGTH_LONG).show();
+
+        } else {
+            Intent searchPairedDevicesIntent = new Intent(this, PairedDevices.class);
+            startActivityForResult(searchPairedDevicesIntent, SELECT_PAIRED_DEVICE);
+
+        }
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -250,11 +302,10 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
                 String macAddress = data.getStringExtra("btDevAddress");
 
                 conexao = new ThreadConexao(macAddress);
-
-                if (conexao.isAlive()) {
-                  //  dialogConformidade.cancel();
-                }
                 conexao.start();
+                if(conexao.isAlive()){
+                    textMessageInspecaoConformidade.setText("Conectado com: " + data.getStringExtra("btDevName") + "\n" + data.getStringExtra("btDevAddress"));
+                }
             } else {
                 textMessageInspecaoConformidade.setText("Nenhum dispositivo selecionado.");
             }
