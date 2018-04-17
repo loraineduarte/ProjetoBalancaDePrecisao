@@ -113,7 +113,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
                     Hawk.put("statusMarchaVazio", statusMarchaVazio);
                     Hawk.put("tempoReprovadoMarchaVazio", tempoReprovadoMarchaVazio);
 
-                    if(conexao.isAlive()){
+                    if(conexao !=null){
                         conexao.interrupt();
                     }
                     mBluetoothAdapter.disable();

@@ -736,18 +736,22 @@ public class ConclusaoActivity extends AppCompatActivity {
             tabelaAnexos.setWidthPercentage(100);
             tabelaAnexos.setHorizontalAlignment(Element.ALIGN_LEFT);
 
+           
             Bitmap fotoPreRegistrador = Hawk.get("FotoPreTesteRegistrador");
             ByteArrayOutputStream streampreregistrador = new ByteArrayOutputStream();
+            PdfPCell anexoItem = null;
             if(fotoPreRegistrador!=null){
                 fotoPreRegistrador.compress(Bitmap.CompressFormat.PNG, 100, streampreregistrador);
+                Image imagePreregistrador = Image.getInstance(streampreregistrador.toByteArray());
+                anexoItem.setHorizontalAlignment(Element.ALIGN_JUSTIFIED_ALL);
+                anexoItem.setBorder(PdfPCell.NO_BORDER);
+                tabelaAnexos.addCell(anexoItem);
+                anexoItem = new PdfPCell(imagePreregistrador);
             }
 
-            Image imagePreregistrador = Image.getInstance(streampreregistrador.toByteArray());
+           
 
-            PdfPCell anexoItem = new PdfPCell(imagePreregistrador);
-            anexoItem.setHorizontalAlignment(Element.ALIGN_JUSTIFIED_ALL);
-            anexoItem.setBorder(PdfPCell.NO_BORDER);
-            tabelaAnexos.addCell(anexoItem);
+            
 
             Bitmap fotoInspecao = Hawk.get("FotoInspecaoVisual");
             ByteArrayOutputStream stream = new ByteArrayOutputStream();

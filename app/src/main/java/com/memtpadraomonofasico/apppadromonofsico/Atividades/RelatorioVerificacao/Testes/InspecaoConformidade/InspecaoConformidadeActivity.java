@@ -23,21 +23,93 @@ import com.orhanobut.hawk.NoEncryption;
 
 public class InspecaoConformidadeActivity extends AppCompatActivity {
 
-    private RadioButton Aprovado, NaoPossibilitaTeste, VariacaoLeitura, Reprovado;
-    private String statusConformidade;
-    @SuppressLint("StaticFieldLeak")
-    private static EditText cargaNominalErro, cargaPequenaErro;
-    private BluetoothAdapter mBluetoothAdapter;
-
     private static final int ENABLE_BLUETOOTH = 1;
     private static final int SELECT_PAIRED_DEVICE = 2;
     private static final int REQUEST_ENABLE_BT = 4;
-
+    @SuppressLint("HandlerLeak")
+    private static final Handler handlerInspecaoConformidade = new Handler() {
+    };
+    @SuppressLint("StaticFieldLeak")
+    private static EditText cargaNominalErro, cargaPequenaErro;
     @SuppressLint("StaticFieldLeak")
     private static TextView textMessageInspecaoConformidade;
+    @SuppressLint("WrongViewCast")
+    Button conectar;
+    private RadioButton Aprovado, NaoPossibilitaTeste, VariacaoLeitura, Reprovado;
+    private String statusConformidade;
+    private BluetoothAdapter mBluetoothAdapter;
     private ThreadConexao conexao;
 
-    @SuppressLint("WrongViewCast") Button  conectar;
+    public static void escreverTelaInspecaoConformidade(final String res) {
+        handlerInspecaoConformidade.post(new Runnable() {
+            @Override
+            public void run() {
+
+                if (!(textMessageInspecaoConformidade == null)) {
+                    if (res.startsWith("T")) {
+                        textMessageInspecaoConformidade.clearComposingText();
+                        textMessageInspecaoConformidade.setText("Teste Concluído!");
+
+                    } else {
+                        textMessageInspecaoConformidade.clearComposingText();
+                        textMessageInspecaoConformidade.setText(res);
+                    }
+
+                }
+
+            }
+        });
+
+    }
+
+    public static void escreverTelaCargaNominal(final String res) {
+
+        handlerInspecaoConformidade.post(new Runnable() {
+            @Override
+            public void run() {
+
+                cargaNominalErro.setEnabled(true);
+                if (!(cargaNominalErro == null)) {
+                    if (res.startsWith("T")) {
+                        textMessageInspecaoConformidade.clearComposingText();
+                        textMessageInspecaoConformidade.setText("Teste Concluído!");
+
+                    }
+
+                    cargaNominalErro.clearComposingText();
+                    cargaNominalErro.setText(res);
+
+
+                }
+
+            }
+        });
+
+    }
+
+    public static void escreverTelaCargaPequena(final String res) {
+
+        handlerInspecaoConformidade.post(new Runnable() {
+            @Override
+            public void run() {
+
+                cargaPequenaErro.setEnabled(true);
+                if (!(cargaPequenaErro == null)) {
+                    if (res.startsWith("T")) {
+                        textMessageInspecaoConformidade.clearComposingText();
+                        textMessageInspecaoConformidade.setText("Teste Concluído!");
+
+                    }
+
+                    cargaPequenaErro.clearComposingText();
+                    cargaPequenaErro.setText(res);
+
+                }
+
+            }
+        });
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +121,10 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
 
         textMessageInspecaoConformidade = findViewById(R.id.textView7);
         textMessageInspecaoConformidade.setText("  ");
-        cargaNominalErro =  findViewById(R.id.CargaNominalErro);
+        cargaNominalErro = findViewById(R.id.CargaNominalErro);
+        cargaNominalErro.setEnabled(false);
         cargaPequenaErro = findViewById(R.id.CargaPequenaErro);
+        cargaPequenaErro.setEnabled(false);
         Aprovado = findViewById(R.id.tampasolidarizada);
         NaoPossibilitaTeste = findViewById(R.id.sinaisCarbonizacao);
         VariacaoLeitura = findViewById(R.id.VariacaoLeitura);
@@ -74,7 +148,6 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
         });
 
 
-
         @SuppressLint("WrongViewCast") Button next = findViewById(R.id.NextFase7);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,29 +158,31 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
                 Hawk.delete("statusConformidade");
 
 
-                if(Aprovado.isChecked()){
+                if (Aprovado.isChecked()) {
                     statusConformidade = "Aprovado";
 
-                } if (NaoPossibilitaTeste.isChecked()){
+                }
+                if (NaoPossibilitaTeste.isChecked()) {
                     statusConformidade = "Não Possibilita Teste";
 
-                }if (VariacaoLeitura.isChecked()){
+                }
+                if (VariacaoLeitura.isChecked()) {
                     statusConformidade = "Variação de Leitura";
 
-                } if (Reprovado.isChecked()){
+                }
+                if (Reprovado.isChecked()) {
                     statusConformidade = "Reprovado";
                 }
 
-                if ((!Aprovado.isChecked()) && (!NaoPossibilitaTeste.isChecked()) && (!VariacaoLeitura.isChecked()) && (!Reprovado.isChecked()))
-                {
+                if ((!Aprovado.isChecked()) && (!NaoPossibilitaTeste.isChecked()) && (!VariacaoLeitura.isChecked()) && (!Reprovado.isChecked())) {
                     Toast.makeText(getApplicationContext(), "Sessão incompleta - Não existe opção de status marcado. ", Toast.LENGTH_LONG).show();
 
-                } else{
-                    Hawk.put("CargaNominalErroConformidade",String.valueOf(cargaNominalErro.getText()));
-                    Hawk.put("CargaPequenaErroConformidade",String.valueOf(cargaPequenaErro.getText()));
-                    Hawk.put("statusConformidade",statusConformidade);
+                } else {
+                    Hawk.put("CargaNominalErroConformidade", String.valueOf(cargaNominalErro.getText()));
+                    Hawk.put("CargaPequenaErroConformidade", String.valueOf(cargaPequenaErro.getText()));
+                    Hawk.put("statusConformidade", statusConformidade);
 
-                    if(conexao!= null){
+                    if (conexao != null) {
                         conexao.interrupt();
                     }
                     mBluetoothAdapter.disable();
@@ -143,7 +218,7 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
 
     public void aplicarCargaNominal(View view) {
 
-        if(conexao == null){
+        if (conexao == null) {
             Toast.makeText(getApplicationContext(), "O teste não pode ser inicializado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
 
         } else {
@@ -176,13 +251,11 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
         }
 
 
-
-
     }
 
     public void aplicarCargaPequena(View view) {
 
-        if(conexao == null){
+        if (conexao == null) {
             Toast.makeText(getApplicationContext(), "O teste não pode ser inicializado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
 
         } else {
@@ -218,79 +291,10 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
 
     }
 
-    @SuppressLint("HandlerLeak")
-    private static final Handler handlerInspecaoConformidade = new Handler() {
-    };
-
-    public static void escreverTelaInspecaoConformidade(final String res) {
-        handlerInspecaoConformidade.post(new Runnable() {
-            @Override
-            public void run() {
-
-                if(!(textMessageInspecaoConformidade==null)){
-                    if(res.startsWith("F")){
-                        textMessageInspecaoConformidade.clearComposingText();
-                        textMessageInspecaoConformidade.setText("Teste Concluído!");
-
-                    } else {
-                        textMessageInspecaoConformidade.clearComposingText();
-                        textMessageInspecaoConformidade.setText(res);
-                    }
-
-                }
-
-            }
-        });
-
-    }
-
-    public static void escreverTelaCargaNominal(final String res) {
-
-        handlerInspecaoConformidade.post(new Runnable() {
-            @Override
-            public void run() {
-                if(!(cargaNominalErro==null)){
-                    if(res.startsWith("F")){
-                        cargaNominalErro.clearComposingText();
-                        cargaNominalErro.setText("Teste Concluído!");
-
-                    } else {
-                        cargaNominalErro.clearComposingText();
-                        cargaNominalErro.setText(res);
-                    }
-
-                }
-
-            }
-        });
-
-    }
-
-    public static void escreverTelaCargaPequena(final String res) {
-
-        handlerInspecaoConformidade.post(new Runnable() {
-            @Override
-            public void run() {
-                if(!(cargaPequenaErro==null)) {
-                    if (res.startsWith("F")) {
-                        cargaPequenaErro.clearComposingText();
-                        cargaPequenaErro.setText("Teste Concluído!");
-
-                    } else {
-                        cargaPequenaErro.clearComposingText();
-                        cargaPequenaErro.setText(res);
-                    }
-                }
-
-            }
-        });
-
-    }
-
     public void conectarDispositivo(View view) {
         ativarBluetooth();
 
-        if(conexao != null){
+        if (conexao != null) {
             Toast.makeText(getApplicationContext(), "Dispositivo já conectado.", Toast.LENGTH_LONG).show();
 
         } else {
@@ -315,7 +319,7 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
 
                 conexao = new ThreadConexao(macAddress);
                 conexao.start();
-                if(conexao.isAlive()){
+                if (conexao.isAlive()) {
                     textMessageInspecaoConformidade.setText("Conexao sendo finalizada com:" + data.getStringExtra("btDevName") + "\n" + data.getStringExtra("btDevAddress"));
                 }
             } else {
