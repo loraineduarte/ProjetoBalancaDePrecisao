@@ -46,7 +46,7 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
 
         NoEncryption encryption = new NoEncryption();
         Hawk.init(this).setEncryption(encryption).build();
-        
+
         textMessageInspecaoConformidade = findViewById(R.id.textView7);
         textMessageInspecaoConformidade.setText("  ");
         cargaNominalErro =  findViewById(R.id.CargaNominalErro);
