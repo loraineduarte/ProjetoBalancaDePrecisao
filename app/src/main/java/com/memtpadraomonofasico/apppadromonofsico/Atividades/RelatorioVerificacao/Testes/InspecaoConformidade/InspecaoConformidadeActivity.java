@@ -46,8 +46,7 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
 
         NoEncryption encryption = new NoEncryption();
         Hawk.init(this).setEncryption(encryption).build();
-
-
+        
         textMessageInspecaoConformidade = findViewById(R.id.textView7);
         textMessageInspecaoConformidade.setText("  ");
         cargaNominalErro =  findViewById(R.id.CargaNominalErro);
@@ -56,10 +55,23 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
         NaoPossibilitaTeste = findViewById(R.id.sinaisCarbonizacao);
         VariacaoLeitura = findViewById(R.id.VariacaoLeitura);
         Reprovado = findViewById(R.id.Reprovado);
-
         conectar = findViewById(R.id.buttonConectarDispositivo);
 
         ativarBluetooth();
+
+        conectar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                try {
+                    ativarBluetooth();
+                    new Thread().sleep(4500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                conectarDispositivo(view);
+            }
+        });
 
 
 
@@ -304,7 +316,7 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
                 conexao = new ThreadConexao(macAddress);
                 conexao.start();
                 if(conexao.isAlive()){
-                    textMessageInspecaoConformidade.setText("Conectado com: " + data.getStringExtra("btDevName") + "\n" + data.getStringExtra("btDevAddress"));
+                    textMessageInspecaoConformidade.setText("Conexao sendo finalizada com:" + data.getStringExtra("btDevName") + "\n" + data.getStringExtra("btDevAddress"));
                 }
             } else {
                 textMessageInspecaoConformidade.setText("Nenhum dispositivo selecionado.");

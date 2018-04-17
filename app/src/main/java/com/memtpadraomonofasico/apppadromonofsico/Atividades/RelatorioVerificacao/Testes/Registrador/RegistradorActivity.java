@@ -37,15 +37,39 @@ public class RegistradorActivity extends AppCompatActivity {
     private static final int TIRAR_FOTO_ANTES = 10207;
     private static final int TIRAR_FOTO_DEPOIS = 10208;
     private static final int REQUEST_OBS = 1000;
+    @SuppressLint("HandlerLeak")
+    private static final Handler handler = new Handler() {
+
+    };
     @SuppressLint("StaticFieldLeak")
     private static TextView textMessage;
+    @SuppressLint("WrongViewCast")
+    Button fotoDepois, fotoAntes, conectar;
+    BluetoothAdapter mBluetoothAdapter = null;
     private ThreadConexao conexao;
     private RadioButton aprovado, naoPossibilitaTeste, reprovado;
     private Bitmap fotoResized1, fotoResized2;
     private String status, observacaoRegistrador = " ";
     private Spinner opcoesReprovados;
-    @SuppressLint("WrongViewCast") Button fotoDepois, fotoAntes, conectar;
-    BluetoothAdapter mBluetoothAdapter = null;
+
+    public static void escreverTela(final String res) {
+
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (res.startsWith("T")) {
+                    textMessage.clearComposingText();
+                    textMessage.setText("Teste Concluído!");
+
+                } else {
+                    textMessage.clearComposingText();
+                    textMessage.setText(res);
+                }
+
+            }
+        });
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,14 +82,11 @@ public class RegistradorActivity extends AppCompatActivity {
         aprovado = findViewById(R.id.tampasolidarizada);
         naoPossibilitaTeste = findViewById(R.id.sinaisCarbonizacao);
         reprovado = findViewById(R.id.Reprovado);
-
         textMessage = findViewById(R.id.textView6);
         fotoAntes = findViewById(R.id.buttonFotoAntes);
         fotoDepois = findViewById(R.id.buttonFotoDepois);
         fotoDepois.setEnabled(false);
-
         conectar = findViewById(R.id.buttonConectarDispositivo);
-
 
         opcoesReprovados = findViewById(R.id.RegistradorSpinner);
         opcoesReprovados.setEnabled(false);
@@ -90,6 +111,20 @@ public class RegistradorActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 abrirAddObs();
+            }
+        });
+
+        conectar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                try {
+                    ativarBluetooth();
+                    new Thread().sleep(4500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                conectarDispositivo(view);
             }
         });
 
@@ -118,7 +153,6 @@ public class RegistradorActivity extends AppCompatActivity {
                 Hawk.delete("ObservaçãoRegistrador");
 
 
-
                 if (aprovado.isChecked()) {
                     status = "Aprovado";
 
@@ -134,19 +168,16 @@ public class RegistradorActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Sessão incompleta - Status não selecionado!", Toast.LENGTH_LONG).show();
 
                 }
-                if (((status.equals("Aprovado"))||(status.equals("Reprovado"))) && ((fotoResized1 == null) || (fotoResized2 == null))){
+                if (((status.equals("Aprovado")) || (status.equals("Reprovado"))) && ((fotoResized1 == null) || (fotoResized2 == null))) {
                     Toast.makeText(getApplicationContext(), "Sessão incompleta - Fotos não tiradas!", Toast.LENGTH_LONG).show();
 
                 } else {
-
-
                     Hawk.put("FotoPreTesteRegistrador", fotoResized1);
                     Hawk.put("FotoPosTesteRegistrador", fotoResized2);
                     Hawk.put("statusRegistrador", status);
                     Hawk.put("ObservaçãoRegistrador", observacaoRegistrador);
 
-
-                    if(conexao != null){
+                    if (conexao != null) {
                         conexao.interrupt();
                     }
                     mBluetoothAdapter.disable();
@@ -157,39 +188,42 @@ public class RegistradorActivity extends AppCompatActivity {
     }
 
     private void ativarBluetooth() {
-        // verificando ativação do bluetooth
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         if (mBluetoothAdapter == null) {
             textMessage.setText("Bluetooth não está funcionando.");
+
         } else {
             textMessage.setText("Bluetooth está funcionando.");
+
             if (!mBluetoothAdapter.isEnabled()) {
                 Log.d(TAG, "ATIVANDO BLUETOOTH");
                 Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
                 textMessage.setText("Solicitando ativação do Bluetooth...");
+
             } else {
                 textMessage.setText("Bluetooth Ativado.");
+
             }
         }
-        // Fim - verificando ativação do bluetooth
     }
 
     public void executarTeste(View view) {
-
-        if(conexao == null){
+        if (conexao == null) {
             Toast.makeText(getApplicationContext(), "O teste não pode ser inicializado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
 
-        } if (fotoResized1 == null) {
+        }
+        if (fotoResized1 == null) {
             Toast.makeText(getApplicationContext(), "O teste não pode ser inicializado sem a foto pré-teste.", Toast.LENGTH_LONG).show();
 
         } else {
 
+            if (conexao.isAlive()) {
+                textMessage.setText("Conectado!");
+            }
 
             byte[] pacote = new byte[10];
-
-            //pegando valores do medidor
             float kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
             byte[] bytes = new byte[4];
             int valorMultiplicado = (int) (kdMedidor * 1000000);
@@ -214,32 +248,6 @@ public class RegistradorActivity extends AppCompatActivity {
             fotoDepois.setEnabled(true);
 
         }
-
-
-    }
-
-    @SuppressLint("HandlerLeak")
-    private static final Handler handler = new Handler() {
-
-    };
-
-    public static void escreverTela(final String res) {
-
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                if(res.startsWith("T")){
-                    textMessage.clearComposingText();
-                    textMessage.setText("Teste Concluído!");
-
-                } else {
-                    textMessage.clearComposingText();
-                    textMessage.setText(res);
-                }
-
-            }
-        });
-
     }
 
     private void abrirAddObs() {
@@ -259,16 +267,14 @@ public class RegistradorActivity extends AppCompatActivity {
     }
 
     public void conectarDispositivo(View view) {
-        ativarBluetooth();
 
-        if(conexao != null){
+        if (conexao != null) {
             Toast.makeText(getApplicationContext(), "Dispositivo já conectado.", Toast.LENGTH_LONG).show();
-
+            //fazer ação para desconectar
         }
-            Intent searchPairedDevicesIntent = new Intent(this, PairedDevices.class);
-            startActivityForResult(searchPairedDevicesIntent, SELECT_PAIRED_DEVICE);
 
-
+        Intent searchPairedDevicesIntent = new Intent(this, PairedDevices.class);
+        startActivityForResult(searchPairedDevicesIntent, SELECT_PAIRED_DEVICE);
     }
 
     @SuppressLint("SetTextI18n")
@@ -341,8 +347,8 @@ public class RegistradorActivity extends AppCompatActivity {
                 conexao = new ThreadConexao(macAddress);
                 conexao.start();
 
-                if(conexao.isAlive()){
-                    textMessage.setText("Conectado com: " + data.getStringExtra("btDevName") + "\n" + data.getStringExtra("btDevAddress"));
+                if (conexao.isAlive()) {
+                    textMessage.setText("Conexao sendo finalizada com: " + data.getStringExtra("btDevName") + "\n" + data.getStringExtra("btDevAddress"));
                 }
 
             } else {

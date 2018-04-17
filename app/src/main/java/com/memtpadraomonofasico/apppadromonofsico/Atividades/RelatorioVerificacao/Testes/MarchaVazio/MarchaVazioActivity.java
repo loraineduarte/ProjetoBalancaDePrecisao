@@ -66,6 +66,20 @@ public class MarchaVazioActivity extends AppCompatActivity {
 
         ativarBluetooth();
 
+        conectar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                try {
+                    ativarBluetooth();
+                    new Thread().sleep(4500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                conectarDispositivo(view);
+            }
+        });
+
 
         @SuppressLint("WrongViewCast") Button next = findViewById(R.id.NextFase5);
         next.setOnClickListener(new View.OnClickListener() {
@@ -277,7 +291,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
                 conexao.start();
 
                 if(conexao!= null){
-                    textMessageMarchaVazio.setText("Conectado com: " + data.getStringExtra("btDevName") + "\n" + data.getStringExtra("btDevAddress"));
+                    textMessageMarchaVazio.setText("Conexao sendo finalizada com: " + data.getStringExtra("btDevName") + "\n" + data.getStringExtra("btDevAddress"));
                 }
 
             } else {
