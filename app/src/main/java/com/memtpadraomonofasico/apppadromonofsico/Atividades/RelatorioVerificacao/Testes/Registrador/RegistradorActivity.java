@@ -119,8 +119,11 @@ public class RegistradorActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 try {
-                    ativarBluetooth();
-                    new Thread().sleep(4500);
+                    if(mBluetoothAdapter==null){
+                        ativarBluetooth();
+                        new Thread().sleep(4500);
+                    }
+
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

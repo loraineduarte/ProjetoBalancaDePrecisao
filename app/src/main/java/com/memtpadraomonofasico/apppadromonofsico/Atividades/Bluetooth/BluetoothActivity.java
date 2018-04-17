@@ -186,6 +186,7 @@ public class BluetoothActivity extends AppCompatActivity {
                     break;
 
                 default:
+                    double a, b ;
                     cont = cont + 1;
                     dados = dataString;
 
@@ -203,16 +204,15 @@ public class BluetoothActivity extends AppCompatActivity {
                     //String teste = new String(dado0255);
                     //dados = dados+Integer.toString(bundle.getByteArray("data").length)+ " : ";
                     //textSpace.setText(dados);
-                    double a = 0;
-                    double b = 0;
 
-                    Log.d("RECEBIDO", dataString);
-                    Log.d("RECEBIDO", String.valueOf(dados.length()));
+
                     if (dados.length() == 1) {
                         pacote[0] = (byte) (data[0] & 0xFF);
                     }
 
                     if (dados.length() == 9) {
+                        a = 0;
+                        b = 0;
                         pacote[1] = (byte) (data[0] & 0xFF);
                         pacote[2] = (byte) (data[1] & 0xFF);
                         pacote[3] = (byte) (data[2] & 0xFF);
@@ -222,10 +222,13 @@ public class BluetoothActivity extends AppCompatActivity {
                         pacote[7] = (byte) (data[6] & 0xFF);
                         pacote[8] = (byte) (data[7] & 0xFF);
                         pacote[9] = (byte) (data[8] & 0xFF);
+
                         a = (pacote[2]) * Math.pow(256, 3) + (pacote[3] & 0xFF) * Math.pow(256, 2) + (pacote[4] & 0xFF) * 256 + (pacote[5] & 0xFF);
                         b = (pacote[6] & 0xFF) * Math.pow(256, 3) + (pacote[7] & 0xFF) * Math.pow(256, 2) + (pacote[8] & 0xFF) * 256 + (pacote[9] & 0xFF);
+
+                        res = "  Tensão:   " + Integer.toString((int) a) + " mV   Corrente:  " + Integer.toString((int) b) + " mA \n";
                     }
-                    res = "  Tensão:   " + Integer.toString((int) a) + " mV   Corrente:  " + Integer.toString((int) b) + " mA \n";
+
 
                     if ((dataString.startsWith("D"))) {
 
@@ -261,12 +264,12 @@ public class BluetoothActivity extends AppCompatActivity {
                     }
 
                     if (dataString.contains("N")) {
-                        if((b==0) && (finalDeTeste==true)){
+                        if( (finalDeTeste==true)){
                             a = (pacote[2]) * Math.pow(256, 3) + (pacote[3] & 0xFF) * Math.pow(256, 2) + (pacote[4] & 0xFF) * 256 + (pacote[5] & 0xFF);
                             Log.d("RESULTADO", String.valueOf(a));
                             res = Double.toString((double) (a / 1000));
                             InspecaoConformidadeActivity.escreverTelaInspecaoConformidade("Teste sendo finalizado ... \n" + res + "%");
-                            InspecaoConformidadeActivity.escreverTelaCargaNominal(res + "%");
+                            InspecaoConformidadeActivity.escreverTelaCargaNominal(a + "%");
                             finalDeTeste= false;
                             break;
 
@@ -277,11 +280,11 @@ public class BluetoothActivity extends AppCompatActivity {
                     }
 
                     if (dataString.contains("B")) {
-                        if((b==0) && (finalDeTeste==true)){
+                        if((finalDeTeste==true)){
                             a = ((pacote[2]) * Math.pow(256, 3) + (pacote[3] & 0xFF) * Math.pow(256, 2) + (pacote[4] & 0xFF) * 256 + (pacote[5] & 0xFF));
                             res = Double.toString((double) (a / 1000));
                             InspecaoConformidadeActivity.escreverTelaInspecaoConformidade("Teste sendo finalizado ... \n" + res + "%");
-                            InspecaoConformidadeActivity.escreverTelaCargaPequena(res + "%");
+                            InspecaoConformidadeActivity.escreverTelaCargaPequena(a + "%");
                             finalDeTeste= false;
                             break;
 
