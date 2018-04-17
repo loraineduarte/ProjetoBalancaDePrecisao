@@ -738,7 +738,10 @@ public class ConclusaoActivity extends AppCompatActivity {
 
             Bitmap fotoPreRegistrador = Hawk.get("FotoPreTesteRegistrador");
             ByteArrayOutputStream streampreregistrador = new ByteArrayOutputStream();
-            fotoPreRegistrador.compress(Bitmap.CompressFormat.PNG, 100, streampreregistrador);
+            if(fotoPreRegistrador!=null){
+                fotoPreRegistrador.compress(Bitmap.CompressFormat.PNG, 100, streampreregistrador);
+            }
+
             Image imagePreregistrador = Image.getInstance(streampreregistrador.toByteArray());
 
             PdfPCell anexoItem = new PdfPCell(imagePreregistrador);
