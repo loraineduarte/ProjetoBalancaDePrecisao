@@ -743,25 +743,25 @@ public class ConclusaoActivity extends AppCompatActivity {
             if(fotoPreRegistrador!=null){
                 fotoPreRegistrador.compress(Bitmap.CompressFormat.PNG, 100, streampreregistrador);
                 Image imagePreregistrador = Image.getInstance(streampreregistrador.toByteArray());
+                anexoItem = new PdfPCell(imagePreregistrador);
                 anexoItem.setHorizontalAlignment(Element.ALIGN_JUSTIFIED_ALL);
                 anexoItem.setBorder(PdfPCell.NO_BORDER);
                 tabelaAnexos.addCell(anexoItem);
-                anexoItem = new PdfPCell(imagePreregistrador);
+
             }
 
-           
-
-            
 
             Bitmap fotoInspecao = Hawk.get("FotoInspecaoVisual");
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            fotoInspecao.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            Image image = Image.getInstance(stream.toByteArray());
+            if(fotoInspecao!=null){
+                fotoInspecao.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                Image image = Image.getInstance(stream.toByteArray());
+                anexoItem = new PdfPCell(image);
+                anexoItem.setHorizontalAlignment(Element.ALIGN_JUSTIFIED_ALL);
+                anexoItem.setBorder(PdfPCell.NO_BORDER);
+                tabelaAnexos.addCell(anexoItem);
 
-            anexoItem = new PdfPCell(image);
-            anexoItem.setHorizontalAlignment(Element.ALIGN_JUSTIFIED_ALL);
-            anexoItem.setBorder(PdfPCell.NO_BORDER);
-            tabelaAnexos.addCell(anexoItem);
+            }
 
             anexoItem = new PdfPCell(new Phrase("Teste de Registrador - Foto Pré Teste ", subFont));
             anexoItem.setHorizontalAlignment(Element.ALIGN_LEFT);

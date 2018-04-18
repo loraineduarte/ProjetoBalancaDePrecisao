@@ -118,4 +118,12 @@ public class CircuitoPotencialActivity extends AppCompatActivity {
         }
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+
+    }
+
 }

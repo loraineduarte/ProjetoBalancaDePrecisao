@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -253,6 +254,16 @@ public class RegistradorActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        Looper myLooper = Looper.myLooper();
+        if (myLooper!=null) {
+            myLooper.quit();
+        }
+    }
+
     private void abrirAddObs() {
 
         Intent intent = new Intent(this, ObservacaoRegistradorActivity.class);
@@ -273,6 +284,7 @@ public class RegistradorActivity extends AppCompatActivity {
 
         if (conexao != null) {
             Toast.makeText(getApplicationContext(), "Dispositivo já conectado.", Toast.LENGTH_LONG).show();
+            conexao=null;
             //fazer ação para desconectar
         }
 

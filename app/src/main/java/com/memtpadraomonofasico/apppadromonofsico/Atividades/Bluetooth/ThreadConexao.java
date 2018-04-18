@@ -40,6 +40,7 @@ public class ThreadConexao extends Thread {
     em uma nova thread.
      */
     public void run() {
+
         Looper.prepare();
         /*  Anuncia que a thread está sendo executada.
             Pega uma referência para o adaptador Bluetooth padrão.
@@ -168,6 +169,7 @@ public class ThreadConexao extends Thread {
 
                 }
 
+
             } catch (IOException e) {
 
                 /*  Caso ocorra alguma exceção, exibe o stack trace para debug.
@@ -177,10 +179,15 @@ public class ThreadConexao extends Thread {
                 e.printStackTrace();
                 toMainActivity("---N".getBytes());
             }
+
         }
-        Looper.loop();
+       Looper.loop();
+
+
 
     }
+
+
 
     /*  Utiliza um handler para enviar um byte array à Activity principal.
         O byte array é encapsulado em um Bundle e posteriormente em uma Message

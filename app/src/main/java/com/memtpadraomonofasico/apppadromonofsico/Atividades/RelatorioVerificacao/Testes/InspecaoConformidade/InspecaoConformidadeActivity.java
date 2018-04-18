@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -40,76 +39,7 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
     private BluetoothAdapter mBluetoothAdapter;
     private ThreadConexao conexao;
 
-    public static void escreverTelaInspecaoConformidade(final String res) {
-        handlerInspecaoConformidade.post(new Runnable() {
-            @Override
-            public void run() {
 
-                if (!(textMessageInspecaoConformidade == null)) {
-                    if (res.startsWith("T")) {
-                        textMessageInspecaoConformidade.clearComposingText();
-                        textMessageInspecaoConformidade.setText("Teste Concluído!");
-
-                    } else {
-                        textMessageInspecaoConformidade.clearComposingText();
-                        textMessageInspecaoConformidade.setText(res);
-                    }
-
-                }
-
-            }
-        });
-
-    }
-
-    public static void escreverTelaCargaNominal(final String res) {
-
-        handlerInspecaoConformidade.post(new Runnable() {
-            @Override
-            public void run() {
-
-                cargaNominalErro.setEnabled(true);
-                if (!(cargaNominalErro == null)) {
-                    if (res.startsWith("T")) {
-                        textMessageInspecaoConformidade.clearComposingText();
-                        textMessageInspecaoConformidade.setText("Teste Concluído!");
-
-                    }
-
-                    cargaNominalErro.clearComposingText();
-                    cargaNominalErro.setText(res);
-
-
-                }
-
-            }
-        });
-
-    }
-
-    public static void escreverTelaCargaPequena(final String res) {
-
-        handlerInspecaoConformidade.post(new Runnable() {
-            @Override
-            public void run() {
-
-                cargaPequenaErro.setEnabled(true);
-                if (!(cargaPequenaErro == null)) {
-                    if (res.startsWith("T")) {
-                        textMessageInspecaoConformidade.clearComposingText();
-                        textMessageInspecaoConformidade.setText("Teste Concluído!");
-
-                    }
-
-                    cargaPequenaErro.clearComposingText();
-                    cargaPequenaErro.setText(res);
-
-                }
-
-            }
-        });
-
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -188,33 +118,111 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
                         conexao.interrupt();
                     }
                     mBluetoothAdapter.disable();
-
-
                     abrirSituacoesObservadas();
                 }
             }
         });
     }
 
+    public static void escreverTelaInspecaoConformidade(final String res) {
+        handlerInspecaoConformidade.post(new Runnable() {
+            @Override
+            public void run() {
+
+                if (!(textMessageInspecaoConformidade == null)) {
+                    if (res.startsWith("T")) {
+                        textMessageInspecaoConformidade.clearComposingText();
+                        textMessageInspecaoConformidade.setText("Teste Concluído!");
+
+                    } else {
+                        textMessageInspecaoConformidade.clearComposingText();
+                        textMessageInspecaoConformidade.setText(res);
+                    }
+
+                }
+
+            }
+        });
+
+    }
+
+    public static void escreverTelaCargaNominal(final String res) {
+
+        handlerInspecaoConformidade.post(new Runnable() {
+            @Override
+            public void run() {
+
+                cargaNominalErro.setEnabled(true);
+                if (!(cargaNominalErro == null)) {
+                    if (res.startsWith("T")) {
+                        textMessageInspecaoConformidade.clearComposingText();
+                        textMessageInspecaoConformidade.setText("Teste Concluído!");
+
+                    }
+
+                    cargaNominalErro.clearComposingText();
+                    cargaNominalErro.setText(res);
+
+
+                }
+
+            }
+        });
+
+    }
+
+    public static void escreverTelaCargaPequena(final String res) {
+
+        handlerInspecaoConformidade.post(new Runnable() {
+            @Override
+            public void run() {
+
+                cargaPequenaErro.setEnabled(true);
+                if (!(cargaPequenaErro == null)) {
+                    if (res.startsWith("T")) {
+                        textMessageInspecaoConformidade.clearComposingText();
+                        textMessageInspecaoConformidade.setText("Teste Concluído!");
+
+                    }
+
+                    cargaPequenaErro.clearComposingText();
+                    cargaPequenaErro.setText(res);
+
+                }
+
+            }
+        });
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+
+    }
+
     private void ativarBluetooth() {
-        // verificando ativação do bluetooth
+
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         if (mBluetoothAdapter == null) {
             textMessageInspecaoConformidade.setText("Bluetooth não está funcionando.");
+
         } else {
             textMessageInspecaoConformidade.setText("Bluetooth está funcionando.");
+
             if (!mBluetoothAdapter.isEnabled()) {
-                Log.d("Bluetooth", "ATIVANDO BLUETOOTH");
                 Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
                 textMessageInspecaoConformidade.setText("Solicitando ativação do Bluetooth...");
+
             } else {
                 textMessageInspecaoConformidade.setText("Bluetooth Ativado.");
+
             }
 
         }
-        // Fim - verificando ativação do bluetooth
 
     }
 
@@ -224,10 +232,11 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "O teste não pode ser inicializado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
 
         } else {
+            if (conexao.isAlive()) {
+                textMessageInspecaoConformidade.setText("Conectado!");
+            }
+
             byte[] pacote = new byte[10];
-
-            //pegando valores do medidor
-
             float kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
 
             byte[] bytes = new byte[4];
@@ -294,16 +303,15 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
     }
 
     public void conectarDispositivo(View view) {
-        ativarBluetooth();
 
         if (conexao != null) {
             Toast.makeText(getApplicationContext(), "Dispositivo já conectado.", Toast.LENGTH_LONG).show();
 
-        } else {
+        }
             Intent searchPairedDevicesIntent = new Intent(this, PairedDevices.class);
             startActivityForResult(searchPairedDevicesIntent, SELECT_PAIRED_DEVICE);
 
-        }
+
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
