@@ -581,9 +581,13 @@ public class ConclusaoActivity extends AppCompatActivity {
             tabelaRegistrador.addCell(MostradorItem);
 
             p = new Phrase("Status: ", smallNormal); //marcha em vazio
-            p.add(new Chunk((String) Hawk.get("statusMarchaVazio"), smallNormal));
-            if (!(String.valueOf(Hawk.get("tempoReprovadoMarchaVazio")).equals("00:00:00"))) {
+            if (String.valueOf(Hawk.get("ObservaçãoRegistrador")).equals("null")) {
+                p.add(new Chunk((String) " ", smallNormal));
+            } else {
+                p.add(new Chunk((String) Hawk.get("statusMarchaVazio"), smallNormal));
+            }
 
+            if (!(String.valueOf(Hawk.get("tempoReprovadoMarchaVazio")).equals("00:00:00"))) {
                 p.add(new Chunk((String) Hawk.get("tempoReprovadoMarchaVazio"), smallNormal));
             }
             MostradorItem = new PdfPCell(p);
@@ -763,10 +767,18 @@ public class ConclusaoActivity extends AppCompatActivity {
 
             }
 
-            anexoItem = new PdfPCell(new Phrase("Teste de Registrador - Foto Pré Teste ", subFont));
-            anexoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
-            anexoItem.setBorder(PdfPCell.NO_BORDER);
-            tabelaAnexos.addCell(anexoItem);
+            if(fotoPreRegistrador!=null){
+                anexoItem = new PdfPCell(new Phrase("Teste de Registrador - Foto Pré Teste ", subFont));
+                anexoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
+                anexoItem.setBorder(PdfPCell.NO_BORDER);
+                tabelaAnexos.addCell(anexoItem);
+            } else {
+                anexoItem = new PdfPCell(new Phrase(" ", subFont));
+                anexoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
+                anexoItem.setBorder(PdfPCell.NO_BORDER);
+                tabelaAnexos.addCell(anexoItem);
+            }
+
 
             anexoItem = new PdfPCell(new Phrase("Inspeção Visual", subFont));
             anexoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
@@ -785,23 +797,35 @@ public class ConclusaoActivity extends AppCompatActivity {
 
             Bitmap fotoPosRegistrador = Hawk.get("FotoPosTesteRegistrador");
             ByteArrayOutputStream streamPosregistrador = new ByteArrayOutputStream();
-            fotoPosRegistrador.compress(Bitmap.CompressFormat.PNG, 100, streamPosregistrador);
-            Image imagePosregistrador = Image.getInstance(streamPosregistrador.toByteArray());
+            if(fotoPosRegistrador!=null){
+                fotoPosRegistrador.compress(Bitmap.CompressFormat.PNG, 100, streamPosregistrador);
+                Image imagePosregistrador = Image.getInstance(streamPosregistrador.toByteArray());
+                anexoItem = new PdfPCell(imagePosregistrador);
+                anexoItem.setHorizontalAlignment(Element.ALIGN_JUSTIFIED_ALL);
+                anexoItem.setBorder(PdfPCell.NO_BORDER);
+                tabelaAnexos.addCell(anexoItem);
 
-            anexoItem = new PdfPCell(imagePosregistrador);
-            anexoItem.setHorizontalAlignment(Element.ALIGN_JUSTIFIED_ALL);
-            anexoItem.setBorder(PdfPCell.NO_BORDER);
-            tabelaAnexos.addCell(anexoItem);
+            }
+
+
 
             anexoItem = new PdfPCell(new Phrase(" ", subFont));
             anexoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             anexoItem.setBorder(PdfPCell.NO_BORDER);
             tabelaAnexos.addCell(anexoItem);
 
-            anexoItem = new PdfPCell(new Phrase("Teste de Registrador - Foto Pós Teste ", subFont));
-            anexoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
-            anexoItem.setBorder(PdfPCell.NO_BORDER);
-            tabelaAnexos.addCell(anexoItem);
+            if(fotoPosRegistrador!=null){
+                anexoItem = new PdfPCell(new Phrase("Teste de Registrador - Foto Pós Teste ", subFont));
+                anexoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
+                anexoItem.setBorder(PdfPCell.NO_BORDER);
+                tabelaAnexos.addCell(anexoItem);
+            } else {
+                anexoItem = new PdfPCell(new Phrase(" ", subFont));
+                anexoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
+                anexoItem.setBorder(PdfPCell.NO_BORDER);
+                tabelaAnexos.addCell(anexoItem);
+            }
+
 
             anexoItem = new PdfPCell(new Phrase(" ", subFont));
             anexoItem.setHorizontalAlignment(Element.ALIGN_LEFT);

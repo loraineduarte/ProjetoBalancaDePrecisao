@@ -16,7 +16,7 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.Registrador.RegistradorActivity;
+import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.CircuitoPotencial.CircuitoPotencialActivity;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
 import com.orhanobut.hawk.NoEncryption;
@@ -124,7 +124,8 @@ public class InspecaoVisualActivity extends AppCompatActivity {
                 Hawk.put("ObservacaoInspecaoVisual", observacaoInspecao);
 
 
-                abrirRegistrador();
+             //   abrirRegistrador();
+                    abrirCircuitoPotencial();
                 }
             }
         });
@@ -141,9 +142,8 @@ public class InspecaoVisualActivity extends AppCompatActivity {
     }
 
 
-    private void abrirRegistrador() {
-
-        Intent intent = new Intent(this, RegistradorActivity.class);
+    private void abrirCircuitoPotencial() {
+        Intent intent = new Intent(this, CircuitoPotencialActivity.class);
         startActivity(intent);
     }
 

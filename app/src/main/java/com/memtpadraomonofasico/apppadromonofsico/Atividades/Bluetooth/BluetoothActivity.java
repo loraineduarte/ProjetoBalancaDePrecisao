@@ -38,12 +38,13 @@ public class BluetoothActivity extends AppCompatActivity {
     static String tipoTeste = "";
     static boolean finalDeTeste = false;
 
-    private static TextView statusMessage;
-    private static TextView textSpace;
+    private TextView statusMessage;
+    private TextView textSpace;
 
     private static final byte[] pacote = new byte[10];
-
-    private static ThreadConexao conexao;
+    InspecaoConformidadeActivity conformidade= new InspecaoConformidadeActivity();
+    RegistradorActivity registrador = new RegistradorActivity();
+    private ThreadConexao conexao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +64,6 @@ public class BluetoothActivity extends AppCompatActivity {
         } else {
             statusMessage.setText("Bluetooth está funcionando.");
             if (!mBluetoothAdapter.isEnabled()) {
-                Log.d(TAG, "ATIVANDO BLUETOOTH");
                 Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
                 statusMessage.setText("Solicitando ativação do Bluetooth...");
@@ -116,7 +116,7 @@ public class BluetoothActivity extends AppCompatActivity {
         conexao.start();
     }
 
-    public static void stopConnection() {
+    public void stopConnection() {
         conexao.interrupt();
     }
 
@@ -166,139 +166,146 @@ public class BluetoothActivity extends AppCompatActivity {
     }
 
     @SuppressLint("HandlerLeak")
-    public static final Handler handler = new Handler() {
+    public final ThreadLocal<Handler> handler = new ThreadLocal<Handler>() {
         @Override
-        public void handleMessage(Message msg) {
+        protected Handler initialValue() {
+            return new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
 
-            String dados;
-            int cont = 0;
-            Bundle bundle = msg.getData();
-            byte[] data = bundle.getByteArray("data");
-            String dataString = new String(data != null ? data : new byte[0]);
-
-
-            switch (dataString) {
-                case "---N":
-                    Log.d("BLUETOOTH", "Ocorreu um erro durante a conexão.");
-                    break;
-                case "---S":
-                    Log.d("BLUETOOTH", "Conectado.");
-                    break;
-
-                default:
-                    double a, b ;
-                    cont = cont + 1;
-                    dados = dataString;
-
-                    //byte[] dado0255 = new byte[10];
-                    //int contar = 0;
-
-                    //for (byte dado :data) {
-                    //    dado0255[contar] = (byte) (dado & 0xFF);
-                    //    contar = contar + 1;
-                    //}
-
-                    //int a = dado0255[2] << 24 | dado0255[3] << 16 | dado0255[4] << 8 | dado0255[5];
-                    //int b = dado0255[6] << 24 | dado0255[7] << 16 | dado0255[8] << 8 | dado0255[9];
-                    //dados = dados+Integer.toString((dado0255[0] & 0xFF))+", "+Integer.toString((dado0255[1] & 0xFF))+"||||"+Integer.toString((dado0255[2] & 0xFF))+", "+Integer.toString((dado0255[3] & 0xFF))+", "+Integer.toString((dado0255[4] & 0xFF))+", "+Integer.toString((dado0255[5] & 0xFF))+"||||"+Integer.toString((dado0255[6] & 0xFF))+", "+Integer.toString((dado0255[7] & 0xFF))+", "+Integer.toString((dado0255[8] & 0xFF))+", "+Integer.toString((dado0255[9] & 0xFF));
-                    //String teste = new String(dado0255);
-                    //dados = dados+Integer.toString(bundle.getByteArray("data").length)+ " : ";
-                    //textSpace.setText(dados);
-                    Log.d("RESULTADO", dataString);
-
-                    if (dados.length() == 1) {
-                        pacote[0] = (byte) (data[0] & 0xFF);
-                    }
-
-                    if (dados.length() == 9) {
-                        a = 0;
-                        b = 0;
-                        pacote[1] = (byte) (data[0] & 0xFF);
-                        pacote[2] = (byte) (data[1] & 0xFF);
-                        pacote[3] = (byte) (data[2] & 0xFF);
-                        pacote[4] = (byte) (data[3] & 0xFF);
-                        pacote[5] = (byte) (data[4] & 0xFF);
-                        pacote[6] = (byte) (data[5] & 0xFF);
-                        pacote[7] = (byte) (data[6] & 0xFF);
-                        pacote[8] = (byte) (data[7] & 0xFF);
-                        pacote[9] = (byte) (data[8] & 0xFF);
-
-                        a = (pacote[2]) * Math.pow(256, 3) + (pacote[3] & 0xFF) * Math.pow(256, 2) + (pacote[4] & 0xFF) * 256 + (pacote[5] & 0xFF);
-                        b = (pacote[6] & 0xFF) * Math.pow(256, 3) + (pacote[7] & 0xFF) * Math.pow(256, 2) + (pacote[8] & 0xFF) * 256 + (pacote[9] & 0xFF);
-
-                        res = "  Tensão:   " + Integer.toString((int) a/1000) + " mV   Corrente:  " + Integer.toString((int) b/1000) + " mA \n";
-                    }
+                    String dados;
+                    int cont = 0;
+                    Bundle bundle = msg.getData();
+                    byte[] data = bundle.getByteArray("data");
+                    String dataString = new String(data != null ? data : new byte[0]);
 
 
-                    if ((dataString.startsWith("D"))) {
-
-                    }
-                    if (dataString.startsWith("F")) {
-                        finalDeTeste = true;
-                    }
-
-                    if (dataString.contains("R")) {
-                        if(finalDeTeste) {
-                            RegistradorActivity.escreverTela("Teste sendo finalizado ... \n" + res);
-                            finalDeTeste= false;
+                    switch (dataString) {
+                        case "---N":
+                            Log.d("BLUETOOTH", "Ocorreu um erro durante a conexão.");
+                            break;
+                        case "---S":
+                            Log.d("BLUETOOTH", "Conectado.");
                             break;
 
-                        } else {
-                            RegistradorActivity.escreverTela("Recebendo dados do padrão \n" + res);
-                        }
-                    }
+                        default:
+                            double a, b;
+                            cont = cont + 1;
+                            dados = dataString;
 
-                    if (dataString.contains("M")) {
-                        if(finalDeTeste) {
-                            a = ((pacote[2]) * 256) + (pacote[3] & 0xFF);
-                            res = "  Número de pulsos :   " + Integer.toString((int) a) + "\n";
-                            MarchaVazioActivity.escreverTelaMarchaVazio("Teste sendo finalizado ... \n" + res);
-                            MarchaVazioActivity.selecionarStatus(a);
-                            finalDeTeste= false;
+                            //byte[] dado0255 = new byte[10];
+                            //int contar = 0;
+
+                            //for (byte dado :data) {
+                            //    dado0255[contar] = (byte) (dado & 0xFF);
+                            //    contar = contar + 1;
+                            //}
+
+                            //int a = dado0255[2] << 24 | dado0255[3] << 16 | dado0255[4] << 8 | dado0255[5];
+                            //int b = dado0255[6] << 24 | dado0255[7] << 16 | dado0255[8] << 8 | dado0255[9];
+                            //dados = dados+Integer.toString((dado0255[0] & 0xFF))+", "+Integer.toString((dado0255[1] & 0xFF))+"||||"+Integer.toString((dado0255[2] & 0xFF))+", "+Integer.toString((dado0255[3] & 0xFF))+", "+Integer.toString((dado0255[4] & 0xFF))+", "+Integer.toString((dado0255[5] & 0xFF))+"||||"+Integer.toString((dado0255[6] & 0xFF))+", "+Integer.toString((dado0255[7] & 0xFF))+", "+Integer.toString((dado0255[8] & 0xFF))+", "+Integer.toString((dado0255[9] & 0xFF));
+                            //String teste = new String(dado0255);
+                            //dados = dados+Integer.toString(bundle.getByteArray("data").length)+ " : ";
+                            //textSpace.setText(dados);
+                            Log.d("RESULTADO", dataString);
+
+                            if (dados.length() == 1) {
+                                pacote[0] = (byte) (data[0] & 0xFF);
+                            }
+
+                            if (dados.length() == 9) {
+                                a = 0;
+                                b = 0;
+                                pacote[1] = (byte) (data[0] & 0xFF);
+                                pacote[2] = (byte) (data[1] & 0xFF);
+                                pacote[3] = (byte) (data[2] & 0xFF);
+                                pacote[4] = (byte) (data[3] & 0xFF);
+                                pacote[5] = (byte) (data[4] & 0xFF);
+                                pacote[6] = (byte) (data[5] & 0xFF);
+                                pacote[7] = (byte) (data[6] & 0xFF);
+                                pacote[8] = (byte) (data[7] & 0xFF);
+                                pacote[9] = (byte) (data[8] & 0xFF);
+
+                                a = (pacote[2]) * Math.pow(256, 3) + (pacote[3] & 0xFF) * Math.pow(256, 2) + (pacote[4] & 0xFF) * 256 + (pacote[5] & 0xFF);
+                                b = (pacote[6] & 0xFF) * Math.pow(256, 3) + (pacote[7] & 0xFF) * Math.pow(256, 2) + (pacote[8] & 0xFF) * 256 + (pacote[9] & 0xFF);
+
+                                res = "  Tensão:   " + Integer.toString((int) a / 1000) + " V   Corrente:  " + Integer.toString((int) b / 1000) + " A \n";
+                            }
+
+
+                            if ((dataString.startsWith("D"))) {
+
+                            }
+                            if (dataString.startsWith("F")) {
+                                finalDeTeste = true;
+                            }
+
+                            if (dataString.contains("R")) {
+                                if (finalDeTeste) {
+                                    registrador.escreverTela("Teste sendo finalizado ... \n" + res);
+                                    finalDeTeste = false;
+                                    break;
+
+                                } else {
+                                    registrador.escreverTela("Recebendo dados do padrão \n" + res);
+                                }
+                            }
+
+                            if (dataString.contains("M")) {
+                                if (finalDeTeste) {
+                                    a = ((pacote[2]) * 256) + (pacote[3] & 0xFF);
+
+                                    res = "  Número de pulsos :   " + Integer.toString((int) a) + "\n";
+                                    MarchaVazioActivity.escreverTelaMarchaVazio("Teste sendo finalizado ... \n" + res);
+                                    MarchaVazioActivity.selecionarStatus(a);
+                                    finalDeTeste = false;
+                                    break;
+
+                                } else {
+                                    MarchaVazioActivity.escreverTelaMarchaVazio("Recebendo dados do padrão \n" + res);
+                                }
+
+                            }
+
+                            if (dataString.contains("N")) {
+
+                                if (finalDeTeste) {
+
+                                    a = (pacote[2]) * Math.pow(256, 3) + (pacote[3] & 0xFF) * Math.pow(256, 2) + (pacote[4] & 0xFF) * 256 + (pacote[5] & 0xFF);
+                                    res = Double.toString((double) (a / 1000));
+                                    conformidade.escreverTelaInspecaoConformidade("Teste sendo finalizado ... \n" + res + "%");
+                                    conformidade.escreverTelaCargaNominal(res + "%");
+                                    finalDeTeste = false;
+                                    break;
+
+                                } else {
+                                    conformidade.escreverTelaInspecaoConformidade("Recebendo dados do padrão \n" + res);
+                                }
+
+                            }
+
+                            if (dataString.contains("B")) {
+                                if (finalDeTeste) {
+                                    a = ((pacote[2]) * Math.pow(256, 3) + (pacote[3] & 0xFF) * Math.pow(256, 2) + (pacote[4] & 0xFF) * 256 + (pacote[5] & 0xFF));
+                                    res = Double.toString((double) (a / 1000));
+                                    conformidade.escreverTelaInspecaoConformidade("Teste sendo finalizado ... \n" + res + "%");
+                                    conformidade.escreverTelaCargaPequena(res + "%");
+                                    finalDeTeste = false;
+                                    break;
+
+                                } else {
+                                    conformidade.escreverTelaInspecaoConformidade("Recebendo dados do padrão \n" + res);
+                                }
+
+                            }
+
+                            if (cont >= 2) {
+                                res = "";
+                            }
                             break;
-
-                        } else {
-                            MarchaVazioActivity.escreverTelaMarchaVazio("Recebendo dados do padrão \n" + res);
-                        }
-
                     }
-
-                    if (dataString.contains("N")) {
-                        if(finalDeTeste){
-                            a = (pacote[2]) * Math.pow(256, 3) + (pacote[3] & 0xFF) * Math.pow(256, 2) + (pacote[4] & 0xFF) * 256 + (pacote[5] & 0xFF);
-                            Log.d("RESULTADO", String.valueOf(a));
-                            res = Double.toString((double) (a / 1000));
-                            InspecaoConformidadeActivity.escreverTelaInspecaoConformidade("Teste sendo finalizado ... \n" + res + "%");
-                            InspecaoConformidadeActivity.escreverTelaCargaNominal(res + "%");
-                            finalDeTeste= false;
-                            break;
-
-                        } else {
-                            InspecaoConformidadeActivity.escreverTelaInspecaoConformidade("Recebendo dados do padrão \n" + res);
-                        }
-
-                    }
-
-                    if (dataString.contains("B")) {
-                        if(finalDeTeste){
-                            a = ((pacote[2]) * Math.pow(256, 3) + (pacote[3] & 0xFF) * Math.pow(256, 2) + (pacote[4] & 0xFF) * 256 + (pacote[5] & 0xFF));
-                            res = Double.toString((double) (a / 1000));
-                            InspecaoConformidadeActivity.escreverTelaInspecaoConformidade("Teste sendo finalizado ... \n" + res + "%");
-                            InspecaoConformidadeActivity.escreverTelaCargaPequena(a + "%");
-                            finalDeTeste= false;
-                            break;
-
-                        } else {
-                            InspecaoConformidadeActivity.escreverTelaInspecaoConformidade("Recebendo dados do padrão \n" + res);
-                        }
-
-                    }
-
-                    if (cont >= 2) {
-                        res = "";
-                    }
-                    break;
-            }
+                }
+            };
         }
     };
 

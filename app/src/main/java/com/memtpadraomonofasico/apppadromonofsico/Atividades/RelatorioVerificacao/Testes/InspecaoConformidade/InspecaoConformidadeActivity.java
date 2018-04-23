@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.Bluetooth.PairedDevices;
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.Bluetooth.ThreadConexao;
-import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.SituacoesObservadasActivity;
+import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.Registrador.RegistradorActivity;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
 import com.orhanobut.hawk.NoEncryption;
@@ -109,6 +109,18 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
                 if ((!Aprovado.isChecked()) && (!NaoPossibilitaTeste.isChecked()) && (!VariacaoLeitura.isChecked()) && (!Reprovado.isChecked())) {
                     Toast.makeText(getApplicationContext(), "Sessão incompleta - Não existe opção de status marcado. ", Toast.LENGTH_LONG).show();
 
+                } if ((NaoPossibilitaTeste.isChecked())) {
+                    Hawk.put("CargaNominalErroConformidade", String.valueOf(cargaNominalErro.getText()));
+                    Hawk.put("CargaPequenaErroConformidade", String.valueOf(cargaPequenaErro.getText()));
+                    Hawk.put("statusConformidade", statusConformidade);
+
+                    if (conexao != null) {
+                        conexao.interrupt();
+                    }
+                    mBluetoothAdapter.disable();
+
+                    abrirRegistrador();
+                   // abrirSituacoesObservadas();
                 } else {
                     Hawk.put("CargaNominalErroConformidade", String.valueOf(cargaNominalErro.getText()));
                     Hawk.put("CargaPequenaErroConformidade", String.valueOf(cargaPequenaErro.getText()));
@@ -118,31 +130,40 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
                         conexao.interrupt();
                     }
                     mBluetoothAdapter.disable();
-                    abrirSituacoesObservadas();
+                    abrirRegistrador();
+                   // abrirSituacoesObservadas();
                 }
             }
         });
     }
 
-    public static void escreverTelaInspecaoConformidade(final String res) {
+    private void abrirRegistrador() {
+
+        Intent intent = new Intent(this, RegistradorActivity.class);
+        startActivity(intent);
+    }
+
+
+    public void escreverTelaInspecaoConformidade(final String res) {
         handlerInspecaoConformidade.post(new Runnable() {
-            @Override
-            public void run() {
+                @Override
+                public void run() {
+                                if (!(textMessageInspecaoConformidade == null)) {
+                                    if (res.startsWith("T")) {
+                                        textMessageInspecaoConformidade.clearComposingText();
+                                        textMessageInspecaoConformidade.setText("Teste Concluído!");
 
-                if (!(textMessageInspecaoConformidade == null)) {
-                    if (res.startsWith("T")) {
-                        textMessageInspecaoConformidade.clearComposingText();
-                        textMessageInspecaoConformidade.setText("Teste Concluído!");
+                                    } else {
+                                        textMessageInspecaoConformidade.clearComposingText();
+                                        textMessageInspecaoConformidade.setText(res);
+                                    }
 
-                    } else {
-                        textMessageInspecaoConformidade.clearComposingText();
-                        textMessageInspecaoConformidade.setText(res);
-                    }
+                                }
+                            }
+                        });
 
-                }
 
-            }
-        });
+
 
     }
 
@@ -198,6 +219,7 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
 
 
     }
@@ -338,10 +360,7 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
         }
     }
 
-    private void abrirSituacoesObservadas() {
-        Intent intent = new Intent(this, SituacoesObservadasActivity.class);
-        startActivity(intent);
-    }
+
 
 
     public void onCheckboxClicked(View view) {

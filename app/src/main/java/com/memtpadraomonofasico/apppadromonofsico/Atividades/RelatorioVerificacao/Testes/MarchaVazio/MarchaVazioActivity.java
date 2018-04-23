@@ -15,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.Bluetooth.PairedDevices;
-import com.memtpadraomonofasico.apppadromonofsico.Atividades.Bluetooth.ThreadConexao;
+import com.memtpadraomonofasico.apppadromonofsico.Atividades.Bluetooth.ThreadConexaoMarchaVazio;
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.InspecaoConformidade.InspecaoConformidadeActivity;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
@@ -36,7 +36,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
     @SuppressLint("StaticFieldLeak")
     private static TextView textMessage;
 
-    private ThreadConexao conexao;
+    private ThreadConexaoMarchaVazio conexao;
     @SuppressLint("WrongViewCast") Button conectar;
     BluetoothAdapter mBluetoothAdapter = null;
     private static Runnable handlerTask;
@@ -59,7 +59,6 @@ public class MarchaVazioActivity extends AppCompatActivity {
         aprovado = findViewById(R.id.aprovado);
         aprovado.setEnabled(false);
         naoRealizado = findViewById(R.id.naoRealizado);
-        naoRealizado.setEnabled(false);
         reprovado = findViewById(R.id.Reprovado);
         reprovado.setEnabled(false);
         tempoReprovado = findViewById(R.id.TempoMarchaVazio);
@@ -113,7 +112,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
                 if ((reprovado.isChecked()) && (tempoReprovadoMarchaVazio.equals("00:00:00"))) {
                     Toast.makeText(getApplicationContext(), "Sessão incompleta - Colocar o tempo de reprovação do teste ", Toast.LENGTH_LONG).show();
 
-                } else {
+                } if ((naoRealizado.isChecked()))  {
                     Hawk.put("statusMarchaVazio", statusMarchaVazio);
                     Hawk.put("tempoReprovadoMarchaVazio", tempoReprovadoMarchaVazio);
 
@@ -123,10 +122,29 @@ public class MarchaVazioActivity extends AppCompatActivity {
                     mBluetoothAdapter.disable();
                     abrirInspecaoConformidade();
 
+                } else {
+                    Hawk.put("statusMarchaVazio", statusMarchaVazio);
+                    Hawk.put("tempoReprovadoMarchaVazio", tempoReprovadoMarchaVazio);
+
+                    if(conexao !=null){
+                        conexao.interrupt();
+                    }
+                    mBluetoothAdapter.disable();
+                    abrirInspecaoConformidade();
                 }
             }
         });
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        Looper myLooper = Looper.getMainLooper();
+        if (myLooper!=null) {
+            myLooper.quit();
+        }
     }
 
     private void ativarBluetooth() {
@@ -285,7 +303,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
                 textMessage.setText("Você selecionou " + data.getStringExtra("btDevName") + "\n" + data.getStringExtra("btDevAddress"));
                 String macAddress = data.getStringExtra("btDevAddress");
 
-                conexao = new ThreadConexao(macAddress);
+                conexao = new ThreadConexaoMarchaVazio(macAddress);
                 conexao.start();
 
                 if(conexao!= null){
@@ -299,14 +317,5 @@ public class MarchaVazioActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        Looper myLooper = Looper.myLooper();
-        if (myLooper!=null) {
-            myLooper.quit();
-        }
-    }
 
 }

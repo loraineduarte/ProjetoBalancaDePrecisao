@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -21,8 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.Bluetooth.PairedDevices;
-import com.memtpadraomonofasico.apppadromonofsico.Atividades.Bluetooth.ThreadConexao;
-import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.CircuitoPotencial.CircuitoPotencialActivity;
+import com.memtpadraomonofasico.apppadromonofsico.Atividades.Bluetooth.ThreadConexaoRegistrador;
+import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.SituacoesObservadasActivity;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
 import com.orhanobut.hawk.NoEncryption;
@@ -39,34 +38,36 @@ public class RegistradorActivity extends AppCompatActivity {
     private static final int TIRAR_FOTO_DEPOIS = 10208;
     private static final int REQUEST_OBS = 1000;
     @SuppressLint("HandlerLeak")
-    private static final Handler handler = new Handler() {
-
-    };
+    private static final Handler handler = new Handler() { };
     @SuppressLint("StaticFieldLeak")
     private static TextView textMessage;
     @SuppressLint("WrongViewCast")
     Button fotoDepois, fotoAntes, conectar;
     BluetoothAdapter mBluetoothAdapter = null;
-    private ThreadConexao conexao;
+    private static ThreadConexaoRegistrador conexao;
     private RadioButton aprovado, naoPossibilitaTeste, reprovado;
     private Bitmap fotoResized1, fotoResized2;
     private String status, observacaoRegistrador = " ";
     private Spinner opcoesReprovados;
 
-    public static void escreverTela(final String res) {
+    public void escreverTela(final String res) {
 
         handler.post(new Runnable() {
             @Override
             public void run() {
-                if (res.startsWith("T")) {
-                    textMessage.clearComposingText();
-                    textMessage.setText("Teste Concluído!");
+                if (textMessage != null) {
+                    if (res.startsWith("T")) {
+                        textMessage.clearComposingText();
+                        textMessage.setText("Teste Concluído!");
+                        if (conexao != null) {
+                            conexao.interrupt();
+                        }
 
-                } else {
-                    textMessage.clearComposingText();
-                    textMessage.setText(res);
+                    } else {
+                        textMessage.clearComposingText();
+                        textMessage.setText(res);
+                    }
                 }
-
             }
         });
 
@@ -120,7 +121,7 @@ public class RegistradorActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 try {
-                    if(mBluetoothAdapter==null){
+                    if (mBluetoothAdapter == null) {
                         ativarBluetooth();
                         new Thread().sleep(4500);
                     }
@@ -181,14 +182,18 @@ public class RegistradorActivity extends AppCompatActivity {
                     Hawk.put("statusRegistrador", status);
                     Hawk.put("ObservaçãoRegistrador", observacaoRegistrador);
 
-                    if (conexao != null) {
-                        conexao.interrupt();
-                    }
+
                     mBluetoothAdapter.disable();
-                    abrirCircuitoPotencial();
+                    abrirSituacoesObservadas();
+
                 }
             }
         });
+    }
+
+    private void abrirSituacoesObservadas() {
+        Intent intent = new Intent(this, SituacoesObservadasActivity.class);
+        startActivity(intent);
     }
 
     private void ativarBluetooth() {
@@ -223,7 +228,7 @@ public class RegistradorActivity extends AppCompatActivity {
 
         } else {
 
-            if (conexao.isAlive()) {
+            if (conexao != null) {
                 textMessage.setText("Conectado!");
             }
 
@@ -258,10 +263,6 @@ public class RegistradorActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-        Looper myLooper = Looper.myLooper();
-        if (myLooper!=null) {
-            myLooper.quit();
-        }
     }
 
     private void abrirAddObs() {
@@ -284,8 +285,7 @@ public class RegistradorActivity extends AppCompatActivity {
 
         if (conexao != null) {
             Toast.makeText(getApplicationContext(), "Dispositivo já conectado.", Toast.LENGTH_LONG).show();
-            conexao=null;
-            //fazer ação para desconectar
+
         }
 
         Intent searchPairedDevicesIntent = new Intent(this, PairedDevices.class);
@@ -359,7 +359,7 @@ public class RegistradorActivity extends AppCompatActivity {
                 textMessage.setText("Você selecionou " + data.getStringExtra("btDevName") + "\n" + data.getStringExtra("btDevAddress"));
                 String macAddress = data.getStringExtra("btDevAddress");
 
-                conexao = new ThreadConexao(macAddress);
+                conexao = new ThreadConexaoRegistrador(macAddress);
                 conexao.start();
 
                 if (conexao.isAlive()) {
@@ -396,9 +396,6 @@ public class RegistradorActivity extends AppCompatActivity {
         }
     }
 
-    private void abrirCircuitoPotencial() {
-        Intent intent = new Intent(this, CircuitoPotencialActivity.class);
-        startActivity(intent);
-    }
+
 }
 
