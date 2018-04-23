@@ -5,8 +5,8 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,6 +44,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
     private static final Handler handler = new Handler() {
     };
 
+    boolean testeComecou=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +80,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+
                 conectarDispositivo(view);
             }
         });
@@ -141,10 +143,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-        Looper myLooper = Looper.getMainLooper();
-        if (myLooper!=null) {
-            myLooper.quit();
-        }
+
     }
 
     private void ativarBluetooth() {
@@ -173,16 +172,27 @@ public class MarchaVazioActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void executarTeste(View view) {
-
+    public void mudarEstadoTeste(View view) {
 
         if(conexao == null){
-            Toast.makeText(getApplicationContext(), "O teste não pode ser inicializado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "O teste não pode ser iniciado/parado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
 
         } else {
-            if (conexao.isAlive()) {
-                textMessage.setText("Conectado!");
+            Log.d("MARCHA", "entrou");
+            if (testeComecou == false) {
+                Log.d("MARCHA", "entrou1");
+                testeComecou = true;
+                executarTeste(view);
+            } else {
+                testeComecou=false;
+                pararTeste(view);
+                Log.d("MARCHA", "entrou2");
             }
+        }
+    }
+
+    public void executarTeste(View view) {
+
 
             byte[] pacote = new byte[10];
             float kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
@@ -207,9 +217,29 @@ public class MarchaVazioActivity extends AppCompatActivity {
             pacote[9] = (byte) (60 & 0xFF);
 
             conexao.write(pacote);
-        }
 
 
+
+    }
+
+    public void pararTeste(View view) {
+
+            byte[] pacote = new byte[10];
+
+            pacote[0] = ('C' & 0xFF);
+            pacote[1] = (byte) (0 & 0xFF);
+            pacote[2] = (byte) (0 & 0xFF);
+            pacote[3] = (byte) (0 & 0xFF);
+            pacote[4] = (byte) (0 & 0xFF);
+            pacote[5] = (byte) (0 & 0xFF);
+            pacote[6] = (byte) (0 & 0xFF);
+            pacote[7] = (byte) (0 & 0xFF);
+            pacote[8] = (byte) (0 & 0xFF);
+            pacote[9] = (byte) (0 & 0xFF);
+
+            conexao.write(pacote);
+        textMessage.clearComposingText();
+        textMessage.setText("Teste Cancelado!");
     }
 
 
