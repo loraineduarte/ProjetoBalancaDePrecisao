@@ -20,6 +20,7 @@ import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
 import com.orhanobut.hawk.NoEncryption;
 
+@SuppressWarnings("ALL")
 public class InspecaoConformidadeActivity extends AppCompatActivity {
 
     private static final int ENABLE_BLUETOOTH = 1;
@@ -33,6 +34,7 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
     @SuppressLint("StaticFieldLeak")
     private static TextView textMessageInspecaoConformidade;
     @SuppressLint("WrongViewCast")
+    private
     Button conectar;
     private RadioButton Aprovado, NaoPossibilitaTeste, VariacaoLeitura, Reprovado;
     private String statusConformidade;
@@ -216,14 +218,6 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-
-
-    }
-
     private void ativarBluetooth() {
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -324,7 +318,7 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
 
     }
 
-    public void conectarDispositivo(View view) {
+    private void conectarDispositivo(View view) {
 
         if (conexao != null) {
             Toast.makeText(getApplicationContext(), "Dispositivo já conectado.", Toast.LENGTH_LONG).show();

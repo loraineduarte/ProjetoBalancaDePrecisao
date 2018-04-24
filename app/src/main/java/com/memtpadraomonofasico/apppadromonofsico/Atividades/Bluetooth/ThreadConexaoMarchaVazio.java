@@ -24,7 +24,7 @@ public class ThreadConexaoMarchaVazio  extends Thread {
     private OutputStream output = null;
     private String btDevAddress = null;
     private final boolean server;
-    BluetoothActivity bluetooth = new BluetoothActivity();
+    private final BluetoothActivity bluetooth = new BluetoothActivity();
 
     /*  Este construtor prepara o dispositivo para atuar como servidor.
      */

@@ -24,16 +24,7 @@ public class CriarMedidorActivity extends AppCompatActivity {
     private EditText numSerie;
     private EditText numGeral;
     private EditText fabricante;
-    private EditText numElementos;
-    private EditText modelo;
-    private EditText correnteNominal;
-    private EditText classe;
-    private EditText RR;
-    private EditText anoFabricacao;
-    private EditText tensaoNominal;
-    private EditText KdKe;
-    private EditText porInmetro;
-    private EditText fios;
+    private EditText numElementos, modelo, correnteNominal, classe, RR, anoFabricacao, tensaoNominal, KdKe, porInmetro, fios;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -42,8 +33,6 @@ public class CriarMedidorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_medidor);
 
         final BancoController crud = new BancoController(getBaseContext());
-        //Cursor cursor = crud.pegaMedidores();
-        //Log.d(TAG, String.valueOf(cursor.getCount()));
 
         checkEletronico = findViewById(R.id.radioButtonEletronico);
         checkMecanico = findViewById(R.id.RadioButtonMecanico);
@@ -68,7 +57,7 @@ public class CriarMedidorActivity extends AppCompatActivity {
                  porInmetro =findViewById(R.id.PorInmetro);
                  fios = findViewById(R.id.Fios);
 
-                int instalacaoString = Integer.parseInt(instalacao.getText().toString());
+                int instalacaoString = Integer.parseInt(String.valueOf(instalacao.getText()));
                 String numSerieString = numSerie.getText().toString();
                 String numGeralString = numGeral.getText().toString();
                 String fabricanteString = fabricante.getText().toString();

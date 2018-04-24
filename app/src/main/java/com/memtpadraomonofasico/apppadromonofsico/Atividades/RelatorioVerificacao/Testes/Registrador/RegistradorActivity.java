@@ -28,6 +28,7 @@ import com.orhanobut.hawk.NoEncryption;
 
 import java.util.Objects;
 
+@SuppressWarnings("ALL")
 public class RegistradorActivity extends AppCompatActivity {
 
     private static final String TAG = "Bluetooth";
@@ -42,8 +43,14 @@ public class RegistradorActivity extends AppCompatActivity {
     @SuppressLint("StaticFieldLeak")
     private static TextView textMessage;
     @SuppressLint("WrongViewCast")
-    Button fotoDepois, fotoAntes, conectar;
-    BluetoothAdapter mBluetoothAdapter = null;
+    private
+    Button fotoDepois;
+    @SuppressLint("WrongViewCast")
+    private
+    Button fotoAntes;
+    @SuppressLint("WrongViewCast")
+    private Button conectar;
+    private BluetoothAdapter mBluetoothAdapter = null;
     private static ThreadConexaoRegistrador conexao;
     private RadioButton aprovado, naoPossibilitaTeste, reprovado;
     private Bitmap fotoResized1, fotoResized2;
@@ -259,12 +266,6 @@ public class RegistradorActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-    }
-
     private void abrirAddObs() {
 
         Intent intent = new Intent(this, ObservacaoRegistradorActivity.class);
@@ -281,7 +282,7 @@ public class RegistradorActivity extends AppCompatActivity {
         startActivityForResult(intent, TIRAR_FOTO_DEPOIS);
     }
 
-    public void conectarDispositivo(View view) {
+    private void conectarDispositivo(View view) {
 
         if (conexao != null) {
             Toast.makeText(getApplicationContext(), "Dispositivo já conectado.", Toast.LENGTH_LONG).show();

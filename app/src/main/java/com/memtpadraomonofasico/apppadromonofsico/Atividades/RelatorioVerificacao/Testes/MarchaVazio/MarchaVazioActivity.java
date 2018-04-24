@@ -22,6 +22,7 @@ import com.orhanobut.hawk.NoEncryption;
 
 import java.sql.Time;
 
+@SuppressWarnings("ALL")
 public class MarchaVazioActivity extends AppCompatActivity {
 
     @SuppressLint("StaticFieldLeak")
@@ -39,13 +40,14 @@ public class MarchaVazioActivity extends AppCompatActivity {
     private ThreadConexaoMarchaVazio conexao;
 
     @SuppressLint("WrongViewCast")
+    private
     Button conectar;
-    BluetoothAdapter mBluetoothAdapter = null;
+    private BluetoothAdapter mBluetoothAdapter = null;
     private static Runnable handlerTask;
 
     @SuppressLint("HandlerLeak")
     private static final Handler handler = new Handler() {};
-    boolean testeComecou = false;
+    private boolean testeComecou = false;
 
 
     @Override
@@ -141,13 +143,6 @@ public class MarchaVazioActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-
-    }
-
     private void ativarBluetooth() {
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -182,7 +177,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
 
         } else {
 
-            if (testeComecou == false) {
+            if (!testeComecou) {
                 testeComecou = true;
                 executarTeste(view);
                 textMessage.clearComposingText();
@@ -197,7 +192,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
         }
     }
 
-    public void executarTeste(View view) {
+    private void executarTeste(View view) {
 
 
         byte[] pacote = new byte[10];
@@ -227,7 +222,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
 
     }
 
-    public void pararTeste(View view) {
+    private void pararTeste(View view) {
 
         byte[] pacote = new byte[10];
 
@@ -310,7 +305,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
 
     }
 
-    public void conectarDispositivo(View view) {
+    private void conectarDispositivo(View view) {
 
         if (conexao != null) {
             Toast.makeText(getApplicationContext(), "Dispositivo já conectado.", Toast.LENGTH_LONG).show();
@@ -348,5 +343,5 @@ public class MarchaVazioActivity extends AppCompatActivity {
             }
         }
     }
-    
+
 }
