@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 
-import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.InspecaoConformidade.InspecaoConformidadeActivity;
+import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.Exatidao.ExatidaoActivity;
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.MarchaVazio.MarchaVazioActivity;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
@@ -94,7 +94,7 @@ public class CircuitoPotencialActivity extends AppCompatActivity {
 
     private void abrirInspecaoConformidade() {
 
-        Intent intent = new Intent(this, InspecaoConformidadeActivity.class);
+        Intent intent = new Intent(this, ExatidaoActivity.class);
         startActivity(intent);
     }
 

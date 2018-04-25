@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.Bluetooth.PairedDevices;
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.Bluetooth.ThreadConexaoMarchaVazio;
-import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.InspecaoConformidade.InspecaoConformidadeActivity;
+import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.Exatidao.ExatidaoActivity;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
 import com.orhanobut.hawk.NoEncryption;
@@ -40,8 +40,8 @@ public class MarchaVazioActivity extends AppCompatActivity {
     private ThreadConexaoMarchaVazio conexao;
 
     @SuppressLint("WrongViewCast")
-    private
-    Button conectar;
+    private Button conectar;
+    private Button teste;
     private BluetoothAdapter mBluetoothAdapter = null;
     private static Runnable handlerTask;
 
@@ -68,6 +68,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
         tempoReprovado = findViewById(R.id.TempoMarchaVazio);
         tempoReprovado.setEnabled(false);
         conectar = findViewById(R.id.buttonConectarDispositivo);
+        teste = findViewById(R.id.buttonAplicarTensao);
 
         ativarBluetooth();
 
@@ -166,7 +167,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
 
     private void abrirInspecaoConformidade() {
 
-        Intent intent = new Intent(this, InspecaoConformidadeActivity.class);
+        Intent intent = new Intent(this, ExatidaoActivity.class);
         startActivity(intent);
     }
 
@@ -179,12 +180,16 @@ public class MarchaVazioActivity extends AppCompatActivity {
 
             if (!testeComecou) {
                 testeComecou = true;
+                teste.clearComposingText();
+                teste.setText("Cancelar Teste");
                 executarTeste(view);
                 textMessage.clearComposingText();
                 textMessage.setText("Teste Iniciado!");
 
             } else {
                 testeComecou = false;
+                teste.clearComposingText();
+                teste.setText("Iniciar Teste");
                 pararTeste(view);
                 textMessage.clearComposingText();
                 textMessage.setText("Teste Cancelado!");
@@ -242,7 +247,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
     }
 
 
-    public static void escreverTelaMarchaVazio(final String res) {
+    public void escreverTelaMarchaVazio(final String res) {
 
         handler.post(new Runnable() {
             @Override
@@ -252,7 +257,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
                         textMessage.clearComposingText();
                         textMessage.setText("Teste Concluído!");
                         textMessage.setText(res);
-
+                        testeComecou = false;
 
                     } else {
                         textMessage.clearComposingText();
@@ -262,6 +267,8 @@ public class MarchaVazioActivity extends AppCompatActivity {
                 }
             }
         });
+
+
     }
 
     public static void selecionarStatus(final double a) {

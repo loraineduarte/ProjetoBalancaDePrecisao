@@ -1,4 +1,4 @@
-package com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.InspecaoConformidade;
+package com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.Exatidao;
 
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
@@ -21,7 +21,7 @@ import com.orhanobut.hawk.Hawk;
 import com.orhanobut.hawk.NoEncryption;
 
 @SuppressWarnings("ALL")
-public class InspecaoConformidadeActivity extends AppCompatActivity {
+public class ExatidaoActivity extends AppCompatActivity {
 
     private static final int ENABLE_BLUETOOTH = 1;
     private static final int SELECT_PAIRED_DEVICE = 2;
@@ -41,133 +41,9 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
     private BluetoothAdapter mBluetoothAdapter;
     private ThreadConexao conexao;
 
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_inspecao_conformidade);
-
-        NoEncryption encryption = new NoEncryption();
-        Hawk.init(this).setEncryption(encryption).build();
-
-        textMessageInspecaoConformidade = findViewById(R.id.textView7);
-        textMessageInspecaoConformidade.setText("  ");
-        cargaNominalErro = findViewById(R.id.CargaNominalErro);
-        cargaNominalErro.setEnabled(false);
-        cargaPequenaErro = findViewById(R.id.CargaPequenaErro);
-        cargaPequenaErro.setEnabled(false);
-        Aprovado = findViewById(R.id.tampasolidarizada);
-        NaoPossibilitaTeste = findViewById(R.id.sinaisCarbonizacao);
-        VariacaoLeitura = findViewById(R.id.VariacaoLeitura);
-        Reprovado = findViewById(R.id.Reprovado);
-        conectar = findViewById(R.id.buttonConectarDispositivo);
-
-        ativarBluetooth();
-
-        conectar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                try {
-                    if(mBluetoothAdapter==null){
-                        ativarBluetooth();
-                        new Thread().sleep(4500);
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                conectarDispositivo(view);
-            }
-        });
-
-
-        @SuppressLint("WrongViewCast") Button next = findViewById(R.id.NextFase7);
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Hawk.delete("CargaNominalErroConformidade");
-                Hawk.delete("CargaPequenaErroConformidade");
-                Hawk.delete("statusConformidade");
-
-
-                if (Aprovado.isChecked()) {
-                    statusConformidade = "Aprovado";
-
-                }
-                if (NaoPossibilitaTeste.isChecked()) {
-                    statusConformidade = "Não Possibilita Teste";
-
-                }
-                if (VariacaoLeitura.isChecked()) {
-                    statusConformidade = "Variação de Leitura";
-
-                }
-                if (Reprovado.isChecked()) {
-                    statusConformidade = "Reprovado";
-                }
-
-                if ((!Aprovado.isChecked()) && (!NaoPossibilitaTeste.isChecked()) && (!VariacaoLeitura.isChecked()) && (!Reprovado.isChecked())) {
-                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Não existe opção de status marcado. ", Toast.LENGTH_LONG).show();
-
-                } if ((NaoPossibilitaTeste.isChecked())) {
-                    Hawk.put("CargaNominalErroConformidade", String.valueOf(cargaNominalErro.getText()));
-                    Hawk.put("CargaPequenaErroConformidade", String.valueOf(cargaPequenaErro.getText()));
-                    Hawk.put("statusConformidade", statusConformidade);
-
-                    if (conexao != null) {
-                        conexao.interrupt();
-                    }
-                    mBluetoothAdapter.disable();
-
-                    abrirRegistrador();
-                   // abrirSituacoesObservadas();
-                } else {
-                    Hawk.put("CargaNominalErroConformidade", String.valueOf(cargaNominalErro.getText()));
-                    Hawk.put("CargaPequenaErroConformidade", String.valueOf(cargaPequenaErro.getText()));
-                    Hawk.put("statusConformidade", statusConformidade);
-
-                    if (conexao != null) {
-                        conexao.interrupt();
-                    }
-                    mBluetoothAdapter.disable();
-                    abrirRegistrador();
-                   // abrirSituacoesObservadas();
-                }
-            }
-        });
-    }
-
-    private void abrirRegistrador() {
-
-        Intent intent = new Intent(this, RegistradorActivity.class);
-        startActivity(intent);
-    }
-
-
-    public void escreverTelaInspecaoConformidade(final String res) {
-        handlerInspecaoConformidade.post(new Runnable() {
-                @Override
-                public void run() {
-                                if (!(textMessageInspecaoConformidade == null)) {
-                                    if (res.startsWith("T")) {
-                                        textMessageInspecaoConformidade.clearComposingText();
-                                        textMessageInspecaoConformidade.setText("Teste Concluído!");
-
-                                    } else {
-                                        textMessageInspecaoConformidade.clearComposingText();
-                                        textMessageInspecaoConformidade.setText(res);
-                                    }
-
-                                }
-                            }
-                        });
-
-
-
-
-    }
+    private boolean testeCargaNominalComecou = false;
+    private boolean testeCargaPequenaComecou = false;
+    private Button testeNominal, testePequeno;
 
     public static void escreverTelaCargaNominal(final String res) {
 
@@ -213,6 +89,215 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
 
                 }
 
+            }
+        });
+
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_inspecao_conformidade);
+
+        NoEncryption encryption = new NoEncryption();
+        Hawk.init(this).setEncryption(encryption).build();
+
+        textMessageInspecaoConformidade = findViewById(R.id.textView7);
+        textMessageInspecaoConformidade.setText("  ");
+        cargaNominalErro = findViewById(R.id.CargaNominalErro);
+        cargaNominalErro.setEnabled(false);
+        cargaPequenaErro = findViewById(R.id.CargaPequenaErro);
+        cargaPequenaErro.setEnabled(false);
+        Aprovado = findViewById(R.id.tampasolidarizada);
+        NaoPossibilitaTeste = findViewById(R.id.sinaisCarbonizacao);
+        VariacaoLeitura = findViewById(R.id.VariacaoLeitura);
+        Reprovado = findViewById(R.id.Reprovado);
+        conectar = findViewById(R.id.buttonConectarDispositivo);
+        testeNominal = findViewById(R.id.button2);
+        testePequeno = findViewById(R.id.button3);
+
+        ativarBluetooth();
+
+        conectar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                try {
+                    if (mBluetoothAdapter == null) {
+                        ativarBluetooth();
+                        new Thread().sleep(4500);
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                conectarDispositivo(view);
+            }
+        });
+
+
+        @SuppressLint("WrongViewCast") Button next = findViewById(R.id.NextFase7);
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Hawk.delete("CargaNominalErroConformidade");
+                Hawk.delete("CargaPequenaErroConformidade");
+                Hawk.delete("statusConformidade");
+
+
+                if (Aprovado.isChecked()) {
+                    statusConformidade = "Aprovado";
+
+                }
+                if (NaoPossibilitaTeste.isChecked()) {
+                    statusConformidade = "Não Possibilita Teste";
+
+                }
+                if (VariacaoLeitura.isChecked()) {
+                    statusConformidade = "Variação de Leitura";
+
+                }
+                if (Reprovado.isChecked()) {
+                    statusConformidade = "Reprovado";
+                }
+
+                if ((!Aprovado.isChecked()) && (!NaoPossibilitaTeste.isChecked()) && (!VariacaoLeitura.isChecked()) && (!Reprovado.isChecked())) {
+                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Não existe opção de status marcado. ", Toast.LENGTH_LONG).show();
+
+                }
+                if ((NaoPossibilitaTeste.isChecked())) {
+                    Hawk.put("CargaNominalErroConformidade", String.valueOf(cargaNominalErro.getText()));
+                    Hawk.put("CargaPequenaErroConformidade", String.valueOf(cargaPequenaErro.getText()));
+                    Hawk.put("statusConformidade", statusConformidade);
+
+                    if (conexao != null) {
+                        conexao.interrupt();
+                    }
+                    mBluetoothAdapter.disable();
+
+                    abrirRegistrador();
+                    // abrirSituacoesObservadas();
+                } else {
+                    Hawk.put("CargaNominalErroConformidade", String.valueOf(cargaNominalErro.getText()));
+                    Hawk.put("CargaPequenaErroConformidade", String.valueOf(cargaPequenaErro.getText()));
+                    Hawk.put("statusConformidade", statusConformidade);
+
+                    if (conexao != null) {
+                        conexao.interrupt();
+                    }
+                    mBluetoothAdapter.disable();
+                    abrirRegistrador();
+                    // abrirSituacoesObservadas();
+                }
+            }
+        });
+    }
+
+    private void abrirRegistrador() {
+
+        Intent intent = new Intent(this, RegistradorActivity.class);
+        startActivity(intent);
+    }
+
+    public void mudarEstadoTesteCargaNominal(View view) {
+
+        if (conexao == null) {
+            Toast.makeText(getApplicationContext(), "O teste não pode ser iniciado/parado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
+
+        } else {
+
+            if (!testeCargaNominalComecou) {
+                testeCargaNominalComecou = true;
+                testeNominal.clearComposingText();
+                testeNominal.setText("Cancelar Teste de Carga Nominal");
+                aplicarCargaNominal(view);
+                textMessageInspecaoConformidade.clearComposingText();
+                textMessageInspecaoConformidade.setText("Teste Iniciado!");
+
+            } else {
+                testeCargaNominalComecou = false;
+                testeNominal.clearComposingText();
+                testeNominal.setText("Iniciar Teste de Carga Nominal");
+                pararTeste(view);
+                textMessageInspecaoConformidade.clearComposingText();
+                textMessageInspecaoConformidade.setText("Teste Cancelado!");
+            }
+        }
+    }
+
+    public void mudarEstadoTesteCargaPequena(View view) {
+
+        if (conexao == null) {
+            Toast.makeText(getApplicationContext(), "O teste não pode ser iniciado/parado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
+
+        } else {
+
+            if (!testeCargaPequenaComecou) {
+                testeCargaPequenaComecou = true;
+                testePequeno.clearComposingText();
+                testePequeno.setText("Cancelar Teste de Carga Pequena");
+                aplicarCargaPequena(view);
+                textMessageInspecaoConformidade.clearComposingText();
+                textMessageInspecaoConformidade.setText("Teste Iniciado!");
+
+            } else {
+                testeCargaPequenaComecou = false;
+                testePequeno.clearComposingText();
+                testePequeno.setText("Iniciar Teste de Carga Pequena");
+                pararTeste(view);
+                textMessageInspecaoConformidade.clearComposingText();
+                textMessageInspecaoConformidade.setText("Teste Cancelado!");
+            }
+        }
+    }
+
+    private void pararTeste(View view) {
+
+        byte[] pacote = new byte[10];
+
+        pacote[0] = ('C' & 0xFF);
+        pacote[1] = (byte) (0 & 0xFF);
+        pacote[2] = (byte) (0 & 0xFF);
+        pacote[3] = (byte) (0 & 0xFF);
+        pacote[4] = (byte) (0 & 0xFF);
+        pacote[5] = (byte) (0 & 0xFF);
+        pacote[6] = (byte) (0 & 0xFF);
+        pacote[7] = (byte) (0 & 0xFF);
+        pacote[8] = (byte) (0 & 0xFF);
+        pacote[9] = (byte) (0 & 0xFF);
+
+        conexao.write(pacote);
+
+
+    }
+
+    public void escreverTelaInspecaoConformidade(final String res) {
+        handlerInspecaoConformidade.post(new Runnable() {
+            @Override
+            public void run() {
+                if (!(textMessageInspecaoConformidade == null)) {
+                    if (res.startsWith("T")) {
+                        textMessageInspecaoConformidade.clearComposingText();
+                        textMessageInspecaoConformidade.setText("Teste Concluído!");
+
+                        if(testePequeno!=null){
+                            testeCargaPequenaComecou = false;
+                            testePequeno.clearComposingText();
+                            testePequeno.setText("Iniciar Teste de Carga Pequena");
+                        }
+                       if(testeNominal!=null){
+                           testeCargaNominalComecou = false;
+                           testeNominal.clearComposingText();
+                           testeNominal.setText("Iniciar Teste de Carga Nominal");
+                       }
+
+
+                    } else {
+                        textMessageInspecaoConformidade.clearComposingText();
+                        textMessageInspecaoConformidade.setText(res);
+                    }
+
+                }
             }
         });
 
@@ -324,8 +409,8 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Dispositivo já conectado.", Toast.LENGTH_LONG).show();
 
         }
-            Intent searchPairedDevicesIntent = new Intent(this, PairedDevices.class);
-            startActivityForResult(searchPairedDevicesIntent, SELECT_PAIRED_DEVICE);
+        Intent searchPairedDevicesIntent = new Intent(this, PairedDevices.class);
+        startActivityForResult(searchPairedDevicesIntent, SELECT_PAIRED_DEVICE);
 
 
     }
@@ -353,8 +438,6 @@ public class InspecaoConformidadeActivity extends AppCompatActivity {
             }
         }
     }
-
-
 
 
     public void onCheckboxClicked(View view) {

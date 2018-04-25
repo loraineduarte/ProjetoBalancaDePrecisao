@@ -15,7 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.InspecaoConformidade.InspecaoConformidadeActivity;
+import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.Exatidao.ExatidaoActivity;
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.MarchaVazio.MarchaVazioActivity;
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.Registrador.RegistradorActivity;
 import com.memtpadraomonofasico.apppadromonofsico.R;
@@ -42,8 +42,9 @@ public class BluetoothActivity extends AppCompatActivity {
     private TextView textSpace;
 
     private static final byte[] pacote = new byte[10];
-    InspecaoConformidadeActivity conformidade= new InspecaoConformidadeActivity();
+    ExatidaoActivity conformidade= new ExatidaoActivity();
     RegistradorActivity registrador = new RegistradorActivity();
+    MarchaVazioActivity marchaVazio = new MarchaVazioActivity();
     private ThreadConexao conexao;
 
     @Override
@@ -256,13 +257,13 @@ public class BluetoothActivity extends AppCompatActivity {
                                     a = ((pacote[2]) * 256) + (pacote[3] & 0xFF);
 
                                     res = "  Número de pulsos :   " + Integer.toString((int) a) + "\n";
-                                    MarchaVazioActivity.escreverTelaMarchaVazio("Teste sendo finalizado ... \n" + res);
-                                    MarchaVazioActivity.selecionarStatus(a);
+                                    marchaVazio.escreverTelaMarchaVazio("Teste sendo finalizado ... \n" + res);
+                                    marchaVazio.selecionarStatus(a);
                                     finalDeTeste = false;
                                     break;
 
                                 } else {
-                                    MarchaVazioActivity.escreverTelaMarchaVazio("Recebendo dados do padrão \n" + res);
+                                    marchaVazio.escreverTelaMarchaVazio("Recebendo dados do padrão \n" + res);
                                 }
 
                             }

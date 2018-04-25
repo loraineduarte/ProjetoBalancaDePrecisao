@@ -67,7 +67,7 @@
         <activity android:name=".Atividades.RelatorioVerificacao.Testes.MarchaVazio.MarchaVazioActivity"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".Atividades.RelatorioVerificacao.Testes.InspecaoConformidade.InspecaoConformidadeActivity"
+        <activity android:name=".Atividades.RelatorioVerificacao.Testes.Exatidao.ExatidaoActivity"
             android:screenOrientation="portrait"/>
 
         <activity android:name=".Atividades.RelatorioVerificacao.SituacoesObservadasActivity"

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Atividades.RelatorioVerificacao.Testes.InspecaoConformidade.InspecaoConformidadeActivity">
+    tools:context=".Atividades.RelatorioVerificacao.Testes.Exatidao.ExatidaoActivity">
 
 
     <TextView
@@ -140,8 +140,8 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/botao_arredondado"
         android:backgroundTint="@color/colorPrimaryDark"
-        android:text="@string/aplicar_carga_nominal"
-        android:onClick="aplicarCargaNominal"
+        android:text="Iniciar Teste de Carga Nominal"
+        android:onClick="mudarEstadoTesteCargaNominal"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
@@ -175,8 +175,8 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/botao_arredondado"
         android:backgroundTint="@color/colorPrimaryDark"
-        android:text="@string/aplicar_carga_pequena"
-        android:onClick="aplicarCargaPequena"
+        android:text="Iniciar Teste de Carga Pequena"
+        android:onClick="mudarEstadoTesteCargaPequena"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
