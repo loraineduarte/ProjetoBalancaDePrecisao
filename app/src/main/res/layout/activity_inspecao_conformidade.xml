@@ -56,15 +56,13 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
+        android:onClick="onCheckboxClicked"
         android:text="@string/n_o_possibilita_teste"
         android:textColorHint="@color/colorPrimaryDark"
         android:textColorLink="@color/colorPrimaryDark"
-        android:onClick="onCheckboxClicked"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tampasolidarizada"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/tampasolidarizada" />
 
     <RadioButton
         android:id="@+id/Reprovado"
@@ -72,7 +70,6 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
         android:onClick="onCheckboxClicked"
         android:text="@string/reprovado"
         android:textColorHint="@color/colorPrimaryDark"
@@ -81,24 +78,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/VariacaoLeitura" />
 
-    <!--suppress AndroidDomInspection -->
-    <Button
-        android:id="@+id/NextFase7"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="220dp"
-        android:background="@drawable/botao_arredondado"
-        android:backgroundTint="?attr/colorPrimaryDark"
-        android:elevation="2dp"
-        android:text="@string/pr_ximo"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@android:color/white"
-        android:textColorLink="@android:color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <RadioButton
         android:id="@+id/VariacaoLeitura"
@@ -106,9 +85,8 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/varia_o_de_leitura"
         android:onClick="onCheckboxClicked"
+        android:text="@string/varia_o_de_leitura"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sinaisCarbonizacao" />
@@ -119,7 +97,6 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="@string/carga_nominal_erro"
         android:inputType="number"
@@ -137,11 +114,10 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
         android:background="@drawable/botao_arredondado"
         android:backgroundTint="@color/colorPrimaryDark"
-        android:text="Iniciar Teste de Carga Nominal"
         android:onClick="mudarEstadoTesteCargaNominal"
+        android:text="Iniciar Teste de Carga Nominal"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
@@ -172,11 +148,10 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
         android:background="@drawable/botao_arredondado"
         android:backgroundTint="@color/colorPrimaryDark"
-        android:text="Iniciar Teste de Carga Pequena"
         android:onClick="mudarEstadoTesteCargaPequena"
+        android:text="Iniciar Teste de Carga Pequena"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
@@ -201,5 +176,74 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Conformidade" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="63dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Reprovado">
+
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:gravity="bottom"
+            android:orientation="horizontal"
+            tools:ignore="UselessParent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="3dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+
+                    <Space
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="3dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+
+                    <Button
+                        android:id="@+id/NextFase7"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:background="@drawable/botao_arredondado"
+                        android:backgroundTint="?attr/colorPrimaryDark"
+                        android:elevation="2dp"
+                        android:text="@string/pr_ximo"
+                        android:textColor="@android:color/background_light"
+                        android:textColorLink="@android:color/black"/>
+
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

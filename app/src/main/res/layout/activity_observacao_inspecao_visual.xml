@@ -35,37 +35,79 @@
         tools:ignore="LabelFor" />
 
     <!--suppress AndroidDomInspection -->
-    <Button
-        android:id="@+id/AddObs"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="0dp"
-        android:layout_height="53dp"
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginStart="210dp"
-        android:layout_marginTop="32dp"
-        android:background="@drawable/botao_arredondado"
-        android:backgroundTint="?attr/colorPrimaryDark"
-        android:text="@string/adicionar_observa_o"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Observacao" />
+        app:layout_constraintTop_toBottomOf="@+id/Observacao">
+
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:gravity="bottom"
+            android:orientation="horizontal"
+            tools:ignore="UselessParent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="3dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/limpar"
+                        style="@style/Widget.AppCompat.Button.Colored"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:background="@drawable/botao_arredondado"
+                        android:backgroundTint="?attr/colorPrimaryDark"
+                        android:text="@string/limpar_campo" />
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="3dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/AddObs"
+                        style="@style/Widget.AppCompat.Button.Colored"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:background="@drawable/botao_arredondado"
+                        android:backgroundTint="?attr/colorPrimaryDark"
+                        android:text="@string/adicionar_observa_o" />
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
 
     <!--suppress AndroidDomInspection -->
-    <Button
-        android:id="@+id/limpar"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="0dp"
-        android:layout_height="53dp"
-        android:layout_marginEnd="210dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:background="@drawable/botao_arredondado"
-        android:backgroundTint="?attr/colorPrimaryDark"
-        android:text="@string/limpar_campo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.306"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Observacao" />
+
 
     <!--suppress AndroidDomInspection -->
     <Button
@@ -81,5 +123,6 @@
         android:text="@string/retornar_inspe_o_visual"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/limpar" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
 </android.support.constraint.ConstraintLayout>
