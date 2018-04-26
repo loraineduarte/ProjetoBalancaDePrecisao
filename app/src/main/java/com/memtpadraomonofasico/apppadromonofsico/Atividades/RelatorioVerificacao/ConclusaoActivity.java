@@ -1,6 +1,5 @@
 package com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -8,8 +7,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -37,7 +34,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -53,8 +49,8 @@ public class ConclusaoActivity extends AppCompatActivity {
     private RadioButton Reintegracao;
     private RadioButton garantia;
     private String conclusão = "";
-    int readfilePermission = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
-    int writefilePermission = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+//    int readfilePermission = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+//    int writefilePermission = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     private static final int MY_PERMISSIONS_REQUEST=10;
 
     @Override
@@ -114,30 +110,30 @@ public class ConclusaoActivity extends AppCompatActivity {
                 } else {
 
                     Hawk.put("Conclusao", conclusão);
-                   if(pedirPermissao()){
+//                   if(pedirPermissao()){
                        gerarRelatorio();
-                   }
+//                   }
                 }
             }
         });
 
     }
 
-    public boolean  pedirPermissao() {
-
-        ArrayList listPermissionsNeeded = new ArrayList();
-        if (readfilePermission != PackageManager.PERMISSION_GRANTED) {
-            listPermissionsNeeded.add(Manifest.permission.READ_EXTERNAL_STORAGE);
-        }
-        if (writefilePermission != PackageManager.PERMISSION_GRANTED) {
-            listPermissionsNeeded.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        }
-        if (!listPermissionsNeeded.isEmpty()) {
-            ActivityCompat.requestPermissions((ConclusaoActivity) this, (String[]) listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]), MY_PERMISSIONS_REQUEST);
-            return false;
-        }
-        return true;
-    }
+//    public boolean  pedirPermissao() {
+//
+//        ArrayList listPermissionsNeeded = new ArrayList();
+//        if (readfilePermission != PackageManager.PERMISSION_GRANTED) {
+//            listPermissionsNeeded.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+//        }
+//        if (writefilePermission != PackageManager.PERMISSION_GRANTED) {
+//            listPermissionsNeeded.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+//        }
+//        if (!listPermissionsNeeded.isEmpty()) {
+//            ActivityCompat.requestPermissions((ConclusaoActivity) this, (String[]) listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]), MY_PERMISSIONS_REQUEST);
+//            return false;
+//        }
+//        return true;
+//    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {

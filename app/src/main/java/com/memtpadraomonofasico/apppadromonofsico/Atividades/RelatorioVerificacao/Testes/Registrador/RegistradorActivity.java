@@ -49,13 +49,14 @@ public class RegistradorActivity extends AppCompatActivity {
     private
     Button fotoAntes;
     @SuppressLint("WrongViewCast")
-    private Button conectar;
+    private Button conectar, estadoTeste;
     private BluetoothAdapter mBluetoothAdapter = null;
     private static ThreadConexaoRegistrador conexao;
     private RadioButton aprovado, naoPossibilitaTeste, reprovado;
     private Bitmap fotoResized1, fotoResized2;
     private String status, observacaoRegistrador = " ";
     private Spinner opcoesReprovados;
+    private boolean teste = false;
 
     public void escreverTela(final String res) {
 
@@ -96,6 +97,7 @@ public class RegistradorActivity extends AppCompatActivity {
         fotoDepois = findViewById(R.id.buttonFotoDepois);
         fotoDepois.setEnabled(false);
         conectar = findViewById(R.id.buttonConectarDispositivo);
+        estadoTeste = findViewById(R.id.executarTeste);
 
         opcoesReprovados = findViewById(R.id.RegistradorSpinner);
         opcoesReprovados.setEnabled(false);
@@ -223,6 +225,52 @@ public class RegistradorActivity extends AppCompatActivity {
 
             }
         }
+    }
+
+    public void mudarEstadoTeste(View view) {
+
+        if (conexao == null) {
+            Toast.makeText(getApplicationContext(), "O teste não pode ser iniciado/parado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
+
+        } else {
+
+            if (!teste) {
+                teste = true;
+                estadoTeste.clearComposingText();
+                estadoTeste.setText("Cancelar Teste de Registrador");
+                executarTeste(view);
+                textMessage.clearComposingText();
+                textMessage.setText("Teste Iniciado!");
+
+            } else {
+                teste = false;
+                estadoTeste.clearComposingText();
+                estadoTeste.setText("Iniciar Teste de Registrador");
+                pararTeste(view);
+                textMessage.clearComposingText();
+                textMessage.setText("Teste Cancelado!");
+            }
+        }
+    }
+
+    private void pararTeste(View view) {
+
+        byte[] pacote = new byte[10];
+
+        pacote[0] = ('C' & 0xFF);
+        pacote[1] = (byte) (0 & 0xFF);
+        pacote[2] = (byte) (0 & 0xFF);
+        pacote[3] = (byte) (0 & 0xFF);
+        pacote[4] = (byte) (0 & 0xFF);
+        pacote[5] = (byte) (0 & 0xFF);
+        pacote[6] = (byte) (0 & 0xFF);
+        pacote[7] = (byte) (0 & 0xFF);
+        pacote[8] = (byte) (0 & 0xFF);
+        pacote[9] = (byte) (0 & 0xFF);
+
+        conexao.write(pacote);
+
+
     }
 
     public void executarTeste(View view) {
