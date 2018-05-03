@@ -107,10 +107,7 @@ public class InspecaoVisualActivity extends AppCompatActivity {
                 if(status==null){
                     Toast.makeText(getApplicationContext(), "Sessão incompleta - Status não selecionado!", Toast.LENGTH_LONG).show();
                 }
-                if(fotoResized==null){
-                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Foto de inspeção não tirada!", Toast.LENGTH_LONG).show();
-
-                } else {
+                else {
 
                 Hawk.put("Selo1", String.valueOf(Selo1.getText()));
                 Hawk.put("Selo2", String.valueOf(Selo2.getText()));
@@ -121,7 +118,6 @@ public class InspecaoVisualActivity extends AppCompatActivity {
                 Hawk.put("ObservacaoInspecaoVisual", observacaoInspecao);
 
 
-             //   abrirRegistrador();
                     abrirCircuitoPotencial();
                 }
             }

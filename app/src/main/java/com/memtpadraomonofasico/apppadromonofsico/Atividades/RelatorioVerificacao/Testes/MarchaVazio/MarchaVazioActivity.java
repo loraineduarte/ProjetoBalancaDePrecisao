@@ -66,7 +66,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
         reprovado = findViewById(R.id.Reprovado);
         reprovado.setEnabled(false);
         tempoReprovado = findViewById(R.id.TempoMarchaVazio);
-        tempoReprovado.setEnabled(false);
+        tempoReprovado.setText("0");
         conectar = findViewById(R.id.buttonConectarDispositivo);
         teste = findViewById(R.id.buttonAplicarTensao);
 
@@ -197,13 +197,35 @@ public class MarchaVazioActivity extends AppCompatActivity {
         }
     }
 
+    public void mudarEstadoTesteFinal(View view) {
+
+
+            if (!testeComecou) {
+                testeComecou = true;
+                teste.clearComposingText();
+                teste.setText("Cancelar Teste");
+                executarTeste(view);
+                textMessage.clearComposingText();
+                textMessage.setText("Teste Iniciado!");
+
+            } else {
+                testeComecou = false;
+                teste.clearComposingText();
+                teste.setText("Iniciar Teste");
+                pararTeste(view);
+                textMessage.clearComposingText();
+                textMessage.setText("Teste Cancelado!");
+            }
+
+    }
+
     private void executarTeste(View view) {
 
 
         byte[] pacote = new byte[10];
         float kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
 
-        byte[] bytes = new byte[4];
+        byte[] bytes = new byte[8];
         int valorMultiplicado = (int) (kdMedidor * 1000000);
 
         bytes[0] = (byte) (valorMultiplicado / (Math.pow(256, 3)));
@@ -217,10 +239,34 @@ public class MarchaVazioActivity extends AppCompatActivity {
         pacote[3] = (byte) (bytes[1] & 0xFF);
         pacote[4] = (byte) (bytes[2] & 0xFF);
         pacote[5] = (byte) (bytes[3] & 0xFF);
-        pacote[6] = (byte) (0 & 0xFF);
-        pacote[7] = (byte) (0 & 0xFF);
-        pacote[8] = (byte) (0 & 0xFF);
-        pacote[9] = (byte) (60 & 0xFF);
+
+        int tempo = Integer.parseInt(tempoReprovado.getText().toString());
+
+        if(tempo==0){
+
+            tempoReprovado.setText("60");
+            Toast.makeText(getApplicationContext(), "Tempo de teste ajustado para 60 segundos... ", Toast.LENGTH_LONG).show();
+            pacote[6] = (byte) (0 & 0xFF);
+            pacote[7] = (byte) (0 & 0xFF);
+            pacote[8] = (byte) (0 & 0xFF);
+            pacote[9] = (byte) (60 & 0xFF);
+
+
+        }else {
+
+
+
+            bytes[4] = (byte) (tempo / (Math.pow(256, 3)));
+            bytes[5] = (byte) ((tempo - (bytes[4] * (Math.pow(256, 3)))) / Math.pow(256, 2));
+            bytes[6] = (byte) ((tempo - ((bytes[4] * (Math.pow(256, 3))) + (bytes[5] * (Math.pow(256, 2))))) / Math.pow(256, 1));
+            bytes[7] = (byte) ((tempo - ((bytes[4] * (Math.pow(256, 3))) + (bytes[5] * (Math.pow(256, 2))) + (bytes[6] * Math.pow(256, 1)))));
+
+            pacote[6] = (byte) (bytes[4] & 0xFF);
+            pacote[7] = (byte) (bytes[5] & 0xFF);
+            pacote[8] = (byte) (bytes[6] & 0xFF);
+            pacote[9] = (byte) (bytes[7] & 0xFF);
+        }
+
 
         conexao.write(pacote);
 
@@ -271,7 +317,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
 
     }
 
-    public static void selecionarStatus(final double a) {
+    public void selecionarStatus(final double a) {
 
 
         new Thread(new Runnable() {
@@ -286,28 +332,19 @@ public class MarchaVazioActivity extends AppCompatActivity {
 
                         if ((a == 1) || (a == 0)) {
                             aprovado.setChecked(true);
-                            reprovado.setEnabled(false);
-                            naoRealizado.setEnabled(false);
-                            tempoReprovado.setEnabled(false);
 
                         } else if (a > 1) {
                             reprovado.setChecked(true);
-                            tempoReprovado.setText("60 s");
-                            aprovado.setEnabled(false);
-                            naoRealizado.setEnabled(false);
 
                         } else {
                             naoRealizado.setChecked(true);
-                            aprovado.setEnabled(false);
-                            reprovado.setEnabled(false);
-                            tempoReprovado.setEnabled(false);
-
 
                         }
                     }
                 });
             }
         }).start();
+
 
 
     }
