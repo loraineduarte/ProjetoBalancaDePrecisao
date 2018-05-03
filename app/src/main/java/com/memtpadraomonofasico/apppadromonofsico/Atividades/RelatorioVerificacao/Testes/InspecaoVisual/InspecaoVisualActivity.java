@@ -104,9 +104,6 @@ public class InspecaoVisualActivity extends AppCompatActivity {
                 if(!statusReprovado.isEmpty()){
                     status = status +" - "+ statusReprovado;
                 }
-                if((String.valueOf(Selo1.getText()).isEmpty())||(String.valueOf(Selo2.getText()).isEmpty())|| (String.valueOf(Selo3.getText()).isEmpty())){
-                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Completar os selos da inspeção visual! ", Toast.LENGTH_LONG).show();
-                }
                 if(status==null){
                     Toast.makeText(getApplicationContext(), "Sessão incompleta - Status não selecionado!", Toast.LENGTH_LONG).show();
                 }
