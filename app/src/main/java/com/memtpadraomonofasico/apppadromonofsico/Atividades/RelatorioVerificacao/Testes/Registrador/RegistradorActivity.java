@@ -187,26 +187,30 @@ public class RegistradorActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Sessão incompleta - Status não selecionado!", Toast.LENGTH_LONG).show();
 
                 }
-                if ((leituraPreTeste.isEmpty())&& (leituraPosTeste.isEmpty())) {
-                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Faltam as leituras de calibração!", Toast.LENGTH_LONG).show();
+                else {
+                    if ((leituraPreTeste.isEmpty())&& (leituraPosTeste.isEmpty())) {
+                        Toast.makeText(getApplicationContext(), "Sessão incompleta - Faltam as leituras de calibração!", Toast.LENGTH_LONG).show();
 
+                    }
+                    else {
+                        if (((status.equals("Aprovado")) || (status.equals("Reprovado"))) && ((fotoResized1 == null) || (fotoResized2 == null))) {
+                            Toast.makeText(getApplicationContext(), "Sessão incompleta - Fotos não tiradas!", Toast.LENGTH_LONG).show();
+
+                        } else {
+                            Hawk.put("FotoPreTesteRegistrador", fotoResized1);
+                            Hawk.put("FotoPosTesteRegistrador", fotoResized2);
+                            Hawk.put("statusRegistrador", status);
+                            Hawk.put("ObservaçãoRegistrador", observacaoRegistrador);
+                            Hawk.put("leituraPreTeste", leituraPreTeste);
+                            Hawk.put("leituraPosTeste", leituraPosTeste);
+
+                            mBluetoothAdapter.disable();
+                            abrirSituacoesObservadas();
+
+                        }
+                    }
                 }
-                if (((status.equals("Aprovado")) || (status.equals("Reprovado"))) && ((fotoResized1 == null) || (fotoResized2 == null))) {
-                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Fotos não tiradas!", Toast.LENGTH_LONG).show();
 
-                } else {
-                    Hawk.put("FotoPreTesteRegistrador", fotoResized1);
-                    Hawk.put("FotoPosTesteRegistrador", fotoResized2);
-                    Hawk.put("statusRegistrador", status);
-                    Hawk.put("ObservaçãoRegistrador", observacaoRegistrador);
-                    Hawk.put("leituraPreTeste", leituraPreTeste);
-                    Hawk.put("leituraPosTeste", leituraPosTeste);
-
-
-                    mBluetoothAdapter.disable();
-                    abrirSituacoesObservadas();
-
-                }
             }
         });
     }
