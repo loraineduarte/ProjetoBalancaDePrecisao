@@ -46,11 +46,7 @@ public class ConclusaoActivity extends AppCompatActivity {
     private RadioButton FuncionandoCorretamente;
     private RadioButton ComDefeito;
     private RadioButton MedidorIrregularidade;
-    private RadioButton Reintegracao;
-    private RadioButton garantia;
     private String conclusão = "";
-//    int readfilePermission = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
-//    int writefilePermission = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     private static final int MY_PERMISSIONS_REQUEST=10;
 
     @Override
@@ -65,8 +61,6 @@ public class ConclusaoActivity extends AppCompatActivity {
         FuncionandoCorretamente = findViewById(R.id.FuncionandoCorretamente);
         ComDefeito = findViewById(R.id.ComDefeito);
         MedidorIrregularidade = findViewById(R.id.MedidorIrregularidade);
-        Reintegracao = findViewById(R.id.Reintegracao);
-        garantia = findViewById(R.id.garantia);
 
 
         @SuppressLint("WrongViewCast") Button next = findViewById(R.id.gerarRelatorio);
@@ -79,8 +73,6 @@ public class ConclusaoActivity extends AppCompatActivity {
                 FuncionandoCorretamente = findViewById(R.id.FuncionandoCorretamente);
                 ComDefeito = findViewById(R.id.ComDefeito);
                 MedidorIrregularidade = findViewById(R.id.MedidorIrregularidade);
-                Reintegracao = findViewById(R.id.Reintegracao);
-                garantia = findViewById(R.id.garantia);
 
 
                 if (FuncionandoCorretamente.isChecked()) {
@@ -95,45 +87,22 @@ public class ConclusaoActivity extends AppCompatActivity {
                     conclusão = "Medidor com irregularidade";
 
                 }
-                if (Reintegracao.isChecked()) {
-                    conclusão = "Reintegração";
 
-                }
-                if (garantia.isChecked()) {
-                    conclusão = "Garantia";
-
-                }
-
-                if ((!garantia.isChecked()) && (!Reintegracao.isChecked()) && (!MedidorIrregularidade.isChecked()) && (!ComDefeito.isChecked()) && (!FuncionandoCorretamente.isChecked())) {
+                if ((!MedidorIrregularidade.isChecked()) && (!ComDefeito.isChecked()) && (!FuncionandoCorretamente.isChecked())) {
                     Toast.makeText(getApplicationContext(), "Sessão incompleta - Não existe opção de conclusão marcado. ", Toast.LENGTH_LONG).show();
 
                 } else {
 
                     Hawk.put("Conclusao", conclusão);
-//                   if(pedirPermissao()){
+
                        gerarRelatorio();
-//                   }
+
                 }
             }
         });
 
     }
 
-//    public boolean  pedirPermissao() {
-//
-//        ArrayList listPermissionsNeeded = new ArrayList();
-//        if (readfilePermission != PackageManager.PERMISSION_GRANTED) {
-//            listPermissionsNeeded.add(Manifest.permission.READ_EXTERNAL_STORAGE);
-//        }
-//        if (writefilePermission != PackageManager.PERMISSION_GRANTED) {
-//            listPermissionsNeeded.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-//        }
-//        if (!listPermissionsNeeded.isEmpty()) {
-//            ActivityCompat.requestPermissions((ConclusaoActivity) this, (String[]) listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]), MY_PERMISSIONS_REQUEST);
-//            return false;
-//        }
-//        return true;
-//    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
@@ -473,22 +442,21 @@ public class ConclusaoActivity extends AppCompatActivity {
             medidorItem.setBorder(PdfPCell.NO_BORDER);
             tabelaMedidor.addCell(medidorItem);
 
-            p = new Phrase("Leitura de Retirada: ", smallNormal);
-            p.add(new Chunk((String) Hawk.get("LeituraRetirada"), smallNormal));
-            medidorItem = new PdfPCell(p);
-            medidorItem.setHorizontalAlignment(Element.ALIGN_LEFT);
-            medidorItem.setBorder(PdfPCell.NO_BORDER);
-            tabelaMedidor.addCell(medidorItem);
-
-            p = new Phrase("Leitura de Calibração: ", smallNormal);
-            p.add(new Chunk((String) Hawk.get("LeitursCalibracao"), smallNormal));
+            p = new Phrase("Leitura Pré Calibração: ", smallNormal);
+            p.add(new Chunk((String) Hawk.get("leituraPreTeste"), smallNormal));
             medidorItem = new PdfPCell(p);
             medidorItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             medidorItem.setBorder(PdfPCell.NO_BORDER);
             tabelaMedidor.addCell(medidorItem);
 
             p = new Phrase("Leitura Pós Calibração: ", smallNormal);
-            p.add(new Chunk((String) Hawk.get("LeituraPosCalibracao"), smallNormal));
+            p.add(new Chunk((String) Hawk.get("leituraPosTeste"), smallNormal));
+            medidorItem = new PdfPCell(p);
+            medidorItem.setHorizontalAlignment(Element.ALIGN_LEFT);
+            medidorItem.setBorder(PdfPCell.NO_BORDER);
+            tabelaMedidor.addCell(medidorItem);
+
+            p = new Phrase(" ", smallNormal);
             medidorItem = new PdfPCell(p);
             medidorItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             medidorItem.setBorder(PdfPCell.NO_BORDER);
@@ -940,45 +908,25 @@ public class ConclusaoActivity extends AppCompatActivity {
         FuncionandoCorretamente = findViewById(R.id.FuncionandoCorretamente);
         ComDefeito = findViewById(R.id.ComDefeito);
         MedidorIrregularidade = findViewById(R.id.MedidorIrregularidade);
-        Reintegracao = findViewById(R.id.Reintegracao);
-        garantia = findViewById(R.id.garantia);
 
 
         switch (view.getId()) {
             case R.id.FuncionandoCorretamente:
                 ComDefeito.setChecked(false);
                 MedidorIrregularidade.setChecked(false);
-                Reintegracao.setChecked(false);
-                garantia.setChecked(false);
                 break;
 
             case R.id.ComDefeito:
                 FuncionandoCorretamente.setChecked(false);
                 MedidorIrregularidade.setChecked(false);
-                Reintegracao.setChecked(false);
-                garantia.setChecked(false);
                 break;
 
             case R.id.MedidorIrregularidade:
                 FuncionandoCorretamente.setChecked(false);
                 ComDefeito.setChecked(false);
-                Reintegracao.setChecked(false);
-                garantia.setChecked(false);
                 break;
 
-            case R.id.Reintegracao:
-                FuncionandoCorretamente.setChecked(false);
-                ComDefeito.setChecked(false);
-                MedidorIrregularidade.setChecked(false);
-                garantia.setChecked(false);
-                break;
 
-            case R.id.garantia:
-                FuncionandoCorretamente.setChecked(false);
-                ComDefeito.setChecked(false);
-                MedidorIrregularidade.setChecked(false);
-                Reintegracao.setChecked(false);
-                break;
 
         }
     }

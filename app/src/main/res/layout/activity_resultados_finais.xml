@@ -23,23 +23,6 @@
 
 
     <!--suppress AndroidDomInspection -->
-    <Button
-        android:id="@+id/NextFase10"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="220dp"
-        android:layout_marginTop="150dp"
-        android:background="@drawable/botao_arredondado"
-        android:backgroundTint="?attr/colorPrimaryDark"
-        android:elevation="2dp"
-        android:text="@string/pr_ximo"
-        android:textColor="@android:color/background_light"
-        android:textColorLink="@android:color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
 
     <EditText
         android:id="@+id/DataInicial"
@@ -103,53 +86,185 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/HoraInicio" />
 
-    <EditText
-        android:id="@+id/LeituraRetirada"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:hint="@string/leitura_de_retirada"
-        android:inputType="number"
-        android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/HoraFim" />
 
-    <EditText
-        android:id="@+id/leituraCalibracao"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:hint="@string/leitura_de_calibra_o"
-        android:inputType="number"
-        android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+    <TextView
+        android:id="@+id/infocomplementares"
+        android:layout_width="296dp"
+        android:layout_height="39dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:text="@string/informa_es_complementares"
+        android:textAppearance="@android:style/TextAppearance.Material.DialogWindowTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/LeituraRetirada" />
+        app:layout_constraintTop_toBottomOf="@+id/HoraFim"/>
 
-    <EditText
-        android:id="@+id/leituraPosCalibracao"
+
+    <RadioButton
+        android:id="@+id/tampasolidarizada"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
-        android:ems="10"
-        android:hint="@string/leitura_p_s_calibra_o"
-        android:inputType="number"
-        android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:text="@string/tampa_do_medidor_solidarizada"
+        android:textColorHint="@color/colorPrimaryDark"
+        android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/leituraCalibracao" />
+        app:layout_constraintTop_toBottomOf="@+id/infocomplementares" />
+
+    <RadioButton
+        android:id="@+id/semTampa"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/sem_tampa_do_bloco_de_terminais"
+        android:textColorHint="@color/colorPrimaryDark"
+        android:textColorLink="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tampasolidarizada" />
+
+    <RadioButton
+        android:id="@+id/tampaQuebrada"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/tampa_quebrada"
+        android:textColorHint="@color/colorPrimaryDark"
+        android:textColorLink="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/semTampa" />
+
+    <!--suppress AndroidDomInspection -->
+
+
+    <RadioButton
+        android:id="@+id/tampaQuebradaTransporte"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/tampa_quebrada_no_transporte"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tampaQuebrada" />
+
+    <RadioButton
+        android:id="@+id/seloRompido"
+        android:layout_width="0dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/selo_rompido_no_laborat_rio"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tampaQuebradaTransporte" />
+
+    <RadioButton
+        android:id="@+id/terminaisOxidados"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/terminais_de_corrente_oxidados"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seloRompido" />
+
+    <RadioButton
+        android:id="@+id/leituraDivergente"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/leitura_divergente"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/terminaisOxidados" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="63dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/leituraDivergente">
+
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:gravity="bottom"
+            android:orientation="horizontal"
+            tools:ignore="UselessParent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="3dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+
+                    <Space
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="3dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+
+                    <Button
+                        android:id="@+id/NextFase9"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:background="@drawable/botao_arredondado"
+                        android:backgroundTint="?attr/colorPrimaryDark"
+                        android:elevation="2dp"
+                        android:text="@string/pr_ximo"
+                        android:textColor="@android:color/background_light"
+                        android:textColorLink="@android:color/black"/>
+
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+
 
 
 </android.support.constraint.ConstraintLayout>

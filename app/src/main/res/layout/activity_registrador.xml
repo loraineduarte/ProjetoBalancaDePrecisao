@@ -7,15 +7,14 @@
     tools:context=".Atividades.RelatorioVerificacao.Testes.Registrador.RegistradorActivity">
 
 
-
     <TextView
         android:id="@+id/Registrador"
         android:layout_width="114dp"
         android:layout_height="30dp"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
         android:gravity="center"
-        android:layout_marginTop="24dp"
         android:text="@string/registrador"
         android:textAppearance="@android:style/TextAppearance.Material.DialogWindowTitle"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,7 +27,7 @@
         android:layout_height="77dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -93,7 +92,7 @@
         android:layout_height="50dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -162,6 +161,77 @@
         </LinearLayout>
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/linearLayoutRegistrador"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:gravity="bottom"
+            android:orientation="horizontal"
+            tools:ignore="UselessParent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="3dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/LeituraRetirada"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:ems="10"
+                        android:hint="Leitura Pré Calibração"
+                        android:inputType="number"
+                        android:singleLine="true"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="3dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/leituraPosCalibracao"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:ems="10"
+                        android:hint="@string/leitura_p_s_calibra_o"
+                        android:inputType="number"
+                        android:singleLine="true"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout4"
@@ -169,11 +239,11 @@
         android:layout_height="50dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutRegistrador">
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -275,7 +345,6 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
         android:onClick="onCheckboxClicked"
         android:text="@string/n_o_possibilita_teste"
         android:textColorLink="@color/colorPrimaryDark"
@@ -289,9 +358,8 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
-        android:text="@string/reprovado"
         android:onClick="onCheckboxClicked"
+        android:text="@string/reprovado"
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -317,17 +385,12 @@
     <!--suppress AndroidDomInspection -->
 
 
-
-
-
-
     <Spinner
         android:id="@+id/RegistradorSpinner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Reprovado" />

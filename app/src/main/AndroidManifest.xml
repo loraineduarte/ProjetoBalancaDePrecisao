@@ -73,9 +73,6 @@
         <activity android:name=".Atividades.RelatorioVerificacao.SituacoesObservadasActivity"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".Atividades.RelatorioVerificacao.InformacoesComplementaresActivity"
-            android:screenOrientation="portrait"/>
-
         <activity android:name=".Atividades.RelatorioVerificacao.ResultadosFinaisActivity"
             android:screenOrientation="portrait"/>
 

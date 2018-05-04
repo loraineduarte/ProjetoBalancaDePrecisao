@@ -66,7 +66,6 @@ public class MarchaVazioActivity extends AppCompatActivity {
         reprovado = findViewById(R.id.Reprovado);
         reprovado.setEnabled(false);
         tempoReprovado = findViewById(R.id.TempoMarchaVazio);
-        tempoReprovado.setText("0");
         conectar = findViewById(R.id.buttonConectarDispositivo);
         teste = findViewById(R.id.buttonAplicarTensao);
 
@@ -240,9 +239,10 @@ public class MarchaVazioActivity extends AppCompatActivity {
         pacote[4] = (byte) (bytes[2] & 0xFF);
         pacote[5] = (byte) (bytes[3] & 0xFF);
 
-        int tempo = Integer.parseInt(tempoReprovado.getText().toString());
+        String time = tempoReprovado.getText().toString();
 
-        if(tempo==0){
+        if(time.equals("")){
+
 
             tempoReprovado.setText("60");
             Toast.makeText(getApplicationContext(), "Tempo de teste ajustado para 60 segundos... ", Toast.LENGTH_LONG).show();
@@ -253,7 +253,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
 
 
         }else {
-
+            float tempo = Float.parseFloat(tempoReprovado.getText().toString());
 
 
             bytes[4] = (byte) (tempo / (Math.pow(256, 3)));

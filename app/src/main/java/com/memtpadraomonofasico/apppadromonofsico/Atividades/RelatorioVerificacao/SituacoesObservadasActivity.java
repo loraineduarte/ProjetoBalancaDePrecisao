@@ -173,15 +173,15 @@ public class SituacoesObservadasActivity extends AppCompatActivity {
 
                 Hawk.put("SituacoesObservadas", todasObservacoes);
 
-                abrirInformacoesComplementares();
+                abrirResultadosFinais();
             }
         });
 
 
     }
 
-    private void abrirInformacoesComplementares() {
-        Intent intent = new Intent(this, InformacoesComplementaresActivity.class);
+    private void abrirResultadosFinais() {
+        Intent intent = new Intent(this, ResultadosFinaisActivity.class);
         startActivity(intent);
     }
 

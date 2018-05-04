@@ -42,19 +42,18 @@ public class RegistradorActivity extends AppCompatActivity {
     private static final Handler handler = new Handler() { };
     @SuppressLint("StaticFieldLeak")
     private static TextView textMessage;
+    private static TextView calibracaoPreTeste, calibracaoPosTeste;
     @SuppressLint("WrongViewCast")
-    private
-    Button fotoDepois;
+    private Button fotoDepois;
     @SuppressLint("WrongViewCast")
-    private
-    Button fotoAntes;
+    private Button fotoAntes;
     @SuppressLint("WrongViewCast")
     private Button conectar, estadoTeste;
     private BluetoothAdapter mBluetoothAdapter = null;
     private static ThreadConexaoRegistrador conexao;
     private RadioButton aprovado, naoPossibilitaTeste, reprovado;
     private Bitmap fotoResized1, fotoResized2;
-    private String status, observacaoRegistrador = " ";
+    private String status, observacaoRegistrador = " ", leituraPreTeste, leituraPosTeste;
     private Spinner opcoesReprovados;
     private boolean teste = false;
 
@@ -98,6 +97,8 @@ public class RegistradorActivity extends AppCompatActivity {
         fotoDepois.setEnabled(false);
         conectar = findViewById(R.id.buttonConectarDispositivo);
         estadoTeste = findViewById(R.id.executarTeste);
+        calibracaoPreTeste = findViewById(R.id.LeituraRetirada);
+        calibracaoPosTeste = findViewById(R.id.leituraPosCalibracao);
 
         opcoesReprovados = findViewById(R.id.RegistradorSpinner);
         opcoesReprovados.setEnabled(false);
@@ -165,6 +166,8 @@ public class RegistradorActivity extends AppCompatActivity {
                 Hawk.delete("FotoPosTesteRegistrador");
                 Hawk.delete("statusRegistrador");
                 Hawk.delete("ObservaçãoRegistrador");
+                Hawk.delete("leituraPreTeste");
+                Hawk.delete("leituraPosTeste");
 
 
                 if (aprovado.isChecked()) {
@@ -175,11 +178,17 @@ public class RegistradorActivity extends AppCompatActivity {
 
                 } else if (reprovado.isChecked()) {
                     status = "Reprovado";
-
                 }
+
+                leituraPreTeste = calibracaoPreTeste.getText().toString();
+                leituraPosTeste = calibracaoPosTeste.getText().toString();
 
                 if (status.isEmpty()) {
                     Toast.makeText(getApplicationContext(), "Sessão incompleta - Status não selecionado!", Toast.LENGTH_LONG).show();
+
+                }
+                if ((leituraPreTeste.isEmpty())&& (leituraPosTeste.isEmpty())) {
+                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Faltam as leituras de calibração!", Toast.LENGTH_LONG).show();
 
                 }
                 if (((status.equals("Aprovado")) || (status.equals("Reprovado"))) && ((fotoResized1 == null) || (fotoResized2 == null))) {
@@ -190,6 +199,8 @@ public class RegistradorActivity extends AppCompatActivity {
                     Hawk.put("FotoPosTesteRegistrador", fotoResized2);
                     Hawk.put("statusRegistrador", status);
                     Hawk.put("ObservaçãoRegistrador", observacaoRegistrador);
+                    Hawk.put("leituraPreTeste", leituraPreTeste);
+                    Hawk.put("leituraPosTeste", leituraPosTeste);
 
 
                     mBluetoothAdapter.disable();
@@ -237,7 +248,7 @@ public class RegistradorActivity extends AppCompatActivity {
             if (!teste) {
                 teste = true;
                 estadoTeste.clearComposingText();
-                estadoTeste.setText("Cancelar Teste de Registrador");
+                estadoTeste.setText("Cancelar Teste ");
                 executarTeste(view);
                 textMessage.clearComposingText();
                 textMessage.setText("Teste Iniciado!");
@@ -245,7 +256,7 @@ public class RegistradorActivity extends AppCompatActivity {
             } else {
                 teste = false;
                 estadoTeste.clearComposingText();
-                estadoTeste.setText("Iniciar Teste de Registrador");
+                estadoTeste.setText("Iniciar Teste ");
                 pararTeste(view);
                 textMessage.clearComposingText();
                 textMessage.setText("Teste Cancelado!");
