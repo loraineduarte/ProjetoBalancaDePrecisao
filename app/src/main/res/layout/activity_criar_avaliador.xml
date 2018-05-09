@@ -39,15 +39,16 @@
                     android:layout_height="wrap_content">
 
                     <Button
-                        android:id="@+id/buttonSalvarAvaliador"
+                        android:id="@+id/buttonLimparCamposAvaliador"
                         style="@style/Widget.AppCompat.Button.Colored"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:background="@drawable/botao_arredondado"
                         android:backgroundTint="@color/colorPrimaryDark"
-                        android:text="@string/salvar"
+                        android:text="@string/limpar"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textColor="@android:color/white" />
+
 
                 </RelativeLayout>
             </LinearLayout>
@@ -65,15 +66,17 @@
                     android:layout_height="wrap_content">
 
                     <Button
-                        android:id="@+id/buttonLimparCamposAvaliador"
+                        android:id="@+id/buttonSalvarAvaliador"
                         style="@style/Widget.AppCompat.Button.Colored"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:background="@drawable/botao_arredondado"
                         android:backgroundTint="@color/colorPrimaryDark"
-                        android:text="@string/limpar"
+                        android:text="@string/salvar"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textColor="@android:color/white" />
+
+
                 </RelativeLayout>
             </LinearLayout>
         </LinearLayout>

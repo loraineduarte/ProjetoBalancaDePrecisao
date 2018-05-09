@@ -272,7 +272,6 @@
                         android:layout_height="fill_parent"
                         android:background="@drawable/botao_arredondado"
                         android:backgroundTint="@color/colorPrimaryDark"
-                        android:onClick="conectarDispositivo"
                         android:text="Conectar"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textColor="@android:color/white"
@@ -331,9 +330,8 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/string_aprovado"
         android:onClick="onCheckboxClicked"
+        android:text="@string/string_aprovado"
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -401,7 +399,7 @@
         android:layout_height="63dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -458,7 +456,7 @@
                         android:text="@string/pr_ximo"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textColor="@android:color/white"
-                        android:textColorLink="@android:color/black"/>
+                        android:textColorLink="@android:color/black" />
 
                 </RelativeLayout>
             </LinearLayout>

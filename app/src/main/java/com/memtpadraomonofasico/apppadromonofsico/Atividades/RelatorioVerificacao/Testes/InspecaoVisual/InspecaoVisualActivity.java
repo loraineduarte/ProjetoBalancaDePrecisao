@@ -21,8 +21,6 @@ import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
 import com.orhanobut.hawk.NoEncryption;
 
-import java.util.Objects;
-
 public class InspecaoVisualActivity extends AppCompatActivity {
 
     private RadioButton Reprovado, Aprovado;
@@ -31,6 +29,7 @@ public class InspecaoVisualActivity extends AppCompatActivity {
     private String status, statusReprovado;
     private String observacaoInspecao = "";
     private Bitmap fotoResized;
+    private Bitmap fotoInspecao;
     private Spinner opcoesReprovados;
     private EditText Selo1, Selo2, Selo3;
 
@@ -114,7 +113,7 @@ public class InspecaoVisualActivity extends AppCompatActivity {
                 Hawk.put("Selo3", String.valueOf(Selo3.getText()));
                 Hawk.put("Status", status);
                 Hawk.put("StatusReprovado", statusReprovado);
-                Hawk.put("FotoInspecaoVisual", fotoResized);
+                Hawk.put("FotoInspecaoVisual", fotoInspecao);
                 Hawk.put("ObservacaoInspecaoVisual", observacaoInspecao);
 
 
@@ -166,12 +165,12 @@ public class InspecaoVisualActivity extends AppCompatActivity {
                     Toast.makeText(getBaseContext(), "A imagem foi capturada", Toast.LENGTH_SHORT);
                     Bundle bundle = data.getExtras();
                     assert bundle != null;
-                    Bitmap fotoInspecao = (Bitmap) bundle.get("data");
-                    fotoResized = Bitmap.createScaledBitmap(Objects.requireNonNull(fotoInspecao), 100, 120, false);
+                    fotoInspecao = (Bitmap) bundle.get("data");
 
-                    if (fotoResized != null) {
+
+                    if (fotoInspecao != null) {
                         ImageView imageView = findViewById(R.id.imageView);
-                        imageView.setImageBitmap(fotoResized);
+                        imageView.setImageBitmap(fotoInspecao);
                     }
 
                 } else {

@@ -24,67 +24,153 @@
 
     <!--suppress AndroidDomInspection -->
 
-    <EditText
-        android:id="@+id/DataInicial"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="220dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:ems="10"
-        android:hint="@string/data_in_cio"
-        android:inputType="date"
-        android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/MarchaVazio" />
-
-    <EditText
-        android:id="@+id/HoraInicio"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginStart="220dp"
-        android:layout_marginTop="24dp"
-        android:ems="10"
-        android:hint="@string/hora_in_cio"
-        android:inputType="time"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/MarchaVazio" />
-
-    <EditText
-        android:id="@+id/DataFinal"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="220dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="@string/data_fim"
-        android:inputType="date"
-        android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:layout_marginTop="4dp"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/DataInicial" />
+        app:layout_constraintTop_toBottomOf="@+id/MarchaVazio">
 
-    <EditText
-        android:id="@+id/HoraFim"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:gravity="bottom"
+            android:orientation="horizontal"
+            tools:ignore="UselessParent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="3dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/DataInicial"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:ems="10"
+                        android:hint="@string/data_in_cio"
+                        android:inputType="date"
+                        android:singleLine="true"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="3dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/HoraInicio"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:ems="10"
+                        android:hint="@string/hora_in_cio"
+                        android:inputType="time"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout5"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginStart="220dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="@string/hora_fim"
-        android:inputType="time"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/HoraInicio" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:gravity="bottom"
+            android:orientation="horizontal"
+            tools:ignore="UselessParent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="3dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/DataFinal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:ems="10"
+                        android:hint="@string/data_fim"
+                        android:inputType="date"
+                        android:singleLine="true"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="3dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/HoraFim"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:ems="10"
+                        android:hint="@string/hora_fim"
+                        android:inputType="time"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+
+
+
+
+
 
 
     <TextView
@@ -99,7 +185,7 @@
         android:textAppearance="@android:style/TextAppearance.Material.DialogWindowTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/HoraFim"/>
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout5"/>
 
 
     <RadioButton

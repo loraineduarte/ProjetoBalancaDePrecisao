@@ -26,8 +26,6 @@ import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
 import com.orhanobut.hawk.NoEncryption;
 
-import java.util.Objects;
-
 @SuppressWarnings("ALL")
 public class RegistradorActivity extends AppCompatActivity {
 
@@ -53,6 +51,7 @@ public class RegistradorActivity extends AppCompatActivity {
     private static ThreadConexaoRegistrador conexao;
     private RadioButton aprovado, naoPossibilitaTeste, reprovado;
     private Bitmap fotoResized1, fotoResized2;
+    private Bitmap fotoDepoisRegistrador, fotoAntesRegistrador;
     private String status, observacaoRegistrador = " ", leituraPreTeste, leituraPosTeste;
     private Spinner opcoesReprovados;
     private boolean teste = false;
@@ -366,12 +365,11 @@ public class RegistradorActivity extends AppCompatActivity {
                     Toast.makeText(getBaseContext(), "A imagem foi capturada", Toast.LENGTH_SHORT);
                     Bundle bundle = data.getExtras();
                     assert bundle != null;
-                    Bitmap fotoAntesRegistrador = (Bitmap) bundle.get("data");
-                    fotoResized1 = Bitmap.createScaledBitmap(Objects.requireNonNull(fotoAntesRegistrador), 100, 120, false);
+                    fotoAntesRegistrador = (Bitmap) bundle.get("data");
 
-                    if (fotoResized1 != null) {
+                    if (fotoAntesRegistrador != null) {
                         ImageView imageView = findViewById(R.id.FotoAntes);
-                        imageView.setImageBitmap(fotoResized1);
+                        imageView.setImageBitmap(fotoAntesRegistrador);
                     }
 
                 } else {
@@ -388,13 +386,12 @@ public class RegistradorActivity extends AppCompatActivity {
                     Toast.makeText(getBaseContext(), "A imagem foi capturada", Toast.LENGTH_SHORT);
                     Bundle bundle = data.getExtras();
                     assert bundle != null;
-                    Bitmap fotoDepoisRegistrador = (Bitmap) bundle.get("data");
-                    fotoResized2 = Bitmap.createScaledBitmap(Objects.requireNonNull(fotoDepoisRegistrador), 100, 120, false);
+                    fotoDepoisRegistrador = (Bitmap) bundle.get("data");
 
-                    if (fotoResized2 != null) {
+                    if (fotoDepoisRegistrador != null) {
 
                         ImageView imageView = findViewById(R.id.FotoDepois);
-                        imageView.setImageBitmap(fotoResized2);
+                        imageView.setImageBitmap(fotoDepoisRegistrador);
                     }
 
                 } else {

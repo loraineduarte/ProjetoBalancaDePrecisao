@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -61,10 +60,6 @@ public class ResultadosFinaisActivity extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss" , Locale.getDefault());
         horaFinalFormatada = sdf.format(hora);
         horaInicialFormatada = Hawk.get("HoraInicial");
-
-        Log.d("Data", dataFormatada);
-        Log.d("Hora Inicial", horaInicialFormatada);
-        Log.d("Hora Final", horaFinalFormatada);
 
         EditText dataInicial = findViewById(R.id.DataInicial);
         dataInicial.setText(dataFormatada);

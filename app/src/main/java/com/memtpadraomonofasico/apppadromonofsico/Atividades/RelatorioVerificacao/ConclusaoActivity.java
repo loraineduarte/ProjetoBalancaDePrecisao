@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -33,9 +34,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 /**
  *
@@ -94,8 +92,7 @@ public class ConclusaoActivity extends AppCompatActivity {
                 } else {
 
                     Hawk.put("Conclusao", conclusão);
-
-                       gerarRelatorio();
+                    gerarRelatorio();
 
                 }
             }
@@ -132,17 +129,60 @@ public class ConclusaoActivity extends AppCompatActivity {
         Document document = new Document();
         try {
 
-            File pdfFolder = new File(Environment.getExternalStoragePublicDirectory(
-                    Environment.DIRECTORY_DOWNLOADS), "RelatorioDeVerificacao");
-            if (!pdfFolder.exists()) {
-                pdfFolder.mkdir();
+            String numServico =  Hawk.get("NumeroNotaServico");
+            File folder = new File(Environment.getExternalStoragePublicDirectory( Environment.DIRECTORY_DOCUMENTS)  + "/Relatórios_Padrao/Relatorio_"+numServico );
+
+            if (!folder.exists()) {
+                folder.mkdirs();
+
             }
 
-            //Create time stamp
-            Date date = new Date();
-            String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmmss", Locale.getDefault()).format(date);
-            File myFile = new File(pdfFolder + timeStamp + ".pdf");
+            Bitmap fotoPreRegistrador = Hawk.get("FotoPreTesteRegistrador");
+            Bitmap fotoPosRegistrador = Hawk.get("FotoPosTesteRegistrador");
+            Bitmap fotoInspecao = Hawk.get("FotoInspecaoVisual");
+
+            //salvando pdf na pasta
+            File myFile = new File(folder,numServico + ".pdf");
             OutputStream output = new FileOutputStream(myFile);
+
+            //salvando foto pre registrador na pasta
+            ByteArrayOutputStream streamfotoPre = new ByteArrayOutputStream();
+            if(fotoPreRegistrador != null){
+                fotoPreRegistrador.compress(Bitmap.CompressFormat.PNG, 100, streamfotoPre);
+
+                byte[] bytes = streamfotoPre.toByteArray();;
+                String nomeArquivo = Environment.getExternalStoragePublicDirectory( Environment.DIRECTORY_DOCUMENTS)  + "/Relatórios_Padrao/FotoPreRegistrador_"+numServico + ".png";
+
+                FileOutputStream fos1 = new FileOutputStream(nomeArquivo);
+                fos1.write(bytes);
+            }
+
+
+
+            //salvando foto pos registrador na pasta
+            ByteArrayOutputStream streamfotoPos = new ByteArrayOutputStream();
+            if(fotoPosRegistrador != null){
+                fotoPosRegistrador.compress(Bitmap.CompressFormat.PNG, 100, streamfotoPos);
+
+                byte[] bytes = streamfotoPos.toByteArray();;
+                String nomeArquivo = Environment.getExternalStoragePublicDirectory( Environment.DIRECTORY_DOCUMENTS)  + "/Relatórios_Padrao/FotoPosRegistrador_"+numServico + ".png";
+
+                FileOutputStream fos1 = new FileOutputStream(nomeArquivo);
+                fos1.write(bytes);
+            }
+
+            //salvando foto inspeçao visual na pasta
+            ByteArrayOutputStream streamfotoInpecao = new ByteArrayOutputStream();
+            if(fotoInspecao!=null){
+                Log.d("FEZDIRETORIO", "done");
+                fotoInspecao.compress(Bitmap.CompressFormat.PNG, 100, streamfotoInpecao);
+                byte[] bytes = streamfotoInpecao.toByteArray();
+                File foto = new File(folder,"FotoInspecaoVisual_"+numServico + ".png");
+                OutputStream output1 = new FileOutputStream(foto);
+                output1.write(bytes);
+
+            }
+
 
             //Step 2
             PdfWriter writer = PdfWriter.getInstance(document, output);
@@ -746,11 +786,6 @@ public class ConclusaoActivity extends AppCompatActivity {
             Paragraph anexos = new Paragraph();
             PdfPCell anexoItem = null;
 
-            Bitmap fotoPreRegistrador = Hawk.get("FotoPreTesteRegistrador");
-            Bitmap fotoInspecao = Hawk.get("FotoInspecaoVisual");
-            Bitmap fotoPosRegistrador = Hawk.get("FotoPosTesteRegistrador");
-
-
             if((fotoPreRegistrador == null) && (fotoInspecao == null) && (fotoPosRegistrador == null)){
 
                 anexos.add(new Paragraph("Anexos: ", catFont));
@@ -922,10 +957,16 @@ public class ConclusaoActivity extends AppCompatActivity {
 
             document.close();
 
+
+
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setDataAndType(Uri.fromFile(myFile), "application/pdf");
             intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
             startActivity(intent);
+
+
+
+
 
         } catch (DocumentException de) {
             System.err.println(de.getMessage());
