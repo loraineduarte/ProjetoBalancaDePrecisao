@@ -10,34 +10,29 @@
 
     <application
         android:allowBackup="true"
+        android:fullBackupContent="@xml/backup_descriptor"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:fullBackupContent="@xml/backup_descriptor">
+        android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".DashboardActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".Atividades.Cadastro.Avaliador.CriarAvaliadorActivity"
-            android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait"/>
+            android:parentActivityName=".DashboardActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Atividades.Cadastro.Medidor.CriarMedidorActivity"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".DashboardActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Bluetooth.BluetoothActivity"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".DashboardActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Bluetooth.DiscoveredDevices"
@@ -46,48 +41,53 @@
         <activity
             android:name=".Bluetooth.PairedDevices"
             android:parentActivityName=".Bluetooth.BluetoothActivity"
-            android:screenOrientation="portrait"  />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Atividades.RelatorioVerificacao.RelatorioVerificacaoActivity"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".DashboardActivity"
             android:screenOrientation="portrait" />
-
-        <activity android:name=".Atividades.RelatorioVerificacao.ServicoActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".Atividades.RelatorioVerificacao.SelecionarMedidorActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".Atividades.RelatorioVerificacao.Testes.InspecaoVisual.InspecaoVisualActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".Atividades.RelatorioVerificacao.Testes.Registrador.RegistradorActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".Atividades.RelatorioVerificacao.Testes.MarchaVazio.MarchaVazioActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".Atividades.RelatorioVerificacao.Testes.Exatidao.ExatidaoActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".Atividades.RelatorioVerificacao.SituacoesObservadasActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".Atividades.RelatorioVerificacao.ResultadosFinaisActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".Atividades.RelatorioVerificacao.ConclusaoActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".Atividades.RelatorioVerificacao.Testes.InspecaoVisual.ObservacaoInspecaoVisualActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".Atividades.RelatorioVerificacao.Testes.Registrador.ObservacaoRegistradorActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".Atividades.RelatorioVerificacao.Testes.CircuitoPotencial.CircuitoPotencialActivity"
+        <activity
+            android:name=".Atividades.RelatorioVerificacao.ServicoActivity"
             android:screenOrientation="portrait" />
-
+        <activity
+            android:name=".Atividades.RelatorioVerificacao.SelecionarMedidorActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Atividades.RelatorioVerificacao.Testes.InspecaoVisual.InspecaoVisualActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Atividades.RelatorioVerificacao.Testes.Registrador.RegistradorActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Atividades.RelatorioVerificacao.Testes.MarchaVazio.MarchaVazioActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Atividades.RelatorioVerificacao.Testes.Exatidao.ExatidaoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Atividades.RelatorioVerificacao.SituacoesObservadasActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Atividades.RelatorioVerificacao.ResultadosFinaisActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Atividades.RelatorioVerificacao.ConclusaoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Atividades.RelatorioVerificacao.Testes.InspecaoVisual.ObservacaoInspecaoVisualActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Atividades.RelatorioVerificacao.Testes.Registrador.ObservacaoRegistradorActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Atividades.RelatorioVerificacao.Testes.CircuitoPotencial.CircuitoPotencialActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Login.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

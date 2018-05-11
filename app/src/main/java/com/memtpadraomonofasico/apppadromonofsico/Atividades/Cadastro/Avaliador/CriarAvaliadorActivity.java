@@ -38,7 +38,7 @@ public class CriarAvaliadorActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Campos em branco! ", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    String resultado = crud.insereNovoAvaliador(nomeString,matriculaString);
+                    String resultado = crud.insereNovoAvaliador(nomeString,matriculaString,"12345", false  );
                     Toast.makeText(getApplicationContext(), resultado, Toast.LENGTH_LONG).show();
                     finish();
                 }
