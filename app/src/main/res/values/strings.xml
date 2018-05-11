@@ -189,5 +189,6 @@
         <item>Bobina interrompida sem causa detectada</item>
         <item>Circuito de potencial com a fiação cortada</item>
     </string-array>
+    <string name="title_activity_dash_board">DashBoard</string>
 
 </resources>

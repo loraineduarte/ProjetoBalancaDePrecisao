@@ -14,7 +14,7 @@ public class BancoController {
         banco = new CriaBanco(context);
     }
 
-    public String insereNovoAvaliador(String nome, String matricula){
+    public String insereNovoAvaliador(String nome, String matricula, String senha, boolean admin){
         ContentValues valores;
         long resultado;
 
@@ -22,6 +22,8 @@ public class BancoController {
         valores = new ContentValues();
         valores.put(CriaBanco.NOME_AVALIADOR, nome);
         valores.put(CriaBanco.MATRICULA, matricula);
+        valores.put(CriaBanco.SENHA, senha);
+        valores.put(CriaBanco.ADMIN, admin);
 
         resultado = db.insert(CriaBanco.TABELA_AVALIADOR, null, valores);
         db.close();
@@ -37,7 +39,7 @@ public class BancoController {
 
     public Cursor pegaAvaliadores(){
         Cursor cursor;
-        String[] campos =  {CriaBanco.ID_AVALIADOR, CriaBanco.NOME_AVALIADOR, CriaBanco.MATRICULA};
+        String[] campos =  {CriaBanco.ID_AVALIADOR, CriaBanco.NOME_AVALIADOR, CriaBanco.MATRICULA, CriaBanco.SENHA, CriaBanco.ADMIN };
         db = banco.getReadableDatabase();
         cursor = db.query(CriaBanco.TABELA_AVALIADOR, campos, null, null, null, null, null, null);
 
@@ -45,7 +47,6 @@ public class BancoController {
             cursor.moveToFirst();
         }
         db.close();
-        Log.d("BANCO", String.valueOf(cursor));
 
         return cursor;
 
@@ -100,10 +101,26 @@ public class BancoController {
             cursor.moveToFirst();
         }
         db.close();
-        Log.d("BANCO", String.valueOf(cursor));
 
         return cursor;
 
     }
 
+    public Cursor validaLogin(String matricula, String senha) {
+
+        Cursor cursor;
+        String[] campos =  {CriaBanco.ID_AVALIADOR, CriaBanco.NOME_AVALIADOR, CriaBanco.MATRICULA, CriaBanco.SENHA, CriaBanco.ADMIN };
+        String avaliador =  CriaBanco.MATRICULA +" = ? AND " +  CriaBanco.SENHA + " = ? " ;
+        String[] avaliadorArgs =  {matricula, senha};
+        db = banco.getReadableDatabase();
+        cursor = db.query(CriaBanco.TABELA_AVALIADOR, campos, avaliador, avaliadorArgs, null, null, null, null);
+
+        if(cursor!=null){
+            cursor.moveToFirst();
+        }
+        db.close();
+        Log.d("BANCO", String.valueOf(cursor));
+
+        return cursor;
+    }
 }

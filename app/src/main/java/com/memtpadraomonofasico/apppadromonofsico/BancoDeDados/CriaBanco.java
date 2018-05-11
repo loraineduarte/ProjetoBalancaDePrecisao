@@ -10,12 +10,17 @@ public class CriaBanco extends SQLiteOpenHelper {
 
     private static final String NOME_BANCO = "banco.db";
     private static final int DATABASE_VERSION = 2;
+    BancoController banco;
+    private SQLiteDatabase db;
 
     //tabela de avaliador
     public static final String TABELA_AVALIADOR = "avaliador";
     public static final String ID_AVALIADOR = "_id_avaliador";
     public static final String NOME_AVALIADOR = "avaliador_nome";
     public static final String MATRICULA = "avaliador_matricula";
+    public static final String SENHA = "avaliador_senha";
+    public static final String ADMIN = "avaliador_admin";
+
     //tabela de medidor
     public static final String TABELA_MEDIDOR = "medidor";
     public static final String ID_MEDIDOR = "_id_medidor";
@@ -45,9 +50,12 @@ public class CriaBanco extends SQLiteOpenHelper {
         String sqlAvaliador = "CREATE TABLE IF NOT EXISTS "+TABELA_AVALIADOR+" (  "
                 + ID_AVALIADOR + " INTEGER PRIMARY KEY AUTOINCREMENT , "
                 + NOME_AVALIADOR + " text, "
-                + MATRICULA + " text "
+                + MATRICULA + " text, "
+                + SENHA + " text, "
+                + ADMIN + " boolean "
                 +" )";
         db.execSQL(sqlAvaliador);
+
 
         String sqlMedidor = "CREATE TABLE IF NOT EXISTS "+TABELA_MEDIDOR+" (  "
                 + ID_MEDIDOR + " INTEGER PRIMARY KEY AUTOINCREMENT , "
@@ -68,7 +76,13 @@ public class CriaBanco extends SQLiteOpenHelper {
                 + TIPO_MEDIDOR + " text "
                 +" )";
         db.execSQL(sqlMedidor);
+
+
+        final String Insert_Data="INSERT or replace INTO avaliador VALUES( 1, 'administrador','12345','admin', 'true')";
+        db.execSQL(Insert_Data);
+
     }
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

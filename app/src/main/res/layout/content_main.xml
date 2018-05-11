@@ -1,275 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.memtpadraomonofasico.apppadromonofsico.MainActivity"
-    tools:showIn="@layout/app_bar_main">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true">
 
-
-    <TextView
-        android:id="@+id/PadrãoMonofásico"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="80dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="24dp"
-        android:gravity="center"
-        android:text="Dashboard"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:paddingTop="56dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="263dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:orientation="vertical"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PadrãoMonofásico">
+        <ImageView android:src="@mipmap/ic_launcher_round"
+            android:layout_width="wrap_content"
+            android:layout_height="72dp"
+            android:layout_marginBottom="24dp"
+            android:layout_gravity="center_horizontal" />
 
-        <LinearLayout
+        <!-- Email Label -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <EditText android:id="@+id/input_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:hint="Matrícula" />
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- Password Label -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <EditText android:id="@+id/input_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:hint="Senha"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_login"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:baselineAligned="false"
-            android:gravity="bottom"
-            android:orientation="horizontal"
-            tools:ignore="UselessParent">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="#fff"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerHorizontal="true"
-                        android:text="Medidores"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <ProgressBar
-                        android:id="@+id/progressBarMedidores"
-                        style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_width="200dp"
-                        android:layout_height="200dp"
-                        android:layout_marginTop="26dp"
-                        android:background="@drawable/circle_shape"
-                        android:indeterminate="false"
-                        android:max="100"
-                        android:progress="60"
-                        android:progressDrawable="@drawable/circular_progress_bar" />
-
-                    <TextView
-                        android:id="@+id/progress_circle_textMedidores"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:gravity="center"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="30sp"
-                        android:textStyle="bold" />
-                </RelativeLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_weight="1"
-                android:background="#fff"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerHorizontal="true"
-                        android:text="@string/avaliadores"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-
-                    <ProgressBar
-                        android:id="@+id/progressBarAvaliadores"
-                        style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_width="200dp"
-                        android:layout_height="200dp"
-                        android:layout_marginTop="26dp"
-                        android:background="@drawable/circle_shape"
-                        android:indeterminate="false"
-                        android:max="100"
-                        android:progress="85"
-                        android:progressDrawable="@drawable/circular_progress_bar" />
-
-                    <TextView
-                        android:id="@+id/progress_circle_textAvaliadores"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:gravity="center"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="30sp"
-                        android:textStyle="bold" />
-                </RelativeLayout>
-            </LinearLayout>
-        </LinearLayout>
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/botao_arredondado"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:padding="12dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@android:color/white"
+            android:text="Entrar"/>
 
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="63dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:baselineAligned="false"
-            android:gravity="bottom"
-            android:orientation="horizontal"
-            tools:ignore="UselessParent">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                android:padding="3dp">
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <Button
-                        android:id="@+id/Medidor"
-                        style="@style/Widget.AppCompat.Button.Colored"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:background="@drawable/botao_arredondado"
-                        android:backgroundTint="@color/colorPrimaryDark"
-                        android:indeterminate="false"
-                        android:text="Cadastrar Medidor"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:textColor="@android:color/white"
-                        android:textColorHint="@color/colorPrimaryDark"
-                        android:textColorLink="@color/colorPrimaryDark" />
-
-                </RelativeLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                android:padding="3dp">
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <Button
-                        android:id="@+id/Avaliador"
-                        style="@style/Widget.AppCompat.Button.Colored"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:background="@drawable/botao_arredondado"
-                        android:backgroundTint="@color/colorPrimaryDark"
-                        android:text="Cadastrar Avaliador"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:textColor="@android:color/white" />
-                </RelativeLayout>
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="match_parent"
-        android:layout_height="63dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:baselineAligned="false"
-            android:gravity="bottom"
-            android:orientation="horizontal"
-            tools:ignore="UselessParent">
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
-
-                <RelativeLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent">
-
-                    <Button
-                        android:id="@+id/Teste"
-                        style="@style/Widget.AppCompat.Button.Colored"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:background="@drawable/botao_arredondado"
-                        android:backgroundTint="@color/colorPrimaryDark"
-                        android:text="Realizar Testes"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:textColor="@android:color/white" />
-
-                </RelativeLayout>
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
-
-
-
-
-</android.support.constraint.ConstraintLayout>
+</ScrollView>

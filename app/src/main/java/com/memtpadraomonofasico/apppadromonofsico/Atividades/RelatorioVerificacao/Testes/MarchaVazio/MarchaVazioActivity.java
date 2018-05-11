@@ -13,8 +13,8 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.memtpadraomonofasico.apppadromonofsico.Atividades.Bluetooth.PairedDevices;
-import com.memtpadraomonofasico.apppadromonofsico.Atividades.Bluetooth.ThreadConexaoMarchaVazio;
+import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.PairedDevices;
+import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.ThreadConexaoMarchaVazio;
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.Exatidao.ExatidaoActivity;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
