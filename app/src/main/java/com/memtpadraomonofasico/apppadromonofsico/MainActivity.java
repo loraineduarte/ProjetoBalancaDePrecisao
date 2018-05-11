@@ -17,8 +17,8 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.memtpadraomonofasico.apppadromonofsico.Atividades.Avaliador.CriarAvaliadorActivity;
-import com.memtpadraomonofasico.apppadromonofsico.Atividades.Medidor.CriarMedidorActivity;
+import com.memtpadraomonofasico.apppadromonofsico.Atividades.Cadastro.Avaliador.CriarAvaliadorActivity;
+import com.memtpadraomonofasico.apppadromonofsico.Atividades.Cadastro.Medidor.CriarMedidorActivity;
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.RelatorioVerificacaoActivity;
 import com.memtpadraomonofasico.apppadromonofsico.BancoDeDados.BancoController;
 import com.orhanobut.hawk.Hawk;

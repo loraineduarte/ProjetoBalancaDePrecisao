@@ -19,8 +19,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.memtpadraomonofasico.apppadromonofsico.Atividades.Bluetooth.PairedDevices;
-import com.memtpadraomonofasico.apppadromonofsico.Atividades.Bluetooth.ThreadConexaoRegistrador;
+import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.PairedDevices;
+import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.ThreadConexaoRegistrador;
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.SituacoesObservadasActivity;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;

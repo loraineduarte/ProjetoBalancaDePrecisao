@@ -1,4 +1,4 @@
-package com.memtpadraomonofasico.apppadromonofsico.Atividades.Avaliador;
+package com.memtpadraomonofasico.apppadromonofsico.Atividades.Cadastro.Avaliador;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

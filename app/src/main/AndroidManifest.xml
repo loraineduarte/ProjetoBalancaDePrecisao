@@ -28,24 +28,24 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Atividades.Avaliador.CriarAvaliadorActivity"
+            android:name=".Atividades.Cadastro.Avaliador.CriarAvaliadorActivity"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".Atividades.Medidor.CriarMedidorActivity"
+            android:name=".Atividades.Cadastro.Medidor.CriarMedidorActivity"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Atividades.Bluetooth.BluetoothActivity"
+            android:name=".Bluetooth.BluetoothActivity"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Atividades.Bluetooth.DiscoveredDevices"
-            android:parentActivityName=".Atividades.Bluetooth.BluetoothActivity"
+            android:name=".Bluetooth.DiscoveredDevices"
+            android:parentActivityName=".Bluetooth.BluetoothActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Atividades.Bluetooth.PairedDevices"
-            android:parentActivityName=".Atividades.Bluetooth.BluetoothActivity"
+            android:name=".Bluetooth.PairedDevices"
+            android:parentActivityName=".Bluetooth.BluetoothActivity"
             android:screenOrientation="portrait"  />
         <activity
             android:name=".Atividades.RelatorioVerificacao.RelatorioVerificacaoActivity"

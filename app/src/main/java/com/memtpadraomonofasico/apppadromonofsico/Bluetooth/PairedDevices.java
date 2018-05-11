@@ -1,4 +1,4 @@
-package com.memtpadraomonofasico.apppadromonofsico.Atividades.Bluetooth;
+package com.memtpadraomonofasico.apppadromonofsico.Bluetooth;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
