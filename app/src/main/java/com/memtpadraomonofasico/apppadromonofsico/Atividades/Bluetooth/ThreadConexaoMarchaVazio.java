@@ -1,4 +1,4 @@
-package com.memtpadraomonofasico.apppadromonofsico.Bluetooth;
+package com.memtpadraomonofasico.apppadromonofsico.Atividades.Bluetooth;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -18,7 +18,7 @@ import java.util.UUID;
  * Created by loraine.duarte on 20/04/2018.
  */
 
-public class ThreadConexaoRegistrador  extends Thread {
+public class ThreadConexaoMarchaVazio  extends Thread {
 
     private BluetoothSocket btSocket = null;
     private OutputStream output = null;
@@ -28,7 +28,7 @@ public class ThreadConexaoRegistrador  extends Thread {
 
     /*  Este construtor prepara o dispositivo para atuar como servidor.
      */
-    public ThreadConexaoRegistrador() {
+    public ThreadConexaoMarchaVazio() {
         this.server = true;
     }
 
@@ -36,7 +36,7 @@ public class ThreadConexaoRegistrador  extends Thread {
         Tem como argumento uma string contendo o endereço MAC do dispositivo
     Bluetooth para o qual deve ser solicitada uma conexão.
      */
-    public ThreadConexaoRegistrador(String btDevAddress) {
+    public ThreadConexaoMarchaVazio(String btDevAddress) {
         this.server = false;
         this.btDevAddress = btDevAddress;
     }
@@ -57,7 +57,7 @@ public class ThreadConexaoRegistrador  extends Thread {
         para atuar como servidor ou cliente.
          */
         String myUUID = "00001101-0000-1000-8000-00805F9B34FB";
-        if (this.server) {
+        if(this.server) {
 
             /*  Servidor.
              */
@@ -74,7 +74,7 @@ public class ThreadConexaoRegistrador  extends Thread {
                 /*  Se a conexão foi estabelecida corretamente, o socket
                 servidor pode ser liberado.
                  */
-                if (btSocket != null) {
+                if(btSocket != null) {
 
                     btServerSocket.close();
                 }
@@ -113,8 +113,8 @@ public class ThreadConexaoRegistrador  extends Thread {
                     Permanece em estado de espera até que a conexão seja
                 estabelecida.
                  */
-                if (btSocket != null) {
-                    if (btSocket.isConnected()) {
+                if (btSocket != null){
+                    if(btSocket.isConnected()){
                         btSocket.close();
                     }
                     btSocket.connect();
@@ -136,7 +136,7 @@ public class ThreadConexaoRegistrador  extends Thread {
             ...
          */
 
-        if (btSocket != null) {
+        if(btSocket != null) {
 
             /*  Envia um código para a Activity principal informando que a
             a conexão ocorreu com sucesso.
@@ -167,7 +167,7 @@ public class ThreadConexaoRegistrador  extends Thread {
                     Esta thread permanecerá em estado de escuta até que
                 a variável running assuma o valor false.
                  */
-                while (running) {
+                while(running) {
 
                     bytes = input.read(buffer);
                     toMainActivity(Arrays.copyOfRange(buffer, 0, bytes));
@@ -189,7 +189,9 @@ public class ThreadConexaoRegistrador  extends Thread {
         Looper.loop();
 
 
+
     }
+
 
 
     /*  Utiliza um handler para enviar um byte array à Activity principal.
@@ -211,7 +213,7 @@ public class ThreadConexaoRegistrador  extends Thread {
      */
     public void write(byte[] data) {
 
-        if (output != null) {
+        if(output != null) {
             try {
 
                 /*  Transmite a mensagem.
@@ -228,9 +230,10 @@ public class ThreadConexaoRegistrador  extends Thread {
             toMainActivity("---N".getBytes());
         }
     }
-}
 
     /*  O método stop() contem as instruções que serão efetivamente realizadas
    em uma nova  para parar a conexão.
     */
 
+
+}

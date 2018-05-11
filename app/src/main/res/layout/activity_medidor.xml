@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".Atividades.Cadastro.Medidor.CriarMedidorActivity">
 
-
     <TextView
         android:id="@+id/Medidor"
         android:layout_width="178dp"
