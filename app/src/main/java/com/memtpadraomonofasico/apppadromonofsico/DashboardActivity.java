@@ -22,7 +22,6 @@ import com.memtpadraomonofasico.apppadromonofsico.Atividades.Cadastro.Medidor.Cr
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.RelatorioVerificacaoActivity;
 import com.memtpadraomonofasico.apppadromonofsico.BancoDeDados.BancoController;
 import com.orhanobut.hawk.Hawk;
-import com.orhanobut.hawk.NoEncryption;
 
 
 public class DashboardActivity extends AppCompatActivity
@@ -34,6 +33,7 @@ public class DashboardActivity extends AppCompatActivity
     private TextView progressingTextViewmedidores;
     private final Handler progressHandler = new Handler();
     private int i = 0;
+    String user, senha;
 
 
     @Override
@@ -43,12 +43,13 @@ public class DashboardActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        NoEncryption encryption = new NoEncryption();
-        Hawk.init(this).setEncryption(encryption).build();
+        user = Hawk.get("usuario");
+        senha = Hawk.get("senha" );
 
         final BancoController crud = new BancoController(getBaseContext());
         final Cursor cursorMedidor = crud.pegaMedidores();
         final Cursor cursorAvaliador = crud.pegaAvaliadores();
+        final Cursor usuarioLogin = crud.pegaTipoUsuario(user, senha);
 
 
         Button avaliadores = findViewById(R.id.Avaliador);

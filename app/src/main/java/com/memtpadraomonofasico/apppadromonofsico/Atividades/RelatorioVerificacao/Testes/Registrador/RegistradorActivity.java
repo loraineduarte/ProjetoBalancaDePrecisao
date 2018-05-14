@@ -192,7 +192,7 @@ public class RegistradorActivity extends AppCompatActivity {
 
                     }
                     else {
-                        if (((status.equals("Aprovado")) || (status.equals("Reprovado"))) && ((fotoResized1 == null) || (fotoResized2 == null))) {
+                        if (((status.equals("Aprovado")) || (status.equals("Reprovado"))) && ((fotoAntesRegistrador == null) || (fotoDepoisRegistrador == null))) {
                             Toast.makeText(getApplicationContext(), "Sessão incompleta - Fotos não tiradas!", Toast.LENGTH_LONG).show();
 
                         } else {
@@ -292,7 +292,7 @@ public class RegistradorActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "O teste não pode ser inicializado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
 
         }
-        if (fotoResized1 == null) {
+        if (fotoAntesRegistrador == null) {
             Toast.makeText(getApplicationContext(), "O teste não pode ser inicializado sem a foto pré-teste.", Toast.LENGTH_LONG).show();
 
         } else {

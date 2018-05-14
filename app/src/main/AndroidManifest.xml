@@ -31,15 +31,15 @@
             android:parentActivityName=".DashboardActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Bluetooth.BluetoothActivity"
+            android:name=".Atividades.Bluetooth.BluetoothActivity"
             android:parentActivityName=".DashboardActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Bluetooth.DiscoveredDevices"
+            android:name=".Atividades.Bluetooth.DiscoveredDevices"
             android:parentActivityName=".Bluetooth.BluetoothActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Bluetooth.PairedDevices"
+            android:name=".Atividades.Bluetooth.PairedDevices"
             android:parentActivityName=".Bluetooth.BluetoothActivity"
             android:screenOrientation="portrait" />
         <activity

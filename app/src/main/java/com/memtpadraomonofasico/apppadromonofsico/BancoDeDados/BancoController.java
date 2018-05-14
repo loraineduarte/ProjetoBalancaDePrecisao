@@ -119,6 +119,23 @@ public class BancoController {
             cursor.moveToFirst();
         }
         db.close();
+
+        return cursor;
+    }
+
+    public Cursor pegaTipoUsuario(String email, String senha) {
+
+        Cursor cursor;
+        String[] campos =  {CriaBanco.ADMIN };
+        String avaliador =  CriaBanco.MATRICULA +" = ? AND " +  CriaBanco.SENHA + " = ? " ;
+        String[] avaliadorArgs =  {email, senha};
+        db = banco.getReadableDatabase();
+        cursor = db.query(CriaBanco.TABELA_AVALIADOR, campos, avaliador, avaliadorArgs, null, null, null, null);
+
+        if(cursor!=null){
+            cursor.moveToFirst();
+        }
+        db.close();
         Log.d("BANCO", String.valueOf(cursor));
 
         return cursor;

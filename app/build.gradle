@@ -9,12 +9,20 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath false
+            }
+        }
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
+
     }
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
@@ -44,4 +52,5 @@ dependencies {
     compile 'com.orhanobut:hawk:2.0.1'
     implementation files('libs/iText-5.0.5.jar')
     implementation files('libs/xmlworker-5.5.6-javadoc.jar')
+    implementation files('libs/butterknife-6.1.0.jar')
 }
