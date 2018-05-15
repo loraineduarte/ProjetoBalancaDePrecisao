@@ -1,4 +1,5 @@
 package com.memtpadraomonofasico.apppadromonofsico;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -10,7 +11,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -25,7 +28,7 @@ import com.orhanobut.hawk.Hawk;
 
 
 public class DashboardActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+implements NavigationView.OnNavigationItemSelectedListener {
 
     private ProgressBar myprogressBarAvaliadores;
     private ProgressBar myprogressBarMedidores;
@@ -34,8 +37,12 @@ public class DashboardActivity extends AppCompatActivity
     private final Handler progressHandler = new Handler();
     private int i = 0;
     String user, senha;
+    Button avaliadores, medidores, teste, avaliador;
+    String usuarioLogin;
 
 
+
+    @SuppressLint("WrongConstant")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,10 +56,31 @@ public class DashboardActivity extends AppCompatActivity
         final BancoController crud = new BancoController(getBaseContext());
         final Cursor cursorMedidor = crud.pegaMedidores();
         final Cursor cursorAvaliador = crud.pegaAvaliadores();
-        final Cursor usuarioLogin = crud.pegaTipoUsuario(user, senha);
+        usuarioLogin = crud.pegaTipoUsuario(user, senha);
+
+        avaliadores = findViewById(R.id.Avaliador);
+        medidores = findViewById(R.id.Medidor);
+        teste = findViewById(R.id.Teste);
+
+        //itens de menu
+        Log.d("Usuario", String.valueOf(usuarioLogin));
 
 
-        Button avaliadores = findViewById(R.id.Avaliador);
+        if (usuarioLogin.equals("true")) { //admin
+            avaliadores.setVisibility(View.VISIBLE);
+            medidores.setVisibility(View.VISIBLE);
+            teste.setVisibility(View.VISIBLE);
+
+
+        } else { //usuário normal
+            avaliadores.setVisibility(View.INVISIBLE);
+            medidores.setVisibility(View.INVISIBLE);
+            teste.setVisibility(View.VISIBLE);
+
+
+        }
+
+
         avaliadores.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,7 +88,6 @@ public class DashboardActivity extends AppCompatActivity
             }
         });
 
-        Button medidores = findViewById(R.id.Medidor);
         medidores.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,7 +95,6 @@ public class DashboardActivity extends AppCompatActivity
             }
         });
 
-        Button teste = findViewById(R.id.Teste);
         teste.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -77,8 +103,7 @@ public class DashboardActivity extends AppCompatActivity
         });
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -130,11 +155,38 @@ public class DashboardActivity extends AppCompatActivity
         }
     }
 
+//    @Override
+//    public boolean onPrepareOptionsMenu(Menu menu) {
+//       // MenuItem cadastros= menu.findItem(R.id.MenuCadastros);
+//        //depending on your conditions, either enable/disable
+//        final BancoController crud = new BancoController(getBaseContext());
+//        usuarioLogin = crud.pegaTipoUsuario(user, senha);
+//
+//
+////        if (usuarioLogin.equals("true")) { //admin
+////            cadastros.setVisible(true);
+////
+////        } else { //usuário normal
+////            cadastros.setVisible(false);
+////
+////        }
+//
+//        super.onPrepareOptionsMenu(menu);
+//        return true;
+//    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
+        MenuInflater inflater = getMenuInflater();
+
+        final BancoController crud = new BancoController(getBaseContext());
+        usuarioLogin = crud.pegaTipoUsuario(user, senha);
+
+        menu.removeItem(R.id.nav_avaliador);
+
+        inflater.inflate(R.menu.main, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -162,6 +214,8 @@ public class DashboardActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 
 
 

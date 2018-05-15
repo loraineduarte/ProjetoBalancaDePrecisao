@@ -123,7 +123,7 @@ public class BancoController {
         return cursor;
     }
 
-    public Cursor pegaTipoUsuario(String email, String senha) {
+    public String pegaTipoUsuario(String email, String senha) {
 
         Cursor cursor;
         String[] campos =  {CriaBanco.ADMIN };
@@ -136,8 +136,10 @@ public class BancoController {
             cursor.moveToFirst();
         }
         db.close();
-        Log.d("BANCO", String.valueOf(cursor));
 
-        return cursor;
+
+        String valor = cursor.getString(cursor.getColumnIndexOrThrow("avaliador_admin"));
+        Log.d("BANCO", valor);
+        return valor;
     }
 }
