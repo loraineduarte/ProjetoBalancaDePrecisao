@@ -138,8 +138,10 @@ public class BancoController {
         db.close();
 
 
+
         String valor = cursor.getString(cursor.getColumnIndexOrThrow("avaliador_admin"));
         Log.d("BANCO", valor);
+        cursor.close();
         return valor;
     }
 }

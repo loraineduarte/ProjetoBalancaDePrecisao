@@ -36,9 +36,10 @@ implements NavigationView.OnNavigationItemSelectedListener {
     private TextView progressingTextViewmedidores;
     private final Handler progressHandler = new Handler();
     private int i = 0;
-    String user, senha;
-    Button avaliadores, medidores, teste, avaliador;
-    String usuarioLogin;
+    private String user;
+    private String senha;
+    Button avaliador;
+    private String usuarioLogin;
 
 
 
@@ -58,9 +59,9 @@ implements NavigationView.OnNavigationItemSelectedListener {
         final Cursor cursorAvaliador = crud.pegaAvaliadores();
         usuarioLogin = crud.pegaTipoUsuario(user, senha);
 
-        avaliadores = findViewById(R.id.Avaliador);
-        medidores = findViewById(R.id.Medidor);
-        teste = findViewById(R.id.Teste);
+        Button avaliadores = findViewById(R.id.Avaliador);
+        Button medidores = findViewById(R.id.Medidor);
+        Button teste = findViewById(R.id.Teste);
 
         //itens de menu
         Log.d("Usuario", String.valueOf(usuarioLogin));

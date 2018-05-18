@@ -31,7 +31,8 @@ public class LoginActivity extends AppCompatActivity {
     private EditText _passwordText;
     @InjectView(R.id.btn_login)
     private Button _loginButton;
-    String email, password;
+    private String email;
+    private String password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

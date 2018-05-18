@@ -1,5 +1,6 @@
 package com.memtpadraomonofasico.apppadromonofsico.Atividades.Avaliador;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.memtpadraomonofasico.apppadromonofsico.R;
 /**
  *
  */
+@SuppressLint("Registered")
 public class CriarAvaliadorActivity extends AppCompatActivity {
 
     private EditText nome, matricula;
