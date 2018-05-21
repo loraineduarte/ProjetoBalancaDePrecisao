@@ -62,6 +62,7 @@ implements NavigationView.OnNavigationItemSelectedListener {
         Button avaliadores = findViewById(R.id.Avaliador);
         Button medidores = findViewById(R.id.Medidor);
         Button teste = findViewById(R.id.Teste);
+        TextView admin = findViewById(R.id.Admin);
 
         //itens de menu
         Log.d("Usuario", String.valueOf(usuarioLogin));
@@ -71,11 +72,13 @@ implements NavigationView.OnNavigationItemSelectedListener {
             avaliadores.setVisibility(View.VISIBLE);
             medidores.setVisibility(View.VISIBLE);
             teste.setVisibility(View.VISIBLE);
+            admin.setVisibility(View.VISIBLE);
 
 
         } else { //usuário normal
             avaliadores.setVisibility(View.INVISIBLE);
             medidores.setVisibility(View.INVISIBLE);
+            admin.setVisibility(View.INVISIBLE);
             teste.setVisibility(View.VISIBLE);
 
 
@@ -184,8 +187,6 @@ implements NavigationView.OnNavigationItemSelectedListener {
         final BancoController crud = new BancoController(getBaseContext());
         usuarioLogin = crud.pegaTipoUsuario(user, senha);
 
-        menu.removeItem(R.id.nav_avaliador);
-
         inflater.inflate(R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
     }
@@ -196,16 +197,7 @@ implements NavigationView.OnNavigationItemSelectedListener {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_avaliador) {
-
-            abrirAvaliador();
-            return true;
-
-        } else if (id == R.id.nav_medidores) {
-            abrirMedidores();
-            return true;
-
-        }  else if (id == R.id.nav_relatorioVerificação) {
+        if (id == R.id.nav_relatorioVerificação) {
             abrirRelatorio();
             return true;
 

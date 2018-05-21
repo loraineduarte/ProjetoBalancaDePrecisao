@@ -133,23 +133,35 @@ public class CriarAvaliadorActivity extends AppCompatActivity {
             // Pull that URI using resultData.getData().
             if (data != null) {
                 Uri uri = data.getData();
+                final BancoController crud = new BancoController(getBaseContext());
 
                 try{
-                    File csvfile = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/teste.csv");
+                    File csvfile = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/avaliador.csv");
                     CSVReader reader = new CSVReader(new FileReader(csvfile));
                     String [] nextLine;
                     while ((nextLine = reader.readNext()) != null) {
-                        // nextLine[] is an array of values from the line
-                        System.out.println(nextLine[0] + nextLine[1] + "etc...");
+                        boolean tipo = false;
+                        String nome= nextLine[0];
+                        String matricula = nextLine[1];
+                        String senha = nextLine[2];
+                        String tipoUsuario = nextLine[3];
+                        if(tipoUsuario.startsWith("adm")){
+                            tipo=true;
+                        } else if(tipoUsuario.startsWith("ava")){
+                            tipo=false;
+                        }
+                        String resultado = crud.insereNovoAvaliador(nome, matricula, senha, tipo);
+                        Toast.makeText(getApplicationContext(), resultado, Toast.LENGTH_LONG).show();
+                        finish();
                     }
                 }catch(Exception e){
                     e.printStackTrace();
-                    Toast.makeText(this, "The specified file was not found", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Erro ao abrir o arquivo", Toast.LENGTH_SHORT).show();
                 }
 
 
             }
         }
     }
-
+   
 }
