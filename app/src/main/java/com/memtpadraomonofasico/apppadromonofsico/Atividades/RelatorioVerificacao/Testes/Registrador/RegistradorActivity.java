@@ -19,9 +19,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.memtpadraomonofasico.apppadromonofsico.Atividades.Bluetooth.PairedDevices;
-import com.memtpadraomonofasico.apppadromonofsico.Atividades.Bluetooth.ThreadConexaoRegistrador;
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.SituacoesObservadasActivity;
+import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.PairedDevices;
+import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.ThreadConexaoRegistrador;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
 import com.orhanobut.hawk.NoEncryption;
@@ -41,6 +41,7 @@ public class RegistradorActivity extends AppCompatActivity {
     @SuppressLint("StaticFieldLeak")
     private static TextView textMessage;
     private static TextView calibracaoPreTeste, calibracaoPosTeste;
+    private static ThreadConexaoRegistrador conexao;
     @SuppressLint("WrongViewCast")
     private Button fotoDepois;
     @SuppressLint("WrongViewCast")
@@ -48,7 +49,6 @@ public class RegistradorActivity extends AppCompatActivity {
     @SuppressLint("WrongViewCast")
     private Button conectar, estadoTeste;
     private BluetoothAdapter mBluetoothAdapter = null;
-    private static ThreadConexaoRegistrador conexao;
     private RadioButton aprovado, naoPossibilitaTeste, reprovado;
     private Bitmap fotoResized1, fotoResized2;
     private Bitmap fotoDepoisRegistrador, fotoAntesRegistrador;

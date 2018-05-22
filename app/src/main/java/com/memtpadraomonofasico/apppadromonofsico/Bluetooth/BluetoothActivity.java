@@ -1,4 +1,4 @@
-package com.memtpadraomonofasico.apppadromonofsico.Atividades.Bluetooth;
+package com.memtpadraomonofasico.apppadromonofsico.Bluetooth;
 
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
@@ -33,139 +33,13 @@ public class BluetoothActivity extends AppCompatActivity {
     private static final int SELECT_PAIRED_DEVICE = 2;
     private static final int SELECT_DISCOVERED_DEVICE = 3;
     private static final int REQUEST_ENABLE_BT = 4;
-
-    private static String res;
+    private static final byte[] pacote = new byte[10];
     static String tipoTeste = "";
     static boolean finalDeTeste = false;
-
-    private TextView statusMessage;
-    private TextView textSpace;
-
-    private static final byte[] pacote = new byte[10];
+    private static String res;
     ExatidaoActivity conformidade= new ExatidaoActivity();
     RegistradorActivity registrador = new RegistradorActivity();
     MarchaVazioActivity marchaVazio = new MarchaVazioActivity();
-    private ThreadConexao conexao;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bluetooth);
-
-        statusMessage = findViewById(R.id.statusMessage);
-        textSpace = findViewById(R.id.textSpace);
-
-        // Início - verificando ativação do bluetooth
-        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
-        if (mBluetoothAdapter == null) {
-            statusMessage.setText("Bluetooth não está funcionando.");
-            out.append("device not supported");
-        } else {
-            statusMessage.setText("Bluetooth está funcionando.");
-            if (!mBluetoothAdapter.isEnabled()) {
-                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-                statusMessage.setText("Solicitando ativação do Bluetooth...");
-                //startActivityForResult(enableBtIntent, REQUEST_DISCOVERABLE_BT);
-                //enableBtIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 1000);
-            } else {
-                statusMessage.setText("Bluetooth Ativado.");
-            }
-        }
-        // Fim - verificando ativação do bluetooth
-
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == ENABLE_BLUETOOTH) {
-            if (resultCode == RESULT_OK) {
-                statusMessage.setText("Bluetooth ativado.");
-            } else {
-                statusMessage.setText("Bluetooth não ativado.");
-            }
-        } else if (requestCode == SELECT_PAIRED_DEVICE || requestCode == SELECT_DISCOVERED_DEVICE) {
-            if (resultCode == RESULT_OK) {
-                statusMessage.setText("Você selecionou " + data.getStringExtra("btDevName") + "\n"
-                        + data.getStringExtra("btDevAddress"));
-
-                conexao = new ThreadConexao(data.getStringExtra("btDevAddress"));
-                conexao.start();
-            } else {
-                statusMessage.setText("Nenhum dispositivo selecionado.");
-            }
-        }
-    }
-
-    /**
-     * @param view
-     */
-    public void searchPairedDevices(View view) {
-        Intent searchPairedDevicesIntent = new Intent(this, PairedDevices.class);
-        startActivityForResult(searchPairedDevicesIntent, SELECT_PAIRED_DEVICE);
-    }
-
-    public void discoverDevices(View view) {
-        Intent searchPairedDevicesIntent = new Intent(this, DiscoveredDevices.class);
-        startActivityForResult(searchPairedDevicesIntent, SELECT_DISCOVERED_DEVICE);
-    }
-
-    public void waitConnection(View view) {
-        conexao = new ThreadConexao();
-        conexao.start();
-    }
-
-    public void stopConnection() {
-        conexao.interrupt();
-    }
-
-    public void enableVisibility(View view) {
-        Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-        discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 30);
-        startActivity(discoverableIntent);
-    }
-
-    public void sendMessage(View view) {
-        EditText messageBox = findViewById(R.id.editText_MessageBox);
-        String messageBoxString = messageBox.getText().toString();
-
-        byte[] pacote = new byte[10];
-
-        if (messageBox.getText().toString().equalsIgnoreCase("i")) {
-            pacote[0] = ('I' & 0xFF);
-            pacote[1] = ('B' & 0xFF);
-            pacote[2] = (byte) (0 & 0xFF);
-            pacote[3] = (byte) (0 & 0xFF);
-            pacote[4] = (byte) (90 & 0xFF);
-            pacote[5] = (byte) (175 & 0xFF);
-            pacote[6] = (byte) (0 & 0xFF);
-            pacote[7] = (byte) (10 & 0xFF);
-            pacote[8] = (byte) (0 & 0xFF);
-            pacote[9] = (byte) (0 & 0xFF);
-        } else if (messageBox.getText().toString().equalsIgnoreCase("c")) {
-            pacote[0] = ('C' & 0xFF);
-            pacote[1] = (byte) (0 & 0xFF);
-            pacote[2] = (byte) (0 & 0xFF);
-            pacote[3] = (byte) (0 & 0xFF);
-            pacote[4] = (byte) (0 & 0xFF);
-            pacote[5] = (byte) (0 & 0xFF);
-            pacote[6] = (byte) (0 & 0xFF);
-            pacote[7] = (byte) (0 & 0xFF);
-            pacote[8] = (byte) (0 & 0xFF);
-            pacote[9] = (byte) (0 & 0xFF);
-        }
-
-        statusMessage.setText(Arrays.toString(pacote));
-        conexao.write(pacote);
-    }
-
-    public static void setAuth(Context contexto, String a) {
-        Toast.makeText(contexto, a, Toast.LENGTH_SHORT).show();
-
-    }
-
     @SuppressLint("HandlerLeak")
     public final ThreadLocal<Handler> handler = new ThreadLocal<Handler>() {
         @Override
@@ -309,6 +183,128 @@ public class BluetoothActivity extends AppCompatActivity {
             };
         }
     };
+    private TextView statusMessage;
+    private TextView textSpace;
+    private ThreadConexao conexao;
+
+    public static void setAuth(Context contexto, String a) {
+        Toast.makeText(contexto, a, Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_bluetooth);
+
+        statusMessage = findViewById(R.id.statusMessage);
+        textSpace = findViewById(R.id.textSpace);
+
+        // Início - verificando ativação do bluetooth
+        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+        if (mBluetoothAdapter == null) {
+            statusMessage.setText("Bluetooth não está funcionando.");
+            out.append("device not supported");
+        } else {
+            statusMessage.setText("Bluetooth está funcionando.");
+            if (!mBluetoothAdapter.isEnabled()) {
+                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+                statusMessage.setText("Solicitando ativação do Bluetooth...");
+                //startActivityForResult(enableBtIntent, REQUEST_DISCOVERABLE_BT);
+                //enableBtIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 1000);
+            } else {
+                statusMessage.setText("Bluetooth Ativado.");
+            }
+        }
+        // Fim - verificando ativação do bluetooth
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == ENABLE_BLUETOOTH) {
+            if (resultCode == RESULT_OK) {
+                statusMessage.setText("Bluetooth ativado.");
+            } else {
+                statusMessage.setText("Bluetooth não ativado.");
+            }
+        } else if (requestCode == SELECT_PAIRED_DEVICE || requestCode == SELECT_DISCOVERED_DEVICE) {
+            if (resultCode == RESULT_OK) {
+                statusMessage.setText("Você selecionou " + data.getStringExtra("btDevName") + "\n"
+                        + data.getStringExtra("btDevAddress"));
+
+                conexao = new ThreadConexao(data.getStringExtra("btDevAddress"));
+                conexao.start();
+            } else {
+                statusMessage.setText("Nenhum dispositivo selecionado.");
+            }
+        }
+    }
+
+    /**
+     * @param view
+     */
+    public void searchPairedDevices(View view) {
+        Intent searchPairedDevicesIntent = new Intent(this, PairedDevices.class);
+        startActivityForResult(searchPairedDevicesIntent, SELECT_PAIRED_DEVICE);
+    }
+
+    public void discoverDevices(View view) {
+        Intent searchPairedDevicesIntent = new Intent(this, DiscoveredDevices.class);
+        startActivityForResult(searchPairedDevicesIntent, SELECT_DISCOVERED_DEVICE);
+    }
+
+    public void waitConnection(View view) {
+        conexao = new ThreadConexao();
+        conexao.start();
+    }
+
+    public void stopConnection() {
+        conexao.interrupt();
+    }
+
+    public void enableVisibility(View view) {
+        Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+        discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 30);
+        startActivity(discoverableIntent);
+    }
+
+    public void sendMessage(View view) {
+        EditText messageBox = findViewById(R.id.editText_MessageBox);
+        String messageBoxString = messageBox.getText().toString();
+
+        byte[] pacote = new byte[10];
+
+        if (messageBox.getText().toString().equalsIgnoreCase("i")) {
+            pacote[0] = ('I' & 0xFF);
+            pacote[1] = ('B' & 0xFF);
+            pacote[2] = (byte) (0 & 0xFF);
+            pacote[3] = (byte) (0 & 0xFF);
+            pacote[4] = (byte) (90 & 0xFF);
+            pacote[5] = (byte) (175 & 0xFF);
+            pacote[6] = (byte) (0 & 0xFF);
+            pacote[7] = (byte) (10 & 0xFF);
+            pacote[8] = (byte) (0 & 0xFF);
+            pacote[9] = (byte) (0 & 0xFF);
+        } else if (messageBox.getText().toString().equalsIgnoreCase("c")) {
+            pacote[0] = ('C' & 0xFF);
+            pacote[1] = (byte) (0 & 0xFF);
+            pacote[2] = (byte) (0 & 0xFF);
+            pacote[3] = (byte) (0 & 0xFF);
+            pacote[4] = (byte) (0 & 0xFF);
+            pacote[5] = (byte) (0 & 0xFF);
+            pacote[6] = (byte) (0 & 0xFF);
+            pacote[7] = (byte) (0 & 0xFF);
+            pacote[8] = (byte) (0 & 0xFF);
+            pacote[9] = (byte) (0 & 0xFF);
+        }
+
+        statusMessage.setText(Arrays.toString(pacote));
+        conexao.write(pacote);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -140,40 +140,40 @@
 
     </LinearLayout>
 
+
     <LinearLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
         android:layout_height="63dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Admin">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:baselineAligned="false"
             android:gravity="bottom"
             android:orientation="horizontal"
             tools:ignore="UselessParent">
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
-                android:orientation="vertical"
-                android:padding="3dp">
+                android:orientation="vertical">
 
                 <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
 
                     <Button
-                        android:id="@+id/Medidor"
+                        android:id="@+id/AdminOpcoes"
                         style="@style/Widget.AppCompat.Button.Colored"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
@@ -181,58 +181,15 @@
                         android:layout_alignParentTop="true"
                         android:background="@drawable/botao_arredondado"
                         android:backgroundTint="@color/colorPrimaryDark"
-                        android:indeterminate="false"
-                        android:text="Cadastrar Medidor"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:textColor="@android:color/white"
-                        android:textColorHint="@color/colorPrimaryDark"
-                        android:textColorLink="@color/colorPrimaryDark" />
-
-                </RelativeLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                android:padding="3dp">
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <Button
-                        android:id="@+id/Avaliador"
-                        style="@style/Widget.AppCompat.Button.Colored"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:background="@drawable/botao_arredondado"
-                        android:backgroundTint="@color/colorPrimaryDark"
-                        android:text="Cadastrar Avaliador"
+                        android:text="Ações do Administrador"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textColor="@android:color/white" />
+
                 </RelativeLayout>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/Admin"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:gravity="center"
-        android:text="Sessão do Administrador"
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Widget"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
     <LinearLayout
         android:id="@+id/linearLayout3"

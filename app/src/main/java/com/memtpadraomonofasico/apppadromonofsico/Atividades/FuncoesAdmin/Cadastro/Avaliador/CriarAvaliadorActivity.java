@@ -1,4 +1,4 @@
-package com.memtpadraomonofasico.apppadromonofsico.Atividades.Cadastro.Avaliador;
+package com.memtpadraomonofasico.apppadromonofsico.Atividades.FuncoesAdmin.Cadastro.Avaliador;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -25,12 +25,12 @@ import java.io.FileReader;
  */
 public class CriarAvaliadorActivity extends AppCompatActivity {
 
-    private EditText nome, matricula, senha, tipoUsuario;
-    private String nomeString, matriculaString, senhaString, tipoUsuarioString = "";
-    private RadioButton radioButtonAvaliador, radioButtonEletronico;
     private static final int READ_REQUEST_CODE = 42;
     String path;
     String curFileName;
+    private EditText nome, matricula, senha, tipoUsuario;
+    private String nomeString, matriculaString, senhaString, tipoUsuarioString = "";
+    private RadioButton radioButtonAvaliador, radioButtonEletronico;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

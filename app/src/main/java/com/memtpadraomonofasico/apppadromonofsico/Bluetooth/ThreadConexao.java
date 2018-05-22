@@ -1,4 +1,4 @@
-package com.memtpadraomonofasico.apppadromonofsico.Atividades.Bluetooth;
+package com.memtpadraomonofasico.apppadromonofsico.Bluetooth;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -14,21 +14,17 @@ import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.UUID;
 
-/**
- * Created by loraine.duarte on 20/04/2018.
- */
+public class ThreadConexao extends Thread {
 
-public class ThreadConexaoMarchaVazio  extends Thread {
-
+    private final boolean server;
+    private final BluetoothActivity bluetooth = new BluetoothActivity();
     private BluetoothSocket btSocket = null;
     private OutputStream output = null;
     private String btDevAddress = null;
-    private final boolean server;
-    private final BluetoothActivity bluetooth = new BluetoothActivity();
 
     /*  Este construtor prepara o dispositivo para atuar como servidor.
      */
-    public ThreadConexaoMarchaVazio() {
+    public ThreadConexao() {
         this.server = true;
     }
 
@@ -36,7 +32,7 @@ public class ThreadConexaoMarchaVazio  extends Thread {
         Tem como argumento uma string contendo o endereço MAC do dispositivo
     Bluetooth para o qual deve ser solicitada uma conexão.
      */
-    public ThreadConexaoMarchaVazio(String btDevAddress) {
+    public ThreadConexao(String btDevAddress) {
         this.server = false;
         this.btDevAddress = btDevAddress;
     }
@@ -186,7 +182,7 @@ public class ThreadConexaoMarchaVazio  extends Thread {
             }
 
         }
-        Looper.loop();
+       Looper.loop();
 
 
 
@@ -204,6 +200,7 @@ public class ThreadConexaoMarchaVazio  extends Thread {
         Bundle bundle = new Bundle();
         bundle.putByteArray("data", data);
         message.setData(bundle);
+
         bluetooth.handler.get().handleMessage(message);
     }
 
@@ -234,6 +231,5 @@ public class ThreadConexaoMarchaVazio  extends Thread {
     /*  O método stop() contem as instruções que serão efetivamente realizadas
    em uma nova  para parar a conexão.
     */
-
 
 }

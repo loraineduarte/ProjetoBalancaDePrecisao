@@ -1,7 +1,12 @@
-package com.memtpadraomonofasico.apppadromonofsico.Atividades.Cadastro.Medidor;
+package com.memtpadraomonofasico.apppadromonofsico.Atividades.FuncoesAdmin.Cadastro.Medidor;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +16,10 @@ import android.widget.Toast;
 
 import com.memtpadraomonofasico.apppadromonofsico.BancoDeDados.BancoController;
 import com.memtpadraomonofasico.apppadromonofsico.R;
+import com.opencsv.CSVReader;
+
+import java.io.File;
+import java.io.FileReader;
 
 /**
  *
@@ -18,6 +27,7 @@ import com.memtpadraomonofasico.apppadromonofsico.R;
 @SuppressWarnings("ALL")
 public class CriarMedidorActivity extends AppCompatActivity {
 
+    private static final int READ_REQUEST_CODE = 42;
     private RadioButton checkEletronico;
     private RadioButton checkMecanico;
     private EditText instalacao;
@@ -97,6 +107,15 @@ public class CriarMedidorActivity extends AppCompatActivity {
             }
         });
 
+        FloatingActionButton botaoImportarDoExcel = findViewById(R.id.ImportarExcel);
+
+        botaoImportarDoExcel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                importarExcel();
+            }
+        });
+
         Button botaoLimparCampos = findViewById(R.id.buttonLimparCamposMedidor);
         botaoLimparCampos.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,27 +175,78 @@ public class CriarMedidorActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle savedInstanceState) {
 
-        savedInstanceState.putCharSequence("instalacao", String.valueOf(instalacao.getText()));
-        savedInstanceState.putCharSequence("numSerie", String.valueOf(numSerie.getText()));
-        savedInstanceState.putCharSequence("numGeral", String.valueOf(numGeral.getText()));
-        savedInstanceState.putCharSequence("fabricante", String.valueOf(fabricante.getText()));
-        savedInstanceState.putCharSequence("numElementos", String.valueOf(numElementos.getText()));
-        savedInstanceState.putCharSequence("modelo", String.valueOf(modelo.getText()));
-        savedInstanceState.putCharSequence("correnteNominal", String.valueOf(correnteNominal.getText()));
-        savedInstanceState.putCharSequence("classe", String.valueOf(classe.getText()));
-        savedInstanceState.putCharSequence("RR", String.valueOf(RR.getText()));
-        savedInstanceState.putCharSequence("anoFabricacao", String.valueOf(anoFabricacao.getText()));
-        savedInstanceState.putCharSequence("tensaoNominal", String.valueOf(tensaoNominal.getText()));
-        savedInstanceState.putCharSequence("KdKe", String.valueOf(KdKe.getText()));
-        savedInstanceState.putCharSequence("porInmetro", String.valueOf(porInmetro.getText()));
-        savedInstanceState.putCharSequence("fios", String.valueOf(fios.getText()));
-        savedInstanceState.putCharSequence("checkEletronico", String.valueOf(checkEletronico.getText()));
-        savedInstanceState.putCharSequence("checkMecanico", String.valueOf(checkMecanico.getText()));
+    private void importarExcel() {
 
-        super.onSaveInstanceState(savedInstanceState);
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+//
+//        // Filter to show only images, using the image MIME data type.
+//        // If one wanted to search for ogg vorbis files, the type would be "audio/ogg".
+//        // To search for all documents available via installed storage providers,
+//        // it would be "*/*".
+        intent.setType("*/*");
+
+        startActivityForResult(intent, READ_REQUEST_CODE);
+
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == READ_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            // The document selected by the user won't be returned in the intent.
+            // Instead, a URI to that document will be contained in the return intent
+            // provided to this method as a parameter.
+            // Pull that URI using resultData.getData().
+            if (data != null) {
+                Uri uri = data.getData();
+                final BancoController crud = new BancoController(getBaseContext());
+
+                try {
+                    File csvfile = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/medidor.csv");
+                    CSVReader reader = new CSVReader(new FileReader(csvfile));
+                    String[] nextLine;
+                    int cont = 0;
+                    while ((nextLine = reader.readNext()) != null) {
+
+                        if (cont == 0) {
+
+                        } else {
+                            int instalacao = Integer.parseInt(nextLine[0].toString());
+                            String numSerie = nextLine[1];
+                            String numGeral = nextLine[2];
+                            String fabricante = nextLine[3];
+                            int numElementos = Integer.parseInt(nextLine[4]);
+                            String modelo = nextLine[5];
+                            int correnteNominal = Integer.parseInt(nextLine[6]);
+                            String classe = nextLine[7];
+                            String RR = nextLine[8];
+                            int anoFabricacao = Integer.parseInt(nextLine[9]);
+                            int tensaoNominal = Integer.parseInt(nextLine[10]);
+                            double KdKe = Double.parseDouble(nextLine[11]);
+                            String porInmetro = nextLine[12];
+                            int fios = Integer.parseInt(nextLine[13]);
+                            String tipoMedidorString = " ";
+                            if (nextLine[14].toString().startsWith("mec")) {
+                                tipoMedidorString = "Mecânico";
+                            } else if (nextLine[14].toString().startsWith("ele")) {
+                                tipoMedidorString = "Eletrônico";
+                            }
+                            String resultado = crud.insereNovoMedidor(instalacao, numSerie, numGeral, fabricante, numElementos, modelo, correnteNominal,
+                                    classe, RR, anoFabricacao, tensaoNominal, KdKe, porInmetro, fios, tipoMedidorString);
+                            Toast.makeText(getApplicationContext(), resultado, Toast.LENGTH_LONG).show();
+
+                        }
+                        finish();
+                        cont++;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(this, "Erro ao abrir o arquivo", Toast.LENGTH_SHORT).show();
+                }
+
+
+            }
+        }
     }
 
 }

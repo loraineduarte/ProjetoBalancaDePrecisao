@@ -20,8 +20,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.memtpadraomonofasico.apppadromonofsico.Atividades.Cadastro.Avaliador.CriarAvaliadorActivity;
-import com.memtpadraomonofasico.apppadromonofsico.Atividades.Cadastro.Medidor.CriarMedidorActivity;
+import com.memtpadraomonofasico.apppadromonofsico.Atividades.FuncoesAdmin.Cadastro.AdminDashboard;
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.RelatorioVerificacaoActivity;
 import com.memtpadraomonofasico.apppadromonofsico.BancoDeDados.BancoController;
 import com.orhanobut.hawk.Hawk;
@@ -30,18 +29,17 @@ import com.orhanobut.hawk.Hawk;
 public class DashboardActivity extends AppCompatActivity
 implements NavigationView.OnNavigationItemSelectedListener {
 
+    private final Handler progressHandler = new Handler();
+    Button avaliador;
+    Cursor cursorMedidor, cursorAvaliador;
     private ProgressBar myprogressBarAvaliadores;
     private ProgressBar myprogressBarMedidores;
     private TextView progressingTextViewAvaliadores;
     private TextView progressingTextViewmedidores;
-    private final Handler progressHandler = new Handler();
     private int i = 0;
     private String user;
     private String senha;
-    Button avaliador;
     private String usuarioLogin;
-
-
 
     @SuppressLint("WrongConstant")
     @Override
@@ -55,47 +53,34 @@ implements NavigationView.OnNavigationItemSelectedListener {
         senha = Hawk.get("senha" );
 
         final BancoController crud = new BancoController(getBaseContext());
-        final Cursor cursorMedidor = crud.pegaMedidores();
-        final Cursor cursorAvaliador = crud.pegaAvaliadores();
+        cursorMedidor = crud.pegaMedidores();
+        cursorAvaliador = crud.pegaAvaliadores();
         usuarioLogin = crud.pegaTipoUsuario(user, senha);
 
-        Button avaliadores = findViewById(R.id.Avaliador);
-        Button medidores = findViewById(R.id.Medidor);
+        Button opcoesAdmin = findViewById(R.id.AdminOpcoes);
         Button teste = findViewById(R.id.Teste);
-        TextView admin = findViewById(R.id.Admin);
+
 
         //itens de menu
         Log.d("Usuario", String.valueOf(usuarioLogin));
 
 
         if (usuarioLogin.equals("true")) { //admin
-            avaliadores.setVisibility(View.VISIBLE);
-            medidores.setVisibility(View.VISIBLE);
+            opcoesAdmin.setVisibility(View.VISIBLE);
             teste.setVisibility(View.VISIBLE);
-            admin.setVisibility(View.VISIBLE);
 
 
         } else { //usuário normal
-            avaliadores.setVisibility(View.INVISIBLE);
-            medidores.setVisibility(View.INVISIBLE);
-            admin.setVisibility(View.INVISIBLE);
+            opcoesAdmin.setVisibility(View.INVISIBLE);
             teste.setVisibility(View.VISIBLE);
 
 
         }
 
-
-        avaliadores.setOnClickListener(new View.OnClickListener() {
+        opcoesAdmin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                abrirAvaliador();
-            }
-        });
-
-        medidores.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                abrirMedidores();
+                abrirOpcoesAdmin();
             }
         });
 
@@ -136,7 +121,6 @@ implements NavigationView.OnNavigationItemSelectedListener {
                         Thread.sleep(300);
 
 
-
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -144,9 +128,11 @@ implements NavigationView.OnNavigationItemSelectedListener {
             }
         }).start();
 
+    }
 
-
-
+    private void abrirOpcoesAdmin() {
+        Intent intent = new Intent(this, AdminDashboard.class);
+        startActivity(intent);
     }
 
     @Override
@@ -159,25 +145,6 @@ implements NavigationView.OnNavigationItemSelectedListener {
         }
     }
 
-//    @Override
-//    public boolean onPrepareOptionsMenu(Menu menu) {
-//       // MenuItem cadastros= menu.findItem(R.id.MenuCadastros);
-//        //depending on your conditions, either enable/disable
-//        final BancoController crud = new BancoController(getBaseContext());
-//        usuarioLogin = crud.pegaTipoUsuario(user, senha);
-//
-//
-////        if (usuarioLogin.equals("true")) { //admin
-////            cadastros.setVisible(true);
-////
-////        } else { //usuário normal
-////            cadastros.setVisible(false);
-////
-////        }
-//
-//        super.onPrepareOptionsMenu(menu);
-//        return true;
-//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -212,16 +179,7 @@ implements NavigationView.OnNavigationItemSelectedListener {
 
 
 
-    //Views
-    private void abrirAvaliador() {
-        Intent intent = new Intent(this, CriarAvaliadorActivity.class);
-        startActivity(intent);
-    }
 
-    private void abrirMedidores() {
-        Intent intent = new Intent(this, CriarMedidorActivity.class);
-        startActivity(intent);
-    }
 
     private void abrirRelatorio() {
         Intent intent = new Intent(this, RelatorioVerificacaoActivity.class);

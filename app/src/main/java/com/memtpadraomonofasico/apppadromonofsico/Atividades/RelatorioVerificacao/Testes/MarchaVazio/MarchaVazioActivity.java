@@ -13,9 +13,9 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.memtpadraomonofasico.apppadromonofsico.Atividades.Bluetooth.PairedDevices;
-import com.memtpadraomonofasico.apppadromonofsico.Atividades.Bluetooth.ThreadConexaoMarchaVazio;
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.Exatidao.ExatidaoActivity;
+import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.PairedDevices;
+import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.ThreadConexaoMarchaVazio;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
 import com.orhanobut.hawk.NoEncryption;
@@ -25,28 +25,25 @@ import java.sql.Time;
 @SuppressWarnings("ALL")
 public class MarchaVazioActivity extends AppCompatActivity {
 
-    @SuppressLint("StaticFieldLeak")
-    private static RadioButton aprovado, naoRealizado, reprovado;
-    private String statusMarchaVazio, tempoReprovadoMarchaVazio;
-
-    @SuppressLint("StaticFieldLeak")
-    private static EditText tempoReprovado;
     private static final int ENABLE_BLUETOOTH = 1;
     private static final int SELECT_PAIRED_DEVICE = 2;
     private static final int REQUEST_ENABLE_BT = 4;
-
+    @SuppressLint("HandlerLeak")
+    private static final Handler handler = new Handler() {
+    };
+    @SuppressLint("StaticFieldLeak")
+    private static RadioButton aprovado, naoRealizado, reprovado;
+    @SuppressLint("StaticFieldLeak")
+    private static EditText tempoReprovado;
     @SuppressLint("StaticFieldLeak")
     private static TextView textMessage;
+    private static Runnable handlerTask;
+    private String statusMarchaVazio, tempoReprovadoMarchaVazio;
     private ThreadConexaoMarchaVazio conexao;
-
     @SuppressLint("WrongViewCast")
     private Button conectar;
     private Button teste;
     private BluetoothAdapter mBluetoothAdapter = null;
-    private static Runnable handlerTask;
-
-    @SuppressLint("HandlerLeak")
-    private static final Handler handler = new Handler() {};
     private boolean testeComecou = false;
 
 

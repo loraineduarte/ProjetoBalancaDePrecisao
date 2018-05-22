@@ -1,4 +1,4 @@
-package com.memtpadraomonofasico.apppadromonofsico.Atividades.Bluetooth;
+package com.memtpadraomonofasico.apppadromonofsico.Bluetooth;
 
 import android.Manifest;
 import android.app.ListActivity;
@@ -10,10 +10,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -26,6 +26,26 @@ import com.memtpadraomonofasico.apppadromonofsico.R;
 public class DiscoveredDevices extends ListActivity {
 
     private ArrayAdapter<String> arrayAdapter;
+    /*  Define um receptor para o evento de descoberta de dispositivo.
+     */
+    private final BroadcastReceiver receiver = new BroadcastReceiver() {
+
+        /*  Este método é executado sempre que um novo dispositivo for descoberto.
+         */
+        public void onReceive(Context context, Intent intent) {
+
+            /*  Obtem o Intent que gerou a ação.
+                Verifica se a ação corresponde à descoberta de um novo dispositivo.
+                Obtem um objeto que representa o dispositivo Bluetooth descoberto.
+                Exibe seu nome e endereço na lista.
+             */
+            String action = intent.getAction();
+            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                arrayAdapter.add(device.getName() + "\n" + device.getAddress());
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,27 +99,6 @@ public class DiscoveredDevices extends ListActivity {
         setResult(RESULT_OK, returnIntent);
         finish();
     }
-
-    /*  Define um receptor para o evento de descoberta de dispositivo.
-     */
-    private final BroadcastReceiver receiver = new BroadcastReceiver() {
-
-        /*  Este método é executado sempre que um novo dispositivo for descoberto.
-         */
-        public void onReceive(Context context, Intent intent) {
-
-            /*  Obtem o Intent que gerou a ação.
-                Verifica se a ação corresponde à descoberta de um novo dispositivo.
-                Obtem um objeto que representa o dispositivo Bluetooth descoberto.
-                Exibe seu nome e endereço na lista.
-             */
-            String action = intent.getAction();
-            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                arrayAdapter.add(device.getName() + "\n" + device.getAddress());
-            }
-        }
-    };
 
     @Override
     protected void onDestroy() {

@@ -20,26 +20,25 @@
         <activity
             android:name=".DashboardActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".Atividades.Cadastro.Avaliador.CriarAvaliadorActivity"
+            android:name=".Atividades.FuncoesAdmin.Cadastro.Avaliador.CriarAvaliadorActivity"
             android:parentActivityName=".DashboardActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Atividades.Cadastro.Medidor.CriarMedidorActivity"
+            android:name=".Atividades.FuncoesAdmin.Cadastro.Medidor.CriarMedidorActivity"
             android:parentActivityName=".DashboardActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Atividades.Bluetooth.BluetoothActivity"
+            android:name=".Bluetooth.BluetoothActivity"
             android:parentActivityName=".DashboardActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Atividades.Bluetooth.DiscoveredDevices"
+            android:name=".Bluetooth.DiscoveredDevices"
             android:parentActivityName=".Bluetooth.BluetoothActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Atividades.Bluetooth.PairedDevices"
+            android:name=".Bluetooth.PairedDevices"
             android:parentActivityName=".Bluetooth.BluetoothActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -85,9 +84,11 @@
         <activity android:name=".Login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Atividades.FuncoesAdmin.Cadastro.AdminDashboard"></activity>
     </application>
 
 </manifest>
