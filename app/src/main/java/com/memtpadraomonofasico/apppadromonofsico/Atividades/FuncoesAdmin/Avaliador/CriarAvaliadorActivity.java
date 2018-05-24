@@ -1,4 +1,4 @@
-package com.memtpadraomonofasico.apppadromonofsico.Atividades.FuncoesAdmin.Cadastro.Avaliador;
+package com.memtpadraomonofasico.apppadromonofsico.Atividades.FuncoesAdmin.Avaliador;
 
 import android.app.Activity;
 import android.content.Intent;

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.memtpadraomonofasico.apppadromonofsico.Atividades.FuncoesAdmin.AdminDashboard">
+    tools:context="com.memtpadraomonofasico.apppadromonofsico.Atividades.FuncoesAdmin.Avaliador.AvaliadorDashboard">
 
     <TextView
         android:id="@+id/PadrãoMonofásico"
@@ -14,149 +14,12 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:gravity="center"
-        android:text="Área do Administrador"
+        android:text="Sessão de Avaliadores"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/AvaliadorSection"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/list_selector"
-        android:orientation="horizontal"
-        android:padding="5dip"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PadrãoMonofásico">
-
-        <!--  ListRow Left sied Thumbnail image -->
-        <LinearLayout
-            android:id="@+id/thumbnail5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_marginEnd="5dip"
-            android:background="@drawable/image_bg"
-            android:padding="3dip">
-
-            <ImageView
-                android:id="@+id/list_image5"
-                android:layout_width="50dip"
-                android:layout_height="50dip"
-                android:src="@drawable/account_box" />
-
-        </LinearLayout>
-
-        <!-- Title Of Song-->
-        <TextView
-            android:id="@+id/title5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/thumbnail5"
-            android:layout_toEndOf="@+id/thumbnail5"
-            android:text=""
-            android:textColor="#040404"
-            android:textSize="6sp"
-            android:textStyle="bold"
-            android:typeface="sans"
-            tools:ignore="SmallSp" />
-
-        <!-- Artist Name -->
-        <TextView
-            android:id="@+id/artist5"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/title5"
-            android:layout_marginTop="1dip"
-            android:layout_toEndOf="@+id/thumbnail5"
-            android:text="Avaliador"
-            android:textColor="#343434"
-            android:textSize="20sp" />
-
-        <!-- Rightend Duration -->
-
-        <!-- Rightend Arrow -->
-        <ImageView
-            android:id="@+id/Avaliador"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/arrow_forward" />
-
-    </RelativeLayout>
-
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/MedidorSection"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/list_selector"
-        android:orientation="horizontal"
-        android:padding="5dip"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AvaliadorSection">
-
-        <!--  ListRow Left sied Thumbnail image -->
-        <LinearLayout
-            android:id="@+id/thumbnail1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_marginEnd="5dip"
-            android:background="@drawable/image_bg"
-            android:padding="3dip">
-
-            <ImageView
-                android:id="@+id/list_image1"
-                android:layout_width="50dip"
-                android:layout_height="50dip"
-                android:src="@drawable/baseline_build_24" />
-
-        </LinearLayout>
-
-        <!-- Title Of Song-->
-        <TextView
-            android:id="@+id/title1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/thumbnail1"
-            android:layout_toEndOf="@+id/thumbnail1"
-            android:text=""
-            android:textColor="#040404"
-            android:textSize="6sp"
-            android:textStyle="bold"
-            android:typeface="sans"
-            tools:ignore="SmallSp" />
-
-        <!-- Artist Name -->
-        <TextView
-            android:id="@+id/artist1"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/title1"
-            android:layout_marginTop="1dip"
-            android:layout_toEndOf="@+id/thumbnail1"
-            android:text="Medidor"
-            android:textColor="#343434"
-            android:textSize="20sp" />
-
-        <!-- Rightend Duration -->
-
-        <!-- Rightend Arrow -->
-        <ImageView
-            android:id="@+id/Medidor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/arrow_forward" />
-
-    </RelativeLayout>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/MensagensSection"
@@ -168,7 +31,7 @@
         android:padding="5dip"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/MedidorSection">
+        app:layout_constraintTop_toBottomOf="@+id/MensagensSection2">
 
         <!--  ListRow Left sied Thumbnail image -->
         <LinearLayout
@@ -210,7 +73,7 @@
             android:layout_below="@id/title2"
             android:layout_marginTop="1dip"
             android:layout_toEndOf="@+id/thumbnail2"
-            android:text="Mensagens"
+            android:text="Listagem"
             android:textColor="#343434"
             android:textSize="20sp" />
 
@@ -218,7 +81,7 @@
 
         <!-- Rightend Arrow -->
         <ImageView
-            android:id="@+id/Mensagens"
+            android:id="@+id/Listar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -227,5 +90,73 @@
 
     </RelativeLayout>
 
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/MensagensSection2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/list_selector"
+        android:orientation="horizontal"
+        android:padding="5dip"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PadrãoMonofásico">
+
+        <!--  ListRow Left sied Thumbnail image -->
+        <LinearLayout
+            android:id="@+id/thumbnail3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginEnd="5dip"
+            android:background="@drawable/image_bg"
+            android:padding="3dip">
+
+            <ImageView
+                android:id="@+id/list_image3"
+                android:layout_width="50dip"
+                android:layout_height="50dip"
+                android:src="@drawable/account_box" />
+
+        </LinearLayout>
+
+        <!-- Title Of Song-->
+        <TextView
+            android:id="@+id/title3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/thumbnail3"
+            android:layout_toEndOf="@+id/thumbnail3"
+            android:text=""
+            android:textColor="#040404"
+            android:textSize="6sp"
+            android:textStyle="bold"
+            android:typeface="sans"
+            tools:ignore="SmallSp" />
+
+        <!-- Artist Name -->
+        <TextView
+            android:id="@+id/artist3"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title3"
+            android:layout_marginTop="1dip"
+            android:layout_toEndOf="@+id/thumbnail3"
+            android:text="Cadastrar"
+            android:textColor="#343434"
+            android:textSize="20sp" />
+
+        <!-- Rightend Duration -->
+
+        <!-- Rightend Arrow -->
+        <ImageView
+            android:id="@+id/Cadastrar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/arrow_forward" />
+
+    </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

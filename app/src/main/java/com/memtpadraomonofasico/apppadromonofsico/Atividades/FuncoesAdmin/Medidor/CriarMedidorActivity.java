@@ -1,4 +1,4 @@
-package com.memtpadraomonofasico.apppadromonofsico.Atividades.FuncoesAdmin.Cadastro.Medidor;
+package com.memtpadraomonofasico.apppadromonofsico.Atividades.FuncoesAdmin.Medidor;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;

@@ -20,13 +20,13 @@
         <activity
             android:name=".DashboardActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Atividades.FuncoesAdmin.Cadastro.Avaliador.CriarAvaliadorActivity"
+            android:name=".Atividades.FuncoesAdmin.Avaliador.CriarAvaliadorActivity"
             android:parentActivityName=".DashboardActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Atividades.FuncoesAdmin.Cadastro.Medidor.CriarMedidorActivity"
+            android:name=".Atividades.FuncoesAdmin.Medidor.CriarMedidorActivity"
             android:parentActivityName=".DashboardActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -88,7 +88,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Atividades.FuncoesAdmin.Cadastro.AdminDashboard"></activity>
+        <activity android:name=".Atividades.FuncoesAdmin.AdminDashboard" />
+        <activity android:name=".Atividades.FuncoesAdmin.Avaliador.AvaliadorDashboard"></activity>
     </application>
 
 </manifest>

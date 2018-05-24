@@ -1,13 +1,14 @@
-package com.memtpadraomonofasico.apppadromonofsico.Atividades.FuncoesAdmin.Cadastro;
+package com.memtpadraomonofasico.apppadromonofsico.Atividades.FuncoesAdmin;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageView;
 
-import com.memtpadraomonofasico.apppadromonofsico.Atividades.FuncoesAdmin.Cadastro.Avaliador.CriarAvaliadorActivity;
-import com.memtpadraomonofasico.apppadromonofsico.Atividades.FuncoesAdmin.Cadastro.Medidor.CriarMedidorActivity;
+import com.memtpadraomonofasico.apppadromonofsico.Atividades.FuncoesAdmin.Avaliador.AvaliadorDashboard;
+import com.memtpadraomonofasico.apppadromonofsico.Atividades.FuncoesAdmin.Medidor.CriarMedidorActivity;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 
 public class AdminDashboard extends AppCompatActivity {
@@ -17,8 +18,9 @@ public class AdminDashboard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_dashboard);
 
-        Button avaliadores = findViewById(R.id.Avaliador);
-        Button medidores = findViewById(R.id.Medidor);
+        @SuppressLint("WrongViewCast") ImageView avaliadores = findViewById(R.id.Avaliador);
+        @SuppressLint("WrongViewCast") ImageView medidores = findViewById(R.id.Medidor);
+        @SuppressLint("WrongViewCast") ImageView mensagens = findViewById(R.id.Mensagens);
 
         avaliadores.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,11 +35,20 @@ public class AdminDashboard extends AppCompatActivity {
                 abrirMedidores();
             }
         });
+
+        mensagens.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                abrirMensagens();
+            }
+        });
+
     }
+
 
     //Views
     private void abrirAvaliador() {
-        Intent intent = new Intent(this, CriarAvaliadorActivity.class);
+        Intent intent = new Intent(this, AvaliadorDashboard.class);
         startActivity(intent);
     }
 
@@ -45,4 +56,8 @@ public class AdminDashboard extends AppCompatActivity {
         Intent intent = new Intent(this, CriarMedidorActivity.class);
         startActivity(intent);
     }
+
+    private void abrirMensagens() {
+    }
+
 }

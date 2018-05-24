@@ -20,7 +20,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.memtpadraomonofasico.apppadromonofsico.Atividades.FuncoesAdmin.Cadastro.AdminDashboard;
+import com.memtpadraomonofasico.apppadromonofsico.Atividades.FuncoesAdmin.AdminDashboard;
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.RelatorioVerificacaoActivity;
 import com.memtpadraomonofasico.apppadromonofsico.BancoDeDados.BancoController;
 import com.orhanobut.hawk.Hawk;
@@ -31,7 +31,8 @@ implements NavigationView.OnNavigationItemSelectedListener {
 
     private final Handler progressHandler = new Handler();
     Button avaliador;
-    Cursor cursorMedidor, cursorAvaliador;
+    private Cursor cursorMedidor;
+    private Cursor cursorAvaliador;
     private ProgressBar myprogressBarAvaliadores;
     private ProgressBar myprogressBarMedidores;
     private TextView progressingTextViewAvaliadores;
