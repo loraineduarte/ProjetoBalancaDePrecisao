@@ -115,7 +115,7 @@ implements NavigationView.OnNavigationItemSelectedListener {
                             myprogressBarMedidores.setProgress(i);
 
                             progressingTextViewmedidores.setText(String.valueOf(cursorMedidor.getCount()));
-                            progressingTextViewAvaliadores.setText(String.valueOf(cursorAvaliador .getCount()));
+                            progressingTextViewAvaliadores.setText(String.valueOf(cursorAvaliador.getCount()));
                         }
                     });
                     try {

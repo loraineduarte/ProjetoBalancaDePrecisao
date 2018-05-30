@@ -89,7 +89,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Atividades.FuncoesAdmin.AdminDashboard" />
-        <activity android:name=".Atividades.FuncoesAdmin.Avaliador.AvaliadorDashboard"></activity>
+        <activity android:name=".Atividades.FuncoesAdmin.Avaliador.AvaliadorDashboard" />
+        <activity android:name=".Atividades.FuncoesAdmin.Avaliador.ListagemAvaliadores"></activity>
     </application>
 
 </manifest>

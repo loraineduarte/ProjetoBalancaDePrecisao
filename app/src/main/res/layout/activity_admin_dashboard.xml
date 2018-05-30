@@ -46,6 +46,7 @@
                 android:id="@+id/list_image5"
                 android:layout_width="50dip"
                 android:layout_height="50dip"
+                android:contentDescription="TODO"
                 android:src="@drawable/account_box" />
 
         </LinearLayout>
@@ -62,7 +63,7 @@
             android:textSize="6sp"
             android:textStyle="bold"
             android:typeface="sans"
-            tools:ignore="SmallSp" />
+            tools:ignore="RelativeOverlap,SmallSp" />
 
         <!-- Artist Name -->
         <TextView
@@ -85,6 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
+            android:contentDescription="TODO"
             android:src="@drawable/arrow_forward" />
 
     </RelativeLayout>
@@ -115,6 +117,7 @@
                 android:id="@+id/list_image1"
                 android:layout_width="50dip"
                 android:layout_height="50dip"
+                android:contentDescription="TODO"
                 android:src="@drawable/baseline_build_24" />
 
         </LinearLayout>
@@ -131,7 +134,7 @@
             android:textSize="6sp"
             android:textStyle="bold"
             android:typeface="sans"
-            tools:ignore="SmallSp" />
+            tools:ignore="RelativeOverlap,SmallSp" />
 
         <!-- Artist Name -->
         <TextView
@@ -154,6 +157,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
+            android:contentDescription="TODO"
             android:src="@drawable/arrow_forward" />
 
     </RelativeLayout>
@@ -184,6 +188,7 @@
                 android:id="@+id/list_image2"
                 android:layout_width="50dip"
                 android:layout_height="50dip"
+                android:contentDescription="TODO"
                 android:src="@drawable/baseline_receipt_24" />
 
         </LinearLayout>
@@ -200,7 +205,7 @@
             android:textSize="6sp"
             android:textStyle="bold"
             android:typeface="sans"
-            tools:ignore="SmallSp" />
+            tools:ignore="RelativeOverlap,SmallSp" />
 
         <!-- Artist Name -->
         <TextView
@@ -223,6 +228,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
+            android:contentDescription="TODO"
             android:src="@drawable/arrow_forward" />
 
     </RelativeLayout>

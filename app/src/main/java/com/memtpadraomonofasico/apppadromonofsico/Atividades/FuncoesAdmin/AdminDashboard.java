@@ -45,6 +45,9 @@ public class AdminDashboard extends AppCompatActivity {
 
     }
 
+    private void abrirMensagens() {
+    }
+
 
     //Views
     private void abrirAvaliador() {
@@ -55,9 +58,6 @@ public class AdminDashboard extends AppCompatActivity {
     private void abrirMedidores() {
         Intent intent = new Intent(this, CriarMedidorActivity.class);
         startActivity(intent);
-    }
-
-    private void abrirMensagens() {
     }
 
 }

@@ -35,6 +35,8 @@ public class AvaliadorDashboard extends AppCompatActivity {
     }
 
     private void abrirListagemAvaliador() {
+        Intent intent = new Intent(this, ListagemAvaliadores.class);
+        startActivity(intent);
     }
 
     private void abrirCadastroAvaliador() {
