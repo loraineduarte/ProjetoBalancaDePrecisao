@@ -176,12 +176,6 @@ implements NavigationView.OnNavigationItemSelectedListener {
         return true;
     }
 
-
-
-
-
-
-
     private void abrirRelatorio() {
         Intent intent = new Intent(this, RelatorioVerificacaoActivity.class);
         startActivity(intent);
