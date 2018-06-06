@@ -37,6 +37,7 @@
         android:layout_height="45dp"
         android:layout_weight="1"
         android:background="@android:color/transparent"
+        android:onClick="editarContato"
         android:src="@android:drawable/ic_menu_edit"
         app:srcCompat="@android:drawable/btn_star" />
 
@@ -46,6 +47,7 @@
         android:layout_height="44dp"
         android:layout_weight="1"
         android:background="@android:color/transparent"
+        android:onClick="deletarContato"
         android:src="@drawable/baseline_delete_24"
         app:srcCompat="@android:drawable/btn_star"
         tools:src="@android:drawable/ic_menu_delete" />

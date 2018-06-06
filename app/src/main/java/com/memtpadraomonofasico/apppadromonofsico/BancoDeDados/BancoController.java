@@ -7,8 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 public class BancoController {
-    private SQLiteDatabase db;
     private final CriaBanco banco;
+    private SQLiteDatabase db;
 
     public BancoController(Context context){
         banco = new CriaBanco(context);
@@ -144,4 +144,76 @@ public class BancoController {
         cursor.close();
         return valor;
     }
+
+    public String deletaAvaliador(String nome, String matricula) {
+        db = banco.getWritableDatabase();
+        long resultado;
+        String avaliador = CriaBanco.NOME_AVALIADOR + " = ? AND " + CriaBanco.MATRICULA + " = ? ";
+        String[] avaliadorArgs = {nome, matricula};
+        resultado = db.delete(CriaBanco.TABELA_AVALIADOR, avaliador, avaliadorArgs);
+        db.close();
+
+        if (resultado == -1) {
+            Log.d("Inseriu", "Erro ao deletar avaliador");
+            return "Erro ao deletar registro";
+        } else {
+            Log.d("Inseriu", "Deletou avaliador");
+            return " Registro deletado com sucesso";
+        }
+    }
+
+    public String updateAvaliador(String nomeNovoString, String matriculaNovoString, String senhaNovaString, boolean bNovo, String nomeAntigo, String matriculaAntigo) {
+
+        db = banco.getWritableDatabase();
+        long resultado;
+        String avaliador = CriaBanco.NOME_AVALIADOR + " = ? AND " + CriaBanco.MATRICULA + " = ? ";
+        String[] avaliadorArgs = {nomeAntigo, matriculaAntigo};
+        resultado = db.delete(CriaBanco.TABELA_AVALIADOR, avaliador, avaliadorArgs);
+        db.close();
+
+        if (resultado == -1) {
+            Log.d("Inseriu", "Erro ao deletar avaliador");
+        } else {
+            Log.d("Inseriu", "Deletou avaliador");
+        }
+
+        ContentValues valores;
+
+        db = banco.getWritableDatabase();
+        valores = new ContentValues();
+        valores.put(CriaBanco.NOME_AVALIADOR, nomeNovoString);
+        valores.put(CriaBanco.MATRICULA, matriculaNovoString);
+        valores.put(CriaBanco.SENHA, senhaNovaString);
+        valores.put(CriaBanco.ADMIN, bNovo);
+
+        resultado = db.insert(CriaBanco.TABELA_AVALIADOR, null, valores);
+        db.close();
+
+
+        if (resultado == -1) {
+            Log.d("atualizou", "Erro ao atualizar avaliador");
+            return "Erro ao atualizar registro";
+        } else {
+            Log.d("atualizou", "Atualizou avaliador");
+            return " Registro atualizado com sucesso";
+        }
+    }
+
+    public Cursor pegarAvaliador(String nome, String matricula) {
+
+        Cursor cursor;
+        String[] campos = {CriaBanco.ID_AVALIADOR, CriaBanco.NOME_AVALIADOR, CriaBanco.MATRICULA, CriaBanco.SENHA, CriaBanco.ADMIN};
+        String avaliador = CriaBanco.NOME_AVALIADOR + " = ? AND " + CriaBanco.MATRICULA + " = ? ";
+        String[] avaliadorArgs = {nome, matricula};
+        db = banco.getReadableDatabase();
+        cursor = db.query(CriaBanco.TABELA_AVALIADOR, campos, avaliador, avaliadorArgs, null, null, null, null);
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+        db.close();
+
+        return cursor;
+    }
 }
+

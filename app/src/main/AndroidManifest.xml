@@ -90,7 +90,8 @@
         </activity>
         <activity android:name=".Atividades.FuncoesAdmin.AdminDashboard" />
         <activity android:name=".Atividades.FuncoesAdmin.Avaliador.AvaliadorDashboard" />
-        <activity android:name=".Atividades.FuncoesAdmin.Avaliador.ListagemAvaliadores"></activity>
+        <activity android:name=".Atividades.FuncoesAdmin.Avaliador.ListagemAvaliadores" />
+        <activity android:name=".Atividades.FuncoesAdmin.Avaliador.EditarAvaliadorActivity"></activity>
     </application>
 
 </manifest>
