@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.FuncoesAdmin.Avaliador.AvaliadorDashboard;
-import com.memtpadraomonofasico.apppadromonofsico.Atividades.FuncoesAdmin.Medidor.CriarMedidorActivity;
+import com.memtpadraomonofasico.apppadromonofsico.Atividades.FuncoesAdmin.Medidor.MedidorDashboard;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 
 public class AdminDashboard extends AppCompatActivity {
@@ -56,7 +56,7 @@ public class AdminDashboard extends AppCompatActivity {
     }
 
     private void abrirMedidores() {
-        Intent intent = new Intent(this, CriarMedidorActivity.class);
+        Intent intent = new Intent(this, MedidorDashboard.class);
         startActivity(intent);
     }
 

@@ -9,10 +9,10 @@
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
-        android:layout_height="63dp"
+        android:layout_height="56dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -175,7 +175,6 @@
         android:layout_height="50dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Senha"
         android:inputType="textPersonName"
@@ -209,7 +208,6 @@
         android:layout_height="45dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="@string/n_mero_de_matr_cula"
         android:inputType="number"
@@ -219,19 +217,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nomeAvaliador" />
 
-    <android.support.design.widget.FloatingActionButton
+
+    <Button
         android:id="@+id/ImportarExcel"
-        android:layout_width="53dp"
-        android:layout_height="50dp"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:clickable="true"
-        android:focusable="true"
+        android:background="@drawable/botao_arredondado"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:text="Importar do Excel"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.951"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_add" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
 </android.support.constraint.ConstraintLayout>

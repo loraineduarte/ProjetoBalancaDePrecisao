@@ -16,7 +16,8 @@ public class EditarAvaliadorActivity extends AppCompatActivity {
 
     private EditText nome, matricula, senha, tipoUsuario;
     private String nomeString, matriculaString, senhaString, tipoUsuarioString = "";
-    private String nomeAntigoString, matriculaAntigoString, senhaAntigoString, tipoUsuarioAntigoString = "";
+    private String nomeAntigoString;
+    private String matriculaAntigoString;
     private RadioButton radioButtonAvaliador, radioButtonEletronico;
 
     @Override
@@ -28,8 +29,8 @@ public class EditarAvaliadorActivity extends AppCompatActivity {
         Intent it = getIntent();
         nomeAntigoString = it.getStringExtra("nome");
         matriculaAntigoString = it.getStringExtra("matricula");
-        senhaAntigoString = it.getStringExtra("senha");
-        tipoUsuarioAntigoString = it.getStringExtra("tipousu");
+        String senhaAntigoString = it.getStringExtra("senha");
+        String tipoUsuarioAntigoString = it.getStringExtra("tipousu");
 
         Button botaoCriarAvaliador = findViewById(R.id.buttonSalvarAvaliador);
 

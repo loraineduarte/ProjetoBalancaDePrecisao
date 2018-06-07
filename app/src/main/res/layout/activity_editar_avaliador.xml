@@ -38,22 +38,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
-
-                </RelativeLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                android:padding="3dp">
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
                     <Button
                         android:id="@+id/buttonSalvarAvaliador"
                         style="@style/Widget.AppCompat.Button.Colored"

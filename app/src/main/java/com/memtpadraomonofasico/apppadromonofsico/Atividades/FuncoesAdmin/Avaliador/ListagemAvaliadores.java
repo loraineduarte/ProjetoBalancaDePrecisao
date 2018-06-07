@@ -17,11 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListagemAvaliadores extends AppCompatActivity {
-    static AdapterAvaliador adapter;
     private final CriaBanco banco = new CriaBanco(this);
-    ListView listaDeAvaliadores;
-    List<Avaliador> avaliadores;
-    BancoController crud = new BancoController(this);
+    private final BancoController crud = new BancoController(this);
+    private AdapterAvaliador adapter;
+    private List<Avaliador> avaliadores;
     private Cursor cursorAvaliador;
 
     @Override
@@ -30,7 +29,7 @@ public class ListagemAvaliadores extends AppCompatActivity {
         setContentView(R.layout.activity_listagem_avaliadores);
 
 
-        listaDeAvaliadores = findViewById(R.id.lista);
+        ListView listaDeAvaliadores = findViewById(R.id.lista);
         avaliadores = todosAvaliadores();
         adapter = new AdapterAvaliador(avaliadores, this);
         listaDeAvaliadores.setAdapter(adapter);
@@ -70,7 +69,7 @@ public class ListagemAvaliadores extends AppCompatActivity {
         reloadAllData();
     }
 
-    public void reloadAllData() {
+    private void reloadAllData() {
         List<Avaliador> objects = todosAvaliadores();
         adapter.updateItens(objects);
 

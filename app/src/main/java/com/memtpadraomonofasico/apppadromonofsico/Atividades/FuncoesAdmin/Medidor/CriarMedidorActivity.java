@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -107,7 +106,7 @@ public class CriarMedidorActivity extends AppCompatActivity {
             }
         });
 
-        FloatingActionButton botaoImportarDoExcel = findViewById(R.id.ImportarExcel);
+        Button botaoImportarDoExcel = findViewById(R.id.ImportarExcel);
 
         botaoImportarDoExcel.setOnClickListener(new View.OnClickListener() {
             @Override
