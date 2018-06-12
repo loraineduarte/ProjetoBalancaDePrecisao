@@ -15,13 +15,13 @@ import java.util.List;
  * Created by loraine.duarte on 07/06/2018.
  */
 
-public class AdapterMedidor extends BaseAdapter {
+class AdapterMedidor extends BaseAdapter {
 
     private final Activity act;
     private List<Medidor> medidores;
 
-    public AdapterMedidor(List<Medidor> avaliadores, Activity act) {
-        this.medidores = avaliadores;
+    public AdapterMedidor(List<Medidor> medidores, Activity act) {
+        this.medidores = medidores;
         this.act = act;
     }
 
@@ -46,19 +46,19 @@ public class AdapterMedidor extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view = act.getLayoutInflater().inflate(R.layout.lista_avaliador_personalizada, parent, false);
+
+        View view = act.getLayoutInflater().inflate(R.layout.lista_medidor_personalizada, parent, false);
         Medidor medidor = medidores.get(position);
         //pegando as referências das Views
-        TextView nome = view.findViewById(R.id.lista_curso_personalizada_nome);
-        TextView matricula = view.findViewById(R.id.lista_curso_personalizada_descricao);
+        TextView numSerie = view.findViewById(R.id.lista_nome);
+        TextView numGeral = view.findViewById(R.id.lista_descricao);
         ImageButton editar = view.findViewById(R.id.editar);
         editar.setTag(position);
         ImageButton excluir = view.findViewById(R.id.deletar);
         excluir.setTag(position);
 
-//        //populando as Views
-//        nome.setText(medidores.getNome());
-//        matricula.setText(medidores.getMatricula());
+        numSerie.setText(medidor.getNumeroSerie());
+        numGeral.setText(medidor.getNumeroGeral());
 
         return view;
     }

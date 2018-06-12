@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.FuncoesAdmin.Avaliador.AvaliadorDashboard;
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.FuncoesAdmin.Medidor.MedidorDashboard;
+import com.memtpadraomonofasico.apppadromonofsico.Atividades.FuncoesAdmin.Mensagens.MensagensDashboard;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 
 public class AdminDashboard extends AppCompatActivity {
@@ -46,6 +47,8 @@ public class AdminDashboard extends AppCompatActivity {
     }
 
     private void abrirMensagens() {
+        Intent intent = new Intent(this, MensagensDashboard.class);
+        startActivity(intent);
     }
 
 

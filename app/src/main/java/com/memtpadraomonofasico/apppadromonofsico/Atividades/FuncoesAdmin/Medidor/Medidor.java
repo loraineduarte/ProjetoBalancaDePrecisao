@@ -4,27 +4,27 @@ package com.memtpadraomonofasico.apppadromonofsico.Atividades.FuncoesAdmin.Medid
  * Created by loraine.duarte on 07/06/2018.
  */
 
-public class Medidor {
+class Medidor {
 
     private String numeroSerie;
     private String numeroGeral;
     private String instalacao;
     private String modelo;
     private String fabricante;
-    private int tensaoNominal;
+    private String tensaoNominal;
     private int correnteNominal;
     private String tipoMedidor;
     private String kdKe;
     private String rr;
     private int numElementos;
-    private int anoFabricacao;
+    private String anoFabricacao;
     private String classe;
     private int fios;
     private String portariaInmetro;
 
-    public Medidor(String numeroSerie, String numeroGeral, String instalacao, String modelo, String fabricante, int tensaoNominal, int correnteNominal, String tipoMedidor, String kdKe,
-                   String rr, int numElementos, int anoFabricacao, String classe, int fios, String portariaInmetro) {
-        
+    public Medidor(String numeroSerie, String numeroGeral, String instalacao, String modelo, String fabricante, String tensaoNominal, int correnteNominal, String tipoMedidor, String kdKe,
+                   String rr, int numElementos, String anoFabricacao, String classe, int fios, String portariaInmetro) {
+
         this.numeroSerie = numeroSerie;
         this.numeroGeral = numeroGeral;
         this.instalacao = instalacao;
@@ -82,11 +82,11 @@ public class Medidor {
         this.fabricante = fabricante;
     }
 
-    public int getTensaoNominal() {
+    public String getTensaoNominal() {
         return tensaoNominal;
     }
 
-    public void setTensaoNominal(int tensaoNominal) {
+    public void setTensaoNominal(String tensaoNominal) {
         this.tensaoNominal = tensaoNominal;
     }
 
@@ -130,11 +130,11 @@ public class Medidor {
         this.numElementos = numElementos;
     }
 
-    public int getAnoFabricacao() {
+    public String getAnoFabricacao() {
         return anoFabricacao;
     }
 
-    public void setAnoFabricacao(int anoFabricacao) {
+    public void setAnoFabricacao(String anoFabricacao) {
         this.anoFabricacao = anoFabricacao;
     }
 

@@ -154,10 +154,10 @@ public class BancoController {
         db.close();
 
         if (resultado == -1) {
-            Log.d("Inseriu", "Erro ao deletar avaliador");
+            Log.d("Deletou", "Erro ao deletar avaliador");
             return "Erro ao deletar registro";
         } else {
-            Log.d("Inseriu", "Deletou avaliador");
+            Log.d("Deletou", "Deletou avaliador");
             return " Registro deletado com sucesso";
         }
     }
@@ -208,6 +208,43 @@ public class BancoController {
         db = banco.getReadableDatabase();
         cursor = db.query(CriaBanco.TABELA_AVALIADOR, campos, avaliador, avaliadorArgs, null, null, null, null);
 
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+        db.close();
+
+        return cursor;
+    }
+
+    public String deletaMedidor(String numeroSerie, String numeroGeral) {
+
+        db = banco.getWritableDatabase();
+        long resultado;
+        String medidor = CriaBanco.NOME_AVALIADOR + " = ? AND " + CriaBanco.MATRICULA + " = ? ";
+        String[] medidorArgs = {numeroSerie, numeroGeral};
+        resultado = db.delete(CriaBanco.TABELA_AVALIADOR, medidor, medidorArgs);
+        db.close();
+
+        if (resultado == -1) {
+            Log.d("Deletou", "Erro ao deletar medidor");
+            return "Erro ao deletar registro";
+        } else {
+            Log.d("Deletou", "Deletou medidor");
+            return " Registro deletado com sucesso";
+        }
+    }
+
+    public Cursor pegarMedidor(String numeroSerie, String numeroGeral) {
+
+        Cursor cursor;
+        String[] campos = {CriaBanco.ID_MEDIDOR, CriaBanco.NUM_SERIE, CriaBanco.INSTALACAO, CriaBanco.NUM_GERAL, CriaBanco.FABRICANTE, CriaBanco.NUM_ELEMENTOS, CriaBanco.MODELO, CriaBanco.CORRENTE_NOMINAL,
+                CriaBanco.CLASSE, CriaBanco.RR, CriaBanco.ANO_FABRICACAO, CriaBanco.TENSAO_NOMINAL, CriaBanco.KDKE, CriaBanco.PORT_INMETRO, CriaBanco.FIOS, CriaBanco.TIPO_MEDIDOR};
+        String avaliador = CriaBanco.NUM_SERIE + " = ? AND " + CriaBanco.NUM_GERAL + " = ? ";
+        String[] avaliadorArgs = {numeroSerie, numeroGeral};
+        db = banco.getReadableDatabase();
+        cursor = db.query(CriaBanco.TABELA_MEDIDOR, campos, avaliador, avaliadorArgs, null, null, null, null);
+
+        Log.d("banco", String.valueOf(cursor));
         if (cursor != null) {
             cursor.moveToFirst();
         }

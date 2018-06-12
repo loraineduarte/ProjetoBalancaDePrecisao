@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.memtpadraomonofasico.apppadromonofsico.Atividades.FuncoesAdmin.Avaliador.ListagemAvaliadores;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 
 public class MedidorDashboard extends AppCompatActivity {
@@ -35,7 +34,7 @@ public class MedidorDashboard extends AppCompatActivity {
     }
 
     private void abrirListagemAvaliador() {
-        Intent intent = new Intent(this, ListagemAvaliadores.class);
+        Intent intent = new Intent(this, ListagemMedidores.class);
         startActivity(intent);
     }
 

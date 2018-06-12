@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListagemAvaliadores extends AppCompatActivity {
+
     private final CriaBanco banco = new CriaBanco(this);
     private final BancoController crud = new BancoController(this);
     private AdapterAvaliador adapter;

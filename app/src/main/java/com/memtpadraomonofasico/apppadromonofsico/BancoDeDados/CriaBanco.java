@@ -8,11 +8,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class CriaBanco extends SQLiteOpenHelper {
 
-    private static final String NOME_BANCO = "banco.db";
-    private static final int DATABASE_VERSION = 2;
-    BancoController banco;
-    private SQLiteDatabase db;
-
     //tabela de avaliador
     public static final String TABELA_AVALIADOR = "avaliador";
     public static final String ID_AVALIADOR = "_id_avaliador";
@@ -20,7 +15,6 @@ public class CriaBanco extends SQLiteOpenHelper {
     public static final String MATRICULA = "avaliador_matricula";
     public static final String SENHA = "avaliador_senha";
     public static final String ADMIN = "avaliador_admin";
-
     //tabela de medidor
     public static final String TABELA_MEDIDOR = "medidor";
     public static final String ID_MEDIDOR = "_id_medidor";
@@ -39,6 +33,15 @@ public class CriaBanco extends SQLiteOpenHelper {
     public static final String PORT_INMETRO = "medidor_port_inmetro";
     public static final String FIOS = "medidor_fios";
     public static final String TIPO_MEDIDOR = "medidor_tipo_medidor";
+    //tabela de medidor
+    public static final String TABELA_MENSAGENS = "mensagens";
+    public static final String ID_MENSAGENS = "_id_mensagens";
+    public static final String LOCAL_MENSAGEM = "local_mensagem";
+    public static final String MENSAGEM = "mensagem";
+    private static final String NOME_BANCO = "banco.db";
+    private static final int DATABASE_VERSION = 2;
+    BancoController banco;
+    private SQLiteDatabase db;
 
 
     public CriaBanco(Context context){
@@ -77,9 +80,40 @@ public class CriaBanco extends SQLiteOpenHelper {
                 +" )";
         db.execSQL(sqlMedidor);
 
+        String sqlMensagens = "CREATE TABLE IF NOT EXISTS " + TABELA_MENSAGENS + " (  "
+                + ID_MENSAGENS + " INTEGER PRIMARY KEY AUTOINCREMENT , "
+                + LOCAL_MENSAGEM + " text, "
+                + MENSAGEM + " text "
+                + " )";
+        db.execSQL(sqlMedidor);
 
-        final String Insert_Data="INSERT or replace INTO avaliador VALUES( 1, 'administrador','12345','admin', 'true')";
-        db.execSQL(Insert_Data);
+
+        final String Insert_Data_Admin = "INSERT or replace INTO avaliador VALUES( 1, 'administrador','12345','admin', 'true')";
+        db.execSQL(Insert_Data_Admin);
+
+        final String Insert_Data_Mensagens = "INSERT or replace INTO mensagens VALUES ( 1, 'Selos de Calibração','Base Perfurada')," +
+                "( 2, 'Selos de Calibração','Dispositivo de selagem quebrado'), ( 3, 'Selos de Calibração','Selo ausente ou não padronizado'), " +
+                "( 4, 'Selos de Calibração','Selo ausente ou violado reconstituído'), ( 5, 'Selos de Calibração','Selo ausente ou violado outro ')," +
+                " ( 6, 'Selos de Calibração','Selo ausente'), ( 7, 'Selos de Calibração','Selo íntegro'), ( 8, 'Selos de Calibração','Selo não padronizado')," +
+                "( 9, 'Selos de Calibração','Selo de policarbonato íntegro'), ( 10, 'Selos de Calibração','Selo PP íntegro'), ( 11, 'Selos de Calibração','Selo reconstituído - reapertado - colado')," +
+                "( 12, 'Selos de Calibração','Selo SB íntegro'), ( 13, 'Selos de Calibração','Selo violado'), ( 14, 'Selos de Calibração','Tampa solidarizada sem selo'), " +
+                //teste de registrador
+                "( 14, 'Registrador','Registrador não registra corretamente'),( 14, 'Registrador','Registrador não registra consumo'), ( 14, 'Registrador','Registrador defeituoso'), " +
+                "( 14, 'Registrador','Registrador travado, provocando atrito excessivo'), ( 14, 'Registrador','Não possibilita teste de registrador')," +
+                "( 14, 'Registrador','Ponteiros desalinhados'), ( 14, 'Registrador','Ciclômetros desalinhados'), ( 14, 'Registrador','Display apagado')," +
+                "( 14, 'Registrador','Primeira engrenagem desacoplada'), ( 14, 'Registrador','Primeira engrenagem com acoplamento excessivo'), ( 14, 'Registrador','Engrenagem com acoplamento intermitente')," +
+                "( 14, 'Registrador','Primeira engrenagem do registrador trocada'), ( 14, 'Registrador','Engrenagem com acoplamento intermitente'), ( 14, 'Registrador','Engrenagem limada')," +
+                "( 14, 'Registrador','Rosca sem fim desgastada'), ( 14, 'Registrador','Registrador incorreto constante disco'), ( 14, 'Registrador','Suporte de fixação do registrador quebrado')," +
+                "( 14, 'Registrador','THS/ Irrig-Erro programação constante e med com cemig')," +
+                //circuito de potencial
+                "(14, 'Circuito de potencial','Circuito Potencial Interrompido - Elo Retirado'), ( 14, 'Circuito de potencial','Circuito Potencial Interrompido - Elo Aberto/ Desapertado')," +
+                " (14, 'Circuito de potencial','Circuito Potencial Interrompido - Elo com Cola'), (14, 'Circuito de potencial','Elo com Sinal de Carbonização')," +
+                "(14, 'Circuito de potencial','Circuito Pot. Interrompido - Elo Retirado BLOCO'), (14, 'Circuito de potencial','Circuito Pot. Interrompido - Elo Aberto/ Desapertado BLOCO')," +
+                "(14, 'Circuito de potencial','Bobina interrompida sob tensão induzida'), (14, 'Circuito de potencial','Bobina Interrompida sem causa detectada')," +
+                "(14, 'Circuito de potencial','Circuito de potencial com a fiação cortada')";
+        db.execSQL(Insert_Data_Mensagens);
+
+
 
     }
 
@@ -88,6 +122,7 @@ public class CriaBanco extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(" DROP TABLE IF EXISTS " + TABELA_AVALIADOR);
         db.execSQL(" DROP TABLE IF EXISTS " + TABELA_MEDIDOR);
+        db.execSQL(" DROP TABLE IF EXISTS " + TABELA_MENSAGENS);
         onCreate(db);
     }
 
