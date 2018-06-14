@@ -252,5 +252,22 @@ public class BancoController {
 
         return cursor;
     }
+
+    public Cursor pegaMensagensSeloCalibracao(String sessao) {
+
+        Cursor cursor;
+        String[] campos = {CriaBanco.ID_MENSAGENS, CriaBanco.LOCAL_MENSAGEM, CriaBanco.MENSAGEM};
+        String avaliador = CriaBanco.LOCAL_MENSAGEM + " = ? ";
+        String[] avaliadorArgs = {sessao};
+        db = banco.getReadableDatabase();
+        cursor = db.query(CriaBanco.TABELA_MENSAGENS, campos, avaliador, avaliadorArgs, null, null, null, null);
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+        db.close();
+
+        return cursor;
+    }
 }
 

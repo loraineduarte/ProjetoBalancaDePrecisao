@@ -95,7 +95,9 @@
         <activity android:name=".Atividades.FuncoesAdmin.Medidor.MedidorDashboard" />
         <activity android:name=".Atividades.FuncoesAdmin.Medidor.ListagemMedidores" />
         <activity android:name=".Atividades.FuncoesAdmin.Medidor.EditarMedidorActivity" />
-        <activity android:name=".Atividades.FuncoesAdmin.Mensagens.MensagensDashboard"></activity>
+        <activity android:name=".Atividades.FuncoesAdmin.Mensagens.MensagensDashboard" />
+        <activity android:name=".Atividades.FuncoesAdmin.Mensagens.SeloCalibracaoListagemMensagens" />
+        <activity android:name=".Atividades.FuncoesAdmin.Mensagens.ListagemTodasMensagensActivity"></activity>
     </application>
 
 </manifest>

@@ -38,8 +38,12 @@ public class CriaBanco extends SQLiteOpenHelper {
     public static final String ID_MENSAGENS = "_id_mensagens";
     public static final String LOCAL_MENSAGEM = "local_mensagem";
     public static final String MENSAGEM = "mensagem";
-    private static final String NOME_BANCO = "banco.db";
-    private static final int DATABASE_VERSION = 2;
+
+
+    public static final String NOME_BANCO = "banco.db";
+
+
+    public static final int DATABASE_VERSION = 2;
     BancoController banco;
     private SQLiteDatabase db;
 
@@ -85,10 +89,10 @@ public class CriaBanco extends SQLiteOpenHelper {
                 + LOCAL_MENSAGEM + " text, "
                 + MENSAGEM + " text "
                 + " )";
-        db.execSQL(sqlMedidor);
+        db.execSQL(sqlMensagens);
 
 
-        final String Insert_Data_Admin = "INSERT or replace INTO avaliador VALUES( 1, 'administrador','12345','admin', 'true')";
+        final String Insert_Data_Admin = "INSERT or replace INTO avaliador VALUES( 1, 'administrador','12345','admin', 'true');";
         db.execSQL(Insert_Data_Admin);
 
         final String Insert_Data_Mensagens = "INSERT or replace INTO mensagens VALUES ( 1, 'Selos de Calibração','Base Perfurada')," +
@@ -98,19 +102,31 @@ public class CriaBanco extends SQLiteOpenHelper {
                 "( 9, 'Selos de Calibração','Selo de policarbonato íntegro'), ( 10, 'Selos de Calibração','Selo PP íntegro'), ( 11, 'Selos de Calibração','Selo reconstituído - reapertado - colado')," +
                 "( 12, 'Selos de Calibração','Selo SB íntegro'), ( 13, 'Selos de Calibração','Selo violado'), ( 14, 'Selos de Calibração','Tampa solidarizada sem selo'), " +
                 //teste de registrador
-                "( 14, 'Registrador','Registrador não registra corretamente'),( 14, 'Registrador','Registrador não registra consumo'), ( 14, 'Registrador','Registrador defeituoso'), " +
-                "( 14, 'Registrador','Registrador travado, provocando atrito excessivo'), ( 14, 'Registrador','Não possibilita teste de registrador')," +
-                "( 14, 'Registrador','Ponteiros desalinhados'), ( 14, 'Registrador','Ciclômetros desalinhados'), ( 14, 'Registrador','Display apagado')," +
-                "( 14, 'Registrador','Primeira engrenagem desacoplada'), ( 14, 'Registrador','Primeira engrenagem com acoplamento excessivo'), ( 14, 'Registrador','Engrenagem com acoplamento intermitente')," +
-                "( 14, 'Registrador','Primeira engrenagem do registrador trocada'), ( 14, 'Registrador','Engrenagem com acoplamento intermitente'), ( 14, 'Registrador','Engrenagem limada')," +
-                "( 14, 'Registrador','Rosca sem fim desgastada'), ( 14, 'Registrador','Registrador incorreto constante disco'), ( 14, 'Registrador','Suporte de fixação do registrador quebrado')," +
-                "( 14, 'Registrador','THS/ Irrig-Erro programação constante e med com cemig')," +
+                "( 15, 'Registrador','Registrador não registra corretamente'),( 16, 'Registrador','Registrador não registra consumo'), ( 17, 'Registrador','Registrador defeituoso'), " +
+                "( 18, 'Registrador','Registrador travado, provocando atrito excessivo'), ( 19, 'Registrador','Não possibilita teste de registrador')," +
+                "( 20, 'Registrador','Ponteiros desalinhados'), ( 21, 'Registrador','Ciclômetros desalinhados'), ( 22, 'Registrador','Display apagado')," +
+                "(23, 'Registrador','Primeira engrenagem desacoplada'), ( 24, 'Registrador','Primeira engrenagem com acoplamento excessivo'), ( 25, 'Registrador','Engrenagem com acoplamento intermitente')," +
+                "( 26, 'Registrador','Primeira engrenagem do registrador trocada'), ( 27, 'Registrador','Engrenagem com acoplamento intermitente'), ( 28, 'Registrador','Engrenagem limada')," +
+                "( 29, 'Registrador','Rosca sem fim desgastada'), ( 30, 'Registrador','Registrador incorreto constante disco'), ( 31, 'Registrador','Suporte de fixação do registrador quebrado')," +
+                "( 32, 'Registrador','THS/ Irrig-Erro programação constante e med com cemig')," +
                 //circuito de potencial
-                "(14, 'Circuito de potencial','Circuito Potencial Interrompido - Elo Retirado'), ( 14, 'Circuito de potencial','Circuito Potencial Interrompido - Elo Aberto/ Desapertado')," +
-                " (14, 'Circuito de potencial','Circuito Potencial Interrompido - Elo com Cola'), (14, 'Circuito de potencial','Elo com Sinal de Carbonização')," +
-                "(14, 'Circuito de potencial','Circuito Pot. Interrompido - Elo Retirado BLOCO'), (14, 'Circuito de potencial','Circuito Pot. Interrompido - Elo Aberto/ Desapertado BLOCO')," +
-                "(14, 'Circuito de potencial','Bobina interrompida sob tensão induzida'), (14, 'Circuito de potencial','Bobina Interrompida sem causa detectada')," +
-                "(14, 'Circuito de potencial','Circuito de potencial com a fiação cortada')";
+                "(33, 'Circuito de potencial','Circuito Potencial Interrompido - Elo Retirado'), ( 34, 'Circuito de potencial','Circuito Potencial Interrompido - Elo Aberto/ Desapertado')," +
+                " (35, 'Circuito de potencial','Circuito Potencial Interrompido - Elo com Cola'), (36, 'Circuito de potencial','Elo com Sinal de Carbonização')," +
+                "(37, 'Circuito de potencial','Circuito Pot. Interrompido - Elo Retirado BLOCO'), (38, 'Circuito de potencial','Circuito Pot. Interrompido - Elo Aberto/ Desapertado BLOCO')," +
+                "(39, 'Circuito de potencial','Bobina interrompida sob tensão induzida'), (40, 'Circuito de potencial','Bobina Interrompida sem causa detectada')," +
+                "(41, 'Circuito de potencial','Circuito de potencial com a fiação cortada')," +
+                //situações observados
+                "(42, 'Situações Observadas','Bloco de Terminais Carbonizado'), (43, 'Situações Observadas','Bobina interrompida sem causa detectada'), " +
+                "(44, 'Situações Observadas','Circuito eletrônico defeituoso'), (45, 'Situações Observadas','Componentes eletrônicos queimados')," +
+                "(46, 'Situações Observadas','Elemento móvel descentralizado'), (47, 'Situações Observadas','LED apagado/ não emite pulso')," +
+                "(48, 'Situações Observadas','LED aceso direto'), (49, 'Situações Observadas','LED disparado'), (50, 'Situações Observadas','LED intermitente')," +
+                "(51, 'Situações Observadas','Mancais deslocados'), (52, 'Situações Observadas','Marcas nos parafusos dos mancais'), (53, 'Situações Observadas','Neutro carbonizado')," +
+                "(54, 'Situações Observadas','Placa identificação amassada'), (55, 'Situações Observadas','Placa solta'), (56, 'Situações Observadas','Ranhuras no disco do elemento móvel')," +
+                "(57, 'Situações Observadas','Sinais de carbonização'), (58, 'Situações Observadas','Sujeira interna - atrito')," +
+                //informações complementares
+                "(59, 'Informações Complementares','Sem tampa do bloco de terminais'), (60, 'Informações Complementares','Tampa Solidarizada')," +
+                "(61, 'Informações Complementares','Tampa quebrada'), (62, 'Informações Complementares','Tampa quebrada no transporte'), (63, 'Informações Complementares','Selo rompido no laboratório')," +
+                "(64, 'Informações Complementares','Terminais de corrente oxidados'), (65, 'Informações Complementares','Leitura divergente');";
         db.execSQL(Insert_Data_Mensagens);
 
 
