@@ -13,7 +13,7 @@ import com.memtpadraomonofasico.apppadromonofsico.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SeloCalibracaoListagemMensagens extends AppCompatActivity {
+public class InfComplementaresListagemMensagens extends AppCompatActivity {
 
     private final CriaBanco banco = new CriaBanco(this);
     private final BancoController crud = new BancoController(this);
@@ -21,10 +21,12 @@ public class SeloCalibracaoListagemMensagens extends AppCompatActivity {
     private List<Mensagem> mensagens;
     private Cursor cursorMensagem;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_selocalibracao_listagem_mensagens);
+        setContentView(R.layout.activity_inf_complementares_listagem_mensagens);
+
 
         ListView listaDeMensagens = findViewById(R.id.listaMensagem);
         mensagens = todasMensagens();
@@ -34,12 +36,12 @@ public class SeloCalibracaoListagemMensagens extends AppCompatActivity {
 
     private List<Mensagem> todasMensagens() {
         List<Mensagem> av = new ArrayList<>();
-        Cursor cursor = crud.pegaMensagens("Selos de Calibração");
+        Cursor cursor = crud.pegaMensagens("Informações Complementares");
         for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-            String corpoMensagem = cursor.getString(1);
-            String localMensagem = cursor.getString(2);
+            String localMensagem = cursor.getString(1);
+            String corpoMensagem = cursor.getString(2);
             Log.d("Corpo", corpoMensagem);
-            Mensagem mensagem = new Mensagem(corpoMensagem, localMensagem);
+            Mensagem mensagem = new Mensagem(localMensagem, corpoMensagem);
             av.add(mensagem);
         }
         return av;

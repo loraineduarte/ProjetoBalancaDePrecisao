@@ -97,7 +97,11 @@
         <activity android:name=".Atividades.FuncoesAdmin.Medidor.EditarMedidorActivity" />
         <activity android:name=".Atividades.FuncoesAdmin.Mensagens.MensagensDashboard" />
         <activity android:name=".Atividades.FuncoesAdmin.Mensagens.SeloCalibracaoListagemMensagens" />
-        <activity android:name=".Atividades.FuncoesAdmin.Mensagens.ListagemTodasMensagensActivity"></activity>
+        <activity android:name=".Atividades.FuncoesAdmin.Mensagens.ListagemTodasMensagensActivity" />
+        <activity android:name=".Atividades.FuncoesAdmin.Mensagens.RegistradorListagemMensagens" />
+        <activity android:name=".Atividades.FuncoesAdmin.Mensagens.CircuitoPotencialListagemMensagens" />
+        <activity android:name=".Atividades.FuncoesAdmin.Mensagens.SitObservadasListagemMensagens" />
+        <activity android:name=".Atividades.FuncoesAdmin.Mensagens.InfComplementaresListagemMensagens"></activity>
     </application>
 
 </manifest>

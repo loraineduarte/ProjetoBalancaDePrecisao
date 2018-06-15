@@ -253,7 +253,7 @@ public class BancoController {
         return cursor;
     }
 
-    public Cursor pegaMensagensSeloCalibracao(String sessao) {
+    public Cursor pegaMensagens(String sessao) {
 
         Cursor cursor;
         String[] campos = {CriaBanco.ID_MENSAGENS, CriaBanco.LOCAL_MENSAGEM, CriaBanco.MENSAGEM};

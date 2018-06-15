@@ -30,12 +30,54 @@ public class ListagemTodasMensagensActivity extends AppCompatActivity {
             }
         });
 
-//        registrador.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                abrirListagemRegistrador();
-//            }
-//        });
+        registrador.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                abrirListagemRegistrador();
+            }
+        });
+
+        circPotencial.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                abrirListagemCircuitoPotencial();
+            }
+        });
+
+        sitObservadas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                abrirListagemSituaçõesObservadas();
+            }
+        });
+
+        infComplementares.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                abrirListagemInformacoesComplementares();
+            }
+        });
+
+    }
+
+    private void abrirListagemInformacoesComplementares() {
+        Intent intent = new Intent(this, InfComplementaresListagemMensagens.class);
+        startActivity(intent);
+    }
+
+    private void abrirListagemSituaçõesObservadas() {
+        Intent intent = new Intent(this, SitObservadasListagemMensagens.class);
+        startActivity(intent);
+    }
+
+    private void abrirListagemCircuitoPotencial() {
+        Intent intent = new Intent(this, CircuitoPotencialListagemMensagens.class);
+        startActivity(intent);
+    }
+
+    private void abrirListagemRegistrador() {
+        Intent intent = new Intent(this, RegistradorListagemMensagens.class);
+        startActivity(intent);
     }
 
     private void abrirListagemSeloCalibração() {
@@ -43,9 +85,5 @@ public class ListagemTodasMensagensActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-//    private void abrirListagemRegistrador() {
-//
-//        Intent intent = new Intent(this, CriarAvaliadorActivity.class);
-//        startActivity(intent);
-//    }
+
 }
