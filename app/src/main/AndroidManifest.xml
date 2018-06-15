@@ -101,7 +101,8 @@
         <activity android:name=".Atividades.FuncoesAdmin.Mensagens.RegistradorListagemMensagens" />
         <activity android:name=".Atividades.FuncoesAdmin.Mensagens.CircuitoPotencialListagemMensagens" />
         <activity android:name=".Atividades.FuncoesAdmin.Mensagens.SitObservadasListagemMensagens" />
-        <activity android:name=".Atividades.FuncoesAdmin.Mensagens.InfComplementaresListagemMensagens"></activity>
+        <activity android:name=".Atividades.FuncoesAdmin.Mensagens.InfComplementaresListagemMensagens" />
+        <activity android:name=".Atividades.FuncoesAdmin.Mensagens.CriarMensagemActivity"></activity>
     </application>
 
 </manifest>

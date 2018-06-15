@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.memtpadraomonofasico.apppadromonofsico.Atividades.FuncoesAdmin.Avaliador.CriarAvaliadorActivity;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 
 public class MensagensDashboard extends AppCompatActivity {
@@ -42,7 +41,7 @@ public class MensagensDashboard extends AppCompatActivity {
 
     private void abrirCadastroAvaliador() {
 
-        Intent intent = new Intent(this, CriarAvaliadorActivity.class);
+        Intent intent = new Intent(this, CriarMensagemActivity.class);
         startActivity(intent);
     }
 }

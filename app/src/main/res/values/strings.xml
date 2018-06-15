@@ -190,4 +190,13 @@
         <item>Circuito de potencial com a fiação cortada</item>
     </string-array>
 
+    <string-array name="TabelaMensagens">
+        <item></item>
+        <item>Selos de Calibração</item>
+        <item>Registrador</item>
+        <item>Circuito de Potencial</item>
+        <item>Situações Observadas</item>
+        <item>Informações Complementares</item>
+    </string-array>
+
 </resources>

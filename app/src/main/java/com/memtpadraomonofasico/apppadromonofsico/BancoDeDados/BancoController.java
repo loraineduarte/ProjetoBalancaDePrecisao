@@ -269,5 +269,28 @@ public class BancoController {
 
         return cursor;
     }
+
+    public String insereMensagem(String mensagemString, String tabelaEscolhida) {
+
+        ContentValues valores;
+        long resultado;
+
+        db = banco.getWritableDatabase();
+        valores = new ContentValues();
+        valores.put(CriaBanco.LOCAL_MENSAGEM, tabelaEscolhida);
+        valores.put(CriaBanco.MENSAGEM, mensagemString);
+
+        resultado = db.insert(CriaBanco.TABELA_MENSAGENS, null, valores);
+        db.close();
+
+        if (resultado == -1) {
+            Log.d("Inseriu", "Erro ao inserir mensagem");
+            return "Erro ao inserir registro";
+        } else {
+            Log.d("Inseriu", "Inseriu mensagem");
+            return " Registro Inserido com sucesso";
+        }
+    }
+
 }
 

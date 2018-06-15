@@ -355,7 +355,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/title6"
             android:layout_toEndOf="@+id/thumbnail6"
-            android:text="Informações Complementares"
+            android:text="Inf. Complementares"
             android:textColor="#343434"
             android:textSize="20sp" />
 
