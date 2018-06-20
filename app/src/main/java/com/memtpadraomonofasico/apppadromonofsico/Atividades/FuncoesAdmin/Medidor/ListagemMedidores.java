@@ -100,7 +100,7 @@ public class ListagemMedidores extends AppCompatActivity {
         String numeroGeral = avaliador.getNumeroGeral();
         Cursor cursor = crud.pegarMedidor(numeroSerie, numeroGeral);
 
-//        Log.d("cursor",  cursor.getString(3));
+        //   Log.d("cursor",  cursor.getString(0));
 //
 //        String instalacao = cursor.getString(3);
 //        String modelo = cursor.getString(4);
@@ -143,6 +143,7 @@ public class ListagemMedidores extends AppCompatActivity {
         Medidor medidor = medidores.get(position);
         String numeroSerie = medidor.getNumeroSerie();
         String numeroGeral = medidor.getNumeroGeral();
+
         deletarMedidorNoBanco(numeroSerie, numeroGeral, view);
     }
 }

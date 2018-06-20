@@ -81,7 +81,7 @@ public class CriaBanco extends SQLiteOpenHelper {
                 + FIOS + " integer, "
                 + PORT_INMETRO + " text, "
                 + TIPO_MEDIDOR + " text "
-                +" )";
+                + " ) ";
         db.execSQL(sqlMedidor);
 
         String sqlMensagens = "CREATE TABLE IF NOT EXISTS " + TABELA_MENSAGENS + " (  "
@@ -128,8 +128,6 @@ public class CriaBanco extends SQLiteOpenHelper {
                 "(61, 'Informações Complementares','Tampa quebrada'), (62, 'Informações Complementares','Tampa quebrada no transporte'), (63, 'Informações Complementares','Selo rompido no laboratório')," +
                 "(64, 'Informações Complementares','Terminais de corrente oxidados'), (65, 'Informações Complementares','Leitura divergente');";
         db.execSQL(Insert_Data_Mensagens);
-
-
 
     }
 

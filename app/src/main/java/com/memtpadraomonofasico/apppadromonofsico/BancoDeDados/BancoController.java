@@ -218,14 +218,31 @@ public class BancoController {
 
     public String deletaMedidor(String numeroSerie, String numeroGeral) {
 
+        // long resultado;
+//        String where = CriaBanco.NUM_GERAL + "= " + numeroGeral;
+//        String[] medidorArgs = {numeroGeral};
+//        db = banco.getReadableDatabase();
+//        resultado = db.delete(CriaBanco.TABELA_MEDIDOR, CriaBanco.NUM_GERAL + "= ? ", medidorArgs);
+//        Log.d("RESULTADO BANCO", String.valueOf(resultado));
+//        db.close();
+//
+//
+//
+////        String medidor = CriaBanco.NUM_SERIE + " = ? AND " + CriaBanco.NUM_GERAL + " = ? ";
+////        String[] medidorArgs = {numeroSerie, numeroGeral};
+////        resultado = db2.delete(CriaBanco.TABELA_MEDIDOR, medidor, medidorArgs);
+////
+////        db2.close();
+
         db = banco.getWritableDatabase();
         long resultado;
-        String medidor = CriaBanco.NOME_AVALIADOR + " = ? AND " + CriaBanco.MATRICULA + " = ? ";
-        String[] medidorArgs = {numeroSerie, numeroGeral};
-        resultado = db.delete(CriaBanco.TABELA_AVALIADOR, medidor, medidorArgs);
+        String avaliador = CriaBanco.NUM_SERIE + " = ? AND " + CriaBanco.NUM_GERAL + " = ? ";
+        String[] avaliadorArgs = {numeroSerie, numeroGeral};
+        resultado = db.delete(CriaBanco.TABELA_MEDIDOR, avaliador, avaliadorArgs);
         db.close();
 
-        if (resultado == -1) {
+
+        if ((resultado == -1) || (resultado == 0)) {
             Log.d("Deletou", "Erro ao deletar medidor");
             return "Erro ao deletar registro";
         } else {
@@ -239,28 +256,39 @@ public class BancoController {
         Cursor cursor;
         String[] campos = {CriaBanco.ID_MEDIDOR, CriaBanco.NUM_SERIE, CriaBanco.INSTALACAO, CriaBanco.NUM_GERAL, CriaBanco.FABRICANTE, CriaBanco.NUM_ELEMENTOS, CriaBanco.MODELO, CriaBanco.CORRENTE_NOMINAL,
                 CriaBanco.CLASSE, CriaBanco.RR, CriaBanco.ANO_FABRICACAO, CriaBanco.TENSAO_NOMINAL, CriaBanco.KDKE, CriaBanco.PORT_INMETRO, CriaBanco.FIOS, CriaBanco.TIPO_MEDIDOR};
-        String avaliador = CriaBanco.NUM_SERIE + " = ? AND " + CriaBanco.NUM_GERAL + " = ? ";
+        String medidor = CriaBanco.NUM_SERIE + " = ?  AND " + CriaBanco.NUM_GERAL + " = ?";
         String[] avaliadorArgs = {numeroSerie, numeroGeral};
         db = banco.getReadableDatabase();
-        cursor = db.query(CriaBanco.TABELA_MEDIDOR, campos, avaliador, avaliadorArgs, null, null, null, null);
+        cursor = db.query(CriaBanco.TABELA_MEDIDOR, campos, medidor, avaliadorArgs, null, null, null, null);
 
-        Log.d("banco", String.valueOf(cursor));
-        if (cursor != null) {
+        Log.d("CURSOR", String.valueOf(cursor.getCount()));
+
+        if (cursor != null && cursor.getCount() > 0) {
             cursor.moveToFirst();
         }
         db.close();
 
         return cursor;
+//        String avaliador = CriaBanco.NUM_SERIE + " = ? AND " + CriaBanco.NUM_GERAL + " = ? ";
+//        String[] avaliadorArgs = {numeroSerie, numeroGeral};
+//        db = banco.getReadableDatabase();
+//        cursor = db.query(CriaBanco.TABELA_MEDIDOR, campos, avaliador, avaliadorArgs, null, null, null, null);
+//
+//        Log.d("banco", String.valueOf(cursor));
+//        if (cursor != null) {
+//            cursor.moveToFirst();
+//        }
+//        db.close();
+//
+//        return cursor;
     }
 
-    public Cursor pegaMensagens(String sessao) {
+    public Cursor pegaMensagens() {
 
         Cursor cursor;
         String[] campos = {CriaBanco.ID_MENSAGENS, CriaBanco.LOCAL_MENSAGEM, CriaBanco.MENSAGEM};
-        String avaliador = CriaBanco.LOCAL_MENSAGEM + " = ? ";
-        String[] avaliadorArgs = {sessao};
         db = banco.getReadableDatabase();
-        cursor = db.query(CriaBanco.TABELA_MENSAGENS, campos, avaliador, avaliadorArgs, null, null, null, null);
+        cursor = db.query(CriaBanco.TABELA_MENSAGENS, campos, null, null, null, null, CriaBanco.LOCAL_MENSAGEM, null);
 
         if (cursor != null) {
             cursor.moveToFirst();
@@ -292,5 +320,57 @@ public class BancoController {
         }
     }
 
+    public String deletaMensagem(String mensagem, String tabela) {
+
+        db = banco.getWritableDatabase();
+        long resultado;
+        String msg = CriaBanco.MENSAGEM + " = ? AND " + CriaBanco.LOCAL_MENSAGEM + " = ? ";
+        String[] Args = {mensagem, tabela};
+        resultado = db.delete(CriaBanco.TABELA_MENSAGENS, msg, Args);
+        db.close();
+
+        if (resultado == -1) {
+            Log.d("Deletou", "Erro ao deletar avaliador");
+            return "Erro ao deletar registro";
+        } else {
+            Log.d("Deletou", "Deletou avaliador");
+            return " Registro deletado com sucesso";
+        }
+    }
+
+    public String updateMensagem(String msgAntigaString, String tabelaAntigaString, String msgString, String tabelaString) {
+
+
+        db = banco.getWritableDatabase();
+        long resultado;
+        String avaliador = CriaBanco.MENSAGEM + " = ? AND " + CriaBanco.LOCAL_MENSAGEM + " = ? ";
+        String[] avaliadorArgs = {msgAntigaString, tabelaAntigaString};
+        resultado = db.delete(CriaBanco.TABELA_MENSAGENS, avaliador, avaliadorArgs);
+        db.close();
+
+        if (resultado == -1) {
+            Log.d("Inseriu", "Erro ao deletar avaliador");
+        } else {
+            Log.d("Inseriu", "Deletou avaliador");
+        }
+
+        ContentValues valores;
+
+        db = banco.getWritableDatabase();
+        valores = new ContentValues();
+        valores.put(CriaBanco.MENSAGEM, msgString);
+        valores.put(CriaBanco.LOCAL_MENSAGEM, tabelaString);
+
+        resultado = db.insert(CriaBanco.TABELA_MENSAGENS, null, valores);
+        db.close();
+
+        if (resultado == -1) {
+            Log.d("atualizou", "Erro ao atualizar mensagem");
+            return "Erro ao atualizar registro";
+        } else {
+            Log.d("atualizou", "Atualizou mensagem");
+            return " Registro atualizado com sucesso";
+        }
+    }
 }
 

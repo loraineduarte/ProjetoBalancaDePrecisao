@@ -1,89 +1,103 @@
 package com.memtpadraomonofasico.apppadromonofsico.Atividades.FuncoesAdmin.Mensagens;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.Toast;
 
+import com.memtpadraomonofasico.apppadromonofsico.BancoDeDados.BancoController;
+import com.memtpadraomonofasico.apppadromonofsico.BancoDeDados.CriaBanco;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ListagemTodasMensagensActivity extends AppCompatActivity {
+
+    private final CriaBanco banco = new CriaBanco(this);
+    private final BancoController crud = new BancoController(this);
+    private AdapterMensagem adapter;
+    private List<Mensagem> mensagens;
+    private Cursor cursorMensagem;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listagem_todas_mensagens);
 
+        ListView listaDeMensagens = findViewById(R.id.listaMensagem);
+        mensagens = todasMensagens();
+        adapter = new AdapterMensagem(mensagens, this);
+        listaDeMensagens.setAdapter(adapter);
 
-        @SuppressLint("WrongViewCast") ImageView seloCalibracao = findViewById(R.id.Selin);
-        @SuppressLint("WrongViewCast") ImageView registrador = findViewById(R.id.Regist);
-        @SuppressLint("WrongViewCast") ImageView circPotencial = findViewById(R.id.Circuito);
-        @SuppressLint("WrongViewCast") ImageView sitObservadas = findViewById(R.id.Situacoes);
-        @SuppressLint("WrongViewCast") ImageView infComplementares = findViewById(R.id.infr);
-
-        seloCalibracao.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                abrirListagemSeloCalibração();
-            }
-        });
-
-        registrador.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                abrirListagemRegistrador();
-            }
-        });
-
-        circPotencial.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                abrirListagemCircuitoPotencial();
-            }
-        });
-
-        sitObservadas.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                abrirListagemSituaçõesObservadas();
-            }
-        });
-
-        infComplementares.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                abrirListagemInformacoesComplementares();
-            }
-        });
 
     }
 
-    private void abrirListagemInformacoesComplementares() {
-        Intent intent = new Intent(this, InfComplementaresListagemMensagens.class);
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d("OI", "entrou2");
+        reloadAllData();
+
+    }
+
+
+    private List<Mensagem> todasMensagens() {
+        List<Mensagem> av = new ArrayList<>();
+        Cursor cursor = crud.pegaMensagens();
+        for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+            String localMensagem = cursor.getString(1);
+            String corpoMensagem = cursor.getString(2);
+            Log.d("Corpo", corpoMensagem);
+            Mensagem mensagem = new Mensagem(localMensagem, corpoMensagem);
+            av.add(mensagem);
+        }
+        return av;
+    }
+
+
+    private void deletarMensagemNoBanco(String msg, String tabela, View view) {
+
+        BancoController crud = new BancoController(getBaseContext());
+        String cursor = crud.deletaMensagem(msg, tabela);
+        Toast.makeText(getApplicationContext(), cursor, Toast.LENGTH_LONG).show();
+        reloadAllData();
+    }
+
+    private void reloadAllData() {
+
+        mensagens = todasMensagens();
+        adapter.updateItens(mensagens);
+    }
+
+
+    public void editarMensagem(View view) {
+
+        int position = (int) view.getTag();
+        Mensagem mensagem = mensagens.get(position);
+
+        final BancoController crud = new BancoController(getBaseContext());
+        String msg = mensagem.getCorpoMensagem();
+        String tabela = mensagem.getTabela();
+
+
+        Intent intent = new Intent(this, EditarMensagemActivity.class);
+        intent.putExtra("mensagem", msg);
+        intent.putExtra("tabela", tabela);
         startActivity(intent);
     }
 
-    private void abrirListagemSituaçõesObservadas() {
-        Intent intent = new Intent(this, SitObservadasListagemMensagens.class);
-        startActivity(intent);
+    public void deletarMensagem(View view) {
+
+        int position = (int) view.getTag();
+        Mensagem mensagem = mensagens.get(position);
+        String msg = mensagem.getCorpoMensagem();
+        String tabela = mensagem.getTabela();
+        deletarMensagemNoBanco(msg, tabela, view);
     }
-
-    private void abrirListagemCircuitoPotencial() {
-        Intent intent = new Intent(this, CircuitoPotencialListagemMensagens.class);
-        startActivity(intent);
-    }
-
-    private void abrirListagemRegistrador() {
-        Intent intent = new Intent(this, RegistradorListagemMensagens.class);
-        startActivity(intent);
-    }
-
-    private void abrirListagemSeloCalibração() {
-        Intent intent = new Intent(this, SeloCalibracaoListagemMensagens.class);
-        startActivity(intent);
-    }
-
-
 }

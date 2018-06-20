@@ -42,17 +42,16 @@ class AdapterMensagem extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view = act.getLayoutInflater().inflate(R.layout.lista_mensagem_personalizada, parent, false);
-        Mensagem mensagem = mensagens.get(position);
-//        //pegando as referências das Views
-        TextView mensag = view.findViewById(R.id.lista_mensaagem);
 
+        Mensagem mensagem = mensagens.get(position);
+        View view = act.getLayoutInflater().inflate(R.layout.lista_mensagem_personalizada, parent, false);
+        TextView tabela = view.findViewById(R.id.tabela);
+        TextView mensag = view.findViewById(R.id.lista_mensaagem);
         ImageButton editar = view.findViewById(R.id.editar);
         editar.setTag(position);
         ImageButton excluir = view.findViewById(R.id.deletar);
         excluir.setTag(position);
-//
-//        //populando as Views
+        tabela.setText(mensagem.getTabela());
         mensag.setText(mensagem.getCorpoMensagem());
 
         return view;
