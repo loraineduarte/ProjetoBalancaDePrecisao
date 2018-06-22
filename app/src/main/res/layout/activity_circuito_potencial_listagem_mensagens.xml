@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.memtpadraomonofasico.apppadromonofsico.Atividades.FuncoesAdmin.Mensagens.CircuitoPotencialListagemMensagens">
+    tools:context="com.memtpadraomonofasico.apppadromonofsico.Atividades.FuncoesAdmin.Mensagens.CircuitoPotencialListagemMensagens"
+    tools:keep="@layout/activity_circuito_potencial_listagem_mensagens">
 
     <TextView
         android:id="@+id/PadrãoMonofásico"

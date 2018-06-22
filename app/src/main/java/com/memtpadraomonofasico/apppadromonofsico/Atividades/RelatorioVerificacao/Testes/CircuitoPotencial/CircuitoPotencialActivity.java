@@ -2,6 +2,7 @@ package com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificac
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -13,25 +14,27 @@ import android.widget.Spinner;
 
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.Exatidao.ExatidaoActivity;
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.MarchaVazio.MarchaVazioActivity;
+import com.memtpadraomonofasico.apppadromonofsico.BancoDeDados.BancoController;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
 import com.orhanobut.hawk.NoEncryption;
 
-/**
- *
- */
-@SuppressWarnings("ALL")
+import java.util.ArrayList;
+import java.util.List;
+
 public class CircuitoPotencialActivity extends AppCompatActivity {
 
     private RadioButton normal;
     private RadioButton reprovado;
     private String status;
     private Spinner opcoesReprovados;
+    private List<String> av = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_circuito_potencial);
+        final BancoController crud = new BancoController(getBaseContext());
 
         NoEncryption encryption = new NoEncryption();
         Hawk.init(this).setEncryption(encryption).build();
@@ -42,7 +45,9 @@ public class CircuitoPotencialActivity extends AppCompatActivity {
 
         opcoesReprovados = findViewById(R.id.RegistradorSpinner);
         opcoesReprovados.setEnabled(false);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,  R.array.ReprovadoCircuitoPotencial, android.R.layout.simple_spinner_item);
+
+        av = todasMensagens();
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, av);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         opcoesReprovados.setAdapter(adapter);
         opcoesReprovados.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
@@ -71,19 +76,23 @@ public class CircuitoPotencialActivity extends AppCompatActivity {
                 if (reprovado.isChecked()){
                     status = "Reprovado";
                 }
-
-//                if ((!normal.isChecked()) &&  (!reprovado.isChecked())) {
-//                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Não existe opção de status marcado. ", Toast.LENGTH_LONG).show();
-//
-//                } else {
                     Hawk.put("statusCircuitoPotencial", status);
-                   // abrirInspecaoConformidade();
                 abrirMarchaVazio();
-//                }
 
 
             }
         });
+    }
+
+    private List<String> todasMensagens() {
+
+        BancoController crud = new BancoController(getBaseContext());
+        Cursor cursor = crud.pegaMensagemEspecifica("Circuito de potencial");
+        for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+            String corpoMensagem = cursor.getString(2);
+            av.add(corpoMensagem);
+        }
+        return av;
     }
 
     private void abrirMarchaVazio() {
@@ -98,9 +107,7 @@ public class CircuitoPotencialActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    /**
-     * @param view
-     */
+
     public void onCheckboxClicked(View view) {
 
         switch (view.getId()) {
@@ -118,12 +125,5 @@ public class CircuitoPotencialActivity extends AppCompatActivity {
         }
     }
 
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-
-    }
 
 }

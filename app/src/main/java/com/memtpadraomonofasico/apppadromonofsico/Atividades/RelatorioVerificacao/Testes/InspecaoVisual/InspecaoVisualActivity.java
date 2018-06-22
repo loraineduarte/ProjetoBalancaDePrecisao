@@ -2,6 +2,7 @@ package com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificac
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -17,21 +18,27 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.CircuitoPotencial.CircuitoPotencialActivity;
+import com.memtpadraomonofasico.apppadromonofsico.BancoDeDados.BancoController;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
 import com.orhanobut.hawk.NoEncryption;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class InspecaoVisualActivity extends AppCompatActivity {
 
-    private RadioButton Reprovado, Aprovado;
     private static final int TIRAR_FOTO = 10207;
     private static final int REQUEST_OBS = 1000;
+    private RadioButton Reprovado, Aprovado;
     private String status, statusReprovado;
     private String observacaoInspecao = "";
     private Bitmap fotoResized;
     private Bitmap fotoInspecao;
     private Spinner opcoesReprovados;
     private EditText Selo1, Selo2, Selo3;
+
+    private List<String> av = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +58,8 @@ public class InspecaoVisualActivity extends AppCompatActivity {
 
         opcoesReprovados = findViewById(R.id.spinner);
         opcoesReprovados.setEnabled(false);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.ReprovadoInspeçãoVisual, android.R.layout.simple_spinner_item);
+        av = todasMensagens();
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, av);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         opcoesReprovados.setAdapter(adapter);
         opcoesReprovados.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -121,6 +129,17 @@ public class InspecaoVisualActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private List<String> todasMensagens() {
+
+        BancoController crud = new BancoController(getBaseContext());
+        Cursor cursor = crud.pegaMensagemEspecifica("Selos de Calibração");
+        for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+            String corpoMensagem = cursor.getString(2);
+            av.add(corpoMensagem);
+        }
+        return av;
     }
 
     private void tirarFoto() {

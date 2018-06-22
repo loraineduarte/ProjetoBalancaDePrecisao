@@ -15,7 +15,6 @@ import com.memtpadraomonofasico.apppadromonofsico.R;
 
 public class CriarMensagemActivity extends AppCompatActivity {
 
-    private Spinner opcoesSpinner;
     private String tabelaEscolhida, mensagemString;
     private EditText mensagem;
 
@@ -27,7 +26,7 @@ public class CriarMensagemActivity extends AppCompatActivity {
         final BancoController crud = new BancoController(getBaseContext());
         Button botaoCriarAvaliador = findViewById(R.id.buttonSalvarAvaliador);
 
-        opcoesSpinner = findViewById(R.id.spinner);
+        Spinner opcoesSpinner = findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.TabelaMensagens, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         opcoesSpinner.setAdapter(adapter);

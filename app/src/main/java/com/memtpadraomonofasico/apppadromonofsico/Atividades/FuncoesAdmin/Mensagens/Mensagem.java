@@ -4,7 +4,7 @@ package com.memtpadraomonofasico.apppadromonofsico.Atividades.FuncoesAdmin.Mensa
  * Created by loraine.duarte on 13/06/2018.
  */
 
-public class Mensagem {
+class Mensagem {
 
     private String tabela;
     private String corpoMensagem;

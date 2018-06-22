@@ -26,10 +26,10 @@ import java.util.Date;
 import java.util.Locale;
 
 public class RelatorioVerificacaoActivity extends AppCompatActivity  {
-    private String toiNumero, matricula, nomeAvaliadorString;
-    private RadioButton SEM, TOI;
-    private EditText MatriculaAvaliador, nomeAvaliador, ToiNumero;
     private final CriaBanco banco = new CriaBanco(this);
+    private String toiNumero, matricula, nomeAvaliadorString, gerenteAvaliador;
+    private RadioButton SEM, TOI;
+    private EditText MatriculaAvaliador, nomeAvaliador, ToiNumero, nomeGerente;
     private String horaInicialFormatada = null;
 
 
@@ -52,6 +52,7 @@ public class RelatorioVerificacaoActivity extends AppCompatActivity  {
 
         MatriculaAvaliador = findViewById(R.id.MatriculaAvaliador);
         nomeAvaliador= findViewById(R.id.NomeAvaliador);
+        nomeGerente = findViewById(R.id.GerenteAvaliador);
         SEM = findViewById(R.id.SEM);
         TOI = findViewById(R.id.TOI);
         ToiNumero = findViewById(R.id.ToiNumero);
@@ -80,6 +81,7 @@ public class RelatorioVerificacaoActivity extends AppCompatActivity  {
                 matricula = String.valueOf(MatriculaAvaliador.getText());
                 nomeAvaliadorString = String.valueOf(nomeAvaliador.getText());
                 toiNumero = String.valueOf(ToiNumero.getText());
+                gerenteAvaliador = String.valueOf(nomeGerente.getText());
 
                 if(matricula.length()==0 || nomeAvaliadorString.length()==0){
                     Toast.makeText(getApplicationContext(), "Sessão incompleta - Selecionar o avaliador! ", Toast.LENGTH_LONG).show();
@@ -106,6 +108,7 @@ public class RelatorioVerificacaoActivity extends AppCompatActivity  {
         Hawk.put("HoraInicial",horaInicialFormatada);
         Hawk.put("NomeAvaliador",String.valueOf(nomeAvaliador.getText()));
         Hawk.put("MatriculaAvaliador", String.valueOf(MatriculaAvaliador.getText()));
+        Hawk.put("GerenteAvaliador", String.valueOf(nomeGerente.getText()));
 
         if (SEM.isChecked()){
             Hawk.put("TipoSolicitação", "SEM");
@@ -143,6 +146,7 @@ public class RelatorioVerificacaoActivity extends AppCompatActivity  {
         savedInstanceState.putCharSequence("matricula", String.valueOf(MatriculaAvaliador.getText()));
         savedInstanceState.putCharSequence("nomeAvaliador", String.valueOf(nomeAvaliador.getText()));
         savedInstanceState.putCharSequence("numeroTOI", String.valueOf(ToiNumero.getText()));
+        savedInstanceState.putCharSequence("nomegerente", String.valueOf(nomeGerente.getText()));
 
         //salvando o Hawk
         savedInstanceState.putCharSequence("HoraInicial",horaInicialFormatada);

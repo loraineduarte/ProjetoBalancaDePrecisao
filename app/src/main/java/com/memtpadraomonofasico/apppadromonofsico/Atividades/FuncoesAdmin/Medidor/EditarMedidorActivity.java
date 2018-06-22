@@ -3,7 +3,6 @@ package com.memtpadraomonofasico.apppadromonofsico.Atividades.FuncoesAdmin.Medid
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -90,17 +89,4 @@ public class EditarMedidorActivity extends AppCompatActivity {
     }
 
 
-    public void onCheckboxClicked(View view) {
-
-//        switch (view.getId()) {
-//            case R.id.radioButtonEletronico:
-//                radioButtonAvaliador.setChecked(false);
-//                break;
-//
-//            case R.id.radioButtonAvaliador:
-//                radioButtonEletronico.setChecked(false);
-//                break;
-//
-//        }
-    }
 }

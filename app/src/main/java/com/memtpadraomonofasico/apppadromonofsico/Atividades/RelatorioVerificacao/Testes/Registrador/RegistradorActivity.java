@@ -3,6 +3,7 @@ package com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificac
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,11 +21,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.SituacoesObservadasActivity;
+import com.memtpadraomonofasico.apppadromonofsico.BancoDeDados.BancoController;
 import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.PairedDevices;
 import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.ThreadConexaoRegistrador;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
 import com.orhanobut.hawk.NoEncryption;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @SuppressWarnings("ALL")
 public class RegistradorActivity extends AppCompatActivity {
@@ -42,6 +47,7 @@ public class RegistradorActivity extends AppCompatActivity {
     private static TextView textMessage;
     private static TextView calibracaoPreTeste, calibracaoPosTeste;
     private static ThreadConexaoRegistrador conexao;
+    List<String> av = new ArrayList<>();
     @SuppressLint("WrongViewCast")
     private Button fotoDepois;
     @SuppressLint("WrongViewCast")
@@ -101,7 +107,8 @@ public class RegistradorActivity extends AppCompatActivity {
 
         opcoesReprovados = findViewById(R.id.RegistradorSpinner);
         opcoesReprovados.setEnabled(false);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.ReprovadoRegistrador, android.R.layout.simple_spinner_item);
+        av = todasMensagens();
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, av);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         opcoesReprovados.setAdapter(adapter);
         opcoesReprovados.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -212,6 +219,17 @@ public class RegistradorActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private List<String> todasMensagens() {
+
+        BancoController crud = new BancoController(getBaseContext());
+        Cursor cursor = crud.pegaMensagemEspecifica("Registrador");
+        for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+            String corpoMensagem = cursor.getString(2);
+            av.add(corpoMensagem);
+        }
+        return av;
     }
 
     private void abrirSituacoesObservadas() {

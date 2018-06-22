@@ -372,5 +372,22 @@ public class BancoController {
             return " Registro atualizado com sucesso";
         }
     }
+
+    public Cursor pegaMensagemEspecifica(String tabela) {
+
+        Cursor cursor;
+        String[] campos = {CriaBanco.ID_MENSAGENS, CriaBanco.LOCAL_MENSAGEM, CriaBanco.MENSAGEM};
+        String msg = CriaBanco.LOCAL_MENSAGEM + " = ? ";
+        String[] Args = {tabela};
+        db = banco.getReadableDatabase();
+        cursor = db.query(CriaBanco.TABELA_MENSAGENS, campos, msg, Args, null, null, null, null);
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+        db.close();
+
+        return cursor;
+    }
 }
 
