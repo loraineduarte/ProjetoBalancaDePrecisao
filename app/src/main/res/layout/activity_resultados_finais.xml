@@ -188,98 +188,14 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout5"/>
 
 
-    <RadioButton
-        android:id="@+id/tampasolidarizada"
-        android:layout_width="0dp"
+    <ListView
+        android:id="@+id/lista"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/tampa_do_medidor_solidarizada"
-        android:textColorHint="@color/colorPrimaryDark"
-        android:textColorLink="@color/colorPrimaryDark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/infocomplementares" />
+        android:layout_marginBottom="70dp"
+        android:layout_marginTop="70dp">
 
-    <RadioButton
-        android:id="@+id/semTampa"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="4dp"
-        android:text="@string/sem_tampa_do_bloco_de_terminais"
-        android:textColorHint="@color/colorPrimaryDark"
-        android:textColorLink="@color/colorPrimaryDark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tampasolidarizada" />
-
-    <RadioButton
-        android:id="@+id/tampaQuebrada"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="4dp"
-        android:text="@string/tampa_quebrada"
-        android:textColorHint="@color/colorPrimaryDark"
-        android:textColorLink="@color/colorPrimaryDark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/semTampa" />
-
-    <!--suppress AndroidDomInspection -->
-
-
-    <RadioButton
-        android:id="@+id/tampaQuebradaTransporte"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="4dp"
-        android:text="@string/tampa_quebrada_no_transporte"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tampaQuebrada" />
-
-    <RadioButton
-        android:id="@+id/seloRompido"
-        android:layout_width="0dp"
-        android:layout_height="32dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="4dp"
-        android:text="@string/selo_rompido_no_laborat_rio"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tampaQuebradaTransporte" />
-
-    <RadioButton
-        android:id="@+id/terminaisOxidados"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="4dp"
-        android:text="@string/terminais_de_corrente_oxidados"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/seloRompido" />
-
-    <RadioButton
-        android:id="@+id/leituraDivergente"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="4dp"
-        android:text="@string/leitura_divergente"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/terminaisOxidados" />
+    </ListView>
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -291,7 +207,7 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/leituraDivergente">
+        app:layout_constraintTop_toBottomOf="@+id/lista">
 
 
         <LinearLayout

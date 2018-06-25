@@ -1,243 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.SituacoesObservadasActivity">
+    android:layout_height="match_parent">
+
 
     <TextView
-        android:id="@+id/MarchaVazio"
-        android:layout_width="229dp"
-        android:layout_height="28dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:id="@+id/PadrãoMonofásico"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
         android:gravity="center"
-        android:text="@string/situa_es_observadas"
-        android:textAppearance="@android:style/TextAppearance.Material.DialogWindowTitle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="Situações Observadas"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
+    <ListView
+        android:id="@+id/lista"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="70dp"
+        android:layout_marginTop="70dp">
 
-    <RadioButton
-        android:id="@+id/SujeiraInterna"
-        android:layout_width="0dp"
-        android:layout_height="28dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/sujeira_interna_atrito"
-        android:textColorHint="@color/colorPrimaryDark"
-        android:textColorLink="@color/colorPrimaryDark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/MarchaVazio" />
+    </ListView>
 
-    <RadioButton
-        android:id="@+id/sinaisCarbonizacao"
-        android:layout_width="0dp"
-        android:layout_height="29dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:text="@string/sinais_de_carboniza_o"
-        android:textColorHint="@color/colorPrimaryDark"
-        android:textColorLink="@color/colorPrimaryDark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SujeiraInterna" />
-
-    <RadioButton
-        android:id="@+id/RanhurasDisco"
-        android:layout_width="0dp"
-        android:layout_height="29dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:text="@string/ranhuras_no_disco_do_elemento_m_vel"
-        android:textColorHint="@color/colorPrimaryDark"
-        android:textColorLink="@color/colorPrimaryDark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sinaisCarbonizacao" />
-
-    <!--suppress AndroidDomInspection -->
-
-
-    <RadioButton
-        android:id="@+id/PlacaSolta"
-        android:layout_width="0dp"
-        android:layout_height="27dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:text="@string/placa_solta"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.166"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/BlocosCarbonizados" />
-
-    <RadioButton
-        android:id="@+id/PlacaAmassada"
-        android:layout_width="0dp"
-        android:layout_height="28dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:text="@string/placa_de_identifica_o_amassada"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PlacaSolta" />
-
-    <RadioButton
-        android:id="@+id/NeutroCarbonizado"
-        android:layout_width="0dp"
-        android:layout_height="29dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:text="@string/neutro_carbonizado"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/RanhurasDisco" />
-
-    <RadioButton
-        android:id="@+id/MarcasParafusos"
-        android:layout_width="0dp"
-        android:layout_height="29dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:text="@string/marcas_nos_parafusos_dos_mancais"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NeutroCarbonizado" />
-
-    <RadioButton
-        android:id="@+id/MancaisDeslocados"
-        android:layout_width="0dp"
-        android:layout_height="27dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:text="@string/mancais_deslocados"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/MarcasParafusos" />
-
-    <RadioButton
-        android:id="@+id/ledIntermitente"
-        android:layout_width="0dp"
-        android:layout_height="28dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:text="@string/led_intermitente"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/MancaisDeslocados" />
-
-    <RadioButton
-        android:id="@+id/LedApagado"
-        android:layout_width="0dp"
-        android:layout_height="29dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:text="@string/led_apagado_n_o_emite_pulso"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ledIntermitente" />
-
-    <RadioButton
-        android:id="@+id/LedDisparado"
-        android:layout_width="0dp"
-        android:layout_height="27dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:text="@string/led_disparado"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/LedApagado" />
-
-    <RadioButton
-        android:id="@+id/LedAcesoDireto"
-        android:layout_width="0dp"
-        android:layout_height="28dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:text="@string/led_aceso_direto"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/LedDisparado" />
-
-    <RadioButton
-        android:id="@+id/elementoDescentralizado"
-        android:layout_width="0dp"
-        android:layout_height="27dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:text="@string/elemento_m_vel_descentralizado"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/LedAcesoDireto" />
-
-    <RadioButton
-        android:id="@+id/ComponenteQueimado"
-        android:layout_width="0dp"
-        android:layout_height="29dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:text="@string/componentes_eletr_nicos_queimados"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/elementoDescentralizado" />
-
-    <RadioButton
-        android:id="@+id/CircuitoDefeituoso"
-        android:layout_width="0dp"
-        android:layout_height="29dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:text="@string/circuito_eletr_nico_defeituoso"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ComponenteQueimado" />
-
-    <RadioButton
-        android:id="@+id/BobinaInterrompida"
-        android:layout_width="0dp"
-        android:layout_height="31dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:text="@string/bobina_interrompida_sem_causa_detectada"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/CircuitoDefeituoso" />
-
-    <RadioButton
-        android:id="@+id/BlocosCarbonizados"
-        android:layout_width="0dp"
-        android:layout_height="32dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:text="@string/bloco_de_terminais_carbonizados"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/BobinaInterrompida" />
 
     <LinearLayout
         android:id="@+id/linearLayout5"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PlacaAmassada">
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="15dp"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:baselineAligned="false"
             android:gravity="bottom"
-            android:orientation="horizontal"
-            tools:ignore="UselessParent">
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -287,4 +90,4 @@
         </LinearLayout>
     </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

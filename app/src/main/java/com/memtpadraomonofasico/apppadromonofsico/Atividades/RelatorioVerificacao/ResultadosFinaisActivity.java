@@ -2,45 +2,42 @@ package com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificac
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
+import android.widget.ListView;
 
+import com.memtpadraomonofasico.apppadromonofsico.BancoDeDados.BancoController;
+import com.memtpadraomonofasico.apppadromonofsico.BancoDeDados.CriaBanco;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
 import com.orhanobut.hawk.NoEncryption;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class ResultadosFinaisActivity extends AppCompatActivity {
 
+    private final CriaBanco banco = new CriaBanco(this);
+    private final BancoController crud = new BancoController(this);
     private EditText leituraRetirada;
     private EditText leituraCalibracao;
     private EditText leituraPosCalibracao;
     private String dataFormatada;
     private String horaFinalFormatada;
     private String horaInicialFormatada;
-    private RadioButton tampasolidarizada;
-    private RadioButton semTampa;
-    private RadioButton tampaQuebrada;
-    private RadioButton tampaQuebradaTransporte;
-    private RadioButton seloRompido;
-    private RadioButton terminaisOxidados;
-    private RadioButton leituraDivergente;
-    private String tampasolidarizadaStatus;
-    private String semTampaStatus;
-    private String tampaQuebradaStatus;
-    private String tampaQuebradaTransporteStatus;
-    private String seloRompidoStatus;
-    private String terminaisOxidadosStatus;
-    private String leituraDivergenteStatus ;
+    private AdapterListagemFinal adapter;
+    private List<String> mensagens;
+    private Cursor cursorMensagem;
     private String informacoesComplementares ="";
+
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -71,6 +68,12 @@ public class ResultadosFinaisActivity extends AppCompatActivity {
         EditText horaFinal = findViewById(R.id.HoraFim);
         horaFinal.setText(horaFinalFormatada);
 
+
+        ListView listaDeMensagens = findViewById(R.id.lista);
+        mensagens = todasMensagens();
+        adapter = new AdapterListagemFinal(mensagens, this);
+        listaDeMensagens.setAdapter(adapter);
+
         @SuppressLint("WrongViewCast") Button next =  findViewById(R.id.NextFase9);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,53 +86,7 @@ public class ResultadosFinaisActivity extends AppCompatActivity {
                 Hawk.delete("HoraFinal");
                 Hawk.delete("InformacoesComplementares");
 
-
-                tampasolidarizada = findViewById(R.id.tampasolidarizada);
-                semTampa = findViewById(R.id.semTampa);
-                tampaQuebrada = findViewById(R.id.tampaQuebrada);
-                tampaQuebradaTransporte = findViewById(R.id.tampaQuebradaTransporte);
-                seloRompido = findViewById(R.id.seloRompido);
-                terminaisOxidados = findViewById(R.id.terminaisOxidados);
-                leituraDivergente = findViewById(R.id.leituraDivergente);
-
-                if(tampasolidarizada.isChecked()){
-                    tampasolidarizadaStatus = "Tampa do medidor solidarizada";
-                    informacoesComplementares = informacoesComplementares + tampasolidarizadaStatus + " - ";
-
-                }
-                if (semTampa.isChecked()){
-                    semTampaStatus = "Sem tampa do bloco de terminais";
-                    informacoesComplementares = informacoesComplementares + semTampaStatus + " - ";
-
-                }
-                if (tampaQuebrada.isChecked()){
-                    tampaQuebradaStatus = "Tampa quebrada";
-                    informacoesComplementares = informacoesComplementares + tampaQuebradaStatus + " - ";
-
-                }
-                if (tampaQuebradaTransporte.isChecked()){
-                    tampaQuebradaTransporteStatus = "Tampa quebrada no transporte";
-                    informacoesComplementares = informacoesComplementares + tampaQuebradaTransporteStatus + " - ";
-
-                }
-                if (seloRompido.isChecked()){
-                    seloRompidoStatus = "Selo rompido no laboratório";
-                    informacoesComplementares = informacoesComplementares + seloRompidoStatus + " - ";
-
-                }
-                if (terminaisOxidados.isChecked()){
-                    terminaisOxidadosStatus = "Terminais de corrente oxidados";
-                    informacoesComplementares = informacoesComplementares + terminaisOxidadosStatus + " - ";
-
-                }
-                if (leituraDivergente.isChecked()){
-                    leituraDivergenteStatus = "Leitura Divergente";
-                    informacoesComplementares = informacoesComplementares + leituraDivergenteStatus;
-                }
-
                 Hawk.put("InformacoesComplementares", informacoesComplementares);
-
-
                     Hawk.put("DataInicial", dataFormatada);
                     Hawk.put("DataFinal", dataFormatada);
                     Hawk.put("HoraInicial", horaInicialFormatada);
@@ -145,5 +102,40 @@ public class ResultadosFinaisActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ConclusaoActivity.class);
         startActivity(intent);
     }
+
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        reloadAllData();
+
+    }
+
+
+    private List<String> todasMensagens() {
+        List<String> av = new ArrayList<>();
+        Cursor cursor = crud.pegaMensagemEspecifica("Informações Complementares");
+        for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+            String corpoMensagem = cursor.getString(2);
+            av.add(corpoMensagem);
+        }
+        return av;
+    }
+
+
+    private void reloadAllData() {
+
+        mensagens = todasMensagens();
+        adapter.updateItens(mensagens);
+    }
+
+    public void selecionarMensagem(View view) {
+
+        int position = (int) view.getTag();
+        String mensagem = mensagens.get(position);
+        informacoesComplementares = informacoesComplementares + "\n" + mensagem;
+
+    }
+
 
 }
