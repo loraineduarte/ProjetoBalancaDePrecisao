@@ -3,6 +3,7 @@ package com.memtpadraomonofasico.apppadromonofsico.Atividades.FuncoesAdmin.Medid
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -16,6 +17,7 @@ public class EditarMedidorActivity extends AppCompatActivity {
     private String numeroSerieString, numeroGeralString, instalacaoString, modeloString, fabricanteString, tensaoNominalString, correnteNominalString, tipoMedidorString, kdKeString, rrString,
             numElementosString, anoFabricacaoString, classeString, fiosString, portariaInmetroString;
     private RadioButton radioButtonMecanico, radioButtonEletronico;
+    private Button botaoCriarMedidor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,51 +43,51 @@ public class EditarMedidorActivity extends AppCompatActivity {
         String portariaInmetroAntigo = it.getStringExtra("portariaInmetro");
 
 
-        Button botaoCriarMedidor = findViewById(R.id.buttonSalvarAvaliador);
+        botaoCriarMedidor = findViewById(R.id.buttonSalvarMedidor);
 
-//        nome = findViewById(R.id.nomeAvaliador);
-//        nome.setText(nomeAntigoString);
-//        matricula = findViewById(R.id.numeroMatriculaAvaliador);
-//        matricula.setText(matriculaAntigoString);
-//        senha = findViewById(R.id.senhaAvaliador);
-//        senha.setText(senhaAntigoString);
-//
-//        radioButtonAvaliador = findViewById(R.id.radioButtonAvaliador);
-//        radioButtonEletronico = findViewById(R.id.radioButtonEletronico);
-//        if (tipoUsuarioAntigoString.equals("true")) {
-//            radioButtonEletronico.setChecked(true);
-//        } else {
-//            radioButtonAvaliador.setChecked(true);
-//        }
-//
-//        botaoCriarAvaliador.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//
-//                nomeString = nome.getText().toString();
-//                matriculaString = matricula.getText().toString();
-//                senhaString = senha.getText().toString();
-//
-//                if (radioButtonAvaliador.isChecked()) {
-//                    tipoUsuarioString = "false";
-//
-//                } else if (radioButtonEletronico.isChecked()) {
-//                    tipoUsuarioString = "true";
-//                }
-//
-//
-//                if (nomeString.equals("") || matriculaString.equals("") || senhaString.equals("") || tipoUsuarioString.equals("")) {
-//                    Toast.makeText(getApplicationContext(), "Campos em branco! ", Toast.LENGTH_LONG).show();
-//                } else {
-//                    String resultado = crud.updateAvaliador(nomeString, matriculaString, senhaString, Boolean.parseBoolean(tipoUsuarioString), nomeAntigoString, matriculaAntigoString);
-//                    Toast.makeText(getApplicationContext(), resultado, Toast.LENGTH_LONG).show();
-//
-//                    finish();
-//                }
-//
-//            }
-//        });
+        numeroSerie = findViewById(R.id.numSerie);
+        numeroSerie.setText(numeroSerieAntigo);
+        numeroGeral = findViewById(R.id.NumGeral);
+        numeroGeral.setText(numeroGeralAntigo);
+        instalacao = findViewById(R.id.Instalacao);
+        instalacao.setText(instalacaoAntigo);
+        modelo = findViewById(R.id.ModeloMedidor);
+        modelo.setText(modeloAntigo);
+        fabricante = findViewById(R.id.fabricanteMedidor);
+        fabricante.setText(fabricanteAntigo);
+        tensaoNominal = findViewById(R.id.TensaoNominal);
+        tensaoNominal.setText(tensaoNominalAntigo);
+        correnteNominal = findViewById(R.id.CorrenteNominal);
+        correnteNominal.setText(correnteNominalAntigo.toString());
+        kdKe = findViewById(R.id.KdKe);
+        kdKe.setText(kdKeAntigo);
+        rr = findViewById(R.id.RR);
+        rr.setText(rrAntigo);
+        numElementos = findViewById(R.id.NumElementos);
+        numElementos.setText(numElementosAntigo);
+        anoFabricacao = findViewById(R.id.AnoFabricacao);
+        anoFabricacao.setText(anoFabricacaoAntigo);
+        classe = findViewById(R.id.Classe);
+        classe.setText(classeAntigo);
+        fios = findViewById(R.id.Fios);
+        fios.setText(fiosAntigo);
+        portariaInmetro = findViewById(R.id.PorInmetro);
+        portariaInmetro.setText(portariaInmetroAntigo);
+
+        radioButtonMecanico = findViewById(R.id.radioButtonAvaliador);
+        radioButtonEletronico = findViewById(R.id.radioButtonEletronico);
+        if (tipoMedidorAntigo.equals("Mecânico")) {
+            radioButtonMecanico.setChecked(true);
+        } else {
+            radioButtonEletronico.setChecked(true);
+        }
+
+        botaoCriarMedidor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
 

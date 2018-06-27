@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 
 public class CriaBanco extends SQLiteOpenHelper {
@@ -40,12 +41,12 @@ public class CriaBanco extends SQLiteOpenHelper {
     public static final String MENSAGEM = "mensagem";
 
 
-    private static final String NOME_BANCO = "banco.db";
+    public static final String NOME_BANCO = "banco.db";
 
 
-    private static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 2;
+    public SQLiteDatabase db;
     BancoController banco;
-    private SQLiteDatabase db;
 
 
     public CriaBanco(Context context){
@@ -54,17 +55,8 @@ public class CriaBanco extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sqlAvaliador = "CREATE TABLE IF NOT EXISTS "+TABELA_AVALIADOR+" (  "
-                + ID_AVALIADOR + " INTEGER PRIMARY KEY AUTOINCREMENT , "
-                + NOME_AVALIADOR + " text, "
-                + MATRICULA + " text, "
-                + SENHA + " text, "
-                + ADMIN + " boolean "
-                +" )";
-        db.execSQL(sqlAvaliador);
 
-
-        String sqlMedidor = "CREATE TABLE IF NOT EXISTS "+TABELA_MEDIDOR+" (  "
+        String sqlMedidor = "CREATE TABLE IF NOT EXISTS " + TABELA_MEDIDOR + " (  "
                 + ID_MEDIDOR + " INTEGER PRIMARY KEY AUTOINCREMENT , "
                 + NUM_SERIE + " text, "
                 + INSTALACAO + " integer, "
@@ -83,6 +75,16 @@ public class CriaBanco extends SQLiteOpenHelper {
                 + TIPO_MEDIDOR + " text "
                 + " ) ";
         db.execSQL(sqlMedidor);
+
+        String sqlAvaliador = "CREATE TABLE IF NOT EXISTS " + TABELA_AVALIADOR + " (  "
+                + ID_AVALIADOR + " INTEGER PRIMARY KEY AUTOINCREMENT , "
+                + NOME_AVALIADOR + " text, "
+                + MATRICULA + " text, "
+                + SENHA + " text, "
+                + ADMIN + " boolean "
+                + " )";
+        db.execSQL(sqlAvaliador);
+
 
         String sqlMensagens = "CREATE TABLE IF NOT EXISTS " + TABELA_MENSAGENS + " (  "
                 + ID_MENSAGENS + " INTEGER PRIMARY KEY AUTOINCREMENT , "
@@ -259,5 +261,25 @@ public class CriaBanco extends SQLiteOpenHelper {
         assert cursor != null;
         cursor.close();
         return arrData;
+    }
+
+    public String DeletarMedidor(String codigo) {
+
+
+        int cursor;
+        SQLiteDatabase db;
+        db = this.getReadableDatabase();
+        String[] selectionArgs = new String[1];
+        selectionArgs[0] = codigo;
+        cursor = db.delete(TABELA_MEDIDOR, NUM_SERIE + " = ?", selectionArgs);
+
+        Log.d("ARRAY", String.valueOf(cursor));
+        if (cursor == -1) {
+            Log.d("Deletou", "Erro ao deletar avaliador");
+            return "Erro ao deletar registro";
+        } else {
+            Log.d("Deletou", "Deletou avaliador");
+            return " Registro deletado com sucesso";
+        }
     }
 }

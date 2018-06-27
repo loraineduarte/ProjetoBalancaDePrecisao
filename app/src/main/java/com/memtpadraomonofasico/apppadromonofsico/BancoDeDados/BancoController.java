@@ -216,7 +216,7 @@ public class BancoController {
         return cursor;
     }
 
-    public String deletaMedidor(String numeroSerie, String numeroGeral) {
+    public String deletaMedidorrs(String numeroSerie, String numeroGeral) {
 
         // long resultado;
 //        String where = CriaBanco.NUM_GERAL + "= " + numeroGeral;
@@ -236,7 +236,7 @@ public class BancoController {
 
         db = banco.getWritableDatabase();
         long resultado;
-        String avaliador = CriaBanco.NUM_SERIE + " = ? AND " + CriaBanco.NUM_GERAL + " = ? ";
+        String avaliador = CriaBanco.NUM_SERIE + " = ? ";
         String[] avaliadorArgs = {numeroSerie, numeroGeral};
         resultado = db.delete(CriaBanco.TABELA_MEDIDOR, avaliador, avaliadorArgs);
         db.close();
@@ -251,13 +251,13 @@ public class BancoController {
         }
     }
 
-    public Cursor pegarMedidor(String numeroSerie, String numeroGeral) {
+    public Cursor pegarMedidor(String numeroSerie) {
 
         Cursor cursor;
         String[] campos = {CriaBanco.ID_MEDIDOR, CriaBanco.NUM_SERIE, CriaBanco.INSTALACAO, CriaBanco.NUM_GERAL, CriaBanco.FABRICANTE, CriaBanco.NUM_ELEMENTOS, CriaBanco.MODELO, CriaBanco.CORRENTE_NOMINAL,
                 CriaBanco.CLASSE, CriaBanco.RR, CriaBanco.ANO_FABRICACAO, CriaBanco.TENSAO_NOMINAL, CriaBanco.KDKE, CriaBanco.PORT_INMETRO, CriaBanco.FIOS, CriaBanco.TIPO_MEDIDOR};
-        String medidor = CriaBanco.NUM_SERIE + " = ?  AND " + CriaBanco.NUM_GERAL + " = ?";
-        String[] avaliadorArgs = {numeroSerie, numeroGeral};
+        String medidor = CriaBanco.NUM_SERIE + " = ? ";
+        String[] avaliadorArgs = {numeroSerie};
         db = banco.getReadableDatabase();
         cursor = db.query(CriaBanco.TABELA_MEDIDOR, campos, medidor, avaliadorArgs, null, null, null, null);
 
@@ -269,18 +269,6 @@ public class BancoController {
         db.close();
 
         return cursor;
-//        String avaliador = CriaBanco.NUM_SERIE + " = ? AND " + CriaBanco.NUM_GERAL + " = ? ";
-//        String[] avaliadorArgs = {numeroSerie, numeroGeral};
-//        db = banco.getReadableDatabase();
-//        cursor = db.query(CriaBanco.TABELA_MEDIDOR, campos, avaliador, avaliadorArgs, null, null, null, null);
-//
-//        Log.d("banco", String.valueOf(cursor));
-//        if (cursor != null) {
-//            cursor.moveToFirst();
-//        }
-//        db.close();
-//
-//        return cursor;
     }
 
     public Cursor pegaMensagens() {
@@ -389,5 +377,7 @@ public class BancoController {
 
         return cursor;
     }
+
+
 }
 

@@ -12,7 +12,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:gravity="center"
-        android:text="Avaliadores"
+        android:text="Medidores"
         android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
     <ListView
