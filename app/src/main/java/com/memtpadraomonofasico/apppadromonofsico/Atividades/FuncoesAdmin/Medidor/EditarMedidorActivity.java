@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import com.memtpadraomonofasico.apppadromonofsico.BancoDeDados.BancoController;
 import com.memtpadraomonofasico.apppadromonofsico.R;
@@ -25,22 +26,22 @@ public class EditarMedidorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_editar_medidor);
 
         final BancoController crud = new BancoController(getBaseContext());
-        Intent it = getIntent();
-        String numeroSerieAntigo = it.getStringExtra("numeroSerie");
-        String numeroGeralAntigo = it.getStringExtra("numeroGeral");
-        String instalacaoAntigo = it.getStringExtra("instalacao");
-        String modeloAntigo = it.getStringExtra("modelo");
-        String fabricanteAntigo = it.getStringExtra("fabricante");
-        String tensaoNominalAntigo = it.getStringExtra("tensaoNominal");
-        String correnteNominalAntigo = it.getStringExtra("correnteNominal");
-        String tipoMedidorAntigo = it.getStringExtra("tipoMedidor");
-        String kdKeAntigo = it.getStringExtra("kdKe");
-        String rrAntigo = it.getStringExtra("rr");
-        String numElementosAntigo = it.getStringExtra("numElementos");
-        String anoFabricacaoAntigo = it.getStringExtra("anoFabricacao");
-        String classeAntigo = it.getStringExtra("classe");
-        String fiosAntigo = it.getStringExtra("fios");
-        String portariaInmetroAntigo = it.getStringExtra("portariaInmetro");
+        final Intent it = getIntent();
+        final String numeroSerieAntigo = it.getStringExtra("numeroSerie");
+        final String numeroGeralAntigo = it.getStringExtra("numeroGeral");
+        final String instalacaoAntigo = it.getStringExtra("instalacao");
+        final String modeloAntigo = it.getStringExtra("modelo");
+        final String fabricanteAntigo = it.getStringExtra("fabricante");
+        final String tensaoNominalAntigo = it.getStringExtra("tensaoNominal");
+        final String correnteNominalAntigo = it.getStringExtra("correnteNominal");
+        final String tipoMedidorAntigo = it.getStringExtra("tipoMedidor");
+        final String kdKeAntigo = it.getStringExtra("kdKe");
+        final String rrAntigo = it.getStringExtra("rr");
+        final String numElementosAntigo = it.getStringExtra("numElementos");
+        final String anoFabricacaoAntigo = it.getStringExtra("anoFabricacao");
+        final String classeAntigo = it.getStringExtra("classe");
+        final String fiosAntigo = it.getStringExtra("fios");
+        final String portariaInmetroAntigo = it.getStringExtra("portariaInmetro");
 
 
         botaoCriarMedidor = findViewById(R.id.buttonSalvarMedidor);
@@ -74,19 +75,57 @@ public class EditarMedidorActivity extends AppCompatActivity {
         portariaInmetro = findViewById(R.id.PorInmetro);
         portariaInmetro.setText(portariaInmetroAntigo);
 
-        radioButtonMecanico = findViewById(R.id.radioButtonAvaliador);
+        radioButtonMecanico = findViewById(R.id.RadioButtonMecanico);
         radioButtonEletronico = findViewById(R.id.radioButtonEletronico);
-        if (tipoMedidorAntigo.equals("Mecânico")) {
+        if (tipoMedidorAntigo.startsWith("M")) {
             radioButtonMecanico.setChecked(true);
+            radioButtonEletronico.setChecked(false);
         } else {
             radioButtonEletronico.setChecked(true);
+            radioButtonMecanico.setChecked(false);
         }
 
         botaoCriarMedidor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                numeroSerieString = numeroSerie.getText().toString();
+                numeroGeralString = numeroGeral.getText().toString();
+                instalacaoString = instalacao.getText().toString();
+                modeloString = modelo.getText().toString();
+                fabricanteString = fabricante.getText().toString();
+                tensaoNominalString = tensaoNominal.getText().toString();
+                correnteNominalString = correnteNominal.getText().toString();
+                kdKeString = kdKe.getText().toString();
+                rrString = rr.getText().toString();
+                numElementosString = numElementos.getText().toString();
+                anoFabricacaoString = anoFabricacao.getText().toString();
+                classeString = classe.getText().toString();
+                fiosString = fios.getText().toString();
+                portariaInmetroString = portariaInmetro.getText().toString();
+                radioButtonMecanico = findViewById(R.id.RadioButtonMecanico);
+                radioButtonMecanico = findViewById(R.id.RadioButtonMecanico);
+                radioButtonEletronico = findViewById(R.id.radioButtonEletronico);
+
+                if (radioButtonMecanico.isChecked()) {
+                    tipoMedidorString = "Mecânico";
+
+                } else if (radioButtonEletronico.isChecked()) {
+                    tipoMedidorString = "Eletrônico";
+                }
+
+
+//                if (nomeString.equals("") || matriculaString.equals("") || senhaString.equals("") || tipoUsuarioString.equals("")) {
+//                    Toast.makeText(getApplicationContext(), "Campos em branco! ", Toast.LENGTH_LONG).show();
+//                } else {
+                String resultado = crud.updateMedidor(numeroSerieAntigo, numeroSerieString, numeroGeralString, instalacaoString, modeloString, fabricanteString, tensaoNominalString,
+                        correnteNominalString, tipoMedidorString, kdKeString, rrString, numElementosString, anoFabricacaoString, classeString, fiosString, portariaInmetroString);
+                Toast.makeText(getApplicationContext(), resultado, Toast.LENGTH_LONG).show();
+
+                finish();
             }
+
+//            }
         });
     }
 

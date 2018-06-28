@@ -216,40 +216,6 @@ public class BancoController {
         return cursor;
     }
 
-    public String deletaMedidorrs(String numeroSerie, String numeroGeral) {
-
-        // long resultado;
-//        String where = CriaBanco.NUM_GERAL + "= " + numeroGeral;
-//        String[] medidorArgs = {numeroGeral};
-//        db = banco.getReadableDatabase();
-//        resultado = db.delete(CriaBanco.TABELA_MEDIDOR, CriaBanco.NUM_GERAL + "= ? ", medidorArgs);
-//        Log.d("RESULTADO BANCO", String.valueOf(resultado));
-//        db.close();
-//
-//
-//
-////        String medidor = CriaBanco.NUM_SERIE + " = ? AND " + CriaBanco.NUM_GERAL + " = ? ";
-////        String[] medidorArgs = {numeroSerie, numeroGeral};
-////        resultado = db2.delete(CriaBanco.TABELA_MEDIDOR, medidor, medidorArgs);
-////
-////        db2.close();
-
-        db = banco.getWritableDatabase();
-        long resultado;
-        String avaliador = CriaBanco.NUM_SERIE + " = ? ";
-        String[] avaliadorArgs = {numeroSerie, numeroGeral};
-        resultado = db.delete(CriaBanco.TABELA_MEDIDOR, avaliador, avaliadorArgs);
-        db.close();
-
-
-        if ((resultado == -1) || (resultado == 0)) {
-            Log.d("Deletou", "Erro ao deletar medidor");
-            return "Erro ao deletar registro";
-        } else {
-            Log.d("Deletou", "Deletou medidor");
-            return " Registro deletado com sucesso";
-        }
-    }
 
     public Cursor pegarMedidor(String numeroSerie) {
 
@@ -379,5 +345,56 @@ public class BancoController {
     }
 
 
+    public String updateMedidor(String numeroSerieAntigo, String numeroSerieString, String numeroGeralString, String instalacaoString, String modeloString,
+                                String fabricanteString, String tensaoNominalString, String correnteNominalString, String tipoMedidorString, String kdKeString, String rrString,
+                                String numElementosString, String anoFabricacaoString, String classeString, String fiosString, String portariaInmetroString) {
+
+        db = banco.getWritableDatabase();
+        long resultado;
+        String avaliador = CriaBanco.NUM_SERIE + " = ? ";
+        String[] avaliadorArgs = {numeroSerieAntigo};
+        resultado = db.delete(CriaBanco.TABELA_MEDIDOR, avaliador, avaliadorArgs);
+        db.close();
+
+
+        if ((resultado == -1) || (resultado == 0)) {
+            Log.d("Deletou", "Erro ao deletar medidor");
+            // return "Erro ao deletar registro";
+        } else {
+            Log.d("Deletou", "Deletou medidor");
+            // return " Registro deletado com sucesso";
+        }
+
+        ContentValues valores;
+
+        db = banco.getWritableDatabase();
+        valores = new ContentValues();
+        valores.put(CriaBanco.NUM_SERIE, numeroSerieString);
+        valores.put(CriaBanco.INSTALACAO, instalacaoString);
+        valores.put(CriaBanco.NUM_GERAL, numeroGeralString);
+        valores.put(CriaBanco.FABRICANTE, fabricanteString);
+        valores.put(CriaBanco.NUM_ELEMENTOS, numElementosString);
+        valores.put(CriaBanco.MODELO, modeloString);
+        valores.put(CriaBanco.CORRENTE_NOMINAL, correnteNominalString);
+        valores.put(CriaBanco.CLASSE, classeString);
+        valores.put(CriaBanco.RR, rrString);
+        valores.put(CriaBanco.ANO_FABRICACAO, anoFabricacaoString);
+        valores.put(CriaBanco.TENSAO_NOMINAL, tensaoNominalString);
+        valores.put(CriaBanco.KDKE, kdKeString);
+        valores.put(CriaBanco.PORT_INMETRO, portariaInmetroString);
+        valores.put(CriaBanco.FIOS, fiosString);
+        valores.put(CriaBanco.TIPO_MEDIDOR, tipoMedidorString);
+
+        resultado = db.insert(CriaBanco.TABELA_MEDIDOR, null, valores);
+        db.close();
+
+        if (resultado == -1) {
+            Log.d("Inseriu", "Erro ao inserir medidor");
+            return "Erro ao inserir registro";
+        } else {
+            Log.d("Inseriu", "Inseriu medidor");
+            return " Registro Inserido com sucesso";
+        }
+    }
 }
 
