@@ -18,7 +18,6 @@ public class EditarMedidorActivity extends AppCompatActivity {
     private String numeroSerieString, numeroGeralString, instalacaoString, modeloString, fabricanteString, tensaoNominalString, correnteNominalString, tipoMedidorString, kdKeString, rrString,
             numElementosString, anoFabricacaoString, classeString, fiosString, portariaInmetroString;
     private RadioButton radioButtonMecanico, radioButtonEletronico;
-    private Button botaoCriarMedidor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +43,7 @@ public class EditarMedidorActivity extends AppCompatActivity {
         final String portariaInmetroAntigo = it.getStringExtra("portariaInmetro");
 
 
-        botaoCriarMedidor = findViewById(R.id.buttonSalvarMedidor);
+        Button botaoCriarMedidor = findViewById(R.id.buttonSalvarMedidor);
 
         numeroSerie = findViewById(R.id.numSerie);
         numeroSerie.setText(numeroSerieAntigo);
@@ -59,7 +58,7 @@ public class EditarMedidorActivity extends AppCompatActivity {
         tensaoNominal = findViewById(R.id.TensaoNominal);
         tensaoNominal.setText(tensaoNominalAntigo);
         correnteNominal = findViewById(R.id.CorrenteNominal);
-        correnteNominal.setText(correnteNominalAntigo.toString());
+        correnteNominal.setText(correnteNominalAntigo);
         kdKe = findViewById(R.id.KdKe);
         kdKe.setText(kdKeAntigo);
         rr = findViewById(R.id.RR);

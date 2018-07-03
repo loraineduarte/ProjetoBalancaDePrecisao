@@ -41,10 +41,10 @@ public class CriaBanco extends SQLiteOpenHelper {
     public static final String MENSAGEM = "mensagem";
 
 
-    public static final String NOME_BANCO = "banco.db";
+    private static final String NOME_BANCO = "banco.db";
 
 
-    public static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 2;
     public SQLiteDatabase db;
     BancoController banco;
 

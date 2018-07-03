@@ -75,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
         Cursor cursor = crud.validaLogin(email, password);
         if (cursor.getCount() == 0) {
             Toast.makeText(getBaseContext(), "Usuário e/ou senha incorretos. ", Toast.LENGTH_LONG).show();
-            _loginButton.setEnabled(false);
+            _loginButton.setEnabled(true);
 
         } else {
             final ProgressDialog progressDialog = new ProgressDialog(this, R.drawable.circular_progress_bar);

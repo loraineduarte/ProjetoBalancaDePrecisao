@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -85,16 +86,19 @@ public class RelatorioVerificacaoActivity extends AppCompatActivity  {
 
                 if(matricula.length()==0 || nomeAvaliadorString.length()==0){
                     Toast.makeText(getApplicationContext(), "Sessão incompleta - Selecionar o avaliador! ", Toast.LENGTH_LONG).show();
-                } else
-                if((!SEM.isChecked() )&& ( !TOI.isChecked()) ){
+                } else if((!SEM.isChecked() )&& ( !TOI.isChecked()) ){
                     Toast.makeText(getApplicationContext(), "Sessão incompleta - Marcar o tipo de relatório! ", Toast.LENGTH_LONG).show();
 
                 } else if (((TOI.isChecked()) && (toiNumero.length()==0) )){
                     Toast.makeText(getApplicationContext(), "Sessão incompleta - Colocar o número do TOI ! ", Toast.LENGTH_LONG).show();
 
                 } else{
+                    Log.d("GERENTE", String.valueOf(nomeGerente.getText()));
 
-
+                    Hawk.put("HoraInicial", horaInicialFormatada);
+                    Hawk.put("NomeAvaliador", String.valueOf(nomeAvaliador.getText()));
+                    Hawk.put("MatriculaAvaliador", String.valueOf(MatriculaAvaliador.getText()));
+                    Hawk.put("GerenteAvaliador", String.valueOf(nomeGerente.getText()));
 
                     abrirServicos();
                 }
@@ -105,10 +109,6 @@ public class RelatorioVerificacaoActivity extends AppCompatActivity  {
 
     private void abrirServicos() {
 
-        Hawk.put("HoraInicial",horaInicialFormatada);
-        Hawk.put("NomeAvaliador",String.valueOf(nomeAvaliador.getText()));
-        Hawk.put("MatriculaAvaliador", String.valueOf(MatriculaAvaliador.getText()));
-        Hawk.put("GerenteAvaliador", String.valueOf(nomeGerente.getText()));
 
         if (SEM.isChecked()){
             Hawk.put("TipoSolicitação", "SEM");

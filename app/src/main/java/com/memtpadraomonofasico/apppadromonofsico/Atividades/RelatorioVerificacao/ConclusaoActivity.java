@@ -41,11 +41,17 @@ import java.io.OutputStream;
 @SuppressWarnings("ALL")
 public class ConclusaoActivity extends AppCompatActivity {
 
+    private static final int MY_PERMISSIONS_REQUEST = 10;
     private RadioButton FuncionandoCorretamente;
     private RadioButton ComDefeito;
     private RadioButton MedidorIrregularidade;
     private String conclusão = "";
-    private static final int MY_PERMISSIONS_REQUEST=10;
+
+    private static void addEmptyLine(Paragraph paragraph, int number) {
+        for (int i = 0; i < number; i++) {
+            paragraph.add(new Paragraph(" "));
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +105,6 @@ public class ConclusaoActivity extends AppCompatActivity {
         });
 
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
@@ -925,12 +930,13 @@ public class ConclusaoActivity extends AppCompatActivity {
             AssinaturaItem.setBorder(PdfPCell.NO_BORDER);
             tabelaAssinaturas.addCell(AssinaturaItem);
 
-            AssinaturaItem = new PdfPCell(new Phrase("Responsável 1 ", subFont));
+            Log.d("GERENTE", (String) Hawk.get("nomegerente"));
+            AssinaturaItem = new PdfPCell(new Phrase((String) Hawk.get("GerenteAvaliador"), subFont));
             AssinaturaItem.setHorizontalAlignment(Element.ALIGN_CENTER);
             AssinaturaItem.setBorder(PdfPCell.NO_BORDER);
             tabelaAssinaturas.addCell(AssinaturaItem);
 
-            AssinaturaItem = new PdfPCell(new Phrase("Responsável 2 ", subFont));
+            AssinaturaItem = new PdfPCell(new Phrase((String) Hawk.get("NomeAvaliador"), subFont));
             AssinaturaItem.setHorizontalAlignment(Element.ALIGN_CENTER);
             AssinaturaItem.setBorder(PdfPCell.NO_BORDER);
             tabelaAssinaturas.addCell(AssinaturaItem);
@@ -974,13 +980,6 @@ public class ConclusaoActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-    }
-
-
-    private static void addEmptyLine(Paragraph paragraph, int number) {
-        for (int i = 0; i < number; i++) {
-            paragraph.add(new Paragraph(" "));
-        }
     }
 
     /**
