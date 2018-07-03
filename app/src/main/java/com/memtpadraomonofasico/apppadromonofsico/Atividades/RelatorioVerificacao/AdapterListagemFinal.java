@@ -46,6 +46,7 @@ class AdapterListagemFinal extends BaseAdapter {
         String mensagem = mensagens.get(position);
         View view = act.getLayoutInflater().inflate(R.layout.listagem_mensagem_final, parent, false);
         TextView mensag = view.findViewById(R.id.Mensagem);
+        mensag.setTag(position);
         mensag.setText(mensagem);
 
         return view;

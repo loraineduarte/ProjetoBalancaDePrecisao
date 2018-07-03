@@ -130,7 +130,6 @@ public class ResultadosFinaisActivity extends AppCompatActivity {
     }
 
     public void selecionarMensagem(View view) {
-
         int position = (int) view.getTag();
         String mensagem = mensagens.get(position);
         informacoesComplementares = informacoesComplementares + "\n" + mensagem;

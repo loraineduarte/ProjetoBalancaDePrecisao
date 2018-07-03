@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -93,8 +92,6 @@ public class RelatorioVerificacaoActivity extends AppCompatActivity  {
                     Toast.makeText(getApplicationContext(), "Sessão incompleta - Colocar o número do TOI ! ", Toast.LENGTH_LONG).show();
 
                 } else{
-                    Log.d("GERENTE", String.valueOf(nomeGerente.getText()));
-
                     Hawk.put("HoraInicial", horaInicialFormatada);
                     Hawk.put("NomeAvaliador", String.valueOf(nomeAvaliador.getText()));
                     Hawk.put("MatriculaAvaliador", String.valueOf(MatriculaAvaliador.getText()));

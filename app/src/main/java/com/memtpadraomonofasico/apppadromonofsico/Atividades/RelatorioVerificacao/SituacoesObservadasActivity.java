@@ -82,17 +82,16 @@ public class SituacoesObservadasActivity extends AppCompatActivity {
         adapter.updateItens(mensagens);
     }
 
-    public void selecionarMensagem(View view) {
-
-        int position = (int) view.getTag();
-        String mensagem = mensagens.get(position);
-        observações = observações + "\n" + mensagem;
-
-    }
 
     private void abrirResultadosFinais() {
         Intent intent = new Intent(this, ResultadosFinaisActivity.class);
         startActivity(intent);
     }
 
+    public void selecionarMensagem(View view) {
+
+        int position = (int) view.getTag();
+        String mensagem = mensagens.get(position);
+        observações = observações + "\n" + mensagem;
+    }
 }

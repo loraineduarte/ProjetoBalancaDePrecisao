@@ -432,11 +432,21 @@ public class ConclusaoActivity extends AppCompatActivity {
             tabelaMedidor.addCell(medidorItem);
 
             p = new Phrase("Tipo: ", smallNormal);
-            p.add(new Chunk((String) Hawk.get("TipoMedidor"), smallNormal));
-            medidorItem = new PdfPCell(p);
-            medidorItem.setHorizontalAlignment(Element.ALIGN_LEFT);
-            medidorItem.setBorder(PdfPCell.NO_BORDER);
-            tabelaMedidor.addCell(medidorItem);
+            if (Hawk.get("TipoMedidor").toString().equals("")) {
+                p.add(new Chunk(" ", smallNormal));
+                medidorItem = new PdfPCell(p);
+                medidorItem.setHorizontalAlignment(Element.ALIGN_LEFT);
+                medidorItem.setBorder(PdfPCell.NO_BORDER);
+                tabelaMedidor.addCell(medidorItem);
+
+            } else {
+                p.add(new Chunk((String) Hawk.get("TipoMedidor"), smallNormal));
+                medidorItem = new PdfPCell(p);
+                medidorItem.setHorizontalAlignment(Element.ALIGN_LEFT);
+                medidorItem.setBorder(PdfPCell.NO_BORDER);
+                tabelaMedidor.addCell(medidorItem);
+            }
+
 
             p = new Phrase("Kd/Ke: ", smallNormal);
             p.add(new Chunk((String) Hawk.get("KdKeMedidor"), smallNormal));
@@ -930,7 +940,7 @@ public class ConclusaoActivity extends AppCompatActivity {
             AssinaturaItem.setBorder(PdfPCell.NO_BORDER);
             tabelaAssinaturas.addCell(AssinaturaItem);
 
-            Log.d("GERENTE", (String) Hawk.get("nomegerente"));
+            Log.d("GERENTE", (String) Hawk.get("GerenteAvaliador"));
             AssinaturaItem = new PdfPCell(new Phrase((String) Hawk.get("GerenteAvaliador"), subFont));
             AssinaturaItem.setHorizontalAlignment(Element.ALIGN_CENTER);
             AssinaturaItem.setBorder(PdfPCell.NO_BORDER);
