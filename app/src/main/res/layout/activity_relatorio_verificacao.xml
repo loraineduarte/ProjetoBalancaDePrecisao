@@ -2,8 +2,8 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     tools:context="com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.RelatorioVerificacaoActivity">
 
     <TextView
@@ -77,10 +77,9 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:hint="@string/nome_do_avaliador"
+        android:hint="Nome do Supervisor *"
         android:inputType="textPersonName"
         android:saveEnabled="true"
-        android:text=" Gerente do Serviço"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColorLink="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"

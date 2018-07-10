@@ -376,7 +376,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
                 conexao.start();
 
                 if (conexao != null) {
-                    textMessage.setText("Conexao sendo finalizada com: " + data.getStringExtra("btDevName") + "\n" + data.getStringExtra("btDevAddress"));
+                    textMessage.setText("Conexao finalizada com: " + data.getStringExtra("btDevName") + "\n Verifique o LED de conexão");
                 }
 
             } else {

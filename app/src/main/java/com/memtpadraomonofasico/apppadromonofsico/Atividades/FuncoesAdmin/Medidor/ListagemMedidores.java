@@ -34,7 +34,6 @@ public class ListagemMedidores extends AppCompatActivity {
         adapter = new AdapterMedidor(medidores, this);
         listaDeMedidores.setAdapter(adapter);
 
-
     }
 
 
@@ -42,35 +41,33 @@ public class ListagemMedidores extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
         reloadAllDataMedidor();
-
     }
 
 
     private List<Medidor> todosMedidores() {
 
-
         List<Medidor> av = new ArrayList<>();
         Cursor cursor = crud.pegaMedidores();
         for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-            String numeroSerie = cursor.getString(1);
-            String numeroGeral = cursor.getString(2);
-            String instalacao = cursor.getString(3);
-            String modelo = cursor.getString(4);
-            String fabricante = cursor.getString(5);
-            String tensaoNominal = cursor.getString(6);
-            int correnteNominal = Integer.parseInt(cursor.getString(7));
-            String tipoMedidor = cursor.getString(8);
-            String kdKe = cursor.getString(9);
-            String rr = cursor.getString(10);
-            int numElementos = Integer.parseInt(cursor.getString(11));
-            String anoFabricacao = cursor.getString(12);
-            String classe = cursor.getString(13);
-            int fios = Integer.parseInt(cursor.getString(14));
-            String portariaInmetro = cursor.getString(15);
 
-            Medidor medidor = new Medidor(numeroSerie, numeroGeral, instalacao, modelo, fabricante, tensaoNominal, correnteNominal, tipoMedidor, kdKe, rr, numElementos, anoFabricacao, classe, fios, portariaInmetro);
+            String numeroGeral = cursor.getString(1);
+            String modelo = cursor.getString(2);
+            String fabricante = cursor.getString(3);
+            String tensaoNominal = cursor.getString(4);
+            int correnteNominal = Integer.parseInt(cursor.getString(5));
+            String tipoMedidor = cursor.getString(6);
+            String kdKe = cursor.getString(7);
+            String rr = cursor.getString(8);
+            int numElementos = Integer.parseInt(cursor.getString(9));
+            String anoFabricacao = cursor.getString(10);
+            String classe = cursor.getString(11);
+            int fios = Integer.parseInt(cursor.getString(12));
+            String portariaInmetro = cursor.getString(13);
+
+            Medidor medidor = new Medidor(numeroGeral, modelo, fabricante, tensaoNominal, correnteNominal, tipoMedidor, kdKe, rr, numElementos, anoFabricacao, classe, fios, portariaInmetro);
             av.add(medidor);
         }
+
         return av;
     }
 
@@ -94,30 +91,28 @@ public class ListagemMedidores extends AppCompatActivity {
         Medidor avaliador = medidores.get(position);
 
         final BancoController crud = new BancoController(getBaseContext());
-        String numeroSerie = avaliador.getNumeroSerie();
+
         String numeroGeral = avaliador.getNumeroGeral();
-        Cursor cursor = crud.pegarMedidor(numeroSerie);
+        Cursor cursor = crud.pegarMedidor(numeroGeral);
 
         Log.d("cursor", cursor.getString(0));
 
-        String instalacao = cursor.getString(3);
-        String modelo = cursor.getString(4);
-        String fabricante = cursor.getString(5);
-        String tensaoNominal = cursor.getString(6);
-        int correnteNominal = Integer.parseInt(cursor.getString(7));
-        String tipoMedidor = cursor.getString(8);
-        String kdKe = cursor.getString(9);
-        String rr = cursor.getString(10);
-        int numElementos = Integer.parseInt(cursor.getString(11));
-        String anoFabricacao = cursor.getString(12);
-        String classe = cursor.getString(13);
-        int fios = Integer.parseInt(cursor.getString(14));
-        String portariaInmetro = cursor.getString(15);
+        String fabricante = cursor.getString(0);
+        String numElementos = cursor.getString(1);
+        String modelo = cursor.getString(2);
+        String correnteNominal = (cursor.getString(3));
+        String classe = cursor.getString(4);
+        String rr = cursor.getString(5);
+        String anoFabricacao = cursor.getString(6);
+        String tensaoNominal = cursor.getString(7);
+        String kdKe = cursor.getString(8);
+        String portariaInmetro = cursor.getString(9);
+        String fios = cursor.getString(10);
+        String tipoMedidor = cursor.getString(11);
 
         Intent intent = new Intent(this, EditarMedidorActivity.class);
-        intent.putExtra("numeroSerie", numeroSerie);
+
         intent.putExtra("numeroGeral", numeroGeral);
-        intent.putExtra("instalacao", instalacao);
         intent.putExtra("modelo", modelo);
         intent.putExtra("fabricante", fabricante);
         intent.putExtra("tensaoNominal", tensaoNominal);
@@ -138,10 +133,9 @@ public class ListagemMedidores extends AppCompatActivity {
 
         int position = (int) view.getTag();
         Medidor medidor = medidores.get(position);
-        String numeroSerie = medidor.getNumeroSerie();
         String numeroGeral = medidor.getNumeroGeral();
 
-        deletarMedidorNoBanco(numeroSerie, view);
+        deletarMedidorNoBanco(numeroGeral, view);
     }
 
     public void editarMedidor(View view) {
@@ -150,29 +144,24 @@ public class ListagemMedidores extends AppCompatActivity {
         Medidor avaliador = medidores.get(position);
 
         final BancoController crud = new BancoController(getBaseContext());
-
-        String numeroSerie = avaliador.getNumeroSerie();
-        Cursor cursor = crud.pegarMedidor(numeroSerie);
-
-        String instalacao = cursor.getString(2);
         String numeroGeral = avaliador.getNumeroGeral();
-        String fabricante = cursor.getString(4);
-        String numElementos = cursor.getString(5);
-        String modelo = cursor.getString(6);
-        String correnteNominal = (cursor.getString(7));
-        String classe = cursor.getString(8);
-        String rr = cursor.getString(9);
-        String anoFabricacao = cursor.getString(10);
-        String tensaoNominal = cursor.getString(11);
-        String kdKe = cursor.getString(12);
-        String portariaInmetro = cursor.getString(13);
-        String fios = cursor.getString(14);
-        String tipoMedidor = cursor.getString(15);
+        Cursor cursor = crud.pegarMedidor(numeroGeral);
+
+        String fabricante = cursor.getString(0);
+        String numElementos = cursor.getString(1);
+        String modelo = cursor.getString(2);
+        String correnteNominal = (cursor.getString(3));
+        String classe = cursor.getString(4);
+        String rr = cursor.getString(5);
+        String anoFabricacao = cursor.getString(6);
+        String tensaoNominal = cursor.getString(7);
+        String kdKe = cursor.getString(8);
+        String portariaInmetro = cursor.getString(9);
+        String fios = cursor.getString(10);
+        String tipoMedidor = cursor.getString(11);
 
         Intent intent = new Intent(this, EditarMedidorActivity.class);
-        intent.putExtra("numeroSerie", numeroSerie);
         intent.putExtra("numeroGeral", numeroGeral);
-        intent.putExtra("instalacao", instalacao);
         intent.putExtra("modelo", modelo);
         intent.putExtra("fabricante", fabricante);
         intent.putExtra("tensaoNominal", tensaoNominal);
@@ -193,9 +182,8 @@ public class ListagemMedidores extends AppCompatActivity {
 
         int position = (int) view.getTag();
         Medidor medidor = medidores.get(position);
-        String numeroSerie = medidor.getNumeroSerie();
         String numeroGeral = medidor.getNumeroGeral();
 
-        deletarMedidorNoBanco(numeroSerie, view);
+        deletarMedidorNoBanco(numeroGeral, view);
     }
 }

@@ -1,76 +1,76 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".Atividades.Bluetooth.BluetoothActivity">
 
     <TextView
         android:id="@+id/statusMessage"
-        android:text=""
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text=""
         tools:ignore="RtlHardcoded" />
 
     <Button
+        android:id="@+id/button_PairedDevices"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/dispositivos_n_pareados"
-        android:id="@+id/button_PairedDevices"
-        android:layout_below="@+id/statusMessage"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_below="@+id/statusMessage"
         android:layout_marginTop="20dp"
         android:onClick="searchPairedDevices"
+        android:text="@string/dispositivos_n_pareados"
         tools:ignore="RtlHardcoded" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/iniciar_descoberta_n_de_dispositivos"
         android:layout_alignTop="@+id/button_PairedDevices"
-        android:layout_toRightOf="@+id/button_PairedDevices"
+        android:layout_marginLeft="5dp"
         android:layout_toEndOf="@+id/button_PairedDevices"
-        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@+id/button_PairedDevices"
         android:onClick="discoverDevices"
+        android:text="@string/iniciar_descoberta_n_de_dispositivos"
         tools:ignore="RtlHardcoded" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/esperar_nconex_o"
-        android:layout_marginLeft="5dp"
         android:layout_alignBottom="@+id/button_Visibility"
-        android:layout_toRightOf="@+id/button_Visibility"
+        android:layout_marginLeft="5dp"
         android:layout_toEndOf="@+id/button_Visibility"
+        android:layout_toRightOf="@+id/button_Visibility"
         android:onClick="waitConnection"
+        android:text="@string/esperar_nconex_o"
         tools:ignore="RtlHardcoded" />
 
     <Button
+        android:id="@+id/button_Visibility"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/habilitar_nvisibilidade"
-        android:id="@+id/button_Visibility"
-        android:layout_below="@+id/button_PairedDevices"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_below="@+id/button_PairedDevices"
         android:onClick="enableVisibility"
+        android:text="@string/habilitar_nvisibilidade"
         tools:ignore="RtlHardcoded" />
 
     <EditText
+        android:id="@+id/editText_MessageBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText_MessageBox"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:inputType=""
         tools:ignore="LabelFor,RtlHardcoded" />
 
@@ -78,20 +78,20 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/enviar"
         android:layout_above="@+id/editText_MessageBox"
-        android:layout_alignRight="@+id/editText_MessageBox"
         android:layout_alignEnd="@+id/editText_MessageBox"
+        android:layout_alignRight="@+id/editText_MessageBox"
         android:onClick="sendMessage"
+        android:text="@string/enviar"
         tools:ignore="RtlHardcoded" />
 
     <TextView
+        android:id="@+id/textSpace"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
-        android:id="@+id/textSpace"
+        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:text="" />
 
 
 </RelativeLayout>

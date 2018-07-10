@@ -51,8 +51,6 @@ public class CriarMedidorActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                instalacao = findViewById(R.id.Instalacao);
-                numSerie = findViewById(R.id.numSerie);
                 numGeral = findViewById(R.id.NumGeral);
                 fabricante = findViewById(R.id.fabricanteMedidor);
                 numElementos = findViewById(R.id.NumElementos);
@@ -66,8 +64,8 @@ public class CriarMedidorActivity extends AppCompatActivity {
                  porInmetro =findViewById(R.id.PorInmetro);
                  fios = findViewById(R.id.Fios);
 
-                int instalacaoString = Integer.parseInt(String.valueOf(instalacao.getText()));
-                String numSerieString = numSerie.getText().toString();
+//                int instalacaoString = Integer.parseInt(String.valueOf(instalacao.getText()));
+//                String numSerieString = numSerie.getText().toString();
                 String numGeralString = numGeral.getText().toString();
                 String fabricanteString = fabricante.getText().toString();
                 int numElementosString = Integer.parseInt(numElementos.getText().toString());
@@ -89,7 +87,10 @@ public class CriarMedidorActivity extends AppCompatActivity {
                     tipoMedidorString = "Mecânico";
                 }
 
-                if( (instalacao.getText().toString().equals("")) || numSerieString.equals("")|| fabricanteString.equals("")||  modeloString.equals("")||
+                if ((tipoMedidorString.startsWith("M") && RR.getText().toString().equals(""))) {
+
+                    Toast.makeText(getApplicationContext(), "Campo RR é obrigatório quando o modelo de medidor é eletrônico! ", Toast.LENGTH_LONG).show();
+                } else if (fabricanteString.equals("") || modeloString.equals("") ||
                         (tensaoNominal.getText().toString().equals(""))|| (correnteNominal.getText().toString().equals("")) || (KdKe.getText().toString().equals(""))
                         ||(numElementos.getText().toString().equals("")) || (anoFabricacao.getText().toString().equals(""))
                         || classeString.equals("")|| porInmetroString.equals("") || tipoMedidorString.equals("")){
@@ -97,7 +98,7 @@ public class CriarMedidorActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Campo obrigatório em branco! ", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    String resultado = crud.insereNovoMedidor(instalacaoString, numSerieString,numGeralString, fabricanteString, numElementosString, modeloString, correnteNominalString,
+                    String resultado = crud.insereNovoMedidor(numGeralString, fabricanteString, numElementosString, modeloString, correnteNominalString,
                             classeString,RRString, anoFabricacaoString, tensaoNominalString, KdKeString, porInmetroString,fiosString, tipoMedidorString);
                     Toast.makeText(getApplicationContext(), resultado, Toast.LENGTH_LONG).show();
                     finish();
@@ -119,8 +120,7 @@ public class CriarMedidorActivity extends AppCompatActivity {
         botaoLimparCampos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                instalacao = findViewById(R.id.Instalacao);
-                numSerie = findViewById(R.id.numSerie);
+
                 numGeral = findViewById(R.id.NumGeral);
                 fabricante = findViewById(R.id.fabricanteMedidor);
                 numElementos = findViewById(R.id.NumElementos);
@@ -136,8 +136,6 @@ public class CriarMedidorActivity extends AppCompatActivity {
                 checkEletronico = findViewById(R.id.radioButtonEletronico);
                 checkMecanico = findViewById(R.id.RadioButtonMecanico);
 
-                instalacao.getText().clear();
-                numSerie.getText().clear();
                 numGeral.getText().clear();
                 fabricante.getText().clear();
                 numElementos.getText().clear();
@@ -210,27 +208,27 @@ public class CriarMedidorActivity extends AppCompatActivity {
                         if (cont == 0) {
 
                         } else {
-                            int instalacao = Integer.parseInt(nextLine[0].toString());
-                            String numSerie = nextLine[1];
-                            String numGeral = nextLine[2];
-                            String fabricante = nextLine[3];
-                            int numElementos = Integer.parseInt(nextLine[4]);
-                            String modelo = nextLine[5];
-                            int correnteNominal = Integer.parseInt(nextLine[6]);
-                            String classe = nextLine[7];
-                            String RR = nextLine[8];
-                            int anoFabricacao = Integer.parseInt(nextLine[9]);
-                            int tensaoNominal = Integer.parseInt(nextLine[10]);
-                            double KdKe = Double.parseDouble(nextLine[11]);
-                            String porInmetro = nextLine[12];
-                            int fios = Integer.parseInt(nextLine[13]);
+//                            int instalacao = Integer.parseInt(nextLine[0].toString());
+//                            String numSerie = nextLine[1];
+                            String numGeral = nextLine[0];
+                            String fabricante = nextLine[1];
+                            int numElementos = Integer.parseInt(nextLine[2]);
+                            String modelo = nextLine[3];
+                            int correnteNominal = Integer.parseInt(nextLine[4]);
+                            String classe = nextLine[5];
+                            String RR = nextLine[6];
+                            int anoFabricacao = Integer.parseInt(nextLine[7]);
+                            int tensaoNominal = Integer.parseInt(nextLine[8]);
+                            double KdKe = Double.parseDouble(nextLine[9]);
+                            String porInmetro = nextLine[10];
+                            int fios = Integer.parseInt(nextLine[11]);
                             String tipoMedidorString = " ";
-                            if (nextLine[14].toString().startsWith("mec")) {
+                            if (nextLine[12].toString().startsWith("mec")) {
                                 tipoMedidorString = "Mecânico";
-                            } else if (nextLine[14].toString().startsWith("ele")) {
+                            } else if (nextLine[12].toString().startsWith("ele")) {
                                 tipoMedidorString = "Eletrônico";
                             }
-                            String resultado = crud.insereNovoMedidor(instalacao, numSerie, numGeral, fabricante, numElementos, modelo, correnteNominal,
+                            String resultado = crud.insereNovoMedidor(numGeral, fabricante, numElementos, modelo, correnteNominal,
                                     classe, RR, anoFabricacao, tensaoNominal, KdKe, porInmetro, fios, tipoMedidorString);
                             Toast.makeText(getApplicationContext(), resultado, Toast.LENGTH_LONG).show();
 

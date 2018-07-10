@@ -15,18 +15,12 @@
         android:paddingRight="5dp">
 
         <TextView
-            android:id="@+id/lista_nome"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Titulo"
-            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium" />
-
-        <TextView
             android:id="@+id/lista_descricao"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="Descriçao"
-            android:textAppearance="@android:style/TextAppearance.DeviceDefault.SearchResult.Subtitle" />
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium" />
+
 
     </LinearLayout>
 

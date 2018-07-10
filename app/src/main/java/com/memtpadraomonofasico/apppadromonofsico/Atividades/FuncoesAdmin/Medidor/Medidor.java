@@ -6,9 +6,7 @@ package com.memtpadraomonofasico.apppadromonofsico.Atividades.FuncoesAdmin.Medid
 
 class Medidor {
 
-    private String numeroSerie;
     private String numeroGeral;
-    private String instalacao;
     private String modelo;
     private String fabricante;
     private String tensaoNominal;
@@ -22,12 +20,11 @@ class Medidor {
     private int fios;
     private String portariaInmetro;
 
-    public Medidor(String numeroSerie, String numeroGeral, String instalacao, String modelo, String fabricante, String tensaoNominal, int correnteNominal, String tipoMedidor, String kdKe,
+    public Medidor(String numeroGeral, String modelo, String fabricante, String tensaoNominal, int correnteNominal, String tipoMedidor, String kdKe,
                    String rr, int numElementos, String anoFabricacao, String classe, int fios, String portariaInmetro) {
 
-        this.numeroSerie = numeroSerie;
+
         this.numeroGeral = numeroGeral;
-        this.instalacao = instalacao;
         this.modelo = modelo;
         this.fabricante = fabricante;
         this.tensaoNominal = tensaoNominal;
@@ -42,13 +39,6 @@ class Medidor {
         this.portariaInmetro = portariaInmetro;
     }
 
-    public String getNumeroSerie() {
-        return numeroSerie;
-    }
-
-    public void setNumeroSerie(String numeroSerie) {
-        this.numeroSerie = numeroSerie;
-    }
 
     public String getNumeroGeral() {
         return numeroGeral;
@@ -58,13 +48,6 @@ class Medidor {
         this.numeroGeral = numeroGeral;
     }
 
-    public String getInstalacao() {
-        return instalacao;
-    }
-
-    public void setInstalacao(String instalacao) {
-        this.instalacao = instalacao;
-    }
 
     public String getModelo() {
         return modelo;

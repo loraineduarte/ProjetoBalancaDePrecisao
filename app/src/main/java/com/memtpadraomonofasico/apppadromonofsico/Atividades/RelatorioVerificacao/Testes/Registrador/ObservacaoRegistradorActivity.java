@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,13 +13,15 @@ import com.memtpadraomonofasico.apppadromonofsico.R;
 
 public class ObservacaoRegistradorActivity extends AppCompatActivity {
 
+    EditText Observacao;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_observacao_registrador);
 
         //clean the editText
-        final EditText Observacao = findViewById(R.id.ObservacaoRegistrador);
+        Observacao = findViewById(R.id.ObservacaoRegistrador);
         Observacao.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 
             public void onFocusChange(View v, boolean hasFocus) {
@@ -64,9 +65,22 @@ public class ObservacaoRegistradorActivity extends AppCompatActivity {
 
     private void retornarRegistrador() {
 
-        Log.d("Adicionar Observação", "Retornando Para inspeção visual");
-        Intent intent = new Intent(this, RegistradorActivity.class);
-        startActivity(intent);
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("RESULT_STRING", Observacao.getText().toString());
+        setResult(RESULT_OK, returnIntent);
+        finish();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putCharSequence("OBS", String.valueOf(Observacao.getText()));
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putCharSequence("OBS", String.valueOf(Observacao.getText()));
+        super.onRestoreInstanceState(savedInstanceState);
     }
 
 }

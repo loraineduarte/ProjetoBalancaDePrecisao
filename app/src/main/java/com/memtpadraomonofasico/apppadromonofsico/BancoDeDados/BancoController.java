@@ -53,8 +53,7 @@ public class BancoController {
     }
 
 
-
-    public String insereNovoMedidor(int medidor_instalacao, String medidor_num_serie , String medidor_num_geral , String medidor_fabricante, int medidor_num_elementos, String medidor_modelo,
+    public String insereNovoMedidor(String medidor_num_geral, String medidor_fabricante, int medidor_num_elementos, String medidor_modelo,
                                     int medidor_corrente_nominal, String medidor_classe, String medidor_RR, int medidor_ano_fabricacao,
                                     int medidor_tensao_nominal, Double medidor_KdKe, String medidor_port_inmetro, int medidor_fios, String medidor_tipo_medidor){
         ContentValues valores;
@@ -62,8 +61,6 @@ public class BancoController {
 
         db = banco.getWritableDatabase();
         valores = new ContentValues();
-        valores.put(CriaBanco.NUM_SERIE, medidor_num_serie);
-        valores.put(CriaBanco.INSTALACAO, medidor_instalacao);
         valores.put(CriaBanco.NUM_GERAL, medidor_num_geral);
         valores.put(CriaBanco.FABRICANTE, medidor_fabricante);
         valores.put(CriaBanco.NUM_ELEMENTOS, medidor_num_elementos);
@@ -92,7 +89,7 @@ public class BancoController {
 
     public Cursor pegaMedidores(){
         Cursor cursor;
-        String[] campos =  {CriaBanco.ID_MEDIDOR, CriaBanco.NUM_SERIE, CriaBanco.INSTALACAO, CriaBanco.NUM_GERAL, CriaBanco.FABRICANTE, CriaBanco.NUM_ELEMENTOS, CriaBanco.MODELO, CriaBanco.CORRENTE_NOMINAL,
+        String[] campos = {CriaBanco.ID_MEDIDOR, CriaBanco.NUM_GERAL, CriaBanco.FABRICANTE, CriaBanco.NUM_ELEMENTOS, CriaBanco.MODELO, CriaBanco.CORRENTE_NOMINAL,
                 CriaBanco.CLASSE, CriaBanco.RR, CriaBanco.ANO_FABRICACAO, CriaBanco.TENSAO_NOMINAL, CriaBanco.KDKE, CriaBanco.PORT_INMETRO, CriaBanco.FIOS, CriaBanco.TIPO_MEDIDOR};
         db = banco.getReadableDatabase();
         cursor = db.query(CriaBanco.TABELA_MEDIDOR, campos, null, null, null, null, null, null);
@@ -217,13 +214,13 @@ public class BancoController {
     }
 
 
-    public Cursor pegarMedidor(String numeroSerie) {
+    public Cursor pegarMedidor(String numeroGeral) {
 
         Cursor cursor;
-        String[] campos = {CriaBanco.ID_MEDIDOR, CriaBanco.NUM_SERIE, CriaBanco.INSTALACAO, CriaBanco.NUM_GERAL, CriaBanco.FABRICANTE, CriaBanco.NUM_ELEMENTOS, CriaBanco.MODELO, CriaBanco.CORRENTE_NOMINAL,
+        String[] campos = {CriaBanco.FABRICANTE, CriaBanco.NUM_ELEMENTOS, CriaBanco.MODELO, CriaBanco.CORRENTE_NOMINAL,
                 CriaBanco.CLASSE, CriaBanco.RR, CriaBanco.ANO_FABRICACAO, CriaBanco.TENSAO_NOMINAL, CriaBanco.KDKE, CriaBanco.PORT_INMETRO, CriaBanco.FIOS, CriaBanco.TIPO_MEDIDOR};
-        String medidor = CriaBanco.NUM_SERIE + " = ? ";
-        String[] avaliadorArgs = {numeroSerie};
+        String medidor = CriaBanco.NUM_GERAL + " = ? ";
+        String[] avaliadorArgs = {numeroGeral};
         db = banco.getReadableDatabase();
         cursor = db.query(CriaBanco.TABELA_MEDIDOR, campos, medidor, avaliadorArgs, null, null, null, null);
 
@@ -345,14 +342,14 @@ public class BancoController {
     }
 
 
-    public String updateMedidor(String numeroSerieAntigo, String numeroSerieString, String numeroGeralString, String instalacaoString, String modeloString,
+    public String updateMedidor(String numeroGeralAntigo, String numeroGeralString, String modeloString,
                                 String fabricanteString, String tensaoNominalString, String correnteNominalString, String tipoMedidorString, String kdKeString, String rrString,
                                 String numElementosString, String anoFabricacaoString, String classeString, String fiosString, String portariaInmetroString) {
 
         db = banco.getWritableDatabase();
         long resultado;
-        String avaliador = CriaBanco.NUM_SERIE + " = ? ";
-        String[] avaliadorArgs = {numeroSerieAntigo};
+        String avaliador = CriaBanco.NUM_GERAL + " = ? ";
+        String[] avaliadorArgs = {numeroGeralAntigo};
         resultado = db.delete(CriaBanco.TABELA_MEDIDOR, avaliador, avaliadorArgs);
         db.close();
 
@@ -369,8 +366,6 @@ public class BancoController {
 
         db = banco.getWritableDatabase();
         valores = new ContentValues();
-        valores.put(CriaBanco.NUM_SERIE, numeroSerieString);
-        valores.put(CriaBanco.INSTALACAO, instalacaoString);
         valores.put(CriaBanco.NUM_GERAL, numeroGeralString);
         valores.put(CriaBanco.FABRICANTE, fabricanteString);
         valores.put(CriaBanco.NUM_ELEMENTOS, numElementosString);

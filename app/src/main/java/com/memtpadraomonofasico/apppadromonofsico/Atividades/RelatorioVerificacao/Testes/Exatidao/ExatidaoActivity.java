@@ -33,6 +33,8 @@ public class ExatidaoActivity extends AppCompatActivity {
     private static EditText cargaNominalErro, cargaPequenaErro;
     @SuppressLint("StaticFieldLeak")
     private static TextView textMessageInspecaoConformidade;
+    boolean testeCargaNominalComecou = false;
+    boolean testeCargaPequenaComecou = false;
     @SuppressLint("WrongViewCast")
     private
     Button conectar;
@@ -40,35 +42,7 @@ public class ExatidaoActivity extends AppCompatActivity {
     private String statusConformidade;
     private BluetoothAdapter mBluetoothAdapter;
     private ThreadConexao conexao;
-
-    private boolean testeCargaNominalComecou = false;
-    private boolean testeCargaPequenaComecou = false;
     private Button testeNominal, testePequeno;
-
-    public static void escreverTelaCargaNominal(final String res) {
-
-        handlerInspecaoConformidade.post(new Runnable() {
-            @Override
-            public void run() {
-
-                cargaNominalErro.setEnabled(true);
-                if (!(cargaNominalErro == null)) {
-                    if (res.startsWith("T")) {
-                        textMessageInspecaoConformidade.clearComposingText();
-                        textMessageInspecaoConformidade.setText("Teste Concluído!");
-
-                    }
-
-                    cargaNominalErro.clearComposingText();
-                    cargaNominalErro.setText(res);
-
-
-                }
-
-            }
-        });
-
-    }
 
     public static void escreverTelaCargaPequena(final String res) {
 
@@ -89,6 +63,37 @@ public class ExatidaoActivity extends AppCompatActivity {
 
                 }
 
+            }
+        });
+
+    }
+
+    public void escreverTelaCargaNominal(final String res) {
+
+        handlerInspecaoConformidade.post(new Runnable() {
+            @Override
+            public void run() {
+
+                cargaNominalErro.setEnabled(true);
+                if (!(cargaNominalErro == null)) {
+                    if (res.startsWith("T")) {
+                        textMessageInspecaoConformidade.clearComposingText();
+                        textMessageInspecaoConformidade.setText("Teste Concluído!");
+                        testeCargaNominalComecou = false;
+                        testeNominal.clearComposingText();
+                        testeNominal.setText("Iniciar Teste de Carga Nominal");
+
+                        testeCargaPequenaComecou = false;
+                        testePequeno.clearComposingText();
+                        testePequeno.setText("Iniciar Teste de Carga Pequena");
+
+                    }
+
+                    cargaNominalErro.clearComposingText();
+                    cargaNominalErro.setText(res);
+
+
+                }
             }
         });
 
@@ -212,7 +217,7 @@ public class ExatidaoActivity extends AppCompatActivity {
                 testeNominal.setText("Cancelar Teste de Carga Nominal");
                 aplicarCargaNominal(view);
                 textMessageInspecaoConformidade.clearComposingText();
-                textMessageInspecaoConformidade.setText("Teste Iniciado!");
+                textMessageInspecaoConformidade.setText("Teste sendo iniciado...");
 
             } else {
                 testeCargaNominalComecou = false;
@@ -238,7 +243,7 @@ public class ExatidaoActivity extends AppCompatActivity {
                 testePequeno.setText("Cancelar Teste de Carga Pequena");
                 aplicarCargaPequena(view);
                 textMessageInspecaoConformidade.clearComposingText();
-                textMessageInspecaoConformidade.setText("Teste Iniciado!");
+                textMessageInspecaoConformidade.setText("Teste sendo iniciado...");
 
             } else {
                 testeCargaPequenaComecou = false;
@@ -431,7 +436,7 @@ public class ExatidaoActivity extends AppCompatActivity {
                 conexao = new ThreadConexao(macAddress);
                 conexao.start();
                 if (conexao.isAlive()) {
-                    textMessageInspecaoConformidade.setText("Conexao sendo finalizada com:" + data.getStringExtra("btDevName") + "\n" + data.getStringExtra("btDevAddress"));
+                    textMessageInspecaoConformidade.setText("Conexao finalizada com:" + data.getStringExtra("btDevName") + "\n Verifique o LED de conexão");
                 }
             } else {
                 textMessageInspecaoConformidade.setText("Nenhum dispositivo selecionado.");

@@ -25,7 +25,7 @@ public class SelecionarMedidorActivity extends AppCompatActivity {
 
     private final CriaBanco banco = new CriaBanco(this);
     private String tipoMedidor;
-    private EditText numSerie, numGeral, instalacao, ModeloMedidor, FabricanteMedidor, TensaoNominalMedidor, CorrenteNominalMedidor, KDKE, RR, ClasseMedidor, NumElementos, AnoFabricacao, Fios, PortariaInmetro;
+    private EditText numGeral, ModeloMedidor, FabricanteMedidor, TensaoNominalMedidor, CorrenteNominalMedidor, KDKE, RR, ClasseMedidor, NumElementos, AnoFabricacao, Fios, PortariaInmetro;
     private RadioButton eletronico, mecanico;
 
 
@@ -43,9 +43,9 @@ public class SelecionarMedidorActivity extends AppCompatActivity {
         BancoController crud = new BancoController(getBaseContext());
         Cursor cursor = crud.pegaMedidores();
 
-        numSerie = findViewById( R.id.numSerie );
+
         numGeral = findViewById( R.id.NumGeral );
-        instalacao = findViewById( R.id.Instalacao );
+
         ModeloMedidor = findViewById( R.id.ModeloMedidor );
         FabricanteMedidor = findViewById( R.id.fabricanteMedidor );
         TensaoNominalMedidor = findViewById( R.id.TensaoNominal );
@@ -63,13 +63,11 @@ public class SelecionarMedidorActivity extends AppCompatActivity {
         if (cursor.getCount() > 0) {
 
             final String[] myData = banco.SelectAllMedidores();
-            @SuppressLint("WrongViewCast") final AutoCompleteTextView autoCom = (AutoCompleteTextView) numSerie;
+            @SuppressLint("WrongViewCast") final AutoCompleteTextView autoCom = (AutoCompleteTextView) numGeral;
             ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, myData);
             autoCom.setAdapter(adapter);
         }
 
-        numGeral.setEnabled(false);
-        instalacao.setEnabled(false);
         ModeloMedidor.setEnabled(false);
         FabricanteMedidor.setEnabled(false);
         TensaoNominalMedidor.setEnabled(false);
@@ -97,7 +95,7 @@ public class SelecionarMedidorActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if((numSerie.getText().length()==0)|| (numGeral.getText().length()==0) || (instalacao.getText().length()==0) || (ModeloMedidor.getText().length()==0) ||
+                if ((numGeral.getText().length() == 0) || (ModeloMedidor.getText().length() == 0) ||
                         (FabricanteMedidor.getText().length()==0) || (TensaoNominalMedidor.getText().length()==0) || (CorrenteNominalMedidor.getText().length()==0) ||
                         (KDKE.getText().length()==0) || (RR.getText().length()==0) || (ClasseMedidor.getText().length()==0) || ( NumElementos.getText().length()==0) ||
                         (AnoFabricacao.getText().length()==0) || (Fios.getText().length()==0) || (PortariaInmetro.getText().length()==0)){
@@ -106,9 +104,8 @@ public class SelecionarMedidorActivity extends AppCompatActivity {
 
                 } else {
 
-                    Hawk.delete("NumeroSerieMedidor");
+
                     Hawk.delete("NumeroGeralMedidor");
-                    Hawk.delete("InstalacaoMedidor");
                     Hawk.delete("ModeloMedidor");
                     Hawk.delete("FaricanteMedidor");
                     Hawk.delete("TensaoNominalMedidor");
@@ -129,9 +126,8 @@ public class SelecionarMedidorActivity extends AppCompatActivity {
                         tipoMedidor = "Mecânico";
                     }
 
-                    Hawk.put("NumeroSerieMedidor", String.valueOf(numSerie.getText()));
+
                     Hawk.put("NumeroGeralMedidor", String.valueOf(numGeral.getText()));
-                    Hawk.put("InstalacaoMedidor", String.valueOf(instalacao.getText()));
                     Hawk.put("ModeloMedidor", String.valueOf(ModeloMedidor.getText()));
                     Hawk.put("FaricanteMedidor", String.valueOf(FabricanteMedidor.getText()));
                     Hawk.put("TensaoNominalMedidor", String.valueOf(TensaoNominalMedidor.getText()));
@@ -161,14 +157,14 @@ public class SelecionarMedidorActivity extends AppCompatActivity {
 
     private void doMyThing() {
 
-        numSerie = findViewById( R.id.numSerie );
-        String numSerie1 = String.valueOf(numSerie.getText());
+        numGeral = findViewById(R.id.NumGeral);
+        String numGeral1 = String.valueOf(numGeral.getText());
 
-        if ((numSerie1.equals("")) || (numSerie1.isEmpty())) {
+        if ((numGeral1.equals("")) || (numGeral1.isEmpty())) {
             Toast.makeText(getApplicationContext(), "Coloque um número de matrícula para a pesquisa. ", Toast.LENGTH_LONG).show();
         }
-        if (numSerie1.length()>0){
-            String[] nome = banco.SelecionaMedidor(numSerie1);
+        if (numGeral1.length() > 0) {
+            String[] nome = banco.SelecionaMedidor(numGeral1);
 
             if(nome == null){
                 Toast.makeText(getApplicationContext(), "Coloque um número de matrícula válido para a pesquisa. ", Toast.LENGTH_LONG).show();
@@ -179,8 +175,6 @@ public class SelecionarMedidorActivity extends AppCompatActivity {
                 //" medidor_RR, medidor_num_elementos, medidor_ano_fabricacao,  medidor_classe, medidor_fios, medidor_port_inmetro
 
                 numGeral.setText(nome[0]);
-                instalacao.setEnabled(true);
-                instalacao.setText(nome[1]);
                 ModeloMedidor.setEnabled(true);
                 ModeloMedidor.setText(nome[2]);
                 FabricanteMedidor.setEnabled(true);
@@ -193,11 +187,11 @@ public class SelecionarMedidorActivity extends AppCompatActivity {
                 eletronico.setEnabled(true);
                 mecanico = findViewById(R.id.RadioButtonMecanico);
                 mecanico.setEnabled(true);
-                if (nome[6].equals("Eletrônico")) {
+                if (nome[6].startsWith("E")) {
                     eletronico.setChecked(true);
                     mecanico.setChecked(false);
                 }
-                if (nome[6].equals("Mecânico")) {
+                if (nome[6].startsWith("Mecânico")) {
                     mecanico.setChecked(true);
                     eletronico.setChecked(false);
                 }
@@ -223,9 +217,7 @@ public class SelecionarMedidorActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle savedInstanceState) {
 
-        savedInstanceState.putCharSequence("NumeroSerieMedidor", String.valueOf(numSerie.getText()));
         savedInstanceState.putCharSequence("NumeroGeralMedidor", String.valueOf(numGeral.getText()));
-        savedInstanceState.putCharSequence("InstalacaoMedidor", String.valueOf(instalacao.getText()));
         savedInstanceState.putCharSequence("ModeloMedidor", String.valueOf(ModeloMedidor.getText()));
         savedInstanceState.putCharSequence("FaricanteMedidor", String.valueOf(FabricanteMedidor.getText()));
         savedInstanceState.putCharSequence("TensaoNominalMedidor", String.valueOf(TensaoNominalMedidor.getText()));

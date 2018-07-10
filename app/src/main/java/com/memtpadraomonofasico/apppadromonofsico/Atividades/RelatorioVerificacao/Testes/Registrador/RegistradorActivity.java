@@ -199,7 +199,7 @@ public class RegistradorActivity extends AppCompatActivity {
 
                     }
                     else {
-                        if (((status.equals("Aprovado")) || (status.equals("Reprovado"))) && ((fotoAntesRegistrador == null) || (fotoDepoisRegistrador == null))) {
+                        if (((status.equals("Aprovado"))) && ((fotoAntesRegistrador == null))) {
                             Toast.makeText(getApplicationContext(), "Sessão incompleta - Fotos não tiradas!", Toast.LENGTH_LONG).show();
 
                         } else {
@@ -316,7 +316,7 @@ public class RegistradorActivity extends AppCompatActivity {
         } else {
 
             if (conexao != null) {
-                textMessage.setText("Conectado!");
+                textMessage.setText("O teste vai ser iniciado...");
             }
 
             byte[] pacote = new byte[10];
@@ -442,7 +442,7 @@ public class RegistradorActivity extends AppCompatActivity {
                 conexao.start();
 
                 if (conexao.isAlive()) {
-                    textMessage.setText("Conexao sendo finalizada com: " + data.getStringExtra("btDevName") + "\n" + data.getStringExtra("btDevAddress"));
+                    textMessage.setText("Conexao finalizada com: " + data.getStringExtra("btDevName") + "\n Verifique o LED de conexão ");
                 }
 
             } else {
@@ -463,7 +463,7 @@ public class RegistradorActivity extends AppCompatActivity {
             case R.id.sinaisCarbonizacao:
                 aprovado.setChecked(false);
                 reprovado.setChecked(false);
-                opcoesReprovados.setEnabled(false);
+                opcoesReprovados.setEnabled(true);
                 break;
 
             case R.id.Reprovado:
@@ -473,6 +473,34 @@ public class RegistradorActivity extends AppCompatActivity {
 
                 break;
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+
+        savedInstanceState.putParcelable("FotoPreTesteRegistrador", fotoResized1);
+        savedInstanceState.putParcelable("FotoPosTesteRegistrador", fotoResized2);
+        savedInstanceState.putCharSequence("statusRegistrador", status);
+        savedInstanceState.putCharSequence("ObservaçãoRegistrador", observacaoRegistrador);
+        savedInstanceState.putCharSequence("leituraPreTeste", leituraPreTeste);
+        savedInstanceState.putCharSequence("leituraPosTeste", leituraPosTeste);
+
+
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        savedInstanceState.putParcelable("FotoPreTesteRegistrador", fotoResized1);
+        savedInstanceState.putParcelable("FotoPosTesteRegistrador", fotoResized2);
+        savedInstanceState.putCharSequence("statusRegistrador", status);
+        savedInstanceState.putCharSequence("ObservaçãoRegistrador", observacaoRegistrador);
+        savedInstanceState.putCharSequence("leituraPreTeste", leituraPreTeste);
+        savedInstanceState.putCharSequence("leituraPosTeste", leituraPosTeste);
+
+
     }
 
 

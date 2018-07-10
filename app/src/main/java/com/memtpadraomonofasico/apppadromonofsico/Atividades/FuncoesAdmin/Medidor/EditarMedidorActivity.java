@@ -15,7 +15,7 @@ import com.memtpadraomonofasico.apppadromonofsico.R;
 public class EditarMedidorActivity extends AppCompatActivity {
 
     private EditText numeroSerie, numeroGeral, instalacao, modelo, fabricante, tensaoNominal, correnteNominal, tipoMedidor, kdKe, rr, numElementos, anoFabricacao, classe, fios, portariaInmetro;
-    private String numeroSerieString, numeroGeralString, instalacaoString, modeloString, fabricanteString, tensaoNominalString, correnteNominalString, tipoMedidorString, kdKeString, rrString,
+    private String numeroGeralAntigo, numeroSerieString, numeroGeralString, instalacaoString, modeloString, fabricanteString, tensaoNominalString, correnteNominalString, tipoMedidorString, kdKeString, rrString,
             numElementosString, anoFabricacaoString, classeString, fiosString, portariaInmetroString;
     private RadioButton radioButtonMecanico, radioButtonEletronico;
 
@@ -26,9 +26,7 @@ public class EditarMedidorActivity extends AppCompatActivity {
 
         final BancoController crud = new BancoController(getBaseContext());
         final Intent it = getIntent();
-        final String numeroSerieAntigo = it.getStringExtra("numeroSerie");
-        final String numeroGeralAntigo = it.getStringExtra("numeroGeral");
-        final String instalacaoAntigo = it.getStringExtra("instalacao");
+        numeroGeralAntigo = it.getStringExtra("numeroGeral");
         final String modeloAntigo = it.getStringExtra("modelo");
         final String fabricanteAntigo = it.getStringExtra("fabricante");
         final String tensaoNominalAntigo = it.getStringExtra("tensaoNominal");
@@ -45,12 +43,8 @@ public class EditarMedidorActivity extends AppCompatActivity {
 
         Button botaoCriarMedidor = findViewById(R.id.buttonSalvarMedidor);
 
-        numeroSerie = findViewById(R.id.numSerie);
-        numeroSerie.setText(numeroSerieAntigo);
         numeroGeral = findViewById(R.id.NumGeral);
         numeroGeral.setText(numeroGeralAntigo);
-        instalacao = findViewById(R.id.Instalacao);
-        instalacao.setText(instalacaoAntigo);
         modelo = findViewById(R.id.ModeloMedidor);
         modelo.setText(modeloAntigo);
         fabricante = findViewById(R.id.fabricanteMedidor);
@@ -88,9 +82,7 @@ public class EditarMedidorActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                numeroSerieString = numeroSerie.getText().toString();
                 numeroGeralString = numeroGeral.getText().toString();
-                instalacaoString = instalacao.getText().toString();
                 modeloString = modelo.getText().toString();
                 fabricanteString = fabricante.getText().toString();
                 tensaoNominalString = tensaoNominal.getText().toString();
@@ -114,10 +106,7 @@ public class EditarMedidorActivity extends AppCompatActivity {
                 }
 
 
-//                if (nomeString.equals("") || matriculaString.equals("") || senhaString.equals("") || tipoUsuarioString.equals("")) {
-//                    Toast.makeText(getApplicationContext(), "Campos em branco! ", Toast.LENGTH_LONG).show();
-//                } else {
-                String resultado = crud.updateMedidor(numeroSerieAntigo, numeroSerieString, numeroGeralString, instalacaoString, modeloString, fabricanteString, tensaoNominalString,
+                String resultado = crud.updateMedidor(numeroGeralAntigo, numeroGeralString, modeloString, fabricanteString, tensaoNominalString,
                         correnteNominalString, tipoMedidorString, kdKeString, rrString, numElementosString, anoFabricacaoString, classeString, fiosString, portariaInmetroString);
                 Toast.makeText(getApplicationContext(), resultado, Toast.LENGTH_LONG).show();
 

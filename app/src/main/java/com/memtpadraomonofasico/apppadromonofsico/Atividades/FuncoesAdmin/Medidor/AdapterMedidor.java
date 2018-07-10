@@ -50,14 +50,12 @@ class AdapterMedidor extends BaseAdapter {
         View view = act.getLayoutInflater().inflate(R.layout.lista_medidor_personalizada, parent, false);
         Medidor medidor = medidores.get(position);
         //pegando as referências das Views
-        TextView numSerie = view.findViewById(R.id.lista_nome);
         TextView numGeral = view.findViewById(R.id.lista_descricao);
         ImageButton editar = view.findViewById(R.id.editar);
         editar.setTag(position);
         ImageButton excluir = view.findViewById(R.id.deletar);
         excluir.setTag(position);
 
-        numSerie.setText(medidor.getNumeroSerie());
         numGeral.setText(medidor.getNumeroGeral());
 
         return view;

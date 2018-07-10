@@ -15,7 +15,7 @@ import com.orhanobut.hawk.NoEncryption;
 
 public class ServicoActivity extends AppCompatActivity {
 
-    private EditText numNotaServico, numInvolucro, numInstalacao, NomeCliente, NumDocumentoCliente, Rua, Numero, Complemento, Bairro, CEP;
+    private EditText numSerie, instalacao, numNotaServico, numInvolucro, numInstalacao, NomeCliente, NumDocumentoCliente, Rua, Numero, Complemento, Bairro, CEP;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +26,8 @@ public class ServicoActivity extends AppCompatActivity {
         Hawk.init(this).setEncryption(encryption).build();
 
 
+        numSerie = findViewById(R.id.numSerie);
+        instalacao = findViewById(R.id.Instalacao);
         numNotaServico = findViewById( R.id.NumNotaServico );
         numInvolucro = findViewById( R.id.numInvolucro );
         numInstalacao = findViewById( R.id.NumInstalacao );
@@ -42,6 +44,9 @@ public class ServicoActivity extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Hawk.delete("NumeroSerieMedidor");
+                Hawk.delete("InstalacaoMedidor");
                 Hawk.delete("NumeroNotaServico");
                 Hawk.delete("NumeroInvolucro");
                 Hawk.delete("NumeroInstalacaoServico");
@@ -53,12 +58,14 @@ public class ServicoActivity extends AppCompatActivity {
                 Hawk.delete("BairroCliente");
                 Hawk.delete("CepCliente");
 
-                if(numNotaServico.getText().toString().isEmpty() || numInvolucro.getText().toString().isEmpty()|| numInstalacao.getText().toString().isEmpty() ||
+                if ((numSerie.getText().length() == 0) || (instalacao.getText().length() == 0) || numNotaServico.getText().toString().isEmpty() || numInvolucro.getText().toString().isEmpty() || numInstalacao.getText().toString().isEmpty() ||
                         NomeCliente.getText().toString().isEmpty() || NumDocumentoCliente.getText().toString().isEmpty() ){
                     Toast.makeText(getApplicationContext(), "Sessão incompleta - Campo em Branco! ", Toast.LENGTH_LONG).show();
 
                 } else {
 
+                    Hawk.put("NumeroSerieMedidor", String.valueOf(numSerie.getText()));
+                    Hawk.put("InstalacaoMedidor", String.valueOf(instalacao.getText()));
                     Hawk.put("NumeroNotaServico",String.valueOf(numNotaServico.getText()));
                     Hawk.put("NumeroInvolucro",String.valueOf(numInvolucro.getText()));
                     Hawk.put("NumeroInstalacaoServico", String.valueOf(numInstalacao.getText()));
@@ -86,6 +93,8 @@ public class ServicoActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle savedInstanceState) {
 
 
+        savedInstanceState.putCharSequence("NumeroSerieMedidor", String.valueOf(numSerie.getText()));
+        savedInstanceState.putCharSequence("InstalacaoMedidor", String.valueOf(instalacao.getText()));
         savedInstanceState.putCharSequence("NumNotaServico", String.valueOf(numNotaServico.getText()));
         savedInstanceState.putCharSequence("numInvolucro", String.valueOf(numInvolucro.getText()));
         savedInstanceState.putCharSequence("NumInstalacao", String.valueOf(numInstalacao.getText()));

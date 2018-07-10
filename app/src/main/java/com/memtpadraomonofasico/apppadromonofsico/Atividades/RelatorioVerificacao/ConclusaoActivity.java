@@ -42,6 +42,7 @@ import java.io.OutputStream;
 public class ConclusaoActivity extends AppCompatActivity {
 
     private static final int MY_PERMISSIONS_REQUEST = 10;
+    private static final int ABRIR_PDF = 3;
     private RadioButton FuncionandoCorretamente;
     private RadioButton ComDefeito;
     private RadioButton MedidorIrregularidade;
@@ -322,6 +323,20 @@ public class ConclusaoActivity extends AppCompatActivity {
             servicoItem.setBorder(PdfPCell.NO_BORDER);
             tableServico.addCell(servicoItem);
 
+            p = new Phrase("Nº de Série: ", smallNormal);
+            p.add(new Chunk((String) Hawk.get("NumeroSerieMedidor"), smallNormal));
+            servicoItem = new PdfPCell(p);
+            servicoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
+            servicoItem.setBorder(PdfPCell.NO_BORDER);
+            tableServico.addCell(servicoItem);
+
+            p = new Phrase("Instalação: ", smallNormal);
+            p.add(new Chunk((String) Hawk.get("InstalacaoMedidor"), smallNormal));
+            servicoItem = new PdfPCell(p);
+            servicoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
+            servicoItem.setBorder(PdfPCell.NO_BORDER);
+            tableServico.addCell(servicoItem);
+
             if ((String.valueOf(Hawk.get("RuaCliente")).isEmpty()) || (String.valueOf(Hawk.get("NumeroCliente")).isEmpty()) || (String.valueOf(Hawk.get("BairroCliente")).isEmpty())) {
 
                 servicoItem = new PdfPCell(new Phrase(" ", subFont));
@@ -382,12 +397,7 @@ public class ConclusaoActivity extends AppCompatActivity {
             medidorItem.setBorder(PdfPCell.NO_BORDER);
             tabelaMedidor.addCell(medidorItem);
 
-            p = new Phrase("Nº de Série: ", smallNormal);
-            p.add(new Chunk((String) Hawk.get("NumeroSerieMedidor"), smallNormal));
-            medidorItem = new PdfPCell(p);
-            medidorItem.setHorizontalAlignment(Element.ALIGN_LEFT);
-            medidorItem.setBorder(PdfPCell.NO_BORDER);
-            tabelaMedidor.addCell(medidorItem);
+
 
             p = new Phrase("Nº Geral:  ", smallNormal);
             p.add(new Chunk((String) Hawk.get("NumeroGeralMedidor"), smallNormal));
@@ -396,12 +406,7 @@ public class ConclusaoActivity extends AppCompatActivity {
             medidorItem.setBorder(PdfPCell.NO_BORDER);
             tabelaMedidor.addCell(medidorItem);
 
-            p = new Phrase("Instalação: ", smallNormal);
-            p.add(new Chunk((String) Hawk.get("InstalacaoMedidor"), smallNormal));
-            medidorItem = new PdfPCell(p);
-            medidorItem.setHorizontalAlignment(Element.ALIGN_LEFT);
-            medidorItem.setBorder(PdfPCell.NO_BORDER);
-            tabelaMedidor.addCell(medidorItem);
+
 
             p = new Phrase("Modelo: ", smallNormal);
             p.add(new Chunk((String) Hawk.get("ModeloMedidor"), smallNormal));
@@ -978,7 +983,7 @@ public class ConclusaoActivity extends AppCompatActivity {
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setDataAndType(Uri.fromFile(myFile), "application/pdf");
             intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-            startActivity(intent);
+            startActivityForResult(intent, ABRIR_PDF);
 
 
 
@@ -1020,6 +1025,17 @@ public class ConclusaoActivity extends AppCompatActivity {
 
 
 
+        }
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == ABRIR_PDF) {
+            if (resultCode == RESULT_OK) {
+
+            } else {
+                Toast.makeText(getBaseContext(), "Verifique as permissões do aplicativo para abrir o relatório.", Toast.LENGTH_SHORT);
+            }
         }
     }
 
