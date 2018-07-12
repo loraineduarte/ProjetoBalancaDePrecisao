@@ -71,6 +71,7 @@ public class RegistradorActivity extends AppCompatActivity {
                     if (res.startsWith("T")) {
                         textMessage.clearComposingText();
                         textMessage.setText("Teste Concluído!");
+
                         if (conexao != null) {
                             conexao.interrupt();
                         }
@@ -211,6 +212,7 @@ public class RegistradorActivity extends AppCompatActivity {
                             Hawk.put("leituraPosTeste", leituraPosTeste);
 
                             mBluetoothAdapter.disable();
+                            conexao = null;
                             abrirSituacoesObservadas();
 
                         }

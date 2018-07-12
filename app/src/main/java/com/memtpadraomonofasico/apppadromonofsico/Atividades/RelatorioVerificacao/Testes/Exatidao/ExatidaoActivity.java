@@ -44,7 +44,7 @@ public class ExatidaoActivity extends AppCompatActivity {
     private ThreadConexao conexao;
     private Button testeNominal, testePequeno;
 
-    public static void escreverTelaCargaPequena(final String res) {
+    public void escreverTelaCargaPequena(final String res) {
 
         handlerInspecaoConformidade.post(new Runnable() {
             @Override
@@ -55,6 +55,13 @@ public class ExatidaoActivity extends AppCompatActivity {
                     if (res.startsWith("T")) {
                         textMessageInspecaoConformidade.clearComposingText();
                         textMessageInspecaoConformidade.setText("Teste Concluído!");
+
+                        testeCargaNominalComecou = false;
+                        testeNominal.clearComposingText();
+                        testeNominal.setText("Iniciar Teste de Carga Nominal");
+                        testeCargaPequenaComecou = false;
+                        testePequeno.clearComposingText();
+                        testePequeno.setText("Iniciar Teste de Carga Pequena");
 
                     }
 
@@ -79,10 +86,11 @@ public class ExatidaoActivity extends AppCompatActivity {
                     if (res.startsWith("T")) {
                         textMessageInspecaoConformidade.clearComposingText();
                         textMessageInspecaoConformidade.setText("Teste Concluído!");
+
+
                         testeCargaNominalComecou = false;
                         testeNominal.clearComposingText();
                         testeNominal.setText("Iniciar Teste de Carga Nominal");
-
                         testeCargaPequenaComecou = false;
                         testePequeno.clearComposingText();
                         testePequeno.setText("Iniciar Teste de Carga Pequena");
@@ -179,9 +187,9 @@ public class ExatidaoActivity extends AppCompatActivity {
                         conexao.interrupt();
                     }
                     mBluetoothAdapter.disable();
-
+                    conexao = null;
                     abrirRegistrador();
-                    // abrirSituacoesObservadas();
+
                 } else {
                     Hawk.put("CargaNominalErroConformidade", String.valueOf(cargaNominalErro.getText()));
                     Hawk.put("CargaPequenaErroConformidade", String.valueOf(cargaPequenaErro.getText()));
@@ -192,7 +200,6 @@ public class ExatidaoActivity extends AppCompatActivity {
                     }
                     mBluetoothAdapter.disable();
                     abrirRegistrador();
-                    // abrirSituacoesObservadas();
                 }
             }
         });

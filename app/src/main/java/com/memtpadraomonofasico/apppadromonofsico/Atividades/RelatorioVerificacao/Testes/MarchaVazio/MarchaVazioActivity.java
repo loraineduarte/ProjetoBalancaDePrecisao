@@ -123,6 +123,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
                         conexao.interrupt();
                     }
                     mBluetoothAdapter.disable();
+                    conexao = null;
                     abrirInspecaoConformidade();
 
                 } else {
@@ -174,6 +175,8 @@ public class MarchaVazioActivity extends AppCompatActivity {
 
         } else {
 
+            teste = findViewById(R.id.buttonAplicarTensao);
+
             if (!testeComecou) {
                 testeComecou = true;
                 teste.clearComposingText();
@@ -194,7 +197,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
     }
 
     public void mudarEstadoTesteFinal(View view) {
-
+        teste = findViewById(R.id.buttonAplicarTensao);
 
             if (!testeComecou) {
                 testeComecou = true;
@@ -299,7 +302,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
                     if (res.startsWith("T")) {
                         textMessage.clearComposingText();
                         textMessage.setText("Teste Concluído!");
-                        textMessage.setText(res);
+                        // textMessage.setText(res);
                         testeComecou = false;
 
                     } else {

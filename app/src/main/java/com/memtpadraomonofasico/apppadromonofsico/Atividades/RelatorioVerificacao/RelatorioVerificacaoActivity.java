@@ -165,8 +165,6 @@ public class RelatorioVerificacaoActivity extends AppCompatActivity  {
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        // Restore UI state from the savedInstanceState.
-        // This bundle has also been passed to onCreate.
 
         toiNumero = savedInstanceState.getString("matricula");
         matricula = savedInstanceState.getString("nomeAvaliador");

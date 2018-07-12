@@ -986,9 +986,6 @@ public class ConclusaoActivity extends AppCompatActivity {
             startActivityForResult(intent, ABRIR_PDF);
 
 
-
-
-
         } catch (DocumentException de) {
             System.err.println(de.getMessage());
         } catch (IOException e) {

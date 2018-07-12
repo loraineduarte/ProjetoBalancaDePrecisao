@@ -63,8 +63,10 @@ public class ObservacaoInspecaoVisualActivity extends AppCompatActivity {
     }
 
     private void retornarInspecaoVisual() {
-        Intent intent = new Intent(this, InspecaoVisualActivity.class);
-        startActivity(intent);
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("RESULT_STRING", Observacao.getText().toString());
+        setResult(RESULT_OK, returnIntent);
+        finish();
     }
 
 
