@@ -117,5 +117,22 @@ public class EditarMedidorActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * @param view
+     */
+    public void onCheckboxClicked(View view) {
+
+        switch (view.getId()) {
+            case R.id.radioButtonEletronico:
+                radioButtonMecanico.setChecked(false);
+                break;
+
+            case R.id.RadioButtonMecanico:
+                radioButtonEletronico.setChecked(false);
+                break;
+
+        }
+    }
+
 
 }

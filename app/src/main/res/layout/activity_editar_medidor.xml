@@ -232,6 +232,7 @@
                         android:id="@+id/radioButtonEletronico"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
+                        android:onClick="onCheckboxClicked"
                         android:text="@string/eletr_nico" />
 
 
@@ -254,6 +255,7 @@
                         android:id="@+id/RadioButtonMecanico"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
+                        android:onClick="onCheckboxClicked"
                         android:text="@string/mec_nico" />
                 </RelativeLayout>
             </LinearLayout>

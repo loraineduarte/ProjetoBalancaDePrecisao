@@ -89,7 +89,7 @@ public class ResultadosFinaisActivity extends AppCompatActivity {
                 Hawk.delete("HoraFinal");
                 Hawk.delete("InformacoesComplementares");
                 Hawk.put("InformacoesComplementares", informacoesComplementares);
-                
+
                 if (!(numInvolucro.getText().toString().equals(""))) {
                     Hawk.delete("NumeroInvolucro");
                     Hawk.put("NumeroInvolucro", String.valueOf(numInvolucro.getText()));
