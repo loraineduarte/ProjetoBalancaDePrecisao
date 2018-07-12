@@ -19,7 +19,6 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
-import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
@@ -151,31 +150,31 @@ public class ConclusaoActivity extends AppCompatActivity {
             File myFile = new File(folder,numServico + ".pdf");
             OutputStream output = new FileOutputStream(myFile);
 
-            //salvando foto pre registrador na pasta
-            ByteArrayOutputStream streamfotoPre = new ByteArrayOutputStream();
-            if(fotoPreRegistrador != null){
-                fotoPreRegistrador.compress(Bitmap.CompressFormat.PNG, 100, streamfotoPre);
-
-                byte[] bytes = streamfotoPre.toByteArray();;
-                String nomeArquivo = Environment.getExternalStoragePublicDirectory( Environment.DIRECTORY_DOCUMENTS)  + "/Relatórios_Padrao/FotoPreRegistrador_"+numServico + ".png";
-
-                FileOutputStream fos1 = new FileOutputStream(nomeArquivo);
-                fos1.write(bytes);
-            }
-
-
-
-            //salvando foto pos registrador na pasta
-            ByteArrayOutputStream streamfotoPos = new ByteArrayOutputStream();
-            if(fotoPosRegistrador != null){
-                fotoPosRegistrador.compress(Bitmap.CompressFormat.PNG, 100, streamfotoPos);
-
-                byte[] bytes = streamfotoPos.toByteArray();;
-                String nomeArquivo = Environment.getExternalStoragePublicDirectory( Environment.DIRECTORY_DOCUMENTS)  + "/Relatórios_Padrao/FotoPosRegistrador_"+numServico + ".png";
-
-                FileOutputStream fos1 = new FileOutputStream(nomeArquivo);
-                fos1.write(bytes);
-            }
+//            //salvando foto pre registrador na pasta
+//            ByteArrayOutputStream streamfotoPre = new ByteArrayOutputStream();
+//            if(fotoPreRegistrador != null){
+//                fotoPreRegistrador.compress(Bitmap.CompressFormat.PNG, 100, streamfotoPre);
+//
+//                byte[] bytes = streamfotoPre.toByteArray();;
+//                String nomeArquivo = Environment.getExternalStoragePublicDirectory( Environment.DIRECTORY_DOCUMENTS)  + "/Relatórios_Padrao/FotoPreRegistrador_"+numServico + ".png";
+//
+//                FileOutputStream fos1 = new FileOutputStream(nomeArquivo);
+//                fos1.write(bytes);
+//            }
+//
+//
+//
+//            //salvando foto pos registrador na pasta
+//            ByteArrayOutputStream streamfotoPos = new ByteArrayOutputStream();
+//            if(fotoPosRegistrador != null){
+//                fotoPosRegistrador.compress(Bitmap.CompressFormat.PNG, 100, streamfotoPos);
+//
+//                byte[] bytes = streamfotoPos.toByteArray();;
+//                String nomeArquivo = Environment.getExternalStoragePublicDirectory( Environment.DIRECTORY_DOCUMENTS)  + "/Relatórios_Padrao/FotoPosRegistrador_"+numServico + ".png";
+//
+//                FileOutputStream fos1 = new FileOutputStream(nomeArquivo);
+//                fos1.write(bytes);
+//            }
 
             //salvando foto inspeçao visual na pasta
             ByteArrayOutputStream streamfotoInpecao = new ByteArrayOutputStream();
@@ -525,7 +524,7 @@ public class ConclusaoActivity extends AppCompatActivity {
             sessaoMedidor.add(tabelaMedidor);
 
             //--------------------------------------------REAULTADOS DOS ENSAIOS
-            addEmptyLine(sessaoMedidor, 3);
+            addEmptyLine(sessaoMedidor, 1);
             Paragraph resultadoEnsaios = new Paragraph();
             resultadoEnsaios.add(new Paragraph("Resultados do Ensaios", catFont));
             resultadoEnsaios.setAlignment(Element.ALIGN_CENTER);
@@ -750,7 +749,7 @@ public class ConclusaoActivity extends AppCompatActivity {
             circuitoPotencial.add(tabelaCircuitoPotecial);
 
             //--------------------------------------------SITUAÇÕES OBSERVADAS
-            addEmptyLine(circuitoPotencial, 2);
+            addEmptyLine(circuitoPotencial, 1);
             Paragraph situacaoObservada = new Paragraph();
             situacaoObservada.add(new Paragraph("Situações Observadas", catFont));
             situacaoObservada.setAlignment(Element.ALIGN_CENTER);
@@ -767,7 +766,7 @@ public class ConclusaoActivity extends AppCompatActivity {
             situacaoObservada.add(tabelaSituacoesObservadas);
 
             //--------------------------------------------INFORMAÇÕES COMPLEMENTARES
-            addEmptyLine(situacaoObservada, 2);
+            addEmptyLine(situacaoObservada, 1);
             Paragraph informacoesComplementares = new Paragraph();
             informacoesComplementares.add(new Paragraph("Informações Complementares ", catFont));
             informacoesComplementares.setAlignment(Element.ALIGN_CENTER);
@@ -785,7 +784,7 @@ public class ConclusaoActivity extends AppCompatActivity {
             informacoesComplementares.add(tabelaInformacoesComplementares);
 
             //--------------------------------------------CONCLUSAO
-            addEmptyLine(informacoesComplementares, 2);
+            addEmptyLine(informacoesComplementares, 1);
             Paragraph conclusao = new Paragraph();
             conclusao.add(new Paragraph("Conclusão: ", catFont));
             conclusao.setAlignment(Element.ALIGN_CENTER);
@@ -801,132 +800,132 @@ public class ConclusaoActivity extends AppCompatActivity {
 
             conclusao.add(tabelaConclusao);
 
-            //--------------------------------------------ANEXOS - FOTOS
-            addEmptyLine(conclusao, 3);
-            Paragraph anexos = new Paragraph();
-            PdfPCell anexoItem = null;
-
-            if((fotoPreRegistrador == null) && (fotoInspecao == null) && (fotoPosRegistrador == null)){
-
-                anexos.add(new Paragraph("Anexos: ", catFont));
-                anexos.setAlignment(Element.ALIGN_CENTER);
-
-                PdfPTable tabelaAnexos = new PdfPTable(1);
-                tabelaAnexos.setWidthPercentage(100);
-                tabelaAnexos.setHorizontalAlignment(Element.ALIGN_LEFT);
-
-                anexoItem = new PdfPCell(new Phrase("Não existe nenhum arquivo de anexo ", smallNormal));
-                anexoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
-                anexoItem.setBorder(PdfPCell.NO_BORDER);
-                tabelaAnexos.addCell(anexoItem);
-
-                anexos.add(tabelaAnexos);
-
-            } else{
-
-                anexos.add(new Paragraph("Anexos: ", catFont));
-                anexos.setAlignment(Element.ALIGN_CENTER);
-
-                PdfPTable tabelaAnexos = new PdfPTable(2);
-                tabelaAnexos.setWidthPercentage(100);
-                tabelaAnexos.setHorizontalAlignment(Element.ALIGN_LEFT);
-
-                ByteArrayOutputStream streampreregistrador = new ByteArrayOutputStream();
-                if(fotoPreRegistrador!=null){
-                    fotoPreRegistrador.compress(Bitmap.CompressFormat.PNG, 100, streampreregistrador);
-                    Image imagePreregistrador = Image.getInstance(streampreregistrador.toByteArray());
-                    anexoItem = new PdfPCell(imagePreregistrador);
-                    anexoItem.setHorizontalAlignment(Element.ALIGN_JUSTIFIED_ALL);
-                    anexoItem.setBorder(PdfPCell.NO_BORDER);
-                    tabelaAnexos.addCell(anexoItem);
-
-                }
-
-
-
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                if(fotoInspecao!=null){
-                    fotoInspecao.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                    Image image = Image.getInstance(stream.toByteArray());
-                    anexoItem = new PdfPCell(image);
-                    anexoItem.setHorizontalAlignment(Element.ALIGN_JUSTIFIED_ALL);
-                    anexoItem.setBorder(PdfPCell.NO_BORDER);
-                    tabelaAnexos.addCell(anexoItem);
-
-                }
-
-                if(fotoPreRegistrador!=null){
-                    anexoItem = new PdfPCell(new Phrase("Teste de Registrador - Foto Pré Teste ", subFont));
-                    anexoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
-                    anexoItem.setBorder(PdfPCell.NO_BORDER);
-                    tabelaAnexos.addCell(anexoItem);
-                } else {
-                    anexoItem = new PdfPCell(new Phrase(" ", subFont));
-                    anexoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
-                    anexoItem.setBorder(PdfPCell.NO_BORDER);
-                    tabelaAnexos.addCell(anexoItem);
-                }
-
-
-                anexoItem = new PdfPCell(new Phrase("Inspeção Visual", subFont));
-                anexoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
-                anexoItem.setBorder(PdfPCell.NO_BORDER);
-                tabelaAnexos.addCell(anexoItem);
-
-                anexoItem = new PdfPCell(new Phrase(" ", subFont));
-                anexoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
-                anexoItem.setBorder(PdfPCell.NO_BORDER);
-                tabelaAnexos.addCell(anexoItem);
-
-                anexoItem = new PdfPCell(new Phrase(" ", subFont));
-                anexoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
-                anexoItem.setBorder(PdfPCell.NO_BORDER);
-                tabelaAnexos.addCell(anexoItem);
-
-
-                ByteArrayOutputStream streamPosregistrador = new ByteArrayOutputStream();
-                if(fotoPosRegistrador!=null){
-                    fotoPosRegistrador.compress(Bitmap.CompressFormat.PNG, 100, streamPosregistrador);
-                    Image imagePosregistrador = Image.getInstance(streamPosregistrador.toByteArray());
-                    anexoItem = new PdfPCell(imagePosregistrador);
-                    anexoItem.setHorizontalAlignment(Element.ALIGN_JUSTIFIED_ALL);
-                    anexoItem.setBorder(PdfPCell.NO_BORDER);
-                    tabelaAnexos.addCell(anexoItem);
-
-                }
-
-
-
-                anexoItem = new PdfPCell(new Phrase(" ", subFont));
-                anexoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
-                anexoItem.setBorder(PdfPCell.NO_BORDER);
-                tabelaAnexos.addCell(anexoItem);
-
-                if(fotoPosRegistrador!=null){
-                    anexoItem = new PdfPCell(new Phrase("Teste de Registrador - Foto Pós Teste ", subFont));
-                    anexoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
-                    anexoItem.setBorder(PdfPCell.NO_BORDER);
-                    tabelaAnexos.addCell(anexoItem);
-                } else {
-                    anexoItem = new PdfPCell(new Phrase(" ", subFont));
-                    anexoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
-                    anexoItem.setBorder(PdfPCell.NO_BORDER);
-                    tabelaAnexos.addCell(anexoItem);
-                }
-
-
-                anexoItem = new PdfPCell(new Phrase(" ", subFont));
-                anexoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
-                anexoItem.setBorder(PdfPCell.NO_BORDER);
-                tabelaAnexos.addCell(anexoItem);
-
-                anexos.add(tabelaAnexos);
-            }
+//            //--------------------------------------------ANEXOS - FOTOS
+//            addEmptyLine(conclusao, 3);
+//            Paragraph anexos = new Paragraph();
+//            PdfPCell anexoItem = null;
+//
+//            if((fotoPreRegistrador == null) && (fotoInspecao == null) && (fotoPosRegistrador == null)){
+//
+//                anexos.add(new Paragraph("Anexos: ", catFont));
+//                anexos.setAlignment(Element.ALIGN_CENTER);
+//
+//                PdfPTable tabelaAnexos = new PdfPTable(1);
+//                tabelaAnexos.setWidthPercentage(100);
+//                tabelaAnexos.setHorizontalAlignment(Element.ALIGN_LEFT);
+//
+//                anexoItem = new PdfPCell(new Phrase("Não existe nenhum arquivo de anexo ", smallNormal));
+//                anexoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
+//                anexoItem.setBorder(PdfPCell.NO_BORDER);
+//                tabelaAnexos.addCell(anexoItem);
+//
+//                anexos.add(tabelaAnexos);
+//
+//            } else{
+//
+//                anexos.add(new Paragraph("Anexos: ", catFont));
+//                anexos.setAlignment(Element.ALIGN_CENTER);
+//
+//                PdfPTable tabelaAnexos = new PdfPTable(2);
+//                tabelaAnexos.setWidthPercentage(100);
+//                tabelaAnexos.setHorizontalAlignment(Element.ALIGN_LEFT);
+//
+//                ByteArrayOutputStream streampreregistrador = new ByteArrayOutputStream();
+//                if(fotoPreRegistrador!=null){
+//                    fotoPreRegistrador.compress(Bitmap.CompressFormat.PNG, 100, streampreregistrador);
+//                    Image imagePreregistrador = Image.getInstance(streampreregistrador.toByteArray());
+//                    anexoItem = new PdfPCell(imagePreregistrador);
+//                    anexoItem.setHorizontalAlignment(Element.ALIGN_JUSTIFIED_ALL);
+//                    anexoItem.setBorder(PdfPCell.NO_BORDER);
+//                    tabelaAnexos.addCell(anexoItem);
+//
+//                }
+//
+//
+//
+//                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+//                if(fotoInspecao!=null){
+//                    fotoInspecao.compress(Bitmap.CompressFormat.PNG, 100, stream);
+//                    Image image = Image.getInstance(stream.toByteArray());
+//                    anexoItem = new PdfPCell(image);
+//                    anexoItem.setHorizontalAlignment(Element.ALIGN_JUSTIFIED_ALL);
+//                    anexoItem.setBorder(PdfPCell.NO_BORDER);
+//                    tabelaAnexos.addCell(anexoItem);
+//
+//                }
+//
+//                if(fotoPreRegistrador!=null){
+//                    anexoItem = new PdfPCell(new Phrase("Teste de Registrador - Foto Pré Teste ", subFont));
+//                    anexoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
+//                    anexoItem.setBorder(PdfPCell.NO_BORDER);
+//                    tabelaAnexos.addCell(anexoItem);
+//                } else {
+//                    anexoItem = new PdfPCell(new Phrase(" ", subFont));
+//                    anexoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
+//                    anexoItem.setBorder(PdfPCell.NO_BORDER);
+//                    tabelaAnexos.addCell(anexoItem);
+//                }
+//
+//
+//                anexoItem = new PdfPCell(new Phrase("Inspeção Visual", subFont));
+//                anexoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
+//                anexoItem.setBorder(PdfPCell.NO_BORDER);
+//                tabelaAnexos.addCell(anexoItem);
+//
+//                anexoItem = new PdfPCell(new Phrase(" ", subFont));
+//                anexoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
+//                anexoItem.setBorder(PdfPCell.NO_BORDER);
+//                tabelaAnexos.addCell(anexoItem);
+//
+//                anexoItem = new PdfPCell(new Phrase(" ", subFont));
+//                anexoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
+//                anexoItem.setBorder(PdfPCell.NO_BORDER);
+//                tabelaAnexos.addCell(anexoItem);
+//
+//
+//                ByteArrayOutputStream streamPosregistrador = new ByteArrayOutputStream();
+//                if(fotoPosRegistrador!=null){
+//                    fotoPosRegistrador.compress(Bitmap.CompressFormat.PNG, 100, streamPosregistrador);
+//                    Image imagePosregistrador = Image.getInstance(streamPosregistrador.toByteArray());
+//                    anexoItem = new PdfPCell(imagePosregistrador);
+//                    anexoItem.setHorizontalAlignment(Element.ALIGN_JUSTIFIED_ALL);
+//                    anexoItem.setBorder(PdfPCell.NO_BORDER);
+//                    tabelaAnexos.addCell(anexoItem);
+//
+//                }
+//
+//
+//
+//                anexoItem = new PdfPCell(new Phrase(" ", subFont));
+//                anexoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
+//                anexoItem.setBorder(PdfPCell.NO_BORDER);
+//                tabelaAnexos.addCell(anexoItem);
+//
+//                if(fotoPosRegistrador!=null){
+//                    anexoItem = new PdfPCell(new Phrase("Teste de Registrador - Foto Pós Teste ", subFont));
+//                    anexoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
+//                    anexoItem.setBorder(PdfPCell.NO_BORDER);
+//                    tabelaAnexos.addCell(anexoItem);
+//                } else {
+//                    anexoItem = new PdfPCell(new Phrase(" ", subFont));
+//                    anexoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
+//                    anexoItem.setBorder(PdfPCell.NO_BORDER);
+//                    tabelaAnexos.addCell(anexoItem);
+//                }
+//
+//
+//                anexoItem = new PdfPCell(new Phrase(" ", subFont));
+//                anexoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
+//                anexoItem.setBorder(PdfPCell.NO_BORDER);
+//                tabelaAnexos.addCell(anexoItem);
+//
+//                anexos.add(tabelaAnexos);
+//            }
 
 
 
             //--------------------------------------------ASSINATURA DOS RESPONSÁVEIS
-            addEmptyLine(anexos, 6);
+            addEmptyLine(conclusao, 3);
             Paragraph assinatura = new Paragraph();
 
 
@@ -972,7 +971,7 @@ public class ConclusaoActivity extends AppCompatActivity {
             document.add(situacaoObservada);
             document.add(informacoesComplementares);
             document.add(conclusao);
-            document.add(anexos);
+            //   document.add(anexos);
             document.add(assinatura);
 
 

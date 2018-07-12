@@ -245,7 +245,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
 
 
             tempoReprovado.setText("60");
-            Toast.makeText(getApplicationContext(), "Tempo de teste ajustado para 60 segundos... ", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Tempo de teste ajustado para 1 minuto... ", Toast.LENGTH_LONG).show();
             pacote[6] = (byte) (0 & 0xFF);
             pacote[7] = (byte) (0 & 0xFF);
             pacote[8] = (byte) (0 & 0xFF);
@@ -253,7 +253,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
 
 
         }else {
-            float tempo = Float.parseFloat(tempoReprovado.getText().toString());
+            float tempo = (Float.parseFloat(tempoReprovado.getText().toString())) * 60;
 
 
             bytes[4] = (byte) (tempo / (Math.pow(256, 3)));

@@ -117,9 +117,7 @@ public class EditarMedidorActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * @param view
-     */
+
     public void onCheckboxClicked(View view) {
 
         switch (view.getId()) {
