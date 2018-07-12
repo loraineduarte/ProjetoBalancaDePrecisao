@@ -13,7 +13,7 @@ import com.memtpadraomonofasico.apppadromonofsico.R;
 
 public class ObservacaoRegistradorActivity extends AppCompatActivity {
 
-    EditText Observacao;
+    private EditText Observacao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
