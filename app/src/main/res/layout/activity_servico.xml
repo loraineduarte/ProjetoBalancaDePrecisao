@@ -76,7 +76,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:ems="10"
-        android:hint="@string/n_do_documento_do_cliente"
+        android:hint="Nº de Documento do Acompanhante *"
         android:inputType="textPersonName"
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
