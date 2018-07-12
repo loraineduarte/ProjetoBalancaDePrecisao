@@ -135,7 +135,8 @@ public class ConclusaoActivity extends AppCompatActivity {
         try {
 
             String numServico =  Hawk.get("NumeroNotaServico");
-            File folder = new File(Environment.getExternalStoragePublicDirectory( Environment.DIRECTORY_DOCUMENTS)  + "/Relatórios_Padrao/Relatorio_"+numServico );
+            String instalacao = Hawk.get("NumeroInstalacaoServico");
+            File folder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + "/Relatórios_Padrao/Relatorio_" + instalacao);
 
             if (!folder.exists()) {
                 folder.mkdirs();
@@ -150,32 +151,6 @@ public class ConclusaoActivity extends AppCompatActivity {
             File myFile = new File(folder,numServico + ".pdf");
             OutputStream output = new FileOutputStream(myFile);
 
-//            //salvando foto pre registrador na pasta
-//            ByteArrayOutputStream streamfotoPre = new ByteArrayOutputStream();
-//            if(fotoPreRegistrador != null){
-//                fotoPreRegistrador.compress(Bitmap.CompressFormat.PNG, 100, streamfotoPre);
-//
-//                byte[] bytes = streamfotoPre.toByteArray();;
-//                String nomeArquivo = Environment.getExternalStoragePublicDirectory( Environment.DIRECTORY_DOCUMENTS)  + "/Relatórios_Padrao/FotoPreRegistrador_"+numServico + ".png";
-//
-//                FileOutputStream fos1 = new FileOutputStream(nomeArquivo);
-//                fos1.write(bytes);
-//            }
-//
-//
-//
-//            //salvando foto pos registrador na pasta
-//            ByteArrayOutputStream streamfotoPos = new ByteArrayOutputStream();
-//            if(fotoPosRegistrador != null){
-//                fotoPosRegistrador.compress(Bitmap.CompressFormat.PNG, 100, streamfotoPos);
-//
-//                byte[] bytes = streamfotoPos.toByteArray();;
-//                String nomeArquivo = Environment.getExternalStoragePublicDirectory( Environment.DIRECTORY_DOCUMENTS)  + "/Relatórios_Padrao/FotoPosRegistrador_"+numServico + ".png";
-//
-//                FileOutputStream fos1 = new FileOutputStream(nomeArquivo);
-//                fos1.write(bytes);
-//            }
-
             //salvando foto inspeçao visual na pasta
             ByteArrayOutputStream streamfotoInpecao = new ByteArrayOutputStream();
             if(fotoInspecao!=null){
@@ -187,6 +162,31 @@ public class ConclusaoActivity extends AppCompatActivity {
                 output1.write(bytes);
 
             }
+
+            //salvando foto pre registrador na pasta
+            ByteArrayOutputStream streamfotoPre = new ByteArrayOutputStream();
+            if (fotoPreRegistrador != null) {
+                fotoPreRegistrador.compress(Bitmap.CompressFormat.PNG, 100, streamfotoPre);
+                byte[] bytes = streamfotoPre.toByteArray();
+                File foto = new File(folder, "FotoPreRegistrador_" + numServico + ".png");
+                OutputStream output1 = new FileOutputStream(foto);
+                output1.write(bytes);
+
+            }
+
+
+            //salvando foto pos registrador na pasta
+            ByteArrayOutputStream streamfotoPos = new ByteArrayOutputStream();
+            if (fotoPosRegistrador != null) {
+                fotoPosRegistrador.compress(Bitmap.CompressFormat.PNG, 100, streamfotoPos);
+                byte[] bytes = streamfotoPos.toByteArray();
+                File foto = new File(folder, "FotoPosRegistrador_" + numServico + ".png");
+                OutputStream output1 = new FileOutputStream(foto);
+                output1.write(bytes);
+
+            }
+
+
 
 
             //Step 2
