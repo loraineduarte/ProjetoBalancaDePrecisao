@@ -69,6 +69,8 @@ public class ResultadosFinaisActivity extends AppCompatActivity {
         EditText horaFinal = findViewById(R.id.HoraFim);
         horaFinal.setText(horaFinalFormatada);
 
+        final EditText numInvolucro = findViewById(R.id.numInvolucro);
+
 
         ListView listaDeMensagens = findViewById(R.id.lista);
         mensagens = todasMensagens();
@@ -86,12 +88,17 @@ public class ResultadosFinaisActivity extends AppCompatActivity {
                 Hawk.delete("HoraInicial");
                 Hawk.delete("HoraFinal");
                 Hawk.delete("InformacoesComplementares");
-
                 Hawk.put("InformacoesComplementares", informacoesComplementares);
-                    Hawk.put("DataInicial", dataFormatada);
-                    Hawk.put("DataFinal", dataFormatada);
-                    Hawk.put("HoraInicial", horaInicialFormatada);
-                    Hawk.put("HoraFinal", horaFinalFormatada);
+                
+                if (!(numInvolucro.getText().toString().equals(""))) {
+                    Hawk.delete("NumeroInvolucro");
+                    Hawk.put("NumeroInvolucro", String.valueOf(numInvolucro.getText()));
+                }
+
+                Hawk.put("DataInicial", dataFormatada);
+                Hawk.put("DataFinal", dataFormatada);
+                Hawk.put("HoraInicial", horaInicialFormatada);
+                Hawk.put("HoraFinal", horaFinalFormatada);
 
                 abrirConclusao();
 
