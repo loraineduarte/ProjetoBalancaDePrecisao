@@ -204,8 +204,8 @@ public class RegistradorActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Sessão incompleta - Fotos não tiradas!", Toast.LENGTH_LONG).show();
 
                         } else {
-                            Hawk.put("FotoPreTesteRegistrador", fotoResized1);
-                            Hawk.put("FotoPosTesteRegistrador", fotoResized2);
+                            Hawk.put("FotoPreTesteRegistrador", fotoAntesRegistrador);
+                            Hawk.put("FotoPosTesteRegistrador", fotoDepoisRegistrador);
                             Hawk.put("statusRegistrador", status);
                             Hawk.put("ObservaçãoRegistrador", observacaoRegistrador);
                             Hawk.put("leituraPreTeste", leituraPreTeste);

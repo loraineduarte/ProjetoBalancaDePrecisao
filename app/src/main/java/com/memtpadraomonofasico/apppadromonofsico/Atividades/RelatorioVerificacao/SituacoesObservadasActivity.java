@@ -95,7 +95,7 @@ public class SituacoesObservadasActivity extends AppCompatActivity {
         if (observações.contains(mensagem)) {
             observações.replace(mensagem, "");
         } else {
-            observações = observações + "\n" + mensagem;
+            observações = observações + " - " + mensagem;
         }
 
     }

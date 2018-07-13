@@ -110,32 +110,35 @@ public class MarchaVazioActivity extends AppCompatActivity {
 
                 if ((!aprovado.isChecked()) && (!naoRealizado.isChecked()) && (!reprovado.isChecked())) {
                     Toast.makeText(getApplicationContext(), "Sessão incompleta - Não existe opção de status marcado. ", Toast.LENGTH_LONG).show();
-                }
-                if ((reprovado.isChecked()) && (tempoReprovadoMarchaVazio.equals("00:00:00"))) {
-                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Colocar o tempo de reprovação do teste ", Toast.LENGTH_LONG).show();
-
-                }
-                if ((naoRealizado.isChecked())) {
-                    Hawk.put("statusMarchaVazio", statusMarchaVazio);
-                    Hawk.put("tempoReprovadoMarchaVazio", tempoReprovadoMarchaVazio);
-
-                    if (conexao != null) {
-                        conexao.interrupt();
-                    }
-                    mBluetoothAdapter.disable();
-                    conexao = null;
-                    abrirInspecaoConformidade();
-
                 } else {
-                    Hawk.put("statusMarchaVazio", statusMarchaVazio);
-                    Hawk.put("tempoReprovadoMarchaVazio", tempoReprovadoMarchaVazio);
+                    if ((reprovado.isChecked()) && (tempoReprovadoMarchaVazio.equals("00:00:00"))) {
+                        Toast.makeText(getApplicationContext(), "Sessão incompleta - Colocar o tempo de reprovação do teste ", Toast.LENGTH_LONG).show();
 
-                    if (conexao != null) {
-                        conexao.interrupt();
+                    } else {
+                        if ((naoRealizado.isChecked())) {
+                            Hawk.put("statusMarchaVazio", statusMarchaVazio);
+                            Hawk.put("tempoReprovadoMarchaVazio", tempoReprovadoMarchaVazio);
+
+                            if (conexao != null) {
+                                conexao.interrupt();
+                            }
+                            mBluetoothAdapter.disable();
+                            conexao = null;
+                            abrirInspecaoConformidade();
+
+                        } else {
+                            Hawk.put("statusMarchaVazio", statusMarchaVazio);
+                            Hawk.put("tempoReprovadoMarchaVazio", tempoReprovadoMarchaVazio);
+
+                            if (conexao != null) {
+                                conexao.interrupt();
+                            }
+                            mBluetoothAdapter.disable();
+                            abrirInspecaoConformidade();
+                        }
                     }
-                    mBluetoothAdapter.disable();
-                    abrirInspecaoConformidade();
                 }
+
             }
         });
 

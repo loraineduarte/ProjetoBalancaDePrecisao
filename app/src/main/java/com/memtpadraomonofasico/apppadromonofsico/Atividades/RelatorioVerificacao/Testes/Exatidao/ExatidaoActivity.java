@@ -177,29 +177,30 @@ public class ExatidaoActivity extends AppCompatActivity {
                 if ((!Aprovado.isChecked()) && (!NaoPossibilitaTeste.isChecked()) && (!VariacaoLeitura.isChecked()) && (!Reprovado.isChecked())) {
                     Toast.makeText(getApplicationContext(), "Sessão incompleta - Não existe opção de status marcado. ", Toast.LENGTH_LONG).show();
 
-                }
-                if ((NaoPossibilitaTeste.isChecked())) {
-                    Hawk.put("CargaNominalErroConformidade", String.valueOf(cargaNominalErro.getText()));
-                    Hawk.put("CargaPequenaErroConformidade", String.valueOf(cargaPequenaErro.getText()));
-                    Hawk.put("statusConformidade", statusConformidade);
-
-                    if (conexao != null) {
-                        conexao.interrupt();
-                    }
-                    mBluetoothAdapter.disable();
-                    conexao = null;
-                    abrirRegistrador();
-
                 } else {
-                    Hawk.put("CargaNominalErroConformidade", String.valueOf(cargaNominalErro.getText()));
-                    Hawk.put("CargaPequenaErroConformidade", String.valueOf(cargaPequenaErro.getText()));
-                    Hawk.put("statusConformidade", statusConformidade);
+                    if ((NaoPossibilitaTeste.isChecked())) {
+                        Hawk.put("CargaNominalErroConformidade", String.valueOf(cargaNominalErro.getText()));
+                        Hawk.put("CargaPequenaErroConformidade", String.valueOf(cargaPequenaErro.getText()));
+                        Hawk.put("statusConformidade", statusConformidade);
 
-                    if (conexao != null) {
-                        conexao.interrupt();
+                        if (conexao != null) {
+                            conexao.interrupt();
+                        }
+                        mBluetoothAdapter.disable();
+                        conexao = null;
+                        abrirRegistrador();
+
+                    } else {
+                        Hawk.put("CargaNominalErroConformidade", String.valueOf(cargaNominalErro.getText()));
+                        Hawk.put("CargaPequenaErroConformidade", String.valueOf(cargaPequenaErro.getText()));
+                        Hawk.put("statusConformidade", statusConformidade);
+
+                        if (conexao != null) {
+                            conexao.interrupt();
+                        }
+                        mBluetoothAdapter.disable();
+                        abrirRegistrador();
                     }
-                    mBluetoothAdapter.disable();
-                    abrirRegistrador();
                 }
             }
         });
