@@ -185,21 +185,27 @@
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
-                android:padding="3dp">
+                android:padding="0dp">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
-                    <EditText
-                        android:id="@+id/LeituraRetirada"
+
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:ems="10"
-                        android:hint="Leitura Pré Calibração"
-                        android:inputType="number"
-                        android:singleLine="true"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                        android:layout_height="fill_parent">
+
+                        <EditText
+                            android:id="@+id/LeituraRetirada"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:ems="10"
+                            android:hint="Leitura Pré Calibração"
+                            android:inputType="number"
+                            android:singleLine="true"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                    </android.support.design.widget.TextInputLayout>
 
                 </RelativeLayout>
             </LinearLayout>
@@ -210,21 +216,26 @@
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
-                android:padding="3dp">
+                android:padding="0dp">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
-                    <EditText
-                        android:id="@+id/leituraPosCalibracao"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:ems="10"
-                        android:hint="@string/leitura_p_s_calibra_o"
-                        android:inputType="number"
-                        android:singleLine="true"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                        android:layout_height="fill_parent">
+
+                        <EditText
+                            android:id="@+id/leituraPosCalibracao"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:ems="10"
+                            android:hint="@string/leitura_p_s_calibra_o"
+                            android:inputType="number"
+                            android:singleLine="true"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                    </android.support.design.widget.TextInputLayout>
 
                 </RelativeLayout>
             </LinearLayout>

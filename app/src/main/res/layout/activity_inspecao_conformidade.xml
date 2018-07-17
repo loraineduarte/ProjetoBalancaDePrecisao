@@ -91,21 +91,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sinaisCarbonizacao" />
 
-    <EditText
-        android:id="@+id/CargaNominalErro"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:ems="10"
-        android:hint="@string/carga_nominal_erro"
-        android:inputType="number"
-        android:maxLength="4"
-        android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonConectarDispositivo" />
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/CargaNominalErro2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/buttonConectarDispositivo">
+
+        <EditText
+            android:id="@+id/CargaNominalErro"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:ems="10"
+            android:hint="@string/carga_nominal_erro"
+            android:inputType="number"
+            android:maxLength="4"
+            android:singleLine="true"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </android.support.design.widget.TextInputLayout>
 
     <Button
         android:id="@+id/button2"
@@ -122,24 +129,31 @@
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/CargaNominalErro" />
+        app:layout_constraintTop_toBottomOf="@+id/CargaNominalErro2" />
 
-    <EditText
-        android:id="@+id/CargaPequenaErro"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/CargaPequenaErro2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="@string/carga_pequena_erro"
-        android:inputType="number"
-        android:maxLength="4"
-        android:onClick="aplicarCargaPequena"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintTop_toBottomOf="@+id/button2">
+
+        <EditText
+            android:id="@+id/CargaPequenaErro"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:ems="10"
+            android:hint="@string/carga_pequena_erro"
+            android:inputType="number"
+            android:maxLength="4"
+            android:onClick="aplicarCargaPequena"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </android.support.design.widget.TextInputLayout>
 
     <Button
         android:id="@+id/button3"
@@ -156,7 +170,7 @@
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/CargaPequenaErro" />
+        app:layout_constraintTop_toBottomOf="@+id/CargaPequenaErro2" />
 
     <Button
         android:id="@+id/buttonConectarDispositivo"

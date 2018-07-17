@@ -13,100 +13,136 @@
         android:layout_height="36dp"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
         android:gravity="center"
         android:text="@string/servi_o"
         android:textAppearance="@android:style/TextAppearance.Material.DialogWindowTitle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/NumNotaServico"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/NumNotaServico2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:ems="10"
-        android:hint="@string/n_da_nota_de_servi_o"
-        android:inputType="textPersonName"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textColorLink="@android:color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Servico" />
+        android:layout_marginTop="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/Servico">
 
-    <EditText
-        android:id="@+id/NumInstalacao"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:ems="10"
-        android:hint="@string/n_da_instala_o"
-        android:inputType="textPersonName"
-        android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textColorLink="@android:color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NumNotaServico" />
+        <EditText
+            android:id="@+id/NumNotaServico"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:ems="10"
+            android:hint="@string/n_da_nota_de_servi_o"
+            android:inputType="textPersonName"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColorLink="@android:color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </android.support.design.widget.TextInputLayout>
 
-    <EditText
-        android:id="@+id/NomeCliente"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/NumInstalacao2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:ems="10"
-        android:hint="@string/nome_do_cliente"
-        android:inputType="textPersonName"
-        android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textColorLink="@android:color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NumInstalacao" />
+        android:layout_marginTop="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/NumNotaServico2">
 
-    <EditText
-        android:id="@+id/NumDocumentoCliente"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:ems="10"
-        android:hint="Nº de Documento do Acompanhante *"
-        android:inputType="textPersonName"
-        android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textColorLink="@android:color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NomeCliente" />
+        <EditText
+            android:id="@+id/NumInstalacao"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:ems="10"
+            android:hint="@string/n_da_instala_o"
+            android:inputType="textPersonName"
+            android:singleLine="true"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColorLink="@android:color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </android.support.design.widget.TextInputLayout>
 
-    <AutoCompleteTextView
-        android:id="@+id/numSerie"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/NomeCliente2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:ems="10"
-        android:hint="Nº de Série do Medidor do Cliente *"
-        android:inputType="textPersonName"
-        android:maxLength="12"
-        android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textColor="@android:color/black"
-        android:textColorHighlight="@android:color/black"
-        android:textColorHint="@android:color/darker_gray"
-        android:textColorLink="@android:color/black"
-        android:textCursorDrawable="@android:color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NumDocumentoCliente"
-        tools:ignore="HardcodedText"
-        tools:textColorHint="@android:color/darker_gray" />
+        android:layout_marginTop="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/NumInstalacao2">
+
+        <EditText
+            android:id="@+id/NomeCliente"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:ems="10"
+            android:hint="@string/nome_do_cliente"
+            android:inputType="textPersonName"
+            android:singleLine="true"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColorLink="@android:color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/NumDocumentoCliente2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/NomeCliente2">
+
+        <EditText
+            android:id="@+id/NumDocumentoCliente"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:ems="10"
+            android:hint="Nº de Documento do Acompanhante *"
+            android:inputType="textPersonName"
+            android:singleLine="true"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColorLink="@android:color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/numSerie2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/NumDocumentoCliente2">
+
+        <AutoCompleteTextView
+            android:id="@+id/numSerie"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:ems="10"
+            android:hint="Nº de Série do Medidor do Cliente *"
+            android:inputType="textPersonName"
+            android:maxLength="12"
+            android:singleLine="true"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="@android:color/black"
+            android:textColorHighlight="@android:color/black"
+            android:textColorHint="@android:color/darker_gray"
+            android:textColorLink="@android:color/black"
+            android:textCursorDrawable="@android:color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="HardcodedText"
+            tools:textColorHint="@android:color/darker_gray" />
+    </android.support.design.widget.TextInputLayout>
 
 
     <TextView
@@ -115,34 +151,42 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:text="@string/endere_o"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColor="@android:color/darker_gray"
         android:textColorLink="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Instalacao" />
+        app:layout_constraintTop_toBottomOf="@+id/Instalacao2" />
 
-    <EditText
-        android:id="@+id/Instalacao"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/Instalacao2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:ems="10"
-        android:hint="@string/instala_o"
-        android:inputType="textPersonName"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/numSerie" />
+        android:layout_marginTop="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/numSerie2">
+
+        <EditText
+            android:id="@+id/Instalacao"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:ems="10"
+            android:hint="@string/instala_o"
+            android:inputType="textPersonName"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </android.support.design.widget.TextInputLayout>
 
 
     <LinearLayout
         android:id="@+id/linearLayout5"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="50dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:orientation="vertical"
@@ -165,23 +209,28 @@
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
-                android:padding="3dp">
+                android:padding="0dp">
 
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
-                    <EditText
-                        android:id="@+id/Rua"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:ems="10"
-                        android:hint="@string/rua_avenida"
-                        android:inputType="textPersonName"
-                        android:singleLine="true"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                        android:textColorLink="@android:color/black" />
+                        android:layout_height="fill_parent">
+
+                        <EditText
+                            android:id="@+id/Rua"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:ems="10"
+                            android:hint="@string/rua_avenida"
+                            android:inputType="textPersonName"
+                            android:singleLine="true"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                            android:textColorLink="@android:color/black" />
+                    </android.support.design.widget.TextInputLayout>
                 </RelativeLayout>
             </LinearLayout>
         </LinearLayout>
@@ -190,7 +239,7 @@
     <LinearLayout
         android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="50dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:orientation="vertical"
@@ -213,23 +262,27 @@
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
-                android:padding="3dp">
+                android:padding="0dp">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
-
-                    <EditText
-                        android:id="@+id/Numero"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:ems="10"
-                        android:hint="@string/n"
-                        android:inputType="textPersonName"
-                        android:singleLine="true"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                        android:textColorLink="@android:color/black" />
+                        android:layout_height="fill_parent">
+
+                        <EditText
+                            android:id="@+id/Numero"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:ems="10"
+                            android:hint="@string/n"
+                            android:inputType="textPersonName"
+                            android:singleLine="true"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                            android:textColorLink="@android:color/black" />
+                    </android.support.design.widget.TextInputLayout>
 
                 </RelativeLayout>
             </LinearLayout>
@@ -240,22 +293,27 @@
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
-                android:padding="3dp">
+                android:padding="0dp">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
-                    <EditText
-                        android:id="@+id/Complemento"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:ems="10"
-                        android:hint="@string/complemento"
-                        android:inputType="textPersonName"
-                        android:singleLine="true"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                        android:textColorLink="@android:color/black" />
+                        android:layout_height="fill_parent">
+
+                        <EditText
+                            android:id="@+id/Complemento"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:ems="10"
+                            android:hint="@string/complemento"
+                            android:inputType="textPersonName"
+                            android:singleLine="true"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                            android:textColorLink="@android:color/black" />
+                    </android.support.design.widget.TextInputLayout>
                 </RelativeLayout>
             </LinearLayout>
         </LinearLayout>
@@ -264,7 +322,7 @@
     <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="50dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:orientation="vertical"
@@ -287,22 +345,26 @@
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
-                android:padding="3dp">
+                android:padding="0dp">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
-
-                    <EditText
-                        android:id="@+id/Bairro"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:ems="10"
-                        android:hint="@string/bairro"
-                        android:inputType="textPersonName"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                        android:textColorLink="@android:color/black" />
+                        android:layout_height="fill_parent">
+
+                        <EditText
+                            android:id="@+id/Bairro"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:ems="10"
+                            android:hint="@string/bairro"
+                            android:inputType="textPersonName"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                            android:textColorLink="@android:color/black" />
+                    </android.support.design.widget.TextInputLayout>
 
                 </RelativeLayout>
             </LinearLayout>
@@ -313,21 +375,26 @@
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
-                android:padding="3dp">
+                android:padding="0dp">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
-                    <EditText
-                        android:id="@+id/CEP"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:ems="10"
-                        android:hint="@string/cep"
-                        android:inputType="textPersonName"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                        android:textColorLink="@android:color/black" />
+                        android:layout_height="fill_parent">
+
+                        <EditText
+                            android:id="@+id/CEP"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:ems="10"
+                            android:hint="@string/cep"
+                            android:inputType="textPersonName"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                            android:textColorLink="@android:color/black" />
+                    </android.support.design.widget.TextInputLayout>
                 </RelativeLayout>
             </LinearLayout>
         </LinearLayout>
@@ -339,7 +406,7 @@
         android:layout_height="63dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -360,7 +427,7 @@
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
-                android:padding="3dp">
+                android:padding="0dp">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"

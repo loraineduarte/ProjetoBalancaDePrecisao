@@ -34,57 +34,76 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/RelatorioVerificacao" />
 
-    <AutoCompleteTextView
-        android:id="@+id/MatriculaAvaliador"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/MatriculaAvaliador2"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
         android:layout_marginEnd="80dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:freezesText="false"
-        android:hint="@string/matr_cula_do_avaliador"
-        android:saveEnabled="true"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textColorLink="@android:color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SelecionarAvaliador"
-        tools:saveEnabled="true" />
+        app:layout_constraintTop_toBottomOf="@+id/SelecionarAvaliador">
 
-    <EditText
-        android:id="@+id/NomeAvaliador"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        <AutoCompleteTextView
+            android:id="@+id/MatriculaAvaliador"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:freezesText="false"
+            android:hint="@string/matr_cula_do_avaliador"
+            android:saveEnabled="true"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColorLink="@android:color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:saveEnabled="true" />
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/NomeAvaliador2"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
         android:layout_marginEnd="80dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="@string/nome_do_avaliador"
-        android:inputType="textPersonName"
-        android:saveEnabled="true"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textColorLink="@android:color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/MatriculaAvaliador" />
+        app:layout_constraintTop_toBottomOf="@+id/MatriculaAvaliador2">
+
+        <EditText
+            android:id="@+id/NomeAvaliador"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:ems="10"
+            android:hint="@string/nome_do_avaliador"
+            android:inputType="textPersonName"
+            android:saveEnabled="true"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColorLink="@android:color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </android.support.design.widget.TextInputLayout>
 
 
-    <EditText
-        android:id="@+id/GerenteAvaliador"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/GerenteAvaliador2"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
         android:layout_marginEnd="80dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="Nome do Supervisor *"
-        android:inputType="textPersonName"
-        android:saveEnabled="true"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textColorLink="@android:color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NomeAvaliador" />
+        app:layout_constraintTop_toBottomOf="@+id/NomeAvaliador2">
+
+        <EditText
+            android:id="@+id/GerenteAvaliador"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:ems="10"
+            android:hint="Nome do Supervisor *"
+            android:inputType="textPersonName"
+            android:saveEnabled="true"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColorLink="@android:color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </android.support.design.widget.TextInputLayout>
 
 
     <TextView
@@ -100,7 +119,7 @@
         android:textColorLink="@android:color/darker_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/GerenteAvaliador" />
+        app:layout_constraintTop_toBottomOf="@+id/GerenteAvaliador2" />
 
     <RadioButton
         android:id="@+id/SEM"
@@ -134,22 +153,27 @@
         app:layout_constraintTop_toBottomOf="@+id/SEM" />
 
 
-
-    <EditText
-        android:id="@+id/ToiNumero"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/ToiNumero2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:layout_marginEnd="80dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="@string/n"
-        android:inputType="number"
-        android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TOI" />
+        app:layout_constraintTop_toBottomOf="@+id/TOI">
+
+        <EditText
+            android:id="@+id/ToiNumero"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:ems="10"
+            android:hint="@string/n"
+            android:inputType="number"
+            android:singleLine="true"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/ProcurarAvaliador"
@@ -179,7 +203,7 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ToiNumero">
+        app:layout_constraintTop_toBottomOf="@+id/ToiNumero2">
 
 
         <LinearLayout
@@ -232,7 +256,7 @@
                         android:text="@string/pr_ximo"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textColor="@android:color/white"
-                        android:textColorLink="@android:color/black"/>
+                        android:textColorLink="@android:color/black" />
                 </RelativeLayout>
             </LinearLayout>
         </LinearLayout>

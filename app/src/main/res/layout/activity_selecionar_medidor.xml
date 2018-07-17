@@ -20,44 +20,52 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <AutoCompleteTextView
-
-        android:id="@+id/NumGeral"
-
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/NumGeral2"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="55dp"
         android:layout_marginEnd="80dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:ems="10"
-        android:hint="@string/n_geral"
-        android:inputType="textPersonName"
-        android:maxLength="12"
-        android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textColor="@android:color/black"
-        android:textColorHighlight="@android:color/black"
-        android:textColorHint="@android:color/darker_gray"
-        android:textColorLink="@android:color/black"
-        android:textCursorDrawable="@android:color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Medidor"
-        tools:ignore="HardcodedText"
-        tools:textColorHint="@android:color/darker_gray" />
+        app:layout_constraintTop_toBottomOf="@+id/Medidor">
+
+        <AutoCompleteTextView
+
+            android:id="@+id/NumGeral"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+
+
+            android:ems="10"
+            android:hint="@string/n_geral"
+            android:inputType="textPersonName"
+            android:maxLength="12"
+            android:singleLine="true"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="@android:color/black"
+            android:textColorHighlight="@android:color/black"
+            android:textColorHint="@android:color/darker_gray"
+            android:textColorLink="@android:color/black"
+            android:textCursorDrawable="@android:color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+
+            tools:ignore="HardcodedText"
+            tools:textColorHint="@android:color/darker_gray" />
+    </android.support.design.widget.TextInputLayout>
 
 
 
     <LinearLayout
         android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="55dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NumGeral">
+        app:layout_constraintTop_toBottomOf="@+id/NumGeral2">
 
 
         <LinearLayout
@@ -80,15 +88,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
-                    <EditText
-                        android:id="@+id/ModeloMedidor"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:ems="10"
-                        android:hint="@string/modelo"
-                        android:inputType="textPersonName"
-                        android:singleLine="true"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                        android:layout_height="fill_parent">
+
+                        <EditText
+                            android:id="@+id/ModeloMedidor"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:ems="10"
+                            android:hint="@string/modelo"
+                            android:inputType="textPersonName"
+                            android:singleLine="true"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                    </android.support.design.widget.TextInputLayout>
 
 
                 </RelativeLayout>
@@ -106,18 +119,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
-                    <EditText
-                        android:id="@+id/fabricanteMedidor"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:ems="10"
-                        android:hint="@string/fabricante"
-                        android:inputType="textPersonName"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                        android:textColor="@android:color/black"
-                        android:textColorHighlight="@android:color/black"
-                        android:textColorHint="@android:color/darker_gray"
-                        android:textColorLink="@android:color/black" />
+                        android:layout_height="fill_parent">
+
+                        <EditText
+                            android:id="@+id/fabricanteMedidor"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:ems="10"
+                            android:hint="@string/fabricante"
+                            android:inputType="textPersonName"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                            android:textColor="@android:color/black"
+                            android:textColorHighlight="@android:color/black"
+                            android:textColorHint="@android:color/darker_gray"
+                            android:textColorLink="@android:color/black" />
+                    </android.support.design.widget.TextInputLayout>
 
 
                 </RelativeLayout>
@@ -129,7 +147,7 @@
     <LinearLayout
         android:id="@+id/linearLayout5"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="55dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:orientation="vertical"
@@ -158,14 +176,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
-                    <EditText
-                        android:id="@+id/TensaoNominal"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:ems="10"
-                        android:hint="@string/tens_o_nominal_v"
-                        android:inputType="number"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                        android:layout_height="fill_parent">
+
+                        <EditText
+                            android:id="@+id/TensaoNominal"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:ems="10"
+                            android:hint="@string/tens_o_nominal_v"
+                            android:inputType="number"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                    </android.support.design.widget.TextInputLayout>
 
                 </RelativeLayout>
             </LinearLayout>
@@ -182,14 +205,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
-                    <EditText
-                        android:id="@+id/CorrenteNominal"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:ems="10"
-                        android:hint="@string/corrente_nominal_a"
-                        android:inputType="number"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                        android:layout_height="fill_parent">
+
+                        <EditText
+                            android:id="@+id/CorrenteNominal"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:ems="10"
+                            android:hint="@string/corrente_nominal_a"
+                            android:inputType="number"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                    </android.support.design.widget.TextInputLayout>
 
 
                 </RelativeLayout>
@@ -264,7 +292,7 @@
     <LinearLayout
         android:id="@+id/linearLayout7"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="55dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:orientation="vertical"
@@ -293,15 +321,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
-                    <EditText
-                        android:id="@+id/KdKe"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:ems="10"
-                        android:hint="@string/kd_ke"
-                        android:inputType="numberDecimal"
-                        android:singleLine="true"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                        android:layout_height="fill_parent">
+
+                        <EditText
+                            android:id="@+id/KdKe"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:ems="10"
+                            android:hint="@string/kd_ke"
+                            android:inputType="numberDecimal"
+                            android:singleLine="true"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                    </android.support.design.widget.TextInputLayout>
 
 
                 </RelativeLayout>
@@ -319,15 +352,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
-                    <EditText
-                        android:id="@+id/RR"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:ems="10"
-                        android:hint="@string/rr"
-                        android:inputType="textPersonName"
-                        android:singleLine="true"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                        android:layout_height="fill_parent">
+
+                        <EditText
+                            android:id="@+id/RR"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:ems="10"
+                            android:hint="@string/rr"
+                            android:inputType="textPersonName"
+                            android:singleLine="true"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+                    </android.support.design.widget.TextInputLayout>
 
 
                 </RelativeLayout>
@@ -338,7 +377,7 @@
     <LinearLayout
         android:id="@+id/linearLayout8"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="55dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:orientation="vertical"
@@ -366,15 +405,21 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
-                    <EditText
-                        android:id="@+id/NumElementos"
+
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:ems="10"
-                        android:hint="@string/n_de_elementos"
-                        android:inputType="number"
-                        android:singleLine="true"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                        android:layout_height="fill_parent">
+
+                        <EditText
+                            android:id="@+id/NumElementos"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:ems="10"
+                            android:hint="@string/n_de_elementos"
+                            android:inputType="number"
+                            android:singleLine="true"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                    </android.support.design.widget.TextInputLayout>
 
 
                 </RelativeLayout>
@@ -391,16 +436,22 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
-                    <EditText
-                        android:id="@+id/AnoFabricacao"
+
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:ems="10"
-                        android:hint="@string/ano_de_fabrica_o"
-                        android:inputType="number"
-                        android:maxLength="4"
-                        android:singleLine="true"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                        android:layout_height="fill_parent">
+
+                        <EditText
+                            android:id="@+id/AnoFabricacao"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:ems="10"
+                            android:hint="@string/ano_de_fabrica_o"
+                            android:inputType="number"
+                            android:maxLength="4"
+                            android:singleLine="true"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                    </android.support.design.widget.TextInputLayout>
 
                 </RelativeLayout>
             </LinearLayout>
@@ -410,7 +461,7 @@
     <LinearLayout
         android:id="@+id/linearLayout9"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="55dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:orientation="vertical"
@@ -438,15 +489,21 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
-                    <EditText
-                        android:id="@+id/Classe"
+
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:ems="10"
-                        android:hint="@string/classe"
-                        android:inputType="textPersonName"
-                        android:singleLine="true"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                        android:layout_height="fill_parent">
+
+                        <EditText
+                            android:id="@+id/Classe"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:ems="10"
+                            android:hint="@string/classe"
+                            android:inputType="textPersonName"
+                            android:singleLine="true"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                    </android.support.design.widget.TextInputLayout>
 
 
                 </RelativeLayout>
@@ -463,14 +520,20 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
-                    <EditText
-                        android:id="@+id/Fios"
+
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:ems="10"
-                        android:hint="@string/fios"
-                        android:inputType="number"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                        android:layout_height="fill_parent">
+
+                        <EditText
+                            android:id="@+id/Fios"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:ems="10"
+                            android:hint="@string/fios"
+                            android:inputType="number"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                    </android.support.design.widget.TextInputLayout>
 
                 </RelativeLayout>
             </LinearLayout>
@@ -480,7 +543,7 @@
     <LinearLayout
         android:id="@+id/linearLayout10"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="55dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:orientation="vertical"
@@ -508,21 +571,26 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
-                    <EditText
-                        android:id="@+id/PorInmetro"
+
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:ems="10"
-                        android:hint="@string/portaria_inmetro"
-                        android:inputType="textPersonName"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+                        android:layout_height="fill_parent">
+
+                        <EditText
+                            android:id="@+id/PorInmetro"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:ems="10"
+                            android:hint="@string/portaria_inmetro"
+                            android:inputType="number"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+                    </android.support.design.widget.TextInputLayout>
 
 
                 </RelativeLayout>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-
 
 
     <!--suppress AndroidDomInspection -->
