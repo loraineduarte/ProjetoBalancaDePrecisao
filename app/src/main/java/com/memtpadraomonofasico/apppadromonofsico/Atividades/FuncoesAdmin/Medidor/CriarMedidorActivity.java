@@ -70,7 +70,7 @@ public class CriarMedidorActivity extends AppCompatActivity {
                 String fabricanteString = fabricante.getText().toString();
                 int numElementosString = Integer.parseInt(numElementos.getText().toString());
                 String modeloString = modelo.getText().toString();
-                int correnteNominalString = Integer.parseInt(correnteNominal.getText().toString());
+                Double correnteNominalString = Double.valueOf(Integer.parseInt(correnteNominal.getText().toString()));
                 String classeString = classe.getText().toString();
                 String RRString =RR.getText().toString();
                 int anoFabricacaoString = Integer.parseInt(anoFabricacao.getText().toString());
@@ -205,7 +205,7 @@ public class CriarMedidorActivity extends AppCompatActivity {
                             String numGeral = nextLine[0].substring(0, 2);
                             String fabricante = nextLine[1];
                             String modelo = nextLine[2];
-                            int correnteNominal = Integer.parseInt(nextLine[3]);
+                            Double correnteNominal = Double.valueOf(Integer.parseInt(nextLine[3]));
                             int numElementos = Integer.parseInt(nextLine[4]);
                             int tensaoNominal = Integer.parseInt(nextLine[5]);
                             String RR = nextLine[6];

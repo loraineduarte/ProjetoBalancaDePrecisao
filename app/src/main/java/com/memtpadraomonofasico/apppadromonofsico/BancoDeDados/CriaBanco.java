@@ -60,7 +60,7 @@ public class CriaBanco extends SQLiteOpenHelper {
                 + FABRICANTE + " text, "
                 + NUM_ELEMENTOS + " integer, "
                 + MODELO + " text, "
-                + CORRENTE_NOMINAL + " integer, "
+                + CORRENTE_NOMINAL + " double, "
                 + CLASSE + " text, "
                 + ANO_FABRICACAO + " integer, "
                 + TENSAO_NOMINAL + " integer, "
@@ -241,7 +241,7 @@ public class CriaBanco extends SQLiteOpenHelper {
                 arrData[2] = cursor.getString(cursor.getColumnIndexOrThrow(MODELO));
                 arrData[3] = cursor.getString(cursor.getColumnIndexOrThrow(FABRICANTE));
                 arrData[4] = cursor.getString(cursor.getColumnIndexOrThrow(TENSAO_NOMINAL));
-                arrData[5] = cursor.getString(cursor.getColumnIndexOrThrow(CORRENTE_NOMINAL));
+                arrData[5] = String.valueOf(cursor.getDouble(cursor.getColumnIndexOrThrow(CORRENTE_NOMINAL)));
                 arrData[6] = cursor.getString(cursor.getColumnIndexOrThrow(TIPO_MEDIDOR));
                 arrData[7] = String.valueOf(cursor.getDouble(cursor.getColumnIndexOrThrow(KDKE)));
                 arrData[8] = cursor.getString(cursor.getColumnIndexOrThrow(RR));

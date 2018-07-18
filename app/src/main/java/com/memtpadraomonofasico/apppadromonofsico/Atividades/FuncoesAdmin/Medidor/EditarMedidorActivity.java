@@ -15,8 +15,9 @@ import com.memtpadraomonofasico.apppadromonofsico.R;
 public class EditarMedidorActivity extends AppCompatActivity {
 
     private EditText numeroSerie, numeroGeral, instalacao, modelo, fabricante, tensaoNominal, correnteNominal, tipoMedidor, kdKe, rr, numElementos, anoFabricacao, classe, fios, portariaInmetro;
-    private String numeroGeralAntigo, numeroSerieString, numeroGeralString, instalacaoString, modeloString, fabricanteString, tensaoNominalString, correnteNominalString, tipoMedidorString, kdKeString, rrString,
+    private String numeroGeralAntigo, numeroSerieString, numeroGeralString, instalacaoString, modeloString, fabricanteString, tensaoNominalString, tipoMedidorString, kdKeString, rrString,
             numElementosString, anoFabricacaoString, classeString, fiosString, portariaInmetroString;
+    private Double correnteNominalString;
     private RadioButton radioButtonMecanico, radioButtonEletronico;
 
     @Override
@@ -86,7 +87,7 @@ public class EditarMedidorActivity extends AppCompatActivity {
                 modeloString = modelo.getText().toString();
                 fabricanteString = fabricante.getText().toString();
                 tensaoNominalString = tensaoNominal.getText().toString();
-                correnteNominalString = correnteNominal.getText().toString();
+                correnteNominalString = Double.valueOf(correnteNominal.getText().toString());
                 kdKeString = kdKe.getText().toString();
                 rrString = rr.getText().toString();
                 numElementosString = numElementos.getText().toString();
