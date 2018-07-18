@@ -99,7 +99,7 @@ public class CriarMedidorActivity extends AppCompatActivity {
                 }
                 else {
                     String resultado = crud.insereNovoMedidor(numGeralString, fabricanteString, numElementosString, modeloString, correnteNominalString,
-                            classeString,RRString, anoFabricacaoString, tensaoNominalString, KdKeString, porInmetroString,fiosString, tipoMedidorString);
+                            classeString, RRString, String.valueOf(anoFabricacaoString), tensaoNominalString, KdKeString, porInmetroString, fiosString, tipoMedidorString);
                     Toast.makeText(getApplicationContext(), resultado, Toast.LENGTH_LONG).show();
                     finish();
                 }
@@ -177,11 +177,6 @@ public class CriarMedidorActivity extends AppCompatActivity {
 
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-//
-//        // Filter to show only images, using the image MIME data type.
-//        // If one wanted to search for ogg vorbis files, the type would be "audio/ogg".
-//        // To search for all documents available via installed storage providers,
-//        // it would be "*/*".
         intent.setType("*/*");
 
         startActivityForResult(intent, READ_REQUEST_CODE);
@@ -190,10 +185,7 @@ public class CriarMedidorActivity extends AppCompatActivity {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == READ_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            // The document selected by the user won't be returned in the intent.
-            // Instead, a URI to that document will be contained in the return intent
-            // provided to this method as a parameter.
-            // Pull that URI using resultData.getData().
+
             if (data != null) {
                 Uri uri = data.getData();
                 final BancoController crud = new BancoController(getBaseContext());
@@ -208,26 +200,35 @@ public class CriarMedidorActivity extends AppCompatActivity {
                         if (cont == 0) {
 
                         } else {
-//                            int instalacao = Integer.parseInt(nextLine[0].toString());
-//                            String numSerie = nextLine[1];
-                            String numGeral = nextLine[0];
+
+                            //codigo - fabricante - modelo - corrente nominal - num elementos - tensao nominal - rr - kdke - fios - classe - erro adminissivel (para olhar se é eletrico ou mecanico)
+                            String numGeral = nextLine[0].substring(0, 2);
                             String fabricante = nextLine[1];
-                            int numElementos = Integer.parseInt(nextLine[2]);
-                            String modelo = nextLine[3];
-                            int correnteNominal = Integer.parseInt(nextLine[4]);
-                            String classe = nextLine[5];
+                            String modelo = nextLine[2];
+                            int correnteNominal = Integer.parseInt(nextLine[3]);
+                            int numElementos = Integer.parseInt(nextLine[4]);
+                            int tensaoNominal = Integer.parseInt(nextLine[5]);
                             String RR = nextLine[6];
-                            int anoFabricacao = Integer.parseInt(nextLine[7]);
-                            int tensaoNominal = Integer.parseInt(nextLine[8]);
-                            double KdKe = Double.parseDouble(nextLine[9]);
-                            String porInmetro = nextLine[10];
-                            int fios = Integer.parseInt(nextLine[11]);
+                            double KdKe = Double.parseDouble(nextLine[7]);
+                            int fios = Integer.parseInt(nextLine[8]);
+                            String classe = nextLine[9];
                             String tipoMedidorString = " ";
-                            if (nextLine[12].toString().startsWith("mec")) {
+                            if (nextLine[10].toString().startsWith("4")) {
                                 tipoMedidorString = "Mecânico";
-                            } else if (nextLine[12].toString().startsWith("ele")) {
+                            } else {
                                 tipoMedidorString = "Eletrônico";
                             }
+                            String anoFabricacao = nextLine[0].substring(3, 4);
+                            String porInmetro = "";
+                            if (nextLine[11].toString().startsWith("")) {
+                                porInmetro = "";
+                            } else {
+                                porInmetro = nextLine[11];
+                            }
+
+
+
+
                             String resultado = crud.insereNovoMedidor(numGeral, fabricante, numElementos, modelo, correnteNominal,
                                     classe, RR, anoFabricacao, tensaoNominal, KdKe, porInmetro, fios, tipoMedidorString);
                             Toast.makeText(getApplicationContext(), resultado, Toast.LENGTH_LONG).show();
