@@ -36,7 +36,6 @@ public class EditarMedidorActivity extends AppCompatActivity {
         final String kdKeAntigo = it.getStringExtra("kdKe");
         final String rrAntigo = it.getStringExtra("rr");
         final String numElementosAntigo = it.getStringExtra("numElementos");
-        final String anoFabricacaoAntigo = it.getStringExtra("anoFabricacao");
         final String classeAntigo = it.getStringExtra("classe");
         final String fiosAntigo = it.getStringExtra("fios");
         final String portariaInmetroAntigo = it.getStringExtra("portariaInmetro");
@@ -60,8 +59,6 @@ public class EditarMedidorActivity extends AppCompatActivity {
         rr.setText(rrAntigo);
         numElementos = findViewById(R.id.NumElementos);
         numElementos.setText(numElementosAntigo);
-        anoFabricacao = findViewById(R.id.AnoFabricacao);
-        anoFabricacao.setText(anoFabricacaoAntigo);
         classe = findViewById(R.id.Classe);
         classe.setText(classeAntigo);
         fios = findViewById(R.id.Fios);
@@ -91,7 +88,6 @@ public class EditarMedidorActivity extends AppCompatActivity {
                 kdKeString = kdKe.getText().toString();
                 rrString = rr.getText().toString();
                 numElementosString = numElementos.getText().toString();
-                anoFabricacaoString = anoFabricacao.getText().toString();
                 classeString = classe.getText().toString();
                 fiosString = fios.getText().toString();
                 portariaInmetroString = portariaInmetro.getText().toString();
@@ -108,7 +104,7 @@ public class EditarMedidorActivity extends AppCompatActivity {
 
 
                 String resultado = crud.updateMedidor(numeroGeralAntigo, numeroGeralString, modeloString, fabricanteString, tensaoNominalString,
-                        correnteNominalString, tipoMedidorString, kdKeString, rrString, numElementosString, anoFabricacaoString, classeString, fiosString, portariaInmetroString);
+                        correnteNominalString, tipoMedidorString, kdKeString, rrString, numElementosString, classeString, fiosString, portariaInmetroString);
                 Toast.makeText(getApplicationContext(), resultado, Toast.LENGTH_LONG).show();
 
                 finish();

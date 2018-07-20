@@ -38,8 +38,8 @@ implements NavigationView.OnNavigationItemSelectedListener {
     private TextView progressingTextViewAvaliadores;
     private TextView progressingTextViewmedidores;
     private int i = 0;
-    private String user;
-    private String senha;
+    private String user = "";
+    private String senha = "";
     private String usuarioLogin;
 
     @SuppressLint("WrongConstant")
@@ -56,7 +56,6 @@ implements NavigationView.OnNavigationItemSelectedListener {
         final BancoController crud = new BancoController(getBaseContext());
         cursorMedidor = crud.pegaMedidores();
         cursorAvaliador = crud.pegaAvaliadores();
-        usuarioLogin = crud.pegaTipoUsuario(user, senha);
 
         Button opcoesAdmin = findViewById(R.id.AdminOpcoes);
         Button teste = findViewById(R.id.Teste);
