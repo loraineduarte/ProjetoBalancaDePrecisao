@@ -51,20 +51,20 @@ public class ListagemMedidores extends AppCompatActivity {
         for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
 
             String numeroGeral = cursor.getString(1);
-            String modelo = cursor.getString(2);
-            String fabricante = cursor.getString(3);
-            String tensaoNominal = cursor.getString(4);
+            String fabricante = cursor.getString(2);
+            int numElementos = Integer.parseInt(cursor.getString(3));
+            String modelo = cursor.getString(4);
             int correnteNominal = Integer.parseInt(cursor.getString(5));
-            String tipoMedidor = cursor.getString(6);
-            String kdKe = cursor.getString(7);
-            String rr = cursor.getString(8);
-            int numElementos = Integer.parseInt(cursor.getString(9));
-            String anoFabricacao = cursor.getString(10);
-            String classe = cursor.getString(11);
-            int fios = Integer.parseInt(cursor.getString(12));
-            String portariaInmetro = cursor.getString(13);
+            String classe = cursor.getString(6);
+            String rr = cursor.getString(7);
+            String tensaoNominal = cursor.getString(8);
+            String tipoMedidor = cursor.getString(12);
+            String kdKe = cursor.getString(9);
 
-            Medidor medidor = new Medidor(numeroGeral, modelo, fabricante, tensaoNominal, correnteNominal, tipoMedidor, kdKe, rr, numElementos, anoFabricacao, classe, fios, portariaInmetro);
+            int fios = Integer.parseInt(cursor.getString(11));
+            String portariaInmetro = cursor.getString(10);
+
+            Medidor medidor = new Medidor(numeroGeral, modelo, fabricante, tensaoNominal, correnteNominal, tipoMedidor, kdKe, rr, numElementos, classe, fios, portariaInmetro);
             av.add(medidor);
         }
 
@@ -103,12 +103,11 @@ public class ListagemMedidores extends AppCompatActivity {
         String correnteNominal = (cursor.getString(3));
         String classe = cursor.getString(4);
         String rr = cursor.getString(5);
-        String anoFabricacao = cursor.getString(6);
-        String tensaoNominal = cursor.getString(7);
-        String kdKe = cursor.getString(8);
-        String portariaInmetro = cursor.getString(9);
-        String fios = cursor.getString(10);
-        String tipoMedidor = cursor.getString(11);
+        String tensaoNominal = cursor.getString(6);
+        String kdKe = cursor.getString(7);
+        String portariaInmetro = cursor.getString(8);
+        String fios = cursor.getString(9);
+        String tipoMedidor = cursor.getString(10);
 
         Intent intent = new Intent(this, EditarMedidorActivity.class);
 
@@ -121,7 +120,6 @@ public class ListagemMedidores extends AppCompatActivity {
         intent.putExtra("kdKe", kdKe);
         intent.putExtra("rr", rr);
         intent.putExtra("numElementos", numElementos);
-        intent.putExtra("anoFabricacao", anoFabricacao);
         intent.putExtra("classe", classe);
         intent.putExtra("fios", fios);
         intent.putExtra("portariaInmetro", portariaInmetro);
@@ -153,12 +151,11 @@ public class ListagemMedidores extends AppCompatActivity {
         String correnteNominal = (cursor.getString(3));
         String classe = cursor.getString(4);
         String rr = cursor.getString(5);
-        String anoFabricacao = cursor.getString(6);
-        String tensaoNominal = cursor.getString(7);
-        String kdKe = cursor.getString(8);
-        String portariaInmetro = cursor.getString(9);
-        String fios = cursor.getString(10);
-        String tipoMedidor = cursor.getString(11);
+        String tensaoNominal = cursor.getString(6);
+        String kdKe = cursor.getString(7);
+        String portariaInmetro = cursor.getString(8);
+        String fios = cursor.getString(9);
+        String tipoMedidor = cursor.getString(10);
 
         Intent intent = new Intent(this, EditarMedidorActivity.class);
         intent.putExtra("numeroGeral", numeroGeral);
@@ -170,7 +167,6 @@ public class ListagemMedidores extends AppCompatActivity {
         intent.putExtra("kdKe", kdKe);
         intent.putExtra("rr", rr);
         intent.putExtra("numElementos", numElementos);
-        intent.putExtra("anoFabricacao", anoFabricacao);
         intent.putExtra("classe", classe);
         intent.putExtra("fios", fios);
         intent.putExtra("portariaInmetro", portariaInmetro);

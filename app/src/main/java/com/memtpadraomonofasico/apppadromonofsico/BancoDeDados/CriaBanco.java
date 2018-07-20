@@ -25,7 +25,7 @@ public class CriaBanco extends SQLiteOpenHelper {
     public static final String MODELO = "medidor_modelo";
     public static final String CORRENTE_NOMINAL = "medidor_corrente_nominal";
     public static final String CLASSE = "medidor_classe";
-    public static final String ANO_FABRICACAO = "medidor_ano_fabricacao";
+    //  public static final String ANO_FABRICACAO = "medidor_ano_fabricacao";
     public static final String TENSAO_NOMINAL = "medidor_tensao_nominal";
     public static final String KDKE = "medidor_KdKe";
     public static final String RR = "medidor_RR";
@@ -62,7 +62,7 @@ public class CriaBanco extends SQLiteOpenHelper {
                 + MODELO + " text, "
                 + CORRENTE_NOMINAL + " double, "
                 + CLASSE + " text, "
-                + ANO_FABRICACAO + " integer, "
+                //  + ANO_FABRICACAO + " integer, "
                 + TENSAO_NOMINAL + " integer, "
                 + KDKE + " double, "
                 + RR + " integer, "
@@ -229,7 +229,7 @@ public class CriaBanco extends SQLiteOpenHelper {
         db = this.getReadableDatabase();
         String[] selectionArgs = new String[1];
         selectionArgs[0] = codigo;
-        String[] campos = {NUM_GERAL, FABRICANTE, NUM_ELEMENTOS, MODELO, CORRENTE_NOMINAL, CLASSE, ANO_FABRICACAO, TENSAO_NOMINAL, KDKE,
+        String[] campos = {NUM_GERAL, FABRICANTE, NUM_ELEMENTOS, MODELO, CORRENTE_NOMINAL, CLASSE, TENSAO_NOMINAL, KDKE,
                 RR, FIOS, PORT_INMETRO, TIPO_MEDIDOR};
 
         cursor = db.query(TABELA_MEDIDOR, campos, NUM_GERAL + " = ?", selectionArgs, null, null, null, null);
@@ -246,10 +246,10 @@ public class CriaBanco extends SQLiteOpenHelper {
                 arrData[7] = String.valueOf(cursor.getDouble(cursor.getColumnIndexOrThrow(KDKE)));
                 arrData[8] = cursor.getString(cursor.getColumnIndexOrThrow(RR));
                 arrData[9] = cursor.getString(cursor.getColumnIndexOrThrow(NUM_ELEMENTOS));
-                arrData[10] = cursor.getString(cursor.getColumnIndexOrThrow(ANO_FABRICACAO));
-                arrData[11] = cursor.getString(cursor.getColumnIndexOrThrow(CLASSE));
-                arrData[12] = cursor.getString(cursor.getColumnIndexOrThrow(FIOS));
-                arrData[13] = cursor.getString(cursor.getColumnIndexOrThrow(PORT_INMETRO));
+                //  arrData[10] = cursor.getString(cursor.getColumnIndexOrThrow(ANO_FABRICACAO));
+                arrData[10] = cursor.getString(cursor.getColumnIndexOrThrow(CLASSE));
+                arrData[11] = cursor.getString(cursor.getColumnIndexOrThrow(FIOS));
+                arrData[12] = cursor.getString(cursor.getColumnIndexOrThrow(PORT_INMETRO));
 
             }
         }

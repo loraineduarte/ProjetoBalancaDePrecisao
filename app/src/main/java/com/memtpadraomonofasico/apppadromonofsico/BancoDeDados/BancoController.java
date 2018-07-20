@@ -54,7 +54,7 @@ public class BancoController {
 
 
     public String insereNovoMedidor(String medidor_num_geral, String medidor_fabricante, int medidor_num_elementos, String medidor_modelo,
-                                    Double medidor_corrente_nominal, String medidor_classe, String medidor_RR, String medidor_ano_fabricacao,
+                                    Double medidor_corrente_nominal, String medidor_classe, String medidor_RR,
                                     int medidor_tensao_nominal, Double medidor_KdKe, String medidor_port_inmetro, int medidor_fios, String medidor_tipo_medidor){
         ContentValues valores;
         long resultado;
@@ -68,7 +68,6 @@ public class BancoController {
         valores.put(CriaBanco.CORRENTE_NOMINAL, medidor_corrente_nominal);
         valores.put(CriaBanco.CLASSE, medidor_classe);
         valores.put(CriaBanco.RR, medidor_RR);
-        valores.put(CriaBanco.ANO_FABRICACAO, medidor_ano_fabricacao);
         valores.put(CriaBanco.TENSAO_NOMINAL, medidor_tensao_nominal);
         valores.put(CriaBanco.KDKE, medidor_KdKe);
         valores.put(CriaBanco.PORT_INMETRO, medidor_port_inmetro);
@@ -90,7 +89,7 @@ public class BancoController {
     public Cursor pegaMedidores(){
         Cursor cursor;
         String[] campos = {CriaBanco.ID_MEDIDOR, CriaBanco.NUM_GERAL, CriaBanco.FABRICANTE, CriaBanco.NUM_ELEMENTOS, CriaBanco.MODELO, CriaBanco.CORRENTE_NOMINAL,
-                CriaBanco.CLASSE, CriaBanco.RR, CriaBanco.ANO_FABRICACAO, CriaBanco.TENSAO_NOMINAL, CriaBanco.KDKE, CriaBanco.PORT_INMETRO, CriaBanco.FIOS, CriaBanco.TIPO_MEDIDOR};
+                CriaBanco.CLASSE, CriaBanco.RR, CriaBanco.TENSAO_NOMINAL, CriaBanco.KDKE, CriaBanco.PORT_INMETRO, CriaBanco.FIOS, CriaBanco.TIPO_MEDIDOR};
         db = banco.getReadableDatabase();
         cursor = db.query(CriaBanco.TABELA_MEDIDOR, campos, null, null, null, null, null, null);
 
@@ -134,10 +133,7 @@ public class BancoController {
         }
         db.close();
 
-
-
         String valor = cursor.getString(cursor.getColumnIndexOrThrow("avaliador_admin"));
-        Log.d("BANCO", valor);
         cursor.close();
         return valor;
     }
@@ -175,7 +171,6 @@ public class BancoController {
         }
 
         ContentValues valores;
-
         db = banco.getWritableDatabase();
         valores = new ContentValues();
         valores.put(CriaBanco.NOME_AVALIADOR, nomeNovoString);
@@ -218,13 +213,11 @@ public class BancoController {
 
         Cursor cursor;
         String[] campos = {CriaBanco.FABRICANTE, CriaBanco.NUM_ELEMENTOS, CriaBanco.MODELO, CriaBanco.CORRENTE_NOMINAL,
-                CriaBanco.CLASSE, CriaBanco.RR, CriaBanco.ANO_FABRICACAO, CriaBanco.TENSAO_NOMINAL, CriaBanco.KDKE, CriaBanco.PORT_INMETRO, CriaBanco.FIOS, CriaBanco.TIPO_MEDIDOR};
+                CriaBanco.CLASSE, CriaBanco.RR, CriaBanco.TENSAO_NOMINAL, CriaBanco.KDKE, CriaBanco.PORT_INMETRO, CriaBanco.FIOS, CriaBanco.TIPO_MEDIDOR};
         String medidor = CriaBanco.NUM_GERAL + " = ? ";
         String[] avaliadorArgs = {numeroGeral};
         db = banco.getReadableDatabase();
         cursor = db.query(CriaBanco.TABELA_MEDIDOR, campos, medidor, avaliadorArgs, null, null, null, null);
-
-        Log.d("CURSOR", String.valueOf(cursor.getCount()));
 
         if (cursor != null && cursor.getCount() > 0) {
             cursor.moveToFirst();
@@ -353,17 +346,13 @@ public class BancoController {
         resultado = db.delete(CriaBanco.TABELA_MEDIDOR, avaliador, avaliadorArgs);
         db.close();
 
-
         if ((resultado == -1) || (resultado == 0)) {
             Log.d("Deletou", "Erro ao deletar medidor");
-            // return "Erro ao deletar registro";
         } else {
             Log.d("Deletou", "Deletou medidor");
-            // return " Registro deletado com sucesso";
         }
 
         ContentValues valores;
-
         db = banco.getWritableDatabase();
         valores = new ContentValues();
         valores.put(CriaBanco.NUM_GERAL, numeroGeralString);
@@ -373,7 +362,7 @@ public class BancoController {
         valores.put(CriaBanco.CORRENTE_NOMINAL, correnteNominalString);
         valores.put(CriaBanco.CLASSE, classeString);
         valores.put(CriaBanco.RR, rrString);
-        valores.put(CriaBanco.ANO_FABRICACAO, anoFabricacaoString);
+        // valores.put(CriaBanco.ANO_FABRICACAO, anoFabricacaoString);
         valores.put(CriaBanco.TENSAO_NOMINAL, tensaoNominalString);
         valores.put(CriaBanco.KDKE, kdKeString);
         valores.put(CriaBanco.PORT_INMETRO, portariaInmetroString);

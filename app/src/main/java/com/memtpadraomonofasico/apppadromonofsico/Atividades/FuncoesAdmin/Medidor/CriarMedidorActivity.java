@@ -33,7 +33,7 @@ public class CriarMedidorActivity extends AppCompatActivity {
     private EditText numSerie;
     private EditText numGeral;
     private EditText fabricante;
-    private EditText numElementos, modelo, correnteNominal, classe, RR, anoFabricacao, tensaoNominal, KdKe, porInmetro, fios;
+    private EditText numElementos, modelo, correnteNominal, classe, RR, tensaoNominal, KdKe, porInmetro, fios;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -58,14 +58,11 @@ public class CriarMedidorActivity extends AppCompatActivity {
                  correnteNominal = findViewById(R.id.CorrenteNominal);
                  classe = findViewById(R.id.Classe);
                  RR = findViewById(R.id.RR);
-                 anoFabricacao = findViewById(R.id.AnoFabricacao);
                  tensaoNominal = findViewById(R.id.TensaoNominal);
                  KdKe = findViewById(R.id.KdKe);
                  porInmetro =findViewById(R.id.PorInmetro);
                  fios = findViewById(R.id.Fios);
 
-//                int instalacaoString = Integer.parseInt(String.valueOf(instalacao.getText()));
-//                String numSerieString = numSerie.getText().toString();
                 String numGeralString = numGeral.getText().toString();
                 String fabricanteString = fabricante.getText().toString();
                 int numElementosString = Integer.parseInt(numElementos.getText().toString());
@@ -73,7 +70,7 @@ public class CriarMedidorActivity extends AppCompatActivity {
                 Double correnteNominalString = Double.valueOf(Integer.parseInt(correnteNominal.getText().toString()));
                 String classeString = classe.getText().toString();
                 String RRString =RR.getText().toString();
-                int anoFabricacaoString = Integer.parseInt(anoFabricacao.getText().toString());
+
                 int tensaoNominalString = Integer.parseInt(tensaoNominal.getText().toString());
                 Double KdKeString = Double.valueOf(KdKe.getText().toString());
                 String porInmetroString = porInmetro.getText().toString();
@@ -92,14 +89,14 @@ public class CriarMedidorActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Campo RR é obrigatório quando o modelo de medidor é eletrônico! ", Toast.LENGTH_LONG).show();
                 } else if (fabricanteString.equals("") || modeloString.equals("") ||
                         (tensaoNominal.getText().toString().equals(""))|| (correnteNominal.getText().toString().equals("")) || (KdKe.getText().toString().equals(""))
-                        ||(numElementos.getText().toString().equals("")) || (anoFabricacao.getText().toString().equals(""))
+                        || (numElementos.getText().toString().equals(""))
                         || classeString.equals("")|| porInmetroString.equals("") || tipoMedidorString.equals("")){
 
                     Toast.makeText(getApplicationContext(), "Campo obrigatório em branco! ", Toast.LENGTH_LONG).show();
                 }
                 else {
                     String resultado = crud.insereNovoMedidor(numGeralString, fabricanteString, numElementosString, modeloString, correnteNominalString,
-                            classeString, RRString, String.valueOf(anoFabricacaoString), tensaoNominalString, KdKeString, porInmetroString, fiosString, tipoMedidorString);
+                            classeString, RRString, tensaoNominalString, KdKeString, porInmetroString, fiosString, tipoMedidorString);
                     Toast.makeText(getApplicationContext(), resultado, Toast.LENGTH_LONG).show();
                     finish();
                 }
@@ -128,7 +125,7 @@ public class CriarMedidorActivity extends AppCompatActivity {
                 correnteNominal = findViewById(R.id.CorrenteNominal);
                 classe = findViewById(R.id.Classe);
                 RR = findViewById(R.id.RR);
-                anoFabricacao = findViewById(R.id.AnoFabricacao);
+
                 tensaoNominal = findViewById(R.id.TensaoNominal);
                 KdKe = findViewById(R.id.KdKe);
                 porInmetro = findViewById(R.id.PorInmetro);
@@ -143,7 +140,7 @@ public class CriarMedidorActivity extends AppCompatActivity {
                 correnteNominal.getText().clear();
                 classe.getText().clear();
                 RR.getText().clear();
-                anoFabricacao.getText().clear();
+
                 tensaoNominal.getText().clear();
                 KdKe.getText().clear();
                 porInmetro.getText().clear();
@@ -218,7 +215,7 @@ public class CriarMedidorActivity extends AppCompatActivity {
                             } else {
                                 tipoMedidorString = "Eletrônico";
                             }
-                            String anoFabricacao = nextLine[0].substring(3, 4);
+                            //  String anoFabricacao = nextLine[0].substring(3, 4);
                             String porInmetro = "";
                             if (nextLine[11].toString().startsWith("")) {
                                 porInmetro = "";
@@ -230,7 +227,7 @@ public class CriarMedidorActivity extends AppCompatActivity {
 
 
                             String resultado = crud.insereNovoMedidor(numGeral, fabricante, numElementos, modelo, correnteNominal,
-                                    classe, RR, anoFabricacao, tensaoNominal, KdKe, porInmetro, fios, tipoMedidorString);
+                                    classe, RR, tensaoNominal, KdKe, porInmetro, fios, tipoMedidorString);
                             Toast.makeText(getApplicationContext(), resultado, Toast.LENGTH_LONG).show();
 
                         }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    tools:context=".Atividades.FuncoesAdmin.Medidor.CriarMedidorActivity">
+    tools:context=".Atividades.FuncoesAdmin.Medidor.EditarMedidorActivity">
 
     <TextView
         android:id="@+id/Medidor"
@@ -259,6 +259,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:onClick="onCheckboxClicked"
+
                         android:text="@string/eletr_nico" />
 
 
@@ -441,15 +442,13 @@
                         android:layout_height="fill_parent">
 
                         <EditText
-                            android:id="@+id/AnoFabricacao"
+                            android:id="@+id/PorInmetro"
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
                             android:ems="10"
-                            android:hint="@string/ano_de_fabrica_o"
+                            android:hint="@string/portaria_inmetro"
                             android:inputType="number"
-                            android:maxLength="4"
-                            android:singleLine="true"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
                     </android.support.design.widget.TextInputLayout>
 
                 </RelativeLayout>
@@ -539,57 +538,7 @@
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout10"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout9">
 
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:baselineAligned="false"
-            android:gravity="bottom"
-            android:orientation="horizontal"
-            tools:ignore="UselessParent">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                android:padding="3dp">
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <android.support.design.widget.TextInputLayout
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent">
-
-                        <EditText
-                            android:id="@+id/PorInmetro"
-                            android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"
-                            android:ems="10"
-                            android:hint="@string/portaria_inmetro"
-                            android:inputType="number"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
-                    </android.support.design.widget.TextInputLayout>
-
-
-                </RelativeLayout>
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -601,7 +550,7 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout10">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout9">
 
 
         <LinearLayout

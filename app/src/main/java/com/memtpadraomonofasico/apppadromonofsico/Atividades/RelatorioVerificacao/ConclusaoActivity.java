@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -57,6 +58,9 @@ public class ConclusaoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conclusao);
+
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
 
         NoEncryption encryption = new NoEncryption();
         Hawk.init(this).setEncryption(encryption).build();
@@ -154,7 +158,6 @@ public class ConclusaoActivity extends AppCompatActivity {
             //salvando foto inspeçao visual na pasta
             ByteArrayOutputStream streamfotoInpecao = new ByteArrayOutputStream();
             if(fotoInspecao!=null){
-                Log.d("FEZDIRETORIO", "done");
                 fotoInspecao.compress(Bitmap.CompressFormat.PNG, 100, streamfotoInpecao);
                 byte[] bytes = streamfotoInpecao.toByteArray();
                 File foto = new File(folder,"FotoInspecaoVisual_"+numServico + ".png");
@@ -185,9 +188,6 @@ public class ConclusaoActivity extends AppCompatActivity {
                 output1.write(bytes);
 
             }
-
-
-
 
             //Step 2
             PdfWriter writer = PdfWriter.getInstance(document, output);
@@ -1006,6 +1006,9 @@ public class ConclusaoActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+//        Intent intent = new Intent(this, DashboardActivity.class);
+//        startActivity(intent);
 
     }
 

@@ -15,13 +15,12 @@ class Medidor {
     private String kdKe;
     private String rr;
     private int numElementos;
-    private String anoFabricacao;
     private String classe;
     private int fios;
     private String portariaInmetro;
 
     public Medidor(String numeroGeral, String modelo, String fabricante, String tensaoNominal, int correnteNominal, String tipoMedidor, String kdKe,
-                   String rr, int numElementos, String anoFabricacao, String classe, int fios, String portariaInmetro) {
+                   String rr, int numElementos, String classe, int fios, String portariaInmetro) {
 
 
         this.numeroGeral = numeroGeral;
@@ -33,7 +32,6 @@ class Medidor {
         this.kdKe = kdKe;
         this.rr = rr;
         this.numElementos = numElementos;
-        this.anoFabricacao = anoFabricacao;
         this.classe = classe;
         this.fios = fios;
         this.portariaInmetro = portariaInmetro;
@@ -111,14 +109,6 @@ class Medidor {
 
     public void setNumElementos(int numElementos) {
         this.numElementos = numElementos;
-    }
-
-    public String getAnoFabricacao() {
-        return anoFabricacao;
-    }
-
-    public void setAnoFabricacao(String anoFabricacao) {
-        this.anoFabricacao = anoFabricacao;
     }
 
     public String getClasse() {
