@@ -33,6 +33,8 @@ public class ExatidaoActivity extends AppCompatActivity {
     private static EditText cargaNominalErro, cargaPequenaErro;
     @SuppressLint("StaticFieldLeak")
     private static TextView textMessageInspecaoConformidade;
+    @SuppressLint("StaticFieldLeak")
+    private static EditText quantidadePulsos;
     boolean testeCargaNominalComecou = false;
     boolean testeCargaPequenaComecou = false;
     boolean testeFCComecou = false;
@@ -129,6 +131,7 @@ public class ExatidaoActivity extends AppCompatActivity {
         conectar = findViewById(R.id.buttonConectarDispositivo);
         testeNominal = findViewById(R.id.button2);
         testePequeno = findViewById(R.id.button3);
+        quantidadePulsos = findViewById(R.id.QuantidadePulsos);
 
         ativarBluetooth();
 
@@ -343,6 +346,7 @@ public class ExatidaoActivity extends AppCompatActivity {
 
     public void aplicarCargaNominal(View view) {
 
+
         if (conexao == null) {
             Toast.makeText(getApplicationContext(), "O teste não pode ser inicializado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
 
@@ -362,16 +366,31 @@ public class ExatidaoActivity extends AppCompatActivity {
             bytes[2] = (byte) ((valorMultiplicado - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))))) / Math.pow(256, 1));
             bytes[3] = (byte) ((valorMultiplicado - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))) + (bytes[2] * Math.pow(256, 1)))));
 
+            byte[] bytesPulso = new byte[4];
+            int pulsos = Integer.parseInt(quantidadePulsos.getText().toString());
+
+            if (pulsos == 0) {
+                bytesPulso[0] = 0;
+                bytesPulso[1] = 5;
+                bytesPulso[2] = 0;
+                bytesPulso[3] = 0;
+            } else {
+                bytesPulso[0] = (byte) (pulsos / (Math.pow(256, 3)));
+                bytesPulso[1] = (byte) ((pulsos - (bytes[0] * (Math.pow(256, 3)))) / Math.pow(256, 2));
+                bytesPulso[2] = (byte) ((pulsos - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))))) / Math.pow(256, 1));
+                bytesPulso[3] = (byte) ((pulsos - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))) + (bytes[2] * Math.pow(256, 1)))));
+            }
+
             pacote[0] = ('I' & 0xFF);
-            pacote[1] = ('N' & 0xFF);
+            pacote[1] = ('B' & 0xFF);
             pacote[2] = (byte) (bytes[0] & 0xFF);
             pacote[3] = (byte) (bytes[1] & 0xFF);
             pacote[4] = (byte) (bytes[2] & 0xFF);
             pacote[5] = (byte) (bytes[3] & 0xFF);
-            pacote[6] = (byte) (0 & 0xFF);
-            pacote[7] = (byte) (5 & 0xFF);
-            pacote[8] = (byte) (0 & 0xFF);
-            pacote[9] = (byte) (0 & 0xFF);
+            pacote[6] = (byte) (bytesPulso[0] & 0xFF);
+            pacote[7] = (byte) (bytesPulso[1] & 0xFF);
+            pacote[8] = (byte) (bytesPulso[2] & 0xFF);
+            pacote[9] = (byte) (bytesPulso[3] & 0xFF);
 
             conexao.write(pacote);
         }
@@ -380,6 +399,7 @@ public class ExatidaoActivity extends AppCompatActivity {
     }
 
     public void aplicarCargaPequena(View view) {
+
 
         if (conexao == null) {
             Toast.makeText(getApplicationContext(), "O teste não pode ser inicializado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
@@ -400,16 +420,33 @@ public class ExatidaoActivity extends AppCompatActivity {
             bytes[2] = (byte) ((valorMultiplicado - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))))) / Math.pow(256, 1));
             bytes[3] = (byte) ((valorMultiplicado - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))) + (bytes[2] * Math.pow(256, 1)))));
 
+            byte[] bytesPulso = new byte[4];
+            int pulsos = Integer.parseInt(quantidadePulsos.getText().toString());
+
+            if (pulsos == 0) {
+                bytesPulso[0] = 0;
+                bytesPulso[1] = 5;
+                bytesPulso[2] = 0;
+                bytesPulso[3] = 0;
+            } else {
+                bytesPulso[0] = (byte) (pulsos / (Math.pow(256, 3)));
+                bytesPulso[1] = (byte) ((pulsos - (bytes[0] * (Math.pow(256, 3)))) / Math.pow(256, 2));
+                bytesPulso[2] = (byte) ((pulsos - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))))) / Math.pow(256, 1));
+                bytesPulso[3] = (byte) ((pulsos - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))) + (bytes[2] * Math.pow(256, 1)))));
+            }
+
+
+
             pacote[0] = ('I' & 0xFF);
             pacote[1] = ('B' & 0xFF);
             pacote[2] = (byte) (bytes[0] & 0xFF);
             pacote[3] = (byte) (bytes[1] & 0xFF);
             pacote[4] = (byte) (bytes[2] & 0xFF);
             pacote[5] = (byte) (bytes[3] & 0xFF);
-            pacote[6] = (byte) (0 & 0xFF);
-            pacote[7] = (byte) (5 & 0xFF);
-            pacote[8] = (byte) (0 & 0xFF);
-            pacote[9] = (byte) (0 & 0xFF);
+            pacote[6] = (byte) (bytesPulso[0] & 0xFF);
+            pacote[7] = (byte) (bytesPulso[1] & 0xFF);
+            pacote[8] = (byte) (bytesPulso[2] & 0xFF);
+            pacote[9] = (byte) (bytesPulso[3] & 0xFF);
 
             conexao.write(pacote);
         }
