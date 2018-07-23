@@ -56,6 +56,7 @@ implements NavigationView.OnNavigationItemSelectedListener {
         final BancoController crud = new BancoController(getBaseContext());
         cursorMedidor = crud.pegaMedidores();
         cursorAvaliador = crud.pegaAvaliadores();
+        usuarioLogin = crud.pegaTipoUsuario(user, senha);
 
         Button opcoesAdmin = findViewById(R.id.AdminOpcoes);
         Button teste = findViewById(R.id.Teste);
