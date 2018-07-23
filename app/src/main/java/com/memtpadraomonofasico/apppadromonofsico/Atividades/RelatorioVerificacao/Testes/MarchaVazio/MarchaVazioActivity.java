@@ -45,6 +45,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
     private Button teste;
     private BluetoothAdapter mBluetoothAdapter = null;
     private boolean testeComecou = false;
+    private boolean testeFCComecou = false;
 
 
     @Override
@@ -391,4 +392,67 @@ public class MarchaVazioActivity extends AppCompatActivity {
         }
     }
 
+    public void testeFotoCelula(View view) {
+        if (conexao == null) {
+            Toast.makeText(getApplicationContext(), "O teste não pode ser iniciado/parado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
+
+        } else {
+
+            teste = findViewById(R.id.buttonTesteFotoCelula);
+
+            if (!testeFCComecou) {
+                testeFCComecou = true;
+                teste.clearComposingText();
+                teste.setText("Cancelar Teste de FotoCélula");
+                testeFoto(view);
+                textMessage.clearComposingText();
+                textMessage.setText("Teste de FotoCélula Iniciado!");
+
+            } else {
+                testeFCComecou = false;
+                teste.clearComposingText();
+                teste.setText("Iniciar Teste de FotoCélula");
+                pararTeste(view);
+                textMessage.clearComposingText();
+                textMessage.setText("Teste de FotoCélula Cancelado!");
+            }
+        }
+
+
+    }
+
+    public void testeFoto(View view) {
+        if (conexao == null) {
+            Toast.makeText(getApplicationContext(), "O teste não pode ser inicializado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
+
+        } else {
+
+            if (conexao != null) {
+                textMessage.setText("O teste de FotoCélula vai ser iniciado...");
+            }
+
+            byte[] pacote = new byte[10];
+            float kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
+            byte[] bytes = new byte[4];
+            int valorMultiplicado = (int) (kdMedidor * 1000000);
+
+            bytes[0] = (byte) (valorMultiplicado / (Math.pow(256, 3)));
+            bytes[1] = (byte) ((valorMultiplicado - (bytes[0] * (Math.pow(256, 3)))) / Math.pow(256, 2));
+            bytes[2] = (byte) ((valorMultiplicado - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))))) / Math.pow(256, 1));
+            bytes[3] = (byte) ((valorMultiplicado - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))) + (bytes[2] * Math.pow(256, 1)))));
+
+            pacote[0] = ('I' & 0xFF);
+            pacote[1] = ('R' & 0xFF);
+            pacote[2] = (byte) (bytes[0] & 0xFF);
+            pacote[3] = (byte) (bytes[1] & 0xFF);
+            pacote[4] = (byte) (bytes[2] & 0xFF);
+            pacote[5] = (byte) (bytes[3] & 0xFF);
+            pacote[6] = (byte) (0 & 0xFF);
+            pacote[7] = (byte) (0 & 0xFF);
+            pacote[8] = (byte) (3 & 0xFF);
+            pacote[9] = (byte) (232 & 0xFF);
+
+            conexao.write(pacote);
+        }
+    }
 }
