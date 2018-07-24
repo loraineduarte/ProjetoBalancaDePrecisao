@@ -48,6 +48,8 @@ public class RegistradorActivity extends AppCompatActivity {
     private static TextView calibracaoPreTeste, calibracaoPosTeste;
     private static ThreadConexaoRegistrador conexao;
     List<String> av = new ArrayList<>();
+    long tempoInicio;
+    float tempoTeste;
     @SuppressLint("WrongViewCast")
     private Button fotoDepois;
     @SuppressLint("WrongViewCast")
@@ -65,6 +67,7 @@ public class RegistradorActivity extends AppCompatActivity {
 
     public void escreverTela(final String res) {
 
+
         handler.post(new Runnable() {
             @Override
             public void run() {
@@ -79,7 +82,7 @@ public class RegistradorActivity extends AppCompatActivity {
 
                     } else {
                         textMessage.clearComposingText();
-                        textMessage.setText(res);
+                        textMessage.setText(res + "\n Tempo Total: " + (System.currentTimeMillis() - tempoInicio));
                     }
                 }
             }
@@ -264,6 +267,11 @@ public class RegistradorActivity extends AppCompatActivity {
 
     public void mudarEstadoTeste(View view) {
 
+        float tensao = Float.parseFloat((String) Hawk.get("TensaoNominalMedidor"));
+        float corrente = Float.parseFloat((String) Hawk.get("CorrenteNominalMedidor"));
+        float kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
+        float FP = 1;
+
         if (conexao == null) {
             Toast.makeText(getApplicationContext(), "O teste não pode ser iniciado/parado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
 
@@ -274,8 +282,9 @@ public class RegistradorActivity extends AppCompatActivity {
                 estadoTeste.clearComposingText();
                 estadoTeste.setText("Cancelar Teste ");
                 executarTeste(view);
+                tempoTeste = (float) (((1.1) / (tensao * corrente * FP)) / 60);
                 textMessage.clearComposingText();
-                textMessage.setText("Teste Iniciado!");
+                textMessage.setText("Teste sendo iniciado...Estimativa: " + tempoTeste + "minutos para finalizar o teste. ");
 
             } else {
                 teste = false;
@@ -309,6 +318,8 @@ public class RegistradorActivity extends AppCompatActivity {
     }
 
     public void executarTeste(View view) {
+
+        tempoInicio = System.currentTimeMillis();
         if (conexao == null) {
             Toast.makeText(getApplicationContext(), "O teste não pode ser inicializado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
 
@@ -505,7 +516,6 @@ public class RegistradorActivity extends AppCompatActivity {
 
 
     }
-
 
     public void testeFotoCelula(View view) {
 

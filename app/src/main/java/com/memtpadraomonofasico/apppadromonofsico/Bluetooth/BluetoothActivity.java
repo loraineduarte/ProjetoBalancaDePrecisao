@@ -83,6 +83,7 @@ public class BluetoothActivity extends AppCompatActivity {
                             //dados = dados+Integer.toString(bundle.getByteArray("data").length)+ " : ";
                             //textSpace.setText(dados);
                             Log.d("RESULTADO", dataString);
+                            long tempoInicio = System.currentTimeMillis();
 
                             if (dados.length() == 1) {
                                 pacote[0] = (byte) (data[0] & 0xFF);
@@ -116,6 +117,7 @@ public class BluetoothActivity extends AppCompatActivity {
                             }
 
                             if (dataString.contains("R")) {
+
                                 if (finalDeTeste) {
                                     registrador.escreverTela("Teste sendo finalizado ... \n" + res);
                                     finalDeTeste = false;
@@ -134,6 +136,7 @@ public class BluetoothActivity extends AppCompatActivity {
                                     marchaVazio.escreverTelaMarchaVazio("Teste sendo finalizado ... \n" + res);
                                     marchaVazio.selecionarStatus(a);
                                     finalDeTeste = false;
+                                    marchaVazio.mudarEstadoTesteFinal();
                                     break;
 
                                 } else {

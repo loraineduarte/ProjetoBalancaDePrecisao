@@ -38,6 +38,7 @@ public class ExatidaoActivity extends AppCompatActivity {
     boolean testeCargaNominalComecou = false;
     boolean testeCargaPequenaComecou = false;
     boolean testeFCComecou = false;
+    long tempoInicio, tempoTeste;
     @SuppressLint("WrongViewCast")
     private
     Button conectar;
@@ -69,7 +70,7 @@ public class ExatidaoActivity extends AppCompatActivity {
                     }
 
                     cargaPequenaErro.clearComposingText();
-                    cargaPequenaErro.setText(res);
+                    cargaPequenaErro.setText(res + "\n Tempo Total: " + (System.currentTimeMillis() - tempoInicio));
 
                 }
 
@@ -101,7 +102,7 @@ public class ExatidaoActivity extends AppCompatActivity {
                     }
 
                     cargaNominalErro.clearComposingText();
-                    cargaNominalErro.setText(res);
+                    cargaNominalErro.setText(res + "\n Tempo Total: " + (System.currentTimeMillis() - tempoInicio));
 
 
                 }
@@ -217,6 +218,11 @@ public class ExatidaoActivity extends AppCompatActivity {
     }
 
     public void mudarEstadoTesteCargaNominal(View view) {
+        int pulsos = Integer.parseInt(quantidadePulsos.getText().toString());
+        float tensao = Float.parseFloat((String) Hawk.get("TensaoNominalMedidor"));
+        float corrente = Float.parseFloat((String) Hawk.get("CorrenteNominalMedidor"));
+        float kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
+        float FP = 1;
 
         if (conexao == null) {
             Toast.makeText(getApplicationContext(), "O teste não pode ser iniciado/parado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
@@ -228,8 +234,10 @@ public class ExatidaoActivity extends AppCompatActivity {
                 testeNominal.clearComposingText();
                 testeNominal.setText("Cancelar Teste de Carga Nominal");
                 aplicarCargaNominal(view);
+
+                tempoTeste = (long) ((3600 * pulsos * kdMedidor) / (tensao * corrente * FP));
                 textMessageInspecaoConformidade.clearComposingText();
-                textMessageInspecaoConformidade.setText("Teste sendo iniciado...");
+                textMessageInspecaoConformidade.setText("Teste sendo iniciado...\n Estimativa: " + tempoTeste + "minutos para finalizar o teste. ");
 
             } else {
                 testeCargaNominalComecou = false;
@@ -311,7 +319,7 @@ public class ExatidaoActivity extends AppCompatActivity {
 
                     } else {
                         textMessageInspecaoConformidade.clearComposingText();
-                        textMessageInspecaoConformidade.setText(res);
+                        textMessageInspecaoConformidade.setText(res + "\n Tempo Total: " + (System.currentTimeMillis() - tempoInicio));
                     }
 
                 }
@@ -345,7 +353,7 @@ public class ExatidaoActivity extends AppCompatActivity {
     }
 
     public void aplicarCargaNominal(View view) {
-
+        tempoInicio = System.currentTimeMillis();
 
         if (conexao == null) {
             Toast.makeText(getApplicationContext(), "O teste não pode ser inicializado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
@@ -400,7 +408,7 @@ public class ExatidaoActivity extends AppCompatActivity {
 
     public void aplicarCargaPequena(View view) {
 
-
+        tempoInicio = System.currentTimeMillis();
         if (conexao == null) {
             Toast.makeText(getApplicationContext(), "O teste não pode ser inicializado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
 

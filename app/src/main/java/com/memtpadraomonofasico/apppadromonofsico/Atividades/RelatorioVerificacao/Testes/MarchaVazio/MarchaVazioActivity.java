@@ -38,6 +38,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
     @SuppressLint("StaticFieldLeak")
     private static TextView textMessage;
     private static Runnable handlerTask;
+    long tempoInicio;
     private String statusMarchaVazio, tempoReprovadoMarchaVazio;
     private ThreadConexaoMarchaVazio conexao;
     @SuppressLint("WrongViewCast")
@@ -46,7 +47,6 @@ public class MarchaVazioActivity extends AppCompatActivity {
     private BluetoothAdapter mBluetoothAdapter = null;
     private boolean testeComecou = false;
     private boolean testeFCComecou = false;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,7 +165,6 @@ public class MarchaVazioActivity extends AppCompatActivity {
         }
     }
 
-
     private void abrirInspecaoConformidade() {
 
         Intent intent = new Intent(this, ExatidaoActivity.class);
@@ -185,7 +184,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
                 testeComecou = true;
                 teste.clearComposingText();
                 teste.setText("Cancelar Teste");
-                executarTeste(view);
+                executarTeste();
                 textMessage.clearComposingText();
                 textMessage.setText("Teste Iniciado!");
 
@@ -193,21 +192,21 @@ public class MarchaVazioActivity extends AppCompatActivity {
                 testeComecou = false;
                 teste.clearComposingText();
                 teste.setText("Iniciar Teste");
-                pararTeste(view);
+                pararTeste();
                 textMessage.clearComposingText();
                 textMessage.setText("Teste Cancelado!");
             }
         }
     }
 
-    public void mudarEstadoTesteFinal(View view) {
+    public void mudarEstadoTesteFinal() {
         teste = findViewById(R.id.buttonAplicarTensao);
 
             if (!testeComecou) {
                 testeComecou = true;
                 teste.clearComposingText();
                 teste.setText("Cancelar Teste");
-                executarTeste(view);
+                executarTeste();
                 textMessage.clearComposingText();
                 textMessage.setText("Teste Iniciado!");
 
@@ -215,16 +214,16 @@ public class MarchaVazioActivity extends AppCompatActivity {
                 testeComecou = false;
                 teste.clearComposingText();
                 teste.setText("Iniciar Teste");
-                pararTeste(view);
+                pararTeste();
                 textMessage.clearComposingText();
-                textMessage.setText("Teste Cancelado!");
+                textMessage.setText("Teste Parado!");
             }
 
     }
 
-    private void executarTeste(View view) {
+    private void executarTeste() {
 
-
+        tempoInicio = System.currentTimeMillis();
         byte[] pacote = new byte[10];
         float kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
 
@@ -277,7 +276,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
 
     }
 
-    private void pararTeste(View view) {
+    private void pararTeste() {
 
         byte[] pacote = new byte[10];
 
@@ -310,8 +309,9 @@ public class MarchaVazioActivity extends AppCompatActivity {
                         testeComecou = false;
 
                     } else {
+
                         textMessage.clearComposingText();
-                        textMessage.setText(res);
+                        textMessage.setText(res + "\n Tempo Total: " + (System.currentTimeMillis() - tempoInicio));
                     }
 
                 }
@@ -404,7 +404,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
                 testeFCComecou = true;
                 teste.clearComposingText();
                 teste.setText("Cancelar Teste de FotoCélula");
-                testeFoto(view);
+                testeFoto();
                 textMessage.clearComposingText();
                 textMessage.setText("Teste de FotoCélula Iniciado!");
 
@@ -412,7 +412,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
                 testeFCComecou = false;
                 teste.clearComposingText();
                 teste.setText("Iniciar Teste de FotoCélula");
-                pararTeste(view);
+                pararTeste();
                 textMessage.clearComposingText();
                 textMessage.setText("Teste de FotoCélula Cancelado!");
             }
@@ -421,7 +421,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
 
     }
 
-    public void testeFoto(View view) {
+    public void testeFoto() {
         if (conexao == null) {
             Toast.makeText(getApplicationContext(), "O teste não pode ser inicializado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
 
