@@ -146,7 +146,8 @@ public class BluetoothActivity extends AppCompatActivity {
                             if (dataString.contains("N")) {
 
                                 if (finalDeTeste) {
-
+                                    a = 0;
+                                    b = 0;
                                     a = (pacote[2]) * Math.pow(256, 3) + (pacote[3] & 0xFF) * Math.pow(256, 2) + (pacote[4] & 0xFF) * 256 + (pacote[5] & 0xFF);
                                     b = (pacote[6] & 0xFF) * Math.pow(256, 3) + (pacote[7] & 0xFF) * Math.pow(256, 2) + (pacote[8] & 0xFF) * 256 + (pacote[9] & 0xFF);
                                     res = Float.toString((float) (a / 1000)) + "Pulsos: " + Float.toString((float) (b / 1000));
@@ -164,6 +165,8 @@ public class BluetoothActivity extends AppCompatActivity {
 
                             if (dataString.contains("B")) {
                                 if (finalDeTeste) {
+                                    a = 0;
+                                    b = 0;
                                     a = ((pacote[2]) * Math.pow(256, 3) + (pacote[3] & 0xFF) * Math.pow(256, 2) + (pacote[4] & 0xFF) * 256 + (pacote[5] & 0xFF));
                                     b = (pacote[6] & 0xFF) * Math.pow(256, 3) + (pacote[7] & 0xFF) * Math.pow(256, 2) + (pacote[8] & 0xFF) * 256 + (pacote[9] & 0xFF);
                                     Log.d("PULSOS", res);
