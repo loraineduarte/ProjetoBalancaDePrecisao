@@ -132,7 +132,7 @@ public class ExatidaoActivity extends AppCompatActivity {
         conectar = findViewById(R.id.buttonConectarDispositivo);
         testeNominal = findViewById(R.id.button2);
         testePequeno = findViewById(R.id.button3);
-        quantidadePulsos = findViewById(R.id.QuantidadePulsos);
+        //quantidadePulsos = findViewById(R.id.QuantidadePulsos);
 
         ativarBluetooth();
 
@@ -218,7 +218,15 @@ public class ExatidaoActivity extends AppCompatActivity {
     }
 
     public void mudarEstadoTesteCargaNominal(View view) {
-        int pulsos = Integer.parseInt(quantidadePulsos.getText().toString());
+        int pulsos = 5;
+//        if(quantidadePulsos.getText().toString().equals("")){
+//            Toast.makeText(getApplicationContext(), "O teste vai ser realizado com 5 pulsos!", Toast.LENGTH_LONG).show();
+//            pulsos=5;
+//        }
+//        else {
+//            pulsos = Integer.parseInt(quantidadePulsos.getText().toString());
+//        }
+
         float tensao = Float.parseFloat((String) Hawk.get("TensaoNominalMedidor"));
         float corrente = Float.parseFloat((String) Hawk.get("CorrenteNominalMedidor"));
         float kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
@@ -235,9 +243,9 @@ public class ExatidaoActivity extends AppCompatActivity {
                 testeNominal.setText("Cancelar Teste de Carga Nominal");
                 aplicarCargaNominal(view);
 
-                tempoTeste = (long) ((3600 * pulsos * kdMedidor) / (tensao * corrente * FP));
+                tempoTeste = (long) (((3600 * pulsos * kdMedidor) / (tensao * corrente * FP)) / 10);
                 textMessageInspecaoConformidade.clearComposingText();
-                textMessageInspecaoConformidade.setText("Teste sendo iniciado...\n Estimativa: " + tempoTeste + "minutos para finalizar o teste. ");
+                textMessageInspecaoConformidade.setText("Teste sendo iniciado...\n Estimativa: " + tempoTeste + " minutos para finalizar o teste. ");
 
             } else {
                 testeCargaNominalComecou = false;
@@ -252,6 +260,19 @@ public class ExatidaoActivity extends AppCompatActivity {
 
     public void mudarEstadoTesteCargaPequena(View view) {
 
+        int pulsos = 5;
+//        if(quantidadePulsos.getText().toString().equals("")){
+//            Toast.makeText(getApplicationContext(), "O teste vai ser realizado com 5 pulsos!", Toast.LENGTH_LONG).show();
+//            pulsos=5;
+//        }
+//        else {
+//            pulsos = Integer.parseInt(quantidadePulsos.getText().toString());
+//        }
+        float tensao = Float.parseFloat((String) Hawk.get("TensaoNominalMedidor"));
+        float corrente = Float.parseFloat((String) Hawk.get("CorrenteNominalMedidor"));
+        float kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
+        float FP = 1;
+
         if (conexao == null) {
             Toast.makeText(getApplicationContext(), "O teste não pode ser iniciado/parado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
 
@@ -262,8 +283,9 @@ public class ExatidaoActivity extends AppCompatActivity {
                 testePequeno.clearComposingText();
                 testePequeno.setText("Cancelar Teste de Carga Pequena");
                 aplicarCargaPequena(view);
+                tempoTeste = (long) (((3600 * pulsos * kdMedidor) / (tensao * corrente * FP)) / 10);
                 textMessageInspecaoConformidade.clearComposingText();
-                textMessageInspecaoConformidade.setText("Teste sendo iniciado...");
+                textMessageInspecaoConformidade.setText("Teste sendo iniciado...\n Estimativa: " + tempoTeste + " minutos para finalizar o teste. ");
 
             } else {
                 testeCargaPequenaComecou = false;
@@ -367,38 +389,23 @@ public class ExatidaoActivity extends AppCompatActivity {
             float kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
 
             byte[] bytes = new byte[4];
-            int valorMultiplicado = (int) (kdMedidor * 1000000);
+            float valorMultiplicado = (float) (kdMedidor * 1000000);
 
             bytes[0] = (byte) (valorMultiplicado / (Math.pow(256, 3)));
             bytes[1] = (byte) ((valorMultiplicado - (bytes[0] * (Math.pow(256, 3)))) / Math.pow(256, 2));
             bytes[2] = (byte) ((valorMultiplicado - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))))) / Math.pow(256, 1));
             bytes[3] = (byte) ((valorMultiplicado - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))) + (bytes[2] * Math.pow(256, 1)))));
 
-            byte[] bytesPulso = new byte[4];
-            int pulsos = Integer.parseInt(quantidadePulsos.getText().toString());
-
-            if (pulsos == 0) {
-                bytesPulso[0] = 0;
-                bytesPulso[1] = 5;
-                bytesPulso[2] = 0;
-                bytesPulso[3] = 0;
-            } else {
-                bytesPulso[0] = (byte) (pulsos / (Math.pow(256, 3)));
-                bytesPulso[1] = (byte) ((pulsos - (bytes[0] * (Math.pow(256, 3)))) / Math.pow(256, 2));
-                bytesPulso[2] = (byte) ((pulsos - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))))) / Math.pow(256, 1));
-                bytesPulso[3] = (byte) ((pulsos - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))) + (bytes[2] * Math.pow(256, 1)))));
-            }
-
             pacote[0] = ('I' & 0xFF);
-            pacote[1] = ('B' & 0xFF);
+            pacote[1] = ('N' & 0xFF);
             pacote[2] = (byte) (bytes[0] & 0xFF);
             pacote[3] = (byte) (bytes[1] & 0xFF);
             pacote[4] = (byte) (bytes[2] & 0xFF);
             pacote[5] = (byte) (bytes[3] & 0xFF);
-            pacote[6] = (byte) (bytesPulso[0] & 0xFF);
-            pacote[7] = (byte) (bytesPulso[1] & 0xFF);
-            pacote[8] = (byte) (bytesPulso[2] & 0xFF);
-            pacote[9] = (byte) (bytesPulso[3] & 0xFF);
+            pacote[6] = (byte) (0 & 0xFF);
+            pacote[7] = (byte) (5 & 0xFF);
+            pacote[8] = (byte) (0 & 0xFF);
+            pacote[9] = (byte) (0 & 0xFF);
 
             conexao.write(pacote);
         }
@@ -408,7 +415,7 @@ public class ExatidaoActivity extends AppCompatActivity {
 
     public void aplicarCargaPequena(View view) {
 
-        tempoInicio = System.currentTimeMillis();
+
         if (conexao == null) {
             Toast.makeText(getApplicationContext(), "O teste não pode ser inicializado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
 
@@ -421,7 +428,7 @@ public class ExatidaoActivity extends AppCompatActivity {
             float kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
 
             byte[] bytes = new byte[4];
-            int valorMultiplicado = (int) (kdMedidor * 1000000);
+            float valorMultiplicado = (float) (kdMedidor * 1000000);
 
             bytes[0] = (byte) (valorMultiplicado / (Math.pow(256, 3)));
             bytes[1] = (byte) ((valorMultiplicado - (bytes[0] * (Math.pow(256, 3)))) / Math.pow(256, 2));
@@ -429,19 +436,19 @@ public class ExatidaoActivity extends AppCompatActivity {
             bytes[3] = (byte) ((valorMultiplicado - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))) + (bytes[2] * Math.pow(256, 1)))));
 
             byte[] bytesPulso = new byte[4];
-            int pulsos = Integer.parseInt(quantidadePulsos.getText().toString());
 
-            if (pulsos == 0) {
+            // if (Integer.parseInt(quantidadePulsos.getText().toString()) <= 0) {
                 bytesPulso[0] = 0;
                 bytesPulso[1] = 5;
                 bytesPulso[2] = 0;
                 bytesPulso[3] = 0;
-            } else {
-                bytesPulso[0] = (byte) (pulsos / (Math.pow(256, 3)));
-                bytesPulso[1] = (byte) ((pulsos - (bytes[0] * (Math.pow(256, 3)))) / Math.pow(256, 2));
-                bytesPulso[2] = (byte) ((pulsos - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))))) / Math.pow(256, 1));
-                bytesPulso[3] = (byte) ((pulsos - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))) + (bytes[2] * Math.pow(256, 1)))));
-            }
+//            } else {
+//                int pulsos = Integer.parseInt(quantidadePulsos.getText().toString());
+//                bytesPulso[0] = (byte) (pulsos / (Math.pow(256, 3)));
+//                bytesPulso[1] = (byte) ((pulsos - (bytes[0] * (Math.pow(256, 3)))) / Math.pow(256, 2));
+//                bytesPulso[2] = 0;
+//                bytesPulso[3] = 0;
+//            }
 
 
 

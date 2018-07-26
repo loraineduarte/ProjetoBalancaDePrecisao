@@ -247,7 +247,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
         if(time.equals("")){
 
 
-            tempoReprovado.setText("60");
+            tempoReprovado.setText("1");
             Toast.makeText(getApplicationContext(), "Tempo de teste ajustado para 1 minuto... ", Toast.LENGTH_LONG).show();
             pacote[6] = (byte) (0 & 0xFF);
             pacote[7] = (byte) (0 & 0xFF);
