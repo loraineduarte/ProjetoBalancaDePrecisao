@@ -25,6 +25,7 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.memtpadraomonofasico.apppadromonofsico.DashboardActivity;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
 import com.orhanobut.hawk.NoEncryption;
@@ -1007,8 +1008,8 @@ public class ConclusaoActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-//        Intent intent = new Intent(this, DashboardActivity.class);
-//        startActivity(intent);
+        Intent intent = new Intent(this, DashboardActivity.class);
+        startActivity(intent);
 
     }
 

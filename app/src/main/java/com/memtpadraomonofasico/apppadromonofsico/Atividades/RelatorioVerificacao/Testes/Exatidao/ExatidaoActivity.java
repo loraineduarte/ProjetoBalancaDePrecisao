@@ -58,7 +58,7 @@ public class ExatidaoActivity extends AppCompatActivity {
                 if (!(cargaPequenaErro == null)) {
                     if (res.startsWith("T")) {
                         textMessageInspecaoConformidade.clearComposingText();
-                        textMessageInspecaoConformidade.setText("Teste Concluído!");
+                        textMessageInspecaoConformidade.setText(res);
 
                         testeCargaNominalComecou = false;
                         testeNominal.clearComposingText();
@@ -89,7 +89,7 @@ public class ExatidaoActivity extends AppCompatActivity {
                 if (!(cargaNominalErro == null)) {
                     if (res.startsWith("T")) {
                         textMessageInspecaoConformidade.clearComposingText();
-                        textMessageInspecaoConformidade.setText("Teste Concluído!");
+                        textMessageInspecaoConformidade.setText(res);
 
 
                         testeCargaNominalComecou = false;
@@ -325,7 +325,7 @@ public class ExatidaoActivity extends AppCompatActivity {
                 if (!(textMessageInspecaoConformidade == null)) {
                     if (res.startsWith("T")) {
                         textMessageInspecaoConformidade.clearComposingText();
-                        textMessageInspecaoConformidade.setText("Teste Concluído!");
+                        textMessageInspecaoConformidade.setText(res);
 
                         if(testePequeno!=null){
                             testeCargaPequenaComecou = false;
