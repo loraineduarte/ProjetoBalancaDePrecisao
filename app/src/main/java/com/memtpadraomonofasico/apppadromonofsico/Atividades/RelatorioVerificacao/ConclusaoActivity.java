@@ -374,6 +374,10 @@ public class ConclusaoActivity extends AppCompatActivity {
                 tableServico.addCell(servicoItem);
             }
 
+            servicoItem = new PdfPCell(new Phrase(" ", subFont));
+            servicoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
+            servicoItem.setBorder(PdfPCell.NO_BORDER);
+            tableServico.addCell(servicoItem);
 
             p = new Phrase("Data-Hora Início: ", smallNormal);
             p.add(new Chunk((Hawk.get("DataFinal")) + " " + (Hawk.get("HoraInicial")), smallNormal));
@@ -385,6 +389,11 @@ public class ConclusaoActivity extends AppCompatActivity {
             p = new Phrase("Data-Hora Fim : ", smallNormal);
             p.add(new Chunk((Hawk.get("DataFinal")) + " " + (Hawk.get("HoraFinal")), smallNormal));
             servicoItem = new PdfPCell(p);
+            servicoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
+            servicoItem.setBorder(PdfPCell.NO_BORDER);
+            tableServico.addCell(servicoItem);
+
+            servicoItem = new PdfPCell(new Phrase(" ", subFont));
             servicoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             servicoItem.setBorder(PdfPCell.NO_BORDER);
             tableServico.addCell(servicoItem);
@@ -562,6 +571,23 @@ public class ConclusaoActivity extends AppCompatActivity {
             inspecaoVisualItem.setBorder(PdfPCell.NO_BORDER);
             tabelaInspecaoVisual.addCell(inspecaoVisualItem);
 
+            servicoItem = new PdfPCell(new Phrase(" ", subFont));
+            servicoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
+            servicoItem.setBorder(PdfPCell.NO_BORDER);
+            tableServico.addCell(servicoItem);
+
+            servicoItem = new PdfPCell(new Phrase(" ", subFont));
+            servicoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
+            servicoItem.setBorder(PdfPCell.NO_BORDER);
+            tableServico.addCell(servicoItem);
+
+            p = new Phrase("Status: ", smallNormal);
+            p.add(new Chunk((String) Hawk.get("Status"), smallNormal));
+            inspecaoVisualItem = new PdfPCell(p);
+            inspecaoVisualItem.setHorizontalAlignment(Element.ALIGN_LEFT);
+            inspecaoVisualItem.setBorder(PdfPCell.NO_BORDER);
+            tabelaInspecaoVisual.addCell(inspecaoVisualItem);
+
             if (String.valueOf(Hawk.get("ObservacaoInspecaoVisual")).equals("null")) {
 
                 inspecaoVisualItem = new PdfPCell(new Phrase(" ", smallBold));
@@ -580,17 +606,7 @@ public class ConclusaoActivity extends AppCompatActivity {
             }
 
 
-            inspecaoVisualItem = new PdfPCell(new Phrase(" ", smallBold));
-            inspecaoVisualItem.setHorizontalAlignment(Element.ALIGN_LEFT);
-            inspecaoVisualItem.setBorder(PdfPCell.NO_BORDER);
-            tabelaInspecaoVisual.addCell(inspecaoVisualItem);
 
-            p = new Phrase("Status: ", smallNormal);
-            p.add(new Chunk((String) Hawk.get("Status"), smallNormal));
-            inspecaoVisualItem = new PdfPCell(p);
-            inspecaoVisualItem.setHorizontalAlignment(Element.ALIGN_LEFT);
-            inspecaoVisualItem.setBorder(PdfPCell.NO_BORDER);
-            tabelaInspecaoVisual.addCell(inspecaoVisualItem);
 
             inspecaoVisualItem = new PdfPCell(new Phrase(" ", smallBold));
             inspecaoVisualItem.setHorizontalAlignment(Element.ALIGN_LEFT);

@@ -234,4 +234,17 @@ public class SelecionarMedidorActivity extends AppCompatActivity {
         super.onSaveInstanceState(savedInstanceState);
     }
 
+    public void onCheckboxClicked(View view) {
+
+        switch (view.getId()) {
+            case R.id.radioButtonEletronico:
+                mecanico.setChecked(false);
+                break;
+
+            case R.id.RadioButtonMecanico:
+                eletronico.setChecked(false);
+                break;
+
+        }
+    }
 }

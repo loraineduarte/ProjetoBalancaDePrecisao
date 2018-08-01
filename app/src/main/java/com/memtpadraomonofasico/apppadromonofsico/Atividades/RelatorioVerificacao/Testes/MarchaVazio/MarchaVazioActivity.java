@@ -311,7 +311,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
                     } else {
 
                         textMessage.clearComposingText();
-                        textMessage.setText(res + "\n Tempo Total: " + (System.currentTimeMillis() - tempoInicio));
+                        textMessage.setText(res);
                     }
 
                 }

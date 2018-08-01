@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +21,8 @@ import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
 import com.orhanobut.hawk.NoEncryption;
 
+import java.util.Calendar;
+
 @SuppressWarnings("ALL")
 public class ExatidaoActivity extends AppCompatActivity {
 
@@ -29,6 +32,7 @@ public class ExatidaoActivity extends AppCompatActivity {
     @SuppressLint("HandlerLeak")
     private static final Handler handlerInspecaoConformidade = new Handler() {
     };
+    static int hours, minutes, seconds;
     @SuppressLint("StaticFieldLeak")
     private static EditText cargaNominalErro, cargaPequenaErro;
     @SuppressLint("StaticFieldLeak")
@@ -56,6 +60,8 @@ public class ExatidaoActivity extends AppCompatActivity {
 
                 cargaPequenaErro.setEnabled(true);
                 if (!(cargaPequenaErro == null)) {
+
+
                     if (res.startsWith("T")) {
                         textMessageInspecaoConformidade.clearComposingText();
                         textMessageInspecaoConformidade.setText(res);
@@ -70,8 +76,7 @@ public class ExatidaoActivity extends AppCompatActivity {
                     }
 
                     cargaPequenaErro.clearComposingText();
-                    cargaPequenaErro.setText(res + "\n Tempo Total: " + (System.currentTimeMillis() - tempoInicio));
-
+                    cargaPequenaErro.setText(res);
                 }
 
             }
@@ -90,8 +95,6 @@ public class ExatidaoActivity extends AppCompatActivity {
                     if (res.startsWith("T")) {
                         textMessageInspecaoConformidade.clearComposingText();
                         textMessageInspecaoConformidade.setText(res);
-
-
                         testeCargaNominalComecou = false;
                         testeNominal.clearComposingText();
                         testeNominal.setText("Iniciar Teste de Carga Nominal");
@@ -102,8 +105,51 @@ public class ExatidaoActivity extends AppCompatActivity {
                     }
 
                     cargaNominalErro.clearComposingText();
-                    cargaNominalErro.setText(res + "\n Tempo Total: " + (System.currentTimeMillis() - tempoInicio));
+                    cargaNominalErro.setText(res);
 
+                }
+            }
+        });
+
+    }
+
+    public void escreverStatusTestesExatidao(final String res) {
+        handlerInspecaoConformidade.post(new Runnable() {
+            @Override
+            public void run() {
+                if (!(textMessageInspecaoConformidade == null)) {
+                    if (res.startsWith("T")) {
+                        textMessageInspecaoConformidade.clearComposingText();
+                        textMessageInspecaoConformidade.setText(res);
+
+                        if (testePequeno != null) {
+                            testeCargaPequenaComecou = false;
+                            testePequeno.clearComposingText();
+                            testePequeno.setText("Iniciar Teste de Carga Pequena");
+                        }
+                        if (testeNominal != null) {
+                            testeCargaNominalComecou = false;
+                            testeNominal.clearComposingText();
+                            testeNominal.setText("Iniciar Teste de Carga Nominal");
+                        }
+
+
+                    } else {
+
+                        long dateAgora = Calendar.getInstance().getTimeInMillis(); //pega a hora do sistema
+                        long diferenca = -(dateAgora - tempoInicio);
+                        int timeInSeconds = (int) diferenca / 1000;
+
+                        hours = timeInSeconds / 3600;
+                        timeInSeconds = timeInSeconds - (hours * 3600);
+                        minutes = timeInSeconds / 60;
+                        timeInSeconds = timeInSeconds - (minutes * 60);
+                        seconds = seconds + timeInSeconds;
+                        Log.d("TEMPO", (hours + " hour(s) " + minutes + " minute(s) " + seconds + " second(s)"));
+
+                        textMessageInspecaoConformidade.clearComposingText();
+                        textMessageInspecaoConformidade.setText(res);
+                    }
 
                 }
             }
@@ -232,6 +278,8 @@ public class ExatidaoActivity extends AppCompatActivity {
         float kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
         float FP = 1;
 
+        tempoTeste = (long) (((3600 * pulsos * kdMedidor) / (tensao * corrente * FP)));
+
         if (conexao == null) {
             Toast.makeText(getApplicationContext(), "O teste não pode ser iniciado/parado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
 
@@ -243,9 +291,9 @@ public class ExatidaoActivity extends AppCompatActivity {
                 testeNominal.setText("Cancelar Teste de Carga Nominal");
                 aplicarCargaNominal(view);
 
-                tempoTeste = (long) (((3600 * pulsos * kdMedidor) / (tensao * corrente * FP)) / 10);
+//  Estimativa: " + tempoTeste + " minuto(s) para finalizar o teste.
                 textMessageInspecaoConformidade.clearComposingText();
-                textMessageInspecaoConformidade.setText("Teste sendo iniciado...\n Estimativa: " + tempoTeste + " minutos para finalizar o teste. ");
+                textMessageInspecaoConformidade.setText("Teste sendo iniciado...");
 
             } else {
                 testeCargaNominalComecou = false;
@@ -260,7 +308,7 @@ public class ExatidaoActivity extends AppCompatActivity {
 
     public void mudarEstadoTesteCargaPequena(View view) {
 
-        int pulsos = 5;
+
 //        if(quantidadePulsos.getText().toString().equals("")){
 //            Toast.makeText(getApplicationContext(), "O teste vai ser realizado com 5 pulsos!", Toast.LENGTH_LONG).show();
 //            pulsos=5;
@@ -268,10 +316,14 @@ public class ExatidaoActivity extends AppCompatActivity {
 //        else {
 //            pulsos = Integer.parseInt(quantidadePulsos.getText().toString());
 //        }
+        int pulsos = 5;
         float tensao = Float.parseFloat((String) Hawk.get("TensaoNominalMedidor"));
         float corrente = Float.parseFloat((String) Hawk.get("CorrenteNominalMedidor"));
         float kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
+        //  kdMedidor = kdMedidor *
         float FP = 1;
+
+        tempoTeste = (long) (((3600 * pulsos * kdMedidor) / (tensao * corrente * FP)));
 
         if (conexao == null) {
             Toast.makeText(getApplicationContext(), "O teste não pode ser iniciado/parado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
@@ -283,9 +335,9 @@ public class ExatidaoActivity extends AppCompatActivity {
                 testePequeno.clearComposingText();
                 testePequeno.setText("Cancelar Teste de Carga Pequena");
                 aplicarCargaPequena(view);
-                tempoTeste = (long) (((3600 * pulsos * kdMedidor) / (tensao * corrente * FP)) / 10);
+                //  Estimativa: " + tempoTeste + " minuto(s) para finalizar o teste.
                 textMessageInspecaoConformidade.clearComposingText();
-                textMessageInspecaoConformidade.setText("Teste sendo iniciado...\n Estimativa: " + tempoTeste + " minutos para finalizar o teste. ");
+                textMessageInspecaoConformidade.setText("Teste sendo iniciado...");
 
             } else {
                 testeCargaPequenaComecou = false;
@@ -318,38 +370,6 @@ public class ExatidaoActivity extends AppCompatActivity {
 
     }
 
-    public void escreverTelaInspecaoConformidade(final String res) {
-        handlerInspecaoConformidade.post(new Runnable() {
-            @Override
-            public void run() {
-                if (!(textMessageInspecaoConformidade == null)) {
-                    if (res.startsWith("T")) {
-                        textMessageInspecaoConformidade.clearComposingText();
-                        textMessageInspecaoConformidade.setText(res);
-
-                        if(testePequeno!=null){
-                            testeCargaPequenaComecou = false;
-                            testePequeno.clearComposingText();
-                            testePequeno.setText("Iniciar Teste de Carga Pequena");
-                        }
-                       if(testeNominal!=null){
-                           testeCargaNominalComecou = false;
-                           testeNominal.clearComposingText();
-                           testeNominal.setText("Iniciar Teste de Carga Nominal");
-                       }
-
-
-                    } else {
-                        textMessageInspecaoConformidade.clearComposingText();
-                        textMessageInspecaoConformidade.setText(res + "\n Tempo Total: " + (System.currentTimeMillis() - tempoInicio));
-                    }
-
-                }
-            }
-        });
-
-    }
-
     private void ativarBluetooth() {
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -375,7 +395,11 @@ public class ExatidaoActivity extends AppCompatActivity {
     }
 
     public void aplicarCargaNominal(View view) {
-        tempoInicio = System.currentTimeMillis();
+        tempoInicio = Calendar.getInstance().getTimeInMillis(); //pega a hora do sistema
+        hours = 0;
+        minutes = 0;
+        seconds = 0;
+
 
         if (conexao == null) {
             Toast.makeText(getApplicationContext(), "O teste não pode ser inicializado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
@@ -415,6 +439,11 @@ public class ExatidaoActivity extends AppCompatActivity {
 
     public void aplicarCargaPequena(View view) {
 
+        tempoInicio = Calendar.getInstance().getTimeInMillis(); //pega a hora do sistema
+        hours = 0;
+        minutes = 0;
+        seconds = 0;
+
 
         if (conexao == null) {
             Toast.makeText(getApplicationContext(), "O teste não pode ser inicializado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
@@ -422,11 +451,7 @@ public class ExatidaoActivity extends AppCompatActivity {
         } else {
 
             byte[] pacote = new byte[10];
-
-            //pegando valores do medidor
-
             float kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
-
             byte[] bytes = new byte[4];
             float valorMultiplicado = (float) (kdMedidor * 1000000);
 

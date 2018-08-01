@@ -82,7 +82,7 @@ public class RegistradorActivity extends AppCompatActivity {
 
                     } else {
                         textMessage.clearComposingText();
-                        textMessage.setText(res + "\n Tempo Total: " + (System.currentTimeMillis() - tempoInicio));
+                        textMessage.setText(res);
                     }
                 }
             }
@@ -284,7 +284,8 @@ public class RegistradorActivity extends AppCompatActivity {
                 executarTeste(view);
                 tempoTeste = (float) (((1.1) / (tensao * corrente * FP)) / 60);
                 textMessage.clearComposingText();
-                textMessage.setText("Teste sendo iniciado...Estimativa: " + tempoTeste + "minutos para finalizar o teste. ");
+                //Estimativa: " + tempoTeste + "minutos para finalizar o teste. "
+                textMessage.setText("Teste sendo iniciado...");
 
             } else {
                 teste = false;

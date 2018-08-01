@@ -358,7 +358,7 @@
                         android:background="@drawable/botao_arredondado"
                         android:backgroundTint="@color/colorPrimaryDark"
                         android:onClick="mudarEstadoTeste"
-                        android:text="Iniciar Testde de Registrador"
+                        android:text="Iniciar Teste de Registrador"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textColor="@android:color/white" />
                 </RelativeLayout>
