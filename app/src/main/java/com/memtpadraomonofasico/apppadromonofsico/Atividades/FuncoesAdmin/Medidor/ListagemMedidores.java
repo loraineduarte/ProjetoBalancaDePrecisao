@@ -52,19 +52,18 @@ public class ListagemMedidores extends AppCompatActivity {
 
             String numeroGeral = cursor.getString(1);
             String fabricante = cursor.getString(2);
-            int numElementos = Integer.parseInt(cursor.getString(3));
+            String numElementos = (cursor.getString(3));
             String modelo = cursor.getString(4);
-            int correnteNominal = Integer.parseInt(cursor.getString(5));
+            String correnteNominal = (cursor.getString(5));
             String classe = cursor.getString(6);
             String rr = cursor.getString(7);
             String tensaoNominal = cursor.getString(8);
-            String tipoMedidor = cursor.getString(12);
             String kdKe = cursor.getString(9);
+            int fios = Integer.parseInt(cursor.getString(10));
+            String tipoMedidor = cursor.getString(11);
 
-            int fios = Integer.parseInt(cursor.getString(11));
-            String portariaInmetro = cursor.getString(10);
 
-            Medidor medidor = new Medidor(numeroGeral, modelo, fabricante, tensaoNominal, correnteNominal, tipoMedidor, kdKe, rr, numElementos, classe, fios, portariaInmetro);
+            Medidor medidor = new Medidor(numeroGeral, modelo, fabricante, tensaoNominal, correnteNominal, tipoMedidor, kdKe, rr, numElementos, classe, fios);
             av.add(medidor);
         }
 
@@ -145,6 +144,7 @@ public class ListagemMedidores extends AppCompatActivity {
         String numeroGeral = avaliador.getNumeroGeral();
         Cursor cursor = crud.pegarMedidor(numeroGeral);
 
+
         String fabricante = cursor.getString(0);
         String numElementos = cursor.getString(1);
         String modelo = cursor.getString(2);
@@ -153,9 +153,8 @@ public class ListagemMedidores extends AppCompatActivity {
         String rr = cursor.getString(5);
         String tensaoNominal = cursor.getString(6);
         String kdKe = cursor.getString(7);
-        String portariaInmetro = cursor.getString(8);
-        String fios = cursor.getString(9);
-        String tipoMedidor = cursor.getString(10);
+        String fios = cursor.getString(8);
+        String tipoMedidor = cursor.getString(9);
 
         Intent intent = new Intent(this, EditarMedidorActivity.class);
         intent.putExtra("numeroGeral", numeroGeral);
@@ -169,7 +168,6 @@ public class ListagemMedidores extends AppCompatActivity {
         intent.putExtra("numElementos", numElementos);
         intent.putExtra("classe", classe);
         intent.putExtra("fios", fios);
-        intent.putExtra("portariaInmetro", portariaInmetro);
 
         startActivity(intent);
     }

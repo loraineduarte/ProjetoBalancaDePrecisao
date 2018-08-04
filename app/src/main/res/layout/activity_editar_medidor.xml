@@ -442,39 +442,17 @@
                         android:layout_height="fill_parent">
 
                         <EditText
-                            android:id="@+id/PorInmetro"
+                            android:id="@+id/Fios"
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
                             android:ems="10"
-                            android:hint="@string/portaria_inmetro"
+                            android:hint="@string/fios"
                             android:inputType="number"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+                            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
                     </android.support.design.widget.TextInputLayout>
 
                 </RelativeLayout>
             </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout9"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout8">
-
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:baselineAligned="false"
-            android:gravity="bottom"
-            android:orientation="horizontal"
-            tools:ignore="UselessParent">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -506,37 +484,10 @@
 
                 </RelativeLayout>
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                android:padding="0dp">
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <android.support.design.widget.TextInputLayout
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent">
-
-                        <EditText
-                            android:id="@+id/Fios"
-                            android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"
-                            android:ems="10"
-                            android:hint="@string/fios"
-                            android:inputType="number"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
-                    </android.support.design.widget.TextInputLayout>
-
-                </RelativeLayout>
-            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+
+
 
 
 
@@ -546,11 +497,11 @@
         android:layout_height="50dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout9">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout8">
 
 
         <LinearLayout

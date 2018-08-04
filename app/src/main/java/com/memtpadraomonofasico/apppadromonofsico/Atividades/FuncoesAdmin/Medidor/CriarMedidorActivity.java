@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,8 +16,8 @@ import android.widget.Toast;
 
 import com.memtpadraomonofasico.apppadromonofsico.BancoDeDados.BancoController;
 import com.memtpadraomonofasico.apppadromonofsico.R;
-import com.opencsv.CSVReader;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 
@@ -65,9 +66,9 @@ public class CriarMedidorActivity extends AppCompatActivity {
 
                 String numGeralString = numGeral.getText().toString();
                 String fabricanteString = fabricante.getText().toString();
-                int numElementosString = Integer.parseInt(numElementos.getText().toString());
+                String numElementosString = (numElementos.getText().toString());
                 String modeloString = modelo.getText().toString();
-                Double correnteNominalString = Double.valueOf(Integer.parseInt(correnteNominal.getText().toString()));
+                Double correnteNominalString = Double.valueOf(correnteNominal.getText().toString());
                 String classeString = classe.getText().toString();
                 String RRString =RR.getText().toString();
 
@@ -87,16 +88,17 @@ public class CriarMedidorActivity extends AppCompatActivity {
                 if ((tipoMedidorString.startsWith("M") && RR.getText().toString().equals(""))) {
 
                     Toast.makeText(getApplicationContext(), "Campo RR é obrigatório quando o modelo de medidor é eletrônico! ", Toast.LENGTH_LONG).show();
-                } else if (fabricanteString.equals("") || modeloString.equals("") ||
+                }
+                if (fabricanteString.equals("") || modeloString.equals("") ||
                         (tensaoNominal.getText().toString().equals(""))|| (correnteNominal.getText().toString().equals("")) || (KdKe.getText().toString().equals(""))
                         || (numElementos.getText().toString().equals(""))
-                        || classeString.equals("")|| porInmetroString.equals("") || tipoMedidorString.equals("")){
+                        || classeString.equals("") || tipoMedidorString.equals("")) {
 
                     Toast.makeText(getApplicationContext(), "Campo obrigatório em branco! ", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    String resultado = crud.insereNovoMedidor(numGeralString, fabricanteString, numElementosString, modeloString, correnteNominalString,
-                            classeString, RRString, tensaoNominalString, KdKeString, porInmetroString, fiosString, tipoMedidorString);
+                    String resultado = crud.insereNovoMedidor(numGeralString, fabricanteString, String.valueOf(numElementosString), modeloString, correnteNominalString,
+                            classeString, RRString, tensaoNominalString, KdKeString, fiosString, tipoMedidorString);
                     Toast.makeText(getApplicationContext(), resultado, Toast.LENGTH_LONG).show();
                     finish();
                 }
@@ -189,54 +191,134 @@ public class CriarMedidorActivity extends AppCompatActivity {
 
                 try {
                     File csvfile = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/medidor.csv");
-                    CSVReader reader = new CSVReader(new FileReader(csvfile));
-                    String[] nextLine;
+                    BufferedReader reader = new BufferedReader(new FileReader(csvfile));
+                    String nextLine;
                     int cont = 0;
-                    while ((nextLine = reader.readNext()) != null) {
+                    while ((nextLine = reader.readLine()) != null) {
+                        String linhaFinal = nextLine.replace(",", ".");
+                        String[] row = linhaFinal.split(";");
 
                         if (cont == 0) {
 
                         } else {
 
                             //codigo - fabricante - modelo - corrente nominal - num elementos - tensao nominal - rr - kdke - fios - classe - erro adminissivel (para olhar se é eletrico ou mecanico)
-                            String numGeral = nextLine[0].substring(0, 2);
-                            String fabricante = nextLine[1];
-                            String modelo = nextLine[2];
-                            Double correnteNominal = Double.valueOf(Integer.parseInt(nextLine[3]));
-                            int numElementos = Integer.parseInt(nextLine[4]);
-                            int tensaoNominal = Integer.parseInt(nextLine[5]);
-                            String RR = nextLine[6];
-                            double KdKe = Double.parseDouble(nextLine[7]);
-                            int fios = Integer.parseInt(nextLine[8]);
-                            String classe = nextLine[9];
-                            String tipoMedidorString = " ";
-                            if (nextLine[10].toString().startsWith("4")) {
-                                tipoMedidorString = "Mecânico";
+                            if (row[0].toString().equals("")) {
+
                             } else {
-                                tipoMedidorString = "Eletrônico";
+                                String numGeral = row[0];
+                                Log.d("NUMGERAL", numGeral);
+
+                                String fabricante = "  ";
+                                if (row[1].toString().equals("")) {
+                                    fabricante = "  ";
+                                    Log.d("FABRICANTE", fabricante);
+                                } else {
+                                    fabricante = row[1];
+                                    Log.d("FABRICANTE", fabricante);
+                                }
+
+                                String modelo = " ";
+                                if (row[2].toString().equals("")) {
+                                    modelo = " ";
+                                    Log.d("MODELO", modelo);
+                                } else {
+                                    modelo = row[2];
+                                    Log.d("MODELO", modelo);
+                                }
+
+                                double correnteNominal = 0;
+                                if (row[3].toString().equals("")) {
+                                    correnteNominal = 0;
+                                    Log.d("CORRENTE", String.valueOf(correnteNominal));
+                                } else {
+                                    correnteNominal = Double.valueOf(row[3]);
+                                    Log.d("CORRENTE", String.valueOf(correnteNominal));
+                                }
+
+                                String numElementos = "0";
+                                if (row[4].toString().equals("")) {
+                                    numElementos = "0";
+                                    Log.d("numElementos", String.valueOf(numElementos));
+                                } else {
+                                    numElementos = String.valueOf(row[4]);
+                                    Log.d("numElementos", String.valueOf(numElementos));
+                                }
+
+                                double tensaoNominal = 0;
+                                if (row[5].toString().equals("")) {
+                                    tensaoNominal = 0;
+                                    Log.d("tensaoNominal", String.valueOf(tensaoNominal));
+                                } else {
+                                    tensaoNominal = Double.valueOf(row[5]);
+                                    Log.d("tensaoNominal", String.valueOf(tensaoNominal));
+                                }
+
+                                String RR = "";
+                                if (row[6].toString().equals("")) {
+                                    RR = "";
+                                    Log.d("RR", String.valueOf(RR));
+                                } else {
+                                    RR = row[6];
+                                    Log.d("RR", String.valueOf(RR));
+                                }
+
+                                double KdKe = 0;
+                                if (row[7].toString().equals("")) {
+                                    KdKe = 0;
+                                    Log.d("KdKe", String.valueOf(KdKe));
+                                } else {
+                                    KdKe = Double.parseDouble(row[7]);
+                                    Log.d("KdKe", String.valueOf(KdKe));
+                                }
+
+                                int fios = 0;
+                                if (row[8].toString().equals("")) {
+                                    fios = 0;
+                                    Log.d("fios", String.valueOf(fios));
+                                } else {
+                                    fios = Integer.parseInt(row[8]);
+                                    Log.d("fios", String.valueOf(fios));
+                                }
+
+                                String classe = "";
+                                if (row[9].toString().equals("")) {
+                                    classe = "";
+                                    Log.d("classe", String.valueOf(classe));
+                                } else {
+                                    classe = row[9];
+                                    Log.d("classe", String.valueOf(classe));
+                                }
+
+                                String tipoMedidorString = " ";
+
+                                if (row[10].toString().equals("")) {
+                                    tipoMedidorString = "";
+                                    Log.d("tipoMedidorString", String.valueOf(tipoMedidorString));
+                                } else {
+                                    if (row[10].toString().startsWith("4")) {
+                                        tipoMedidorString = "Mecânico";
+
+                                    } else {
+                                        tipoMedidorString = "Eletrônico";
+                                    }
+                                    Log.d("tipoMedidorString", String.valueOf(tipoMedidorString));
+                                }
+
+
+                                String resultado = crud.insereNovoMedidor(numGeral, fabricante, numElementos, modelo, correnteNominal,
+                                        classe, RR, tensaoNominal, KdKe, fios, tipoMedidorString);
+                                Log.d("RESULTADO", resultado);
+                                //Toast.makeText(getApplicationContext(), resultado, Toast.LENGTH_LONG).show();
                             }
-                            //  String anoFabricacao = nextLine[0].substring(3, 4);
-                            String porInmetro = "";
-                            if (nextLine[11].toString().startsWith("")) {
-                                porInmetro = "";
-                            } else {
-                                porInmetro = nextLine[11];
-                            }
-
-
-
-
-                            String resultado = crud.insereNovoMedidor(numGeral, fabricante, numElementos, modelo, correnteNominal,
-                                    classe, RR, tensaoNominal, KdKe, porInmetro, fios, tipoMedidorString);
-                            Toast.makeText(getApplicationContext(), resultado, Toast.LENGTH_LONG).show();
-
                         }
                         finish();
                         cont++;
                     }
+                    Toast.makeText(getApplicationContext(), "Foram inseridos " + cont + " registros.", Toast.LENGTH_LONG).show();
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Toast.makeText(this, "Erro ao abrir o arquivo", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Erro ao ler todo o arquivo", Toast.LENGTH_SHORT).show();
                 }
 
 

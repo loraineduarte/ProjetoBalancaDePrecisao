@@ -10,17 +10,16 @@ class Medidor {
     private String modelo;
     private String fabricante;
     private String tensaoNominal;
-    private int correnteNominal;
+    private String correnteNominal;
     private String tipoMedidor;
     private String kdKe;
     private String rr;
-    private int numElementos;
+    private String numElementos;
     private String classe;
     private int fios;
-    private String portariaInmetro;
 
-    public Medidor(String numeroGeral, String modelo, String fabricante, String tensaoNominal, int correnteNominal, String tipoMedidor, String kdKe,
-                   String rr, int numElementos, String classe, int fios, String portariaInmetro) {
+    public Medidor(String numeroGeral, String modelo, String fabricante, String tensaoNominal, String correnteNominal, String tipoMedidor, String kdKe,
+                   String rr, String numElementos, String classe, int fios) {
 
 
         this.numeroGeral = numeroGeral;
@@ -34,7 +33,6 @@ class Medidor {
         this.numElementos = numElementos;
         this.classe = classe;
         this.fios = fios;
-        this.portariaInmetro = portariaInmetro;
     }
 
 
@@ -71,11 +69,11 @@ class Medidor {
         this.tensaoNominal = tensaoNominal;
     }
 
-    public int getCorrenteNominal() {
+    public String getCorrenteNominal() {
         return correnteNominal;
     }
 
-    public void setCorrenteNominal(int correnteNominal) {
+    public void setCorrenteNominal(String correnteNominal) {
         this.correnteNominal = correnteNominal;
     }
 
@@ -103,11 +101,11 @@ class Medidor {
         this.rr = rr;
     }
 
-    public int getNumElementos() {
+    public String getNumElementos() {
         return numElementos;
     }
 
-    public void setNumElementos(int numElementos) {
+    public void setNumElementos(String numElementos) {
         this.numElementos = numElementos;
     }
 
@@ -127,13 +125,6 @@ class Medidor {
         this.fios = fios;
     }
 
-    public String getPortariaInmetro() {
-        return portariaInmetro;
-    }
-
-    public void setPortariaInmetro(String portariaInmetro) {
-        this.portariaInmetro = portariaInmetro;
-    }
 
 
 }

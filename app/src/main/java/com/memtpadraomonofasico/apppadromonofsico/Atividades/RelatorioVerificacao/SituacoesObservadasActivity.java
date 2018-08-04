@@ -18,6 +18,7 @@ import com.orhanobut.hawk.NoEncryption;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("ALL")
 public class SituacoesObservadasActivity extends AppCompatActivity {
 
     private final CriaBanco banco = new CriaBanco(this);
@@ -26,7 +27,6 @@ public class SituacoesObservadasActivity extends AppCompatActivity {
     private List<String> mensagens;
     private Cursor cursorMensagem;
     private String observações = "";
-
 
 
     @Override

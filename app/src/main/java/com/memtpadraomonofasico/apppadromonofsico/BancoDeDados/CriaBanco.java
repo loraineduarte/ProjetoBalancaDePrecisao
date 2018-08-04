@@ -29,7 +29,7 @@ public class CriaBanco extends SQLiteOpenHelper {
     public static final String TENSAO_NOMINAL = "medidor_tensao_nominal";
     public static final String KDKE = "medidor_KdKe";
     public static final String RR = "medidor_RR";
-    public static final String PORT_INMETRO = "medidor_port_inmetro";
+    // public static final String PORT_INMETRO = "medidor_port_inmetro";
     public static final String FIOS = "medidor_fios";
     public static final String TIPO_MEDIDOR = "medidor_tipo_medidor";
     //tabela de medidor
@@ -66,8 +66,8 @@ public class CriaBanco extends SQLiteOpenHelper {
                 + TENSAO_NOMINAL + " integer, "
                 + KDKE + " double, "
                 + RR + " integer, "
-                + FIOS + " integer, "
-                + PORT_INMETRO + " text, "
+                + FIOS + " text, "
+                // + PORT_INMETRO + " text, "
                 + TIPO_MEDIDOR + " text "
                 + " ) ";
         db.execSQL(sqlMedidor);
@@ -230,7 +230,7 @@ public class CriaBanco extends SQLiteOpenHelper {
         String[] selectionArgs = new String[1];
         selectionArgs[0] = codigo;
         String[] campos = {NUM_GERAL, FABRICANTE, NUM_ELEMENTOS, MODELO, CORRENTE_NOMINAL, CLASSE, TENSAO_NOMINAL, KDKE,
-                RR, FIOS, PORT_INMETRO, TIPO_MEDIDOR};
+                RR, FIOS, TIPO_MEDIDOR};
 
         cursor = db.query(TABELA_MEDIDOR, campos, NUM_GERAL + " = ?", selectionArgs, null, null, null, null);
 
@@ -249,7 +249,7 @@ public class CriaBanco extends SQLiteOpenHelper {
                 //  arrData[10] = cursor.getString(cursor.getColumnIndexOrThrow(ANO_FABRICACAO));
                 arrData[10] = cursor.getString(cursor.getColumnIndexOrThrow(CLASSE));
                 arrData[11] = cursor.getString(cursor.getColumnIndexOrThrow(FIOS));
-                arrData[12] = cursor.getString(cursor.getColumnIndexOrThrow(PORT_INMETRO));
+                // arrData[12] = cursor.getString(cursor.getColumnIndexOrThrow(PORT_INMETRO));
 
             }
         }

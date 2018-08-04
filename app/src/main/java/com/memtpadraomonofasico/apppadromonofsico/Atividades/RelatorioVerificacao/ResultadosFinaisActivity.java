@@ -23,6 +23,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+@SuppressWarnings("ALL")
 public class ResultadosFinaisActivity extends AppCompatActivity {
 
     private final CriaBanco banco = new CriaBanco(this);
