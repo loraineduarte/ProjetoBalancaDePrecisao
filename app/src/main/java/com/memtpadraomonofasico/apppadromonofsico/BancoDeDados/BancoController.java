@@ -336,7 +336,7 @@ public class BancoController {
 
     public String updateMedidor(String numeroGeralAntigo, String numeroGeralString, String modeloString,
                                 String fabricanteString, String tensaoNominalString, Double correnteNominalString, String tipoMedidorString, String kdKeString, String rrString,
-                                String numElementosString, String classeString, String fiosString, String portariaInmetroString) {
+                                String numElementosString, String classeString, String fiosString) {
 
         db = banco.getWritableDatabase();
         long resultado;
@@ -363,7 +363,6 @@ public class BancoController {
         valores.put(CriaBanco.RR, rrString);
         valores.put(CriaBanco.TENSAO_NOMINAL, tensaoNominalString);
         valores.put(CriaBanco.KDKE, kdKeString);
-        // valores.put(CriaBanco.PORT_INMETRO, portariaInmetroString);
         valores.put(CriaBanco.FIOS, fiosString);
         valores.put(CriaBanco.TIPO_MEDIDOR, tipoMedidorString);
 

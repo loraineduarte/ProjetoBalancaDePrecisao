@@ -38,7 +38,6 @@ public class EditarMedidorActivity extends AppCompatActivity {
         final String numElementosAntigo = it.getStringExtra("numElementos");
         final String classeAntigo = it.getStringExtra("classe");
         final String fiosAntigo = it.getStringExtra("fios");
-        final String portariaInmetroAntigo = it.getStringExtra("portariaInmetro");
 
 
         Button botaoCriarMedidor = findViewById(R.id.buttonSalvarMedidor);
@@ -63,8 +62,6 @@ public class EditarMedidorActivity extends AppCompatActivity {
         classe.setText(classeAntigo);
         fios = findViewById(R.id.Fios);
         fios.setText(fiosAntigo);
-        portariaInmetro = findViewById(R.id.PorInmetro);
-        portariaInmetro.setText(portariaInmetroAntigo);
 
         radioButtonMecanico = findViewById(R.id.RadioButtonMecanico);
         radioButtonEletronico = findViewById(R.id.radioButtonEletronico);
@@ -90,7 +87,6 @@ public class EditarMedidorActivity extends AppCompatActivity {
                 numElementosString = numElementos.getText().toString();
                 classeString = classe.getText().toString();
                 fiosString = fios.getText().toString();
-                portariaInmetroString = portariaInmetro.getText().toString();
                 radioButtonMecanico = findViewById(R.id.RadioButtonMecanico);
                 radioButtonMecanico = findViewById(R.id.RadioButtonMecanico);
                 radioButtonEletronico = findViewById(R.id.radioButtonEletronico);
@@ -104,7 +100,7 @@ public class EditarMedidorActivity extends AppCompatActivity {
 
 
                 String resultado = crud.updateMedidor(numeroGeralAntigo, numeroGeralString, modeloString, fabricanteString, tensaoNominalString,
-                        correnteNominalString, tipoMedidorString, kdKeString, rrString, numElementosString, classeString, fiosString, portariaInmetroString);
+                        correnteNominalString, tipoMedidorString, kdKeString, rrString, numElementosString, classeString, fiosString);
                 Toast.makeText(getApplicationContext(), resultado, Toast.LENGTH_LONG).show();
 
                 finish();

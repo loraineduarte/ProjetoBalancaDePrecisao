@@ -597,7 +597,7 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/botao_arredondado"
         android:backgroundTint="@color/colorPrimaryDark"
-        android:text="Importar do Excel"
+        android:text="Importar Arquivo"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
