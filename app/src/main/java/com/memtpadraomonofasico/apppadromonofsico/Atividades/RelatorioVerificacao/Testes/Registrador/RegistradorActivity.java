@@ -28,6 +28,7 @@ import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
 import com.orhanobut.hawk.NoEncryption;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +50,7 @@ public class RegistradorActivity extends AppCompatActivity {
     private static ThreadConexaoRegistrador conexao;
     List<String> av = new ArrayList<>();
     long tempoInicio;
-    float tempoTeste;
+    double tempoTeste;
     @SuppressLint("WrongViewCast")
     private Button fotoDepois;
     @SuppressLint("WrongViewCast")
@@ -65,7 +66,7 @@ public class RegistradorActivity extends AppCompatActivity {
     private boolean teste = false;
     private boolean testeFC = false;
 
-    public void escreverTela(final String res) {
+    public void escreverTela(final String res, final double tensao, final double corrente) {
 
 
         handler.post(new Runnable() {
@@ -81,8 +82,12 @@ public class RegistradorActivity extends AppCompatActivity {
                         }
 
                     } else {
+                        tempoTeste = ((((1100) / (tensao * corrente))) * 60);
+                        DecimalFormat df = new DecimalFormat("0.##");
+                        String dx = df.format(tempoTeste);
+
                         textMessage.clearComposingText();
-                        textMessage.setText(res);
+                        textMessage.setText(res + " Estimado " + dx + " minuto(s) para a execução total do teste.");
                     }
                 }
             }
@@ -267,8 +272,6 @@ public class RegistradorActivity extends AppCompatActivity {
 
     public void mudarEstadoTeste(View view) {
 
-        float tensao = Float.parseFloat((String) Hawk.get("TensaoNominalMedidor"));
-        float corrente = Float.parseFloat((String) Hawk.get("CorrenteNominalMedidor"));
         float kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
         float FP = 1;
 
@@ -282,7 +285,7 @@ public class RegistradorActivity extends AppCompatActivity {
                 estadoTeste.clearComposingText();
                 estadoTeste.setText("Cancelar Teste ");
                 executarTeste(view);
-                tempoTeste = (float) (((1.1) / (tensao * corrente * FP)) / 60);
+                // tempoTeste = (float) (((1100) / (120 * 35 * FP)) );
                 textMessage.clearComposingText();
                 //Estimativa: " + tempoTeste + "minutos para finalizar o teste. "
                 textMessage.setText("Teste sendo iniciado...");

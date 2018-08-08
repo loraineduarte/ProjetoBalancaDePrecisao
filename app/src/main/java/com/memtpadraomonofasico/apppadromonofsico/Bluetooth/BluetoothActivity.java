@@ -64,7 +64,7 @@ public class BluetoothActivity extends AppCompatActivity {
                             break;
 
                         default:
-                            double a, b;
+                            double a = 0, b = 0;
                             cont = cont + 1;
                             dados = dataString;
                             Log.d("DADOS", dados);
@@ -83,9 +83,6 @@ public class BluetoothActivity extends AppCompatActivity {
 
                             if (dados.length() == 9) {
 
-
-                                a = 0;
-                                b = 0;
                                 pacote[1] = (byte) (data[0] & 0xFF);
                                 pacote[2] = (byte) (data[1] & 0xFF);
                                 pacote[3] = (byte) (data[2] & 0xFF);
@@ -116,8 +113,6 @@ public class BluetoothActivity extends AppCompatActivity {
 
                             if (dados.length() == 8) {
 
-                                a = 0;
-                                b = 0;
                                 pacote[1] = (byte) (data[0] & 0xFF);
                                 pacote[2] = (byte) (data[1] & 0xFF);
                                 pacote[3] = (byte) (data[2] & 0xFF);
@@ -151,13 +146,14 @@ public class BluetoothActivity extends AppCompatActivity {
                                     b = (pacote[6] & 0xFF) * Math.pow(256, 3) + (pacote[7] & 0xFF) * Math.pow(256, 2) + (pacote[8] & 0xFF) * 256 + (pacote[9] & 0xFF);
                                     res = "Energia Total do Padrão: " + Float.toString((float) a / 1000)
                                             + "\n Energia total do Medidor :" + Float.toString((float) b / 1000);
-                                    registrador.escreverTela("Teste sendo finalizado ... \n");
+                                    registrador.escreverTela("Teste sendo finalizado ... \n", (a / 1000), (b / 1000));
 
                                     finalDeTeste = false;
                                     break;
 
                                 } else {
-                                    registrador.escreverTela("Recebendo dados do padrão \n" + res);
+
+                                    registrador.escreverTela("Recebendo dados do padrão \n" + res, (a / 1000), (b / 1000));
                                 }
                             }
 
