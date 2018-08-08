@@ -171,8 +171,17 @@ public class SelecionarMedidorActivity extends AppCompatActivity {
             } else {
 
                 //vetor que vem do banco está na ordem :
-                //medidor_num_geral, medidor_instalacao, medidor_modelo, medidor_fabricante, medidor_tensao_nominal, medidor_corrente_nominal, medidor_tipo_medidor, medidor_KdKe," +
-                //" medidor_RR, medidor_num_elementos, medidor_ano_fabricacao,  medidor_classe, medidor_fios, medidor_port_inmetro
+//                arrData[0] = cursor.getString(cursor.getColumnIndexOrThrow(NUM_GERAL));
+//                arrData[2] = cursor.getString(cursor.getColumnIndexOrThrow(MODELO));
+//                arrData[3] = cursor.getString(cursor.getColumnIndexOrThrow(FABRICANTE));
+//                arrData[4] = cursor.getString(cursor.getColumnIndexOrThrow(TENSAO_NOMINAL));
+//                arrData[5] = String.valueOf(cursor.getDouble(cursor.getColumnIndexOrThrow(CORRENTE_NOMINAL)));
+//                arrData[6] = cursor.getString(cursor.getColumnIndexOrThrow(TIPO_MEDIDOR));
+//                arrData[7] = String.valueOf(cursor.getDouble(cursor.getColumnIndexOrThrow(KDKE)));
+//                arrData[8] = cursor.getString(cursor.getColumnIndexOrThrow(RR));
+//                arrData[9] = cursor.getString(cursor.getColumnIndexOrThrow(NUM_ELEMENTOS));
+//                arrData[10] = cursor.getString(cursor.getColumnIndexOrThrow(CLASSE));
+//                arrData[11] = cursor.getString(cursor.getColumnIndexOrThrow(FIOS));
 
                 numGeral.setText(nome[0]);
                 ModeloMedidor.setEnabled(true);
@@ -201,14 +210,12 @@ public class SelecionarMedidorActivity extends AppCompatActivity {
                 RR.setText(nome[8]);
                 NumElementos.setEnabled(true);
                 NumElementos.setText(nome[9]);
-                AnoFabricacao.setEnabled(true);
-                AnoFabricacao.setText(nome[10]);
                 ClasseMedidor.setEnabled(true);
-                ClasseMedidor.setText(nome[11]);
+                ClasseMedidor.setText(nome[10]);
                 Fios.setEnabled(true);
-                Fios.setText(nome[12]);
+                Fios.setText(nome[11]);
+                AnoFabricacao.setEnabled(true);
                 PortariaInmetro.setEnabled(true);
-                PortariaInmetro.setText(nome[13]);
 
             }
         }
@@ -229,7 +236,6 @@ public class SelecionarMedidorActivity extends AppCompatActivity {
         savedInstanceState.putCharSequence("NumElementosMedidor", String.valueOf(NumElementos.getText()));
         savedInstanceState.putCharSequence("AnoFabricacaoMedidor", String.valueOf(AnoFabricacao.getText()));
         savedInstanceState.putCharSequence("FiosMedidor", String.valueOf(Fios.getText()));
-        savedInstanceState.putCharSequence("PortariaInmetroMedidor", String.valueOf(PortariaInmetro.getText()));
 
         super.onSaveInstanceState(savedInstanceState);
     }

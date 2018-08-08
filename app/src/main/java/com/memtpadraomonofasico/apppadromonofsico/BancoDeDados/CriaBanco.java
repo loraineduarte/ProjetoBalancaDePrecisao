@@ -246,10 +246,8 @@ public class CriaBanco extends SQLiteOpenHelper {
                 arrData[7] = String.valueOf(cursor.getDouble(cursor.getColumnIndexOrThrow(KDKE)));
                 arrData[8] = cursor.getString(cursor.getColumnIndexOrThrow(RR));
                 arrData[9] = cursor.getString(cursor.getColumnIndexOrThrow(NUM_ELEMENTOS));
-                //  arrData[10] = cursor.getString(cursor.getColumnIndexOrThrow(ANO_FABRICACAO));
                 arrData[10] = cursor.getString(cursor.getColumnIndexOrThrow(CLASSE));
                 arrData[11] = cursor.getString(cursor.getColumnIndexOrThrow(FIOS));
-                // arrData[12] = cursor.getString(cursor.getColumnIndexOrThrow(PORT_INMETRO));
 
             }
         }

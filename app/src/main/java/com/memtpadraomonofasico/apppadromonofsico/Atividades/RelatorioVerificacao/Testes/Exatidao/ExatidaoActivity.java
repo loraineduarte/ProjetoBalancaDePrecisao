@@ -160,7 +160,7 @@ public class ExatidaoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_inspecao_conformidade);
+        setContentView(R.layout.activity_exatidao);
 
         NoEncryption encryption = new NoEncryption();
         Hawk.init(this).setEncryption(encryption).build();
