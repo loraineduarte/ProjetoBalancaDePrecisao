@@ -21,6 +21,7 @@ import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
 import com.orhanobut.hawk.NoEncryption;
 
+import java.text.DecimalFormat;
 import java.util.Calendar;
 
 @SuppressWarnings("ALL")
@@ -42,7 +43,7 @@ public class ExatidaoActivity extends AppCompatActivity {
     boolean testeCargaNominalComecou = false;
     boolean testeCargaPequenaComecou = false;
     boolean testeFCComecou = false;
-    long tempoInicio, tempoTeste;
+    double tempoInicio, tempoTeste;
     @SuppressLint("WrongViewCast")
     private
     Button conectar;
@@ -137,7 +138,7 @@ public class ExatidaoActivity extends AppCompatActivity {
                     } else {
 
                         long dateAgora = Calendar.getInstance().getTimeInMillis(); //pega a hora do sistema
-                        long diferenca = -(dateAgora - tempoInicio);
+                        double diferenca = -(dateAgora - tempoInicio);
                         int timeInSeconds = (int) diferenca / 1000;
 
                         hours = timeInSeconds / 3600;
@@ -278,7 +279,9 @@ public class ExatidaoActivity extends AppCompatActivity {
         float kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
         float FP = 1;
 
-        tempoTeste = (long) (((3600 * pulsos * kdMedidor) / (tensao * corrente * FP)));
+        tempoTeste = ((((3600 * pulsos * kdMedidor) / (tensao * corrente * FP))) / 10);
+        DecimalFormat df = new DecimalFormat("0.##");
+        String dx = df.format(tempoTeste);
 
         if (conexao == null) {
             Toast.makeText(getApplicationContext(), "O teste não pode ser iniciado/parado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
@@ -291,9 +294,10 @@ public class ExatidaoActivity extends AppCompatActivity {
                 testeNominal.setText("Cancelar Teste de Carga Nominal");
                 aplicarCargaNominal(view);
 
-//  Estimativa: " + tempoTeste + " minuto(s) para finalizar o teste.
+//
                 textMessageInspecaoConformidade.clearComposingText();
-                textMessageInspecaoConformidade.setText("Teste sendo iniciado...");
+                textMessageInspecaoConformidade.setText("Teste sendo iniciado...  \n Estimativa: " + dx + " minuto(s) para finalizar o teste.");
+                tempoTeste = 0;
 
             } else {
                 testeCargaNominalComecou = false;
@@ -320,10 +324,12 @@ public class ExatidaoActivity extends AppCompatActivity {
         float tensao = Float.parseFloat((String) Hawk.get("TensaoNominalMedidor"));
         float corrente = Float.parseFloat((String) Hawk.get("CorrenteNominalMedidor"));
         float kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
-        //  kdMedidor = kdMedidor *
         float FP = 1;
 
-        tempoTeste = (long) (((3600 * pulsos * kdMedidor) / (tensao * corrente * FP)));
+        tempoTeste = ((((3600 * pulsos * kdMedidor) / (tensao * corrente * FP))) / 10);
+
+        DecimalFormat df = new DecimalFormat("0.##");
+        String dx = df.format(tempoTeste);
 
         if (conexao == null) {
             Toast.makeText(getApplicationContext(), "O teste não pode ser iniciado/parado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
@@ -335,9 +341,10 @@ public class ExatidaoActivity extends AppCompatActivity {
                 testePequeno.clearComposingText();
                 testePequeno.setText("Cancelar Teste de Carga Pequena");
                 aplicarCargaPequena(view);
-                //  Estimativa: " + tempoTeste + " minuto(s) para finalizar o teste.
+                //
                 textMessageInspecaoConformidade.clearComposingText();
-                textMessageInspecaoConformidade.setText("Teste sendo iniciado...");
+                textMessageInspecaoConformidade.setText("Teste sendo iniciado... \n Estimativa: " + dx + " minuto(s) para finalizar o teste.");
+                tempoTeste = 0;
 
             } else {
                 testeCargaPequenaComecou = false;

@@ -74,10 +74,11 @@ public class BluetoothActivity extends AppCompatActivity {
                             if (dados.length() == 1) {
                                 pacote[0] = (byte) (data[0] & 0xFF);
 
-                                if ((dataString.startsWith("F"))) {
-                                    Log.d("ENTROU FIM", "FINAL DE TESTE");
-                                    finalDeTeste = true;
-                                }
+                            }
+
+                            if ((dataString.startsWith("F"))) {
+                                Log.d("ENTROU FIM", "FINAL DE TESTE");
+                                finalDeTeste = true;
                             }
 
                             if (dados.length() == 9) {
@@ -95,6 +96,17 @@ public class BluetoothActivity extends AppCompatActivity {
                                 pacote[8] = (byte) (data[7] & 0xFF);
                                 pacote[9] = (byte) (data[8] & 0xFF);
 
+                                Log.d("PACOTE", String.valueOf(pacote[0]));
+                                Log.d("PACOTE", String.valueOf(pacote[1]));
+                                Log.d("PACOTE", String.valueOf(pacote[2]));
+                                Log.d("PACOTE", String.valueOf(pacote[3]));
+                                Log.d("PACOTE", String.valueOf(pacote[4]));
+                                Log.d("PACOTE", String.valueOf(pacote[5]));
+                                Log.d("PACOTE", String.valueOf(pacote[6]));
+                                Log.d("PACOTE", String.valueOf(pacote[7]));
+                                Log.d("PACOTE", String.valueOf(pacote[8]));
+                                Log.d("PACOTE", String.valueOf(pacote[9]));
+
                                 a = (pacote[2]) * Math.pow(256, 3) + (pacote[3] & 0xFF) * Math.pow(256, 2) + (pacote[4] & 0xFF) * 256 + (pacote[5] & 0xFF);
                                 b = (pacote[6] & 0xFF) * Math.pow(256, 3) + (pacote[7] & 0xFF) * Math.pow(256, 2) + (pacote[8] & 0xFF) * 256 + (pacote[9] & 0xFF);
 
@@ -102,8 +114,7 @@ public class BluetoothActivity extends AppCompatActivity {
 
                             }
 
-                            if (dados.length() > 9) {
-
+                            if (dados.length() == 8) {
 
                                 a = 0;
                                 b = 0;
@@ -112,15 +123,26 @@ public class BluetoothActivity extends AppCompatActivity {
                                 pacote[3] = (byte) (data[2] & 0xFF);
                                 pacote[4] = (byte) (data[3] & 0xFF);
                                 pacote[5] = (byte) (data[4] & 0xFF);
+                                pacote[6] = (byte) (data[5] & 0xFF);
+                                pacote[7] = (byte) (data[6] & 0xFF);
+                                pacote[8] = (byte) (data[7] & 0xFF);
+
+                                Log.d("PACOTE", String.valueOf(pacote[0]));
+                                Log.d("PACOTE", String.valueOf(pacote[1]));
+                                Log.d("PACOTE", String.valueOf(pacote[2]));
+                                Log.d("PACOTE", String.valueOf(pacote[3]));
+                                Log.d("PACOTE", String.valueOf(pacote[4]));
+                                Log.d("PACOTE", String.valueOf(pacote[5]));
+                                Log.d("PACOTE", String.valueOf(pacote[6]));
+                                Log.d("PACOTE", String.valueOf(pacote[7]));
+                                Log.d("PACOTE", String.valueOf(pacote[8]));
 
                                 a = (pacote[2]) * Math.pow(256, 3) + (pacote[3] & 0xFF) * Math.pow(256, 2) + (pacote[4] & 0xFF) * 256 + (pacote[5] & 0xFF);
 
 
-                                res = "  Pacote inconsistente de valor :   " + Float.toString((float) a / 1000);
+                                res = " Tensão :   " + Float.toString((float) a / 1000);
 
                             }
-
-
 
                             if (dataString.contains("R")) {
 

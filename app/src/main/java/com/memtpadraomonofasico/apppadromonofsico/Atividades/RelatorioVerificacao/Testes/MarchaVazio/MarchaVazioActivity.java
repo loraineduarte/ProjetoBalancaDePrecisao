@@ -245,8 +245,6 @@ public class MarchaVazioActivity extends AppCompatActivity {
         String time = tempoReprovado.getText().toString();
 
         if(time.equals("")){
-
-
             tempoReprovado.setText("1");
             Toast.makeText(getApplicationContext(), "Tempo de teste ajustado para 1 minuto... ", Toast.LENGTH_LONG).show();
             pacote[6] = (byte) (0 & 0xFF);
@@ -254,11 +252,8 @@ public class MarchaVazioActivity extends AppCompatActivity {
             pacote[8] = (byte) (0 & 0xFF);
             pacote[9] = (byte) (60 & 0xFF);
 
-
         }else {
             float tempo = (Float.parseFloat(tempoReprovado.getText().toString())) * 60;
-
-
             bytes[4] = (byte) (tempo / (Math.pow(256, 3)));
             bytes[5] = (byte) ((tempo - (bytes[4] * (Math.pow(256, 3)))) / Math.pow(256, 2));
             bytes[6] = (byte) ((tempo - ((bytes[4] * (Math.pow(256, 3))) + (bytes[5] * (Math.pow(256, 2))))) / Math.pow(256, 1));
@@ -268,8 +263,8 @@ public class MarchaVazioActivity extends AppCompatActivity {
             pacote[7] = (byte) (bytes[5] & 0xFF);
             pacote[8] = (byte) (bytes[6] & 0xFF);
             pacote[9] = (byte) (bytes[7] & 0xFF);
-        }
 
+        }
 
         conexao.write(pacote);
 
@@ -305,7 +300,6 @@ public class MarchaVazioActivity extends AppCompatActivity {
                     if (res.startsWith("T")) {
                         textMessage.clearComposingText();
                         textMessage.setText("Teste Concluído!");
-                        // textMessage.setText(res);
                         testeComecou = false;
 
                     } else {
