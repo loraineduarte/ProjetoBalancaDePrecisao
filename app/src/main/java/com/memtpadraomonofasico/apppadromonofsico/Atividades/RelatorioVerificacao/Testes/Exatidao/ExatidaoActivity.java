@@ -21,8 +21,11 @@ import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
 import com.orhanobut.hawk.NoEncryption;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
-import java.util.Calendar;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+
 
 @SuppressWarnings("ALL")
 public class ExatidaoActivity extends AppCompatActivity {
@@ -43,7 +46,9 @@ public class ExatidaoActivity extends AppCompatActivity {
     boolean testeCargaNominalComecou = false;
     boolean testeCargaPequenaComecou = false;
     boolean testeFCComecou = false;
-    double tempoInicio, tempoTeste;
+    double tempoTeste;
+    long tempoInicio, tempoCorrendo;
+    Instant iInicial;
     @SuppressLint("WrongViewCast")
     private
     Button conectar;
@@ -137,19 +142,16 @@ public class ExatidaoActivity extends AppCompatActivity {
 
                     } else {
 
-                        long dateAgora = Calendar.getInstance().getTimeInMillis(); //pega a hora do sistema
-                        double diferenca = -(dateAgora - tempoInicio);
-                        int timeInSeconds = (int) diferenca / 1000;
+                        long total = System.currentTimeMillis();
+                        tempoCorrendo = 0;
+                        tempoCorrendo = (total - tempoInicio);
+                        DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+                        String today = formatter.format((tempoCorrendo / 1000));
+                        Log.d("TEMPO CORRIDO", String.valueOf(today));
 
-                        hours = timeInSeconds / 3600;
-                        timeInSeconds = timeInSeconds - (hours * 3600);
-                        minutes = timeInSeconds / 60;
-                        timeInSeconds = timeInSeconds - (minutes * 60);
-                        seconds = seconds + timeInSeconds;
-                        Log.d("TEMPO", (hours + " hour(s) " + minutes + " minute(s) " + seconds + " second(s)"));
 
                         textMessageInspecaoConformidade.clearComposingText();
-                        textMessageInspecaoConformidade.setText(res);
+                        textMessageInspecaoConformidade.setText(res + "\n O teste está executando a: " + today + " segundo(s)");
                     }
 
                 }
@@ -179,7 +181,7 @@ public class ExatidaoActivity extends AppCompatActivity {
         conectar = findViewById(R.id.buttonConectarDispositivo);
         testeNominal = findViewById(R.id.button2);
         testePequeno = findViewById(R.id.button3);
-        //quantidadePulsos = findViewById(R.id.QuantidadePulsos);
+        quantidadePulsos = findViewById(R.id.QuantidadePulsos);
 
         ativarBluetooth();
 
@@ -293,8 +295,6 @@ public class ExatidaoActivity extends AppCompatActivity {
                 testeNominal.clearComposingText();
                 testeNominal.setText("Cancelar Teste de Carga Nominal");
                 aplicarCargaNominal(view);
-
-//
                 textMessageInspecaoConformidade.clearComposingText();
                 textMessageInspecaoConformidade.setText("Teste sendo iniciado...  \n Estimativa: " + dx + " minuto(s) para finalizar o teste.");
                 tempoTeste = 0;
@@ -341,7 +341,6 @@ public class ExatidaoActivity extends AppCompatActivity {
                 testePequeno.clearComposingText();
                 testePequeno.setText("Cancelar Teste de Carga Pequena");
                 aplicarCargaPequena(view);
-                //
                 textMessageInspecaoConformidade.clearComposingText();
                 textMessageInspecaoConformidade.setText("Teste sendo iniciado... \n Estimativa: " + dx + " minuto(s) para finalizar o teste.");
                 tempoTeste = 0;
@@ -402,10 +401,12 @@ public class ExatidaoActivity extends AppCompatActivity {
     }
 
     public void aplicarCargaNominal(View view) {
-        tempoInicio = Calendar.getInstance().getTimeInMillis(); //pega a hora do sistema
-        hours = 0;
-        minutes = 0;
-        seconds = 0;
+
+
+        tempoInicio = System.currentTimeMillis();
+        DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+        String today = formatter.format(tempoInicio);
+        Log.d("TEMPO DO INICIO", String.valueOf(today));
 
 
         if (conexao == null) {
@@ -427,16 +428,35 @@ public class ExatidaoActivity extends AppCompatActivity {
             bytes[2] = (byte) ((valorMultiplicado - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))))) / Math.pow(256, 1));
             bytes[3] = (byte) ((valorMultiplicado - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))) + (bytes[2] * Math.pow(256, 1)))));
 
+            byte[] bytesPulso = new byte[4];
+
+            if (quantidadePulsos.getText().toString().equals("")) {
+                Toast.makeText(getApplicationContext(), "O teste foi configurado para 5 pulsos", Toast.LENGTH_LONG).show();
+                bytesPulso[0] = 0;
+                bytesPulso[1] = 5;
+                bytesPulso[2] = 0;
+                bytesPulso[3] = 0;
+                quantidadePulsos.setText("5");
+            } else {
+                int pulsos = Integer.parseInt(quantidadePulsos.getText().toString());
+                bytesPulso[0] = (byte) (pulsos / (Math.pow(256, 3)));
+                bytesPulso[1] = (byte) ((pulsos - (bytes[0] * (Math.pow(256, 3)))) / Math.pow(256, 2));
+                bytesPulso[2] = 0;
+                bytesPulso[3] = 0;
+            }
+
+
+
             pacote[0] = ('I' & 0xFF);
             pacote[1] = ('N' & 0xFF);
             pacote[2] = (byte) (bytes[0] & 0xFF);
             pacote[3] = (byte) (bytes[1] & 0xFF);
             pacote[4] = (byte) (bytes[2] & 0xFF);
             pacote[5] = (byte) (bytes[3] & 0xFF);
-            pacote[6] = (byte) (0 & 0xFF);
-            pacote[7] = (byte) (5 & 0xFF);
-            pacote[8] = (byte) (0 & 0xFF);
-            pacote[9] = (byte) (0 & 0xFF);
+            pacote[6] = (byte) (bytesPulso[0] & 0xFF);
+            pacote[7] = (byte) (bytesPulso[1] & 0xFF);
+            pacote[8] = (byte) (bytesPulso[2] & 0xFF);
+            pacote[9] = (byte) (bytesPulso[3] & 0xFF);
 
             conexao.write(pacote);
         }
@@ -446,11 +466,11 @@ public class ExatidaoActivity extends AppCompatActivity {
 
     public void aplicarCargaPequena(View view) {
 
-        tempoInicio = Calendar.getInstance().getTimeInMillis(); //pega a hora do sistema
-        hours = 0;
-        minutes = 0;
-        seconds = 0;
 
+        tempoInicio = System.currentTimeMillis();
+        DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+        String today = formatter.format(tempoInicio);
+        Log.d("TEMPO DO INICIO", String.valueOf(today));
 
         if (conexao == null) {
             Toast.makeText(getApplicationContext(), "O teste não pode ser inicializado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
@@ -469,18 +489,20 @@ public class ExatidaoActivity extends AppCompatActivity {
 
             byte[] bytesPulso = new byte[4];
 
-            // if (Integer.parseInt(quantidadePulsos.getText().toString()) <= 0) {
+            if (quantidadePulsos.getText().toString().equals("")) {
+                Toast.makeText(getApplicationContext(), "O teste foi configurado para 5 pulsos", Toast.LENGTH_LONG).show();
                 bytesPulso[0] = 0;
                 bytesPulso[1] = 5;
                 bytesPulso[2] = 0;
                 bytesPulso[3] = 0;
-//            } else {
-//                int pulsos = Integer.parseInt(quantidadePulsos.getText().toString());
-//                bytesPulso[0] = (byte) (pulsos / (Math.pow(256, 3)));
-//                bytesPulso[1] = (byte) ((pulsos - (bytes[0] * (Math.pow(256, 3)))) / Math.pow(256, 2));
-//                bytesPulso[2] = 0;
-//                bytesPulso[3] = 0;
-//            }
+                quantidadePulsos.setText("5");
+            } else {
+                int pulsos = Integer.parseInt(quantidadePulsos.getText().toString());
+                bytesPulso[0] = (byte) (pulsos / (Math.pow(256, 3)));
+                bytesPulso[1] = (byte) ((pulsos - (bytes[0] * (Math.pow(256, 3)))) / Math.pow(256, 2));
+                bytesPulso[2] = 0;
+                bytesPulso[3] = 0;
+            }
 
 
 
