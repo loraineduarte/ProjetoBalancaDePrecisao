@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
@@ -48,6 +50,8 @@ public class RegistradorActivity extends AppCompatActivity {
     private static TextView textMessage;
     private static TextView calibracaoPreTeste, calibracaoPosTeste;
     private static ThreadConexaoRegistrador conexao;
+    @SuppressLint("StaticFieldLeak")
+    private static Chronometer cronometro;
     List<String> av = new ArrayList<>();
     long tempoInicio;
     double tempoTeste;
@@ -68,12 +72,15 @@ public class RegistradorActivity extends AppCompatActivity {
 
     public void escreverTela(final String res, final double tensao, final double corrente) {
 
-
         handler.post(new Runnable() {
             @Override
             public void run() {
                 if (textMessage != null) {
                     if (res.startsWith("T")) {
+
+                        cronometro.stop(); // stop a chronometer
+                        cronometro.setText("00:00");
+
                         textMessage.clearComposingText();
                         textMessage.setText("Teste Concluído!");
 
@@ -87,7 +94,7 @@ public class RegistradorActivity extends AppCompatActivity {
                         String dx = df.format(tempoTeste);
 
                         textMessage.clearComposingText();
-                        textMessage.setText(res + " Estimado " + dx + " minuto(s) para a execução total do teste.");
+                        textMessage.setText(res + " \n Estimado " + dx + " minuto(s) ");
                     }
                 }
             }
@@ -131,6 +138,9 @@ public class RegistradorActivity extends AppCompatActivity {
             }
         });
 
+        cronometro = new Chronometer(this);
+        cronometro = findViewById(R.id.Cronometro);
+        cronometro.setVisibility(View.INVISIBLE);
         ativarBluetooth();
 
 
@@ -318,12 +328,17 @@ public class RegistradorActivity extends AppCompatActivity {
 
         conexao.write(pacote);
 
+        cronometro.stop();
+
 
     }
 
     public void executarTeste(View view) {
 
-        tempoInicio = System.currentTimeMillis();
+        cronometro.setVisibility(View.VISIBLE);
+        cronometro.setBase(SystemClock.elapsedRealtime());
+        cronometro.start(); // start a chronometer
+
         if (conexao == null) {
             Toast.makeText(getApplicationContext(), "O teste não pode ser inicializado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
 

@@ -5,10 +5,13 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -34,7 +37,7 @@ public class ExatidaoActivity extends AppCompatActivity {
     private static final int SELECT_PAIRED_DEVICE = 2;
     private static final int REQUEST_ENABLE_BT = 4;
     @SuppressLint("HandlerLeak")
-    private static final Handler handlerInspecaoConformidade = new Handler() {
+    private static final Handler handlerInspecaoConformidade = new Handler(Looper.getMainLooper()) {
     };
     static int hours, minutes, seconds;
     @SuppressLint("StaticFieldLeak")
@@ -43,6 +46,10 @@ public class ExatidaoActivity extends AppCompatActivity {
     private static TextView textMessageInspecaoConformidade;
     @SuppressLint("StaticFieldLeak")
     private static EditText quantidadePulsos;
+    @SuppressLint("StaticFieldLeak")
+    private static Chronometer cronometroPequeno;
+    @SuppressLint("StaticFieldLeak")
+    private static Chronometer cronometroNominal;
     boolean testeCargaNominalComecou = false;
     boolean testeCargaPequenaComecou = false;
     boolean testeFCComecou = false;
@@ -60,6 +67,16 @@ public class ExatidaoActivity extends AppCompatActivity {
 
     public void escreverTelaCargaPequena(final String res) {
 
+        new Thread(new Runnable() {
+            public void run() {
+                if (res.startsWith("T")) {
+
+                    cronometroPequeno.stop(); // stop a chronometer
+                    cronometroPequeno.setText("00:00");
+                }
+            }
+        }).start();
+
         handlerInspecaoConformidade.post(new Runnable() {
             @Override
             public void run() {
@@ -69,6 +86,11 @@ public class ExatidaoActivity extends AppCompatActivity {
 
 
                     if (res.startsWith("T")) {
+
+                        cronometroPequeno.setVisibility(View.INVISIBLE);
+                        cronometroPequeno.setEnabled(false);//stop(); // stop a chronometer
+                        cronometroPequeno.setText("00:00");
+
                         textMessageInspecaoConformidade.clearComposingText();
                         textMessageInspecaoConformidade.setText(res);
 
@@ -92,6 +114,7 @@ public class ExatidaoActivity extends AppCompatActivity {
 
     public void escreverTelaCargaNominal(final String res) {
 
+
         handlerInspecaoConformidade.post(new Runnable() {
             @Override
             public void run() {
@@ -99,6 +122,12 @@ public class ExatidaoActivity extends AppCompatActivity {
                 cargaNominalErro.setEnabled(true);
                 if (!(cargaNominalErro == null)) {
                     if (res.startsWith("T")) {
+
+                        cronometroNominal.setVisibility(View.INVISIBLE);
+                        cronometroNominal.setEnabled(false);// stop(); // stop a chronometer
+                        cronometroNominal.setText("00:00");
+
+
                         textMessageInspecaoConformidade.clearComposingText();
                         textMessageInspecaoConformidade.setText(res);
                         testeCargaNominalComecou = false;
@@ -116,6 +145,16 @@ public class ExatidaoActivity extends AppCompatActivity {
                 }
             }
         });
+
+        new Thread(new Runnable() {
+            public void run() {
+                if (res.startsWith("T")) {
+
+                    cronometroNominal.stop(); // stop a chronometer
+                    cronometroNominal.setText("00:00");
+                }
+            }
+        }).start();
 
     }
 
@@ -142,16 +181,20 @@ public class ExatidaoActivity extends AppCompatActivity {
 
                     } else {
 
-                        long total = System.currentTimeMillis();
-                        tempoCorrendo = 0;
-                        tempoCorrendo = (total - tempoInicio);
-                        DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-                        String today = formatter.format((tempoCorrendo / 1000));
-                        Log.d("TEMPO CORRIDO", String.valueOf(today));
+//                        long total = System.currentTimeMillis();
+//                        tempoCorrendo = ((((total - tempoInicio)%1000)%3600) %60) ;
+//                        long hours, minutes, seconds;
+//                        hours = tempoCorrendo / 3600;
+//                        tempoCorrendo = tempoCorrendo - (hours * 3600);
+//                        minutes = tempoCorrendo / 60;
+//                        tempoCorrendo = tempoCorrendo - (minutes * 60);
+//                        seconds = tempoCorrendo;
+//                        Log.d("TEMPO", ( minutes + " minute(s) " + seconds + " second(s)"));
+//                        Log.d("TEMPO CORRIDO", String.valueOf(tempoCorrendo));
 
 
                         textMessageInspecaoConformidade.clearComposingText();
-                        textMessageInspecaoConformidade.setText(res + "\n O teste está executando a: " + today + " segundo(s)");
+                        textMessageInspecaoConformidade.setText(res);
                     }
 
                 }
@@ -182,6 +225,15 @@ public class ExatidaoActivity extends AppCompatActivity {
         testeNominal = findViewById(R.id.button2);
         testePequeno = findViewById(R.id.button3);
         quantidadePulsos = findViewById(R.id.QuantidadePulsos);
+
+
+        cronometroPequeno = new Chronometer(this);
+        cronometroPequeno = findViewById(R.id.CronometroPequeno);
+        cronometroPequeno.setVisibility(View.INVISIBLE);
+
+        cronometroNominal = new Chronometer(this);
+        cronometroNominal = (Chronometer) findViewById(R.id.CronometroNominal); // initiate a chronometer
+        cronometroNominal.setVisibility(View.INVISIBLE);
 
         ativarBluetooth();
 
@@ -267,6 +319,11 @@ public class ExatidaoActivity extends AppCompatActivity {
     }
 
     public void mudarEstadoTesteCargaNominal(View view) {
+
+        cronometroNominal.setVisibility(View.VISIBLE);
+        cronometroNominal.setBase(SystemClock.elapsedRealtime());
+        cronometroNominal.start(); // start a chronometer
+
         int pulsos = 5;
         if (quantidadePulsos.getText().toString().equals("")) {
             Toast.makeText(getApplicationContext(), "O teste vai ser realizado com 5 pulsos!", Toast.LENGTH_LONG).show();
@@ -295,7 +352,8 @@ public class ExatidaoActivity extends AppCompatActivity {
                 testeNominal.setText("Cancelar Teste de Carga Nominal");
                 aplicarCargaNominal(view);
                 textMessageInspecaoConformidade.clearComposingText();
-                textMessageInspecaoConformidade.setText("Teste sendo iniciado...  \n Estimativa: " + dx + " minuto(s) para finalizar o teste.");
+                textMessageInspecaoConformidade.setText("Teste sendo iniciado...  \n " +
+                        "Estimativa: " + dx + " minuto(s)");
                 tempoTeste = 0;
 
             } else {
@@ -310,6 +368,10 @@ public class ExatidaoActivity extends AppCompatActivity {
     }
 
     public void mudarEstadoTesteCargaPequena(View view) {
+
+        cronometroPequeno.setVisibility(View.VISIBLE);
+        cronometroPequeno.setBase(SystemClock.elapsedRealtime());
+        cronometroPequeno.start(); // start a chronometer
 
         int pulsos = 5;
         if (quantidadePulsos.getText().toString().equals("")) {
@@ -339,7 +401,8 @@ public class ExatidaoActivity extends AppCompatActivity {
                 testePequeno.setText("Cancelar Teste de Carga Pequena");
                 aplicarCargaPequena(view);
                 textMessageInspecaoConformidade.clearComposingText();
-                textMessageInspecaoConformidade.setText("Teste sendo iniciado... \n Estimativa: " + dx + " minuto(s) para finalizar o teste.");
+                textMessageInspecaoConformidade.setText("Teste sendo iniciado... \n" +
+                        "Estimativa: " + dx + " minuto(s) ");
                 tempoTeste = 0;
 
             } else {
@@ -369,6 +432,13 @@ public class ExatidaoActivity extends AppCompatActivity {
         pacote[9] = (byte) (0 & 0xFF);
 
         conexao.write(pacote);
+
+
+        cronometroPequeno.stop(); // stop a chronometer
+        cronometroPequeno.setText("00:00");
+
+        cronometroNominal.stop(); // stop a chronometer
+        cronometroNominal.setText("00:00");
 
 
     }
@@ -454,9 +524,6 @@ public class ExatidaoActivity extends AppCompatActivity {
                 pacote[9] = (byte) (bytes[3] & 0xFF);
             }
 
-
-
-
             conexao.write(pacote);
         }
 
@@ -465,11 +532,11 @@ public class ExatidaoActivity extends AppCompatActivity {
 
     public void aplicarCargaPequena(View view) {
 
-
-        tempoInicio = System.currentTimeMillis();
-        DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-        String today = formatter.format(tempoInicio);
-        Log.d("TEMPO DO INICIO", String.valueOf(today));
+//
+//        tempoInicio = System.currentTimeMillis();
+//        DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+//        String today = formatter.format(tempoInicio);
+//        Log.d("TEMPO DO INICIO", String.valueOf(today));
 
         if (conexao == null) {
             Toast.makeText(getApplicationContext(), "O teste não pode ser inicializado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
@@ -657,6 +724,14 @@ public class ExatidaoActivity extends AppCompatActivity {
             pacote[9] = (byte) (232 & 0xFF);
 
             conexao.write(pacote);
+        }
+    }
+
+    public void pararCronometro(String res) {
+        if (res.startsWith("T")) {
+            cronometroNominal.setVisibility(View.INVISIBLE);
+            cronometroNominal.setEnabled(false);// stop(); // stop a chronometer
+            cronometroNominal.setText("00:00");
         }
     }
 }

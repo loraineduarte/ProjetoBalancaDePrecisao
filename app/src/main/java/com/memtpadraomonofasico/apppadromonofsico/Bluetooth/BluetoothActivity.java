@@ -67,9 +67,9 @@ public class BluetoothActivity extends AppCompatActivity {
                             double a = 0, b = 0;
                             cont = cont + 1;
                             dados = dataString;
-                            Log.d("DADOS", dados);
-                            Log.d("DADOS TAMANHO", String.valueOf(dados.length()));
-                            Log.d("DADOS STRING", dataString);
+//                            Log.d("DADOS", dados);
+//                            Log.d("DADOS TAMANHO", String.valueOf(dados.length()));
+//                            Log.d("DADOS STRING", dataString);
 
                             if (dados.length() == 1) {
                                 pacote[0] = (byte) (data[0] & 0xFF);
@@ -183,6 +183,7 @@ public class BluetoothActivity extends AppCompatActivity {
                                     res = Float.toString((float) (a / 1000)) + " % ";
                                     conformidade.escreverStatusTestesExatidao("Teste sendo finalizado ... \n" + res);
                                     conformidade.escreverTelaCargaNominal(res);
+                                   
                                     finalDeTeste = false;
                                     break;
 
@@ -204,6 +205,7 @@ public class BluetoothActivity extends AppCompatActivity {
                                     res = Float.toString((float) (a / 1000)) + "%";
                                     conformidade.escreverStatusTestesExatidao("Teste sendo finalizado ...Erro:  \n" + res);
                                     conformidade.escreverTelaCargaPequena(res);
+
                                     finalDeTeste = false;
                                     break;
 

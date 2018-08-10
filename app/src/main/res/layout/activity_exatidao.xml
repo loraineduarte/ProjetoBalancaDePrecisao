@@ -96,7 +96,7 @@
         android:id="@+id/CargaNominalErro2"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="150dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -115,6 +115,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
     </android.support.design.widget.TextInputLayout>
 
     <Button
@@ -139,7 +140,7 @@
         android:id="@+id/CargaPequenaErro2"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="150dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -346,5 +347,29 @@
             android:textColorHint="@android:color/darker_gray"
             android:textColorLink="@android:color/black" />
     </android.support.design.widget.TextInputLayout>
+
+    <Chronometer
+        android:id="@+id/CronometroNominal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/CargaNominalErro2"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+
+    <Chronometer
+        android:id="@+id/CronometroPequeno"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/CargaPequenaErro2"
+        app:layout_constraintTop_toTopOf="@+id/CargaPequenaErro2" />
 
 </android.support.constraint.ConstraintLayout>
