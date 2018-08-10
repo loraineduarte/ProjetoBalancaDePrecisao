@@ -268,13 +268,12 @@ public class ExatidaoActivity extends AppCompatActivity {
 
     public void mudarEstadoTesteCargaNominal(View view) {
         int pulsos = 5;
-//        if(quantidadePulsos.getText().toString().equals("")){
-//            Toast.makeText(getApplicationContext(), "O teste vai ser realizado com 5 pulsos!", Toast.LENGTH_LONG).show();
-//            pulsos=5;
-//        }
-//        else {
-//            pulsos = Integer.parseInt(quantidadePulsos.getText().toString());
-//        }
+        if (quantidadePulsos.getText().toString().equals("")) {
+            Toast.makeText(getApplicationContext(), "O teste vai ser realizado com 5 pulsos!", Toast.LENGTH_LONG).show();
+            pulsos = 5;
+        } else {
+            pulsos = Integer.parseInt(quantidadePulsos.getText().toString());
+        }
 
         float tensao = Float.parseFloat((String) Hawk.get("TensaoNominalMedidor"));
         float corrente = Float.parseFloat((String) Hawk.get("CorrenteNominalMedidor"));
@@ -312,15 +311,13 @@ public class ExatidaoActivity extends AppCompatActivity {
 
     public void mudarEstadoTesteCargaPequena(View view) {
 
-
-//        if(quantidadePulsos.getText().toString().equals("")){
-//            Toast.makeText(getApplicationContext(), "O teste vai ser realizado com 5 pulsos!", Toast.LENGTH_LONG).show();
-//            pulsos=5;
-//        }
-//        else {
-//            pulsos = Integer.parseInt(quantidadePulsos.getText().toString());
-//        }
         int pulsos = 5;
+        if (quantidadePulsos.getText().toString().equals("")) {
+            Toast.makeText(getApplicationContext(), "O teste vai ser realizado com 5 pulsos!", Toast.LENGTH_LONG).show();
+            pulsos = 5;
+        } else {
+            pulsos = Integer.parseInt(quantidadePulsos.getText().toString());
+        }
         float tensao = Float.parseFloat((String) Hawk.get("TensaoNominalMedidor"));
         float corrente = Float.parseFloat((String) Hawk.get("CorrenteNominalMedidor"));
         float kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
@@ -422,30 +419,10 @@ public class ExatidaoActivity extends AppCompatActivity {
 
             byte[] bytes = new byte[4];
             float valorMultiplicado = (float) (kdMedidor * 1000000);
-
             bytes[0] = (byte) (valorMultiplicado / (Math.pow(256, 3)));
             bytes[1] = (byte) ((valorMultiplicado - (bytes[0] * (Math.pow(256, 3)))) / Math.pow(256, 2));
             bytes[2] = (byte) ((valorMultiplicado - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))))) / Math.pow(256, 1));
             bytes[3] = (byte) ((valorMultiplicado - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))) + (bytes[2] * Math.pow(256, 1)))));
-
-            byte[] bytesPulso = new byte[4];
-
-            if (quantidadePulsos.getText().toString().equals("")) {
-                Toast.makeText(getApplicationContext(), "O teste foi configurado para 5 pulsos", Toast.LENGTH_LONG).show();
-                bytesPulso[0] = 0;
-                bytesPulso[1] = 5;
-                bytesPulso[2] = 0;
-                bytesPulso[3] = 0;
-                quantidadePulsos.setText("5");
-            } else {
-                int pulsos = Integer.parseInt(quantidadePulsos.getText().toString());
-                bytesPulso[0] = (byte) (pulsos / (Math.pow(256, 3)));
-                bytesPulso[1] = (byte) ((pulsos - (bytes[0] * (Math.pow(256, 3)))) / Math.pow(256, 2));
-                bytesPulso[2] = 0;
-                bytesPulso[3] = 0;
-            }
-
-
 
             pacote[0] = ('I' & 0xFF);
             pacote[1] = ('N' & 0xFF);
@@ -453,10 +430,32 @@ public class ExatidaoActivity extends AppCompatActivity {
             pacote[3] = (byte) (bytes[1] & 0xFF);
             pacote[4] = (byte) (bytes[2] & 0xFF);
             pacote[5] = (byte) (bytes[3] & 0xFF);
-            pacote[6] = (byte) (bytesPulso[0] & 0xFF);
-            pacote[7] = (byte) (bytesPulso[1] & 0xFF);
-            pacote[8] = (byte) (bytesPulso[2] & 0xFF);
-            pacote[9] = (byte) (bytesPulso[3] & 0xFF);
+
+
+            if (quantidadePulsos.getText().toString().equals("")) {
+                Toast.makeText(getApplicationContext(), "O teste foi configurado para 5 pulsos", Toast.LENGTH_LONG).show();
+                quantidadePulsos.setText("5");
+                pacote[6] = (byte) (0 & 0xFF);
+                pacote[7] = (byte) (5 & 0xFF);
+                pacote[8] = (byte) (0 & 0xFF);
+                pacote[9] = (byte) (0 & 0xFF);
+
+
+            } else {
+                float pulsos = Float.parseFloat((quantidadePulsos.getText().toString()));
+                bytes[0] = (byte) (pulsos / (Math.pow(256, 1)));
+                bytes[1] = (byte) (pulsos - (bytes[0] * (Math.pow(256, 1))));
+                bytes[2] = 0;
+                bytes[3] = 0;
+
+                pacote[6] = (byte) (bytes[0] & 0xFF);
+                pacote[7] = (byte) (bytes[1] & 0xFF);
+                pacote[8] = (byte) (bytes[2] & 0xFF);
+                pacote[9] = (byte) (bytes[3] & 0xFF);
+            }
+
+
+
 
             conexao.write(pacote);
         }
@@ -479,32 +478,13 @@ public class ExatidaoActivity extends AppCompatActivity {
 
             byte[] pacote = new byte[10];
             float kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
+
             byte[] bytes = new byte[4];
             float valorMultiplicado = (float) (kdMedidor * 1000000);
-
             bytes[0] = (byte) (valorMultiplicado / (Math.pow(256, 3)));
             bytes[1] = (byte) ((valorMultiplicado - (bytes[0] * (Math.pow(256, 3)))) / Math.pow(256, 2));
             bytes[2] = (byte) ((valorMultiplicado - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))))) / Math.pow(256, 1));
             bytes[3] = (byte) ((valorMultiplicado - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))) + (bytes[2] * Math.pow(256, 1)))));
-
-            byte[] bytesPulso = new byte[4];
-
-            if (quantidadePulsos.getText().toString().equals("")) {
-                Toast.makeText(getApplicationContext(), "O teste foi configurado para 5 pulsos", Toast.LENGTH_LONG).show();
-                bytesPulso[0] = 0;
-                bytesPulso[1] = 5;
-                bytesPulso[2] = 0;
-                bytesPulso[3] = 0;
-                quantidadePulsos.setText("5");
-            } else {
-                int pulsos = Integer.parseInt(quantidadePulsos.getText().toString());
-                bytesPulso[0] = (byte) (pulsos / (Math.pow(256, 3)));
-                bytesPulso[1] = (byte) ((pulsos - (bytes[0] * (Math.pow(256, 3)))) / Math.pow(256, 2));
-                bytesPulso[2] = 0;
-                bytesPulso[3] = 0;
-            }
-
-
 
             pacote[0] = ('I' & 0xFF);
             pacote[1] = ('B' & 0xFF);
@@ -512,10 +492,32 @@ public class ExatidaoActivity extends AppCompatActivity {
             pacote[3] = (byte) (bytes[1] & 0xFF);
             pacote[4] = (byte) (bytes[2] & 0xFF);
             pacote[5] = (byte) (bytes[3] & 0xFF);
-            pacote[6] = (byte) (bytesPulso[0] & 0xFF);
-            pacote[7] = (byte) (bytesPulso[1] & 0xFF);
-            pacote[8] = (byte) (bytesPulso[2] & 0xFF);
-            pacote[9] = (byte) (bytesPulso[3] & 0xFF);
+
+
+            if (quantidadePulsos.getText().toString().equals("")) {
+                Toast.makeText(getApplicationContext(), "O teste foi configurado para 5 pulsos", Toast.LENGTH_LONG).show();
+                quantidadePulsos.setText("5");
+                pacote[6] = (byte) (0 & 0xFF);
+                pacote[7] = (byte) (5 & 0xFF);
+                pacote[8] = (byte) (0 & 0xFF);
+                pacote[9] = (byte) (0 & 0xFF);
+
+
+            } else {
+                float pulsos = Float.parseFloat((quantidadePulsos.getText().toString()));
+                bytes[0] = (byte) (pulsos / (Math.pow(256, 1)));
+                bytes[1] = (byte) (pulsos - (bytes[0] * (Math.pow(256, 1))));
+                bytes[2] = 0;
+                bytes[3] = 0;
+
+                pacote[6] = (byte) (bytes[0] & 0xFF);
+                pacote[7] = (byte) (bytes[1] & 0xFF);
+                pacote[8] = (byte) (bytes[2] & 0xFF);
+                pacote[9] = (byte) (bytes[3] & 0xFF);
+            }
+
+
+
 
             conexao.write(pacote);
         }
