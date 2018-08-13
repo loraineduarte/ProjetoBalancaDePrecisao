@@ -42,7 +42,7 @@ public class CriaBanco extends SQLiteOpenHelper {
     private static final String NOME_BANCO = "banco.db";
 
 
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 1;
     public SQLiteDatabase db;
     BancoController banco;
 
@@ -132,10 +132,14 @@ public class CriaBanco extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(" DROP TABLE IF EXISTS " + TABELA_AVALIADOR);
-        db.execSQL(" DROP TABLE IF EXISTS " + TABELA_MEDIDOR);
-        db.execSQL(" DROP TABLE IF EXISTS " + TABELA_MENSAGENS);
-        onCreate(db);
+
+        if (oldVersion < 1) {
+            db.execSQL(" DROP TABLE IF EXISTS " + TABELA_AVALIADOR);
+            db.execSQL(" DROP TABLE IF EXISTS " + TABELA_MEDIDOR);
+            db.execSQL(" DROP TABLE IF EXISTS " + TABELA_MENSAGENS);
+            onCreate(db);
+        }
+
     }
 
     public String[] SelectAllAvaliadores() {
