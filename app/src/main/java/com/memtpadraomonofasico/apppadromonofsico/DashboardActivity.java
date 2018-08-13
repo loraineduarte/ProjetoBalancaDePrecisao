@@ -52,11 +52,20 @@ implements NavigationView.OnNavigationItemSelectedListener {
 
         user = Hawk.get("usuario");
         senha = Hawk.get("senha" );
+        Hawk.put("usuario", user);
+        Hawk.put("senha", senha);
 
         final BancoController crud = new BancoController(getBaseContext());
         cursorMedidor = crud.pegaMedidores();
         cursorAvaliador = crud.pegaAvaliadores();
-        usuarioLogin = crud.pegaTipoUsuario(user, senha);
+        if ((user == null) || (senha == null)) {
+            usuarioLogin = "false";
+        }
+        if ((user == null) && (senha == null)) {
+            usuarioLogin = "false";
+        } else {
+            usuarioLogin = crud.pegaTipoUsuario(user, senha);
+        }
 
         Button opcoesAdmin = findViewById(R.id.AdminOpcoes);
         Button teste = findViewById(R.id.Teste);

@@ -846,6 +846,12 @@ public class ConclusaoActivity extends AppCompatActivity {
             intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
             startActivityForResult(intent, ABRIR_PDF);
 
+            Hawk.put("usuario", user);
+            Hawk.put("senha", senha);
+
+//            Intent intent2 = new Intent(this, DashboardActivity.class);
+//            startActivity(intent2);
+
 
         } catch (DocumentException de) {
             System.err.println(de.getMessage());
