@@ -90,7 +90,7 @@ public class CriaBanco extends SQLiteOpenHelper {
         db.execSQL(sqlMensagens);
 
 
-        final String Insert_Data_Admin = "INSERT or replace INTO avaliador VALUES( 1, 'administrador','12345','admin', 'true');";
+        final String Insert_Data_Admin = "INSERT or replace INTO avaliador VALUES( 1, 'administrador','admin','123456', 'true');";
         db.execSQL(Insert_Data_Admin);
 
         final String Insert_Data_Mensagens = "INSERT or replace INTO mensagens VALUES ( 1, 'Selos de Calibração','Base Perfurada')," +

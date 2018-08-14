@@ -64,10 +64,18 @@ public class ListagemAvaliadores extends AppCompatActivity {
     }
 
     private void deletarContatoNoBanco(String nome, String matricula, View view) {
-        BancoController crud = new BancoController(getBaseContext());
-        String cursor = crud.deletaAvaliador(nome, matricula);
-        Toast.makeText(getApplicationContext(), cursor, Toast.LENGTH_LONG).show();
-        reloadAllData();
+
+        if (nome.equals("administrador") && (matricula.equals("admin"))) {
+            Toast.makeText(getApplicationContext(), "Não é possível excluir o Administrador principal do sistema. ", Toast.LENGTH_LONG).show();
+
+
+        } else {
+            BancoController crud = new BancoController(getBaseContext());
+            String cursor = crud.deletaAvaliador(nome, matricula);
+            Toast.makeText(getApplicationContext(), cursor, Toast.LENGTH_LONG).show();
+            reloadAllData();
+        }
+
     }
 
     private void reloadAllData() {
@@ -88,12 +96,18 @@ public class ListagemAvaliadores extends AppCompatActivity {
         String senha = cursor.getString(3);
         String tipoUsu = cursor.getString(4);
 
-        Intent intent = new Intent(this, EditarAvaliadorActivity.class);
-        intent.putExtra("nome", nome);
-        intent.putExtra("matricula", matricula);
-        intent.putExtra("senha", senha);
-        intent.putExtra("tipousu", tipoUsu);
-        startActivity(intent);
+        if (nome.equals("administrador") && (matricula.equals("admin"))) {
+            Toast.makeText(getApplicationContext(), "Não é possível editar o Administrador principal do sistema. ", Toast.LENGTH_LONG).show();
+
+        } else {
+            Intent intent = new Intent(this, EditarAvaliadorActivity.class);
+            intent.putExtra("nome", nome);
+            intent.putExtra("matricula", matricula);
+            intent.putExtra("senha", senha);
+            intent.putExtra("tipousu", tipoUsu);
+            startActivity(intent);
+
+        }
 
     }
 

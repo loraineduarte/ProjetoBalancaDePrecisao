@@ -72,6 +72,7 @@ public class ListagemMedidores extends AppCompatActivity {
 
     private void deletarMedidorNoBanco(String numeroSerie, View view) {
 
+
         String cursor = banco.DeletarMedidor(numeroSerie);
         Toast.makeText(getApplicationContext(), cursor, Toast.LENGTH_LONG).show();
         reloadAllDataMedidor();
