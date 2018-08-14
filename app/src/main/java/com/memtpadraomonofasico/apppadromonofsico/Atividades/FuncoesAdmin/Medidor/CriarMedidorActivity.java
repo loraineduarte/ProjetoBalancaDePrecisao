@@ -66,21 +66,11 @@ public class CriarMedidorActivity extends AppCompatActivity {
 
                 if (numGeral.getText().toString().equals("") || fabricante.getText().toString().equals("") || numElementos.getText().toString().equals("") || modelo.getText().toString().equals("") ||
                         (correnteNominal.getText().toString().equals("")) || (tensaoNominal.getText().toString().equals("")) || (KdKe.getText().toString().equals(""))
-                        || RR.getText().toString().equals("") || classe.getText().toString().equals("") || ((!checkEletronico.isChecked()) && (!checkMecanico.isChecked())) || fios.getText().toString().equals("")) {
+                        || classe.getText().toString().equals("") || ((!checkEletronico.isChecked()) && (!checkMecanico.isChecked())) || fios.getText().toString().equals("")) {
 
                     Toast.makeText(getApplicationContext(), "Campo obrigatório em branco! ", Toast.LENGTH_LONG).show();
                 } else {
 
-                    String numGeralString = numGeral.getText().toString();
-                    String fabricanteString = fabricante.getText().toString();
-                    String numElementosString = (numElementos.getText().toString());
-                    String modeloString = modelo.getText().toString();
-                    double tensaoNominalString = Double.parseDouble((tensaoNominal.getText().toString()));
-                    double correnteNominalString = Double.parseDouble((correnteNominal.getText().toString()));
-                    String classeString = classe.getText().toString();
-                    String RRString = RR.getText().toString();
-                    double KdKeString = Double.parseDouble((KdKe.getText().toString()));
-                    int fiosString = Integer.parseInt(fios.getText().toString());
                     String tipoMedidorString = " ";
                     if (checkEletronico.isChecked()) {
                         tipoMedidorString = "Eletrônico";
@@ -89,13 +79,33 @@ public class CriarMedidorActivity extends AppCompatActivity {
                     }
 
                     if ((tipoMedidorString.startsWith("M") && RR.getText().toString().equals(""))) {
+                        Toast.makeText(getApplicationContext(), "Campo RR é obrigatório quando o modelo de medidor é mecânico! ", Toast.LENGTH_LONG).show();
 
-                        Toast.makeText(getApplicationContext(), "Campo RR é obrigatório quando o modelo de medidor é eletrônico! ", Toast.LENGTH_LONG).show();
+                    } else {
+
+                        String RRString = "";
+                        if (RR.getText().toString().equals("")) {
+                            RRString = "0";
+                        } else {
+                            RRString = RR.getText().toString();
+                        }
+
+                        String numGeralString = numGeral.getText().toString();
+                        String fabricanteString = fabricante.getText().toString();
+                        String numElementosString = (numElementos.getText().toString());
+                        String modeloString = modelo.getText().toString();
+                        double tensaoNominalString = Double.parseDouble((tensaoNominal.getText().toString()));
+                        double correnteNominalString = Double.parseDouble((correnteNominal.getText().toString()));
+                        String classeString = classe.getText().toString();
+                        double KdKeString = Double.parseDouble((KdKe.getText().toString()));
+                        int fiosString = Integer.parseInt(fios.getText().toString());
+
+                        String resultado = crud.insereNovoMedidor(numGeralString, fabricanteString, numElementosString, modeloString, correnteNominalString,
+                                classeString, RRString, tensaoNominalString, KdKeString, fiosString, tipoMedidorString);
+                        Toast.makeText(getApplicationContext(), resultado, Toast.LENGTH_LONG).show();
+                        finish();
                     }
-                    String resultado = crud.insereNovoMedidor(numGeralString, fabricanteString, numElementosString, modeloString, correnteNominalString,
-                            classeString, RRString, tensaoNominalString, KdKeString, fiosString, tipoMedidorString);
-                    Toast.makeText(getApplicationContext(), resultado, Toast.LENGTH_LONG).show();
-                    finish();
+
                 }
 
             }
@@ -204,7 +214,7 @@ public class CriarMedidorActivity extends AppCompatActivity {
 
                                 String fabricante = "  ";
                                 if (row[1].toString().equals("")) {
-                                    fabricante = "  ";
+                                    fabricante = "-";
                                     Log.d("FABRICANTE", fabricante);
                                 } else {
                                     fabricante = row[1];
@@ -213,7 +223,7 @@ public class CriarMedidorActivity extends AppCompatActivity {
 
                                 String modelo = " ";
                                 if (row[2].toString().equals("")) {
-                                    modelo = " ";
+                                    modelo = "-";
                                     Log.d("MODELO", modelo);
                                 } else {
                                     modelo = row[2];
@@ -249,7 +259,7 @@ public class CriarMedidorActivity extends AppCompatActivity {
 
                                 String RR = "";
                                 if (row[6].toString().equals("")) {
-                                    RR = "";
+                                    RR = "0";
                                     Log.d("RR", String.valueOf(RR));
                                 } else {
                                     RR = row[6];
@@ -276,7 +286,7 @@ public class CriarMedidorActivity extends AppCompatActivity {
 
                                 String classe = "";
                                 if (row[9].toString().equals("")) {
-                                    classe = "";
+                                    classe = "0";
                                     Log.d("classe", String.valueOf(classe));
                                 } else {
                                     classe = row[9];
@@ -286,7 +296,7 @@ public class CriarMedidorActivity extends AppCompatActivity {
                                 String tipoMedidorString = " ";
 
                                 if (row[10].toString().equals("")) {
-                                    tipoMedidorString = "";
+                                    tipoMedidorString = "Eletrônico";
                                     Log.d("tipoMedidorString", String.valueOf(tipoMedidorString));
                                 } else {
                                     if (row[10].toString().startsWith("4")) {
