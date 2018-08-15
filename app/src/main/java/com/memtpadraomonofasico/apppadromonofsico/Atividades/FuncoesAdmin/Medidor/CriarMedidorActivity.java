@@ -2,10 +2,12 @@ package com.memtpadraomonofasico.apppadromonofsico.Atividades.FuncoesAdmin.Medid
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -36,6 +38,7 @@ public class CriarMedidorActivity extends AppCompatActivity {
     private EditText fabricante;
     private EditText numElementos, modelo, correnteNominal, classe, RR, tensaoNominal, KdKe, fios;
 
+
     @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,21 @@ public class CriarMedidorActivity extends AppCompatActivity {
 
         checkEletronico = findViewById(R.id.radioButtonEletronico);
         checkMecanico = findViewById(R.id.RadioButtonMecanico);
+
+
+        FloatingActionButton duvida = findViewById(R.id.DuvidaImportacao);
+        duvida.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Dialog dialog = new Dialog(CriarMedidorActivity.this);
+                dialog.setContentView(R.layout.importacao_excel);
+
+                //  TextView txt = (TextView)dialog.findViewById(R.id.textbox);
+                dialog.show();
+            }
+
+        });
 
         Button botaoCriarAvaliador = findViewById(R.id.buttonSalvarMedidor);
         botaoCriarAvaliador.setOnClickListener(new View.OnClickListener() {
