@@ -25,11 +25,9 @@ public class CriaBanco extends SQLiteOpenHelper {
     public static final String MODELO = "medidor_modelo";
     public static final String CORRENTE_NOMINAL = "medidor_corrente_nominal";
     public static final String CLASSE = "medidor_classe";
-    //  public static final String ANO_FABRICACAO = "medidor_ano_fabricacao";
     public static final String TENSAO_NOMINAL = "medidor_tensao_nominal";
     public static final String KDKE = "medidor_KdKe";
     public static final String RR = "medidor_RR";
-    // public static final String PORT_INMETRO = "medidor_port_inmetro";
     public static final String FIOS = "medidor_fios";
     public static final String TIPO_MEDIDOR = "medidor_tipo_medidor";
     //tabela de medidor
@@ -38,11 +36,10 @@ public class CriaBanco extends SQLiteOpenHelper {
     public static final String LOCAL_MENSAGEM = "local_mensagem";
     public static final String MENSAGEM = "mensagem";
 
-
     private static final String NOME_BANCO = "banco.db";
 
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     public SQLiteDatabase db;
     BancoController banco;
 
@@ -62,12 +59,10 @@ public class CriaBanco extends SQLiteOpenHelper {
                 + MODELO + " text, "
                 + CORRENTE_NOMINAL + " double, "
                 + CLASSE + " text, "
-                //  + ANO_FABRICACAO + " integer, "
                 + TENSAO_NOMINAL + " integer, "
                 + KDKE + " double, "
                 + RR + " integer, "
                 + FIOS + " text, "
-                // + PORT_INMETRO + " text, "
                 + TIPO_MEDIDOR + " text "
                 + " ) ";
         db.execSQL(sqlMedidor);
@@ -90,7 +85,7 @@ public class CriaBanco extends SQLiteOpenHelper {
         db.execSQL(sqlMensagens);
 
 
-        final String Insert_Data_Admin = "INSERT or replace INTO avaliador VALUES( 1, 'administrador','admin','123456', 'true');";
+        final String Insert_Data_Admin = "INSERT or replace INTO avaliador VALUES( 1, 'administrador','cemig','123456', 'true');";
         db.execSQL(Insert_Data_Admin);
 
         final String Insert_Data_Mensagens = "INSERT or replace INTO mensagens VALUES ( 1, 'Selos de Calibração','Base Perfurada')," +
@@ -175,8 +170,15 @@ public class CriaBanco extends SQLiteOpenHelper {
             String arrData[] = null;
             SQLiteDatabase db;
             db = this.getReadableDatabase(); // Read Data
-            String strSQL = "SELECT avaliador_nome FROM " + TABELA_AVALIADOR + " WHERE avaliador_matricula = " + matricula ;
-            Cursor cursor = db.rawQuery(strSQL, null);
+            Cursor cursor;
+            String[] selectionArgs = new String[1];
+            selectionArgs[0] = matricula;
+            String[] campos = {NOME_AVALIADOR};
+
+            cursor = db.query(TABELA_AVALIADOR, campos, MATRICULA + " = ?", selectionArgs, null, null, null, null);
+//            String strSQL = "SELECT avaliador_nome FROM " + TABELA_AVALIADOR + " WHERE avaliador_matricula = " + matricula ;
+//            Cursor cursor = db.rawQuery(strSQL, null);
+//            Log.d("RESULT", String.valueOf(cursor));
             if(cursor != null)
             {
                 if (cursor.moveToFirst()) {
@@ -184,6 +186,7 @@ public class CriaBanco extends SQLiteOpenHelper {
                     int i= 0;
                     do {
                         arrData[i] = cursor.getString(0);
+                        Log.d("RESULT", arrData[i]);
                         i++;
                     } while (cursor.moveToNext());
                 }

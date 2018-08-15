@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -183,6 +184,7 @@ public class RelatorioVerificacaoActivity extends AppCompatActivity  {
     private void doMyThing() {
 
         matricula = String.valueOf(MatriculaAvaliador.getText());
+        Log.d("MATRICULA", matricula);
 
         if ((matricula.equals(""))|| (matricula.isEmpty())) {
             Toast.makeText(getApplicationContext(), "Coloque um número de matrícula para a pesquisa. ", Toast.LENGTH_LONG).show();

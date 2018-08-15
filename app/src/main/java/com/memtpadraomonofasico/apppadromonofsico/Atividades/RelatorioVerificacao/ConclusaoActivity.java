@@ -26,6 +26,7 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.memtpadraomonofasico.apppadromonofsico.DashboardActivity;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
 import com.orhanobut.hawk.NoEncryption;
@@ -105,9 +106,16 @@ public class ConclusaoActivity extends AppCompatActivity {
                     Hawk.put("Conclusao", conclusão);
                     gerarRelatorio();
 
+                    voltarInicio();
                 }
             }
         });
+    }
+
+    private void voltarInicio() {
+        Intent intent2 = new Intent(this, DashboardActivity.class);
+        intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent2);
     }
 
     @Override
@@ -141,7 +149,7 @@ public class ConclusaoActivity extends AppCompatActivity {
             Bitmap fotoPosRegistrador = Hawk.get("FotoPosTesteRegistrador");
             Bitmap fotoInspecao = Hawk.get("FotoInspecaoVisual");
 
-            File myFile = new File(folder, numServico + ".pdf");
+            final File myFile = new File(folder, numServico + ".pdf");
             OutputStream output = new FileOutputStream(myFile);
 
             ByteArrayOutputStream streamfotoInpecao = new ByteArrayOutputStream();
@@ -321,9 +329,7 @@ public class ConclusaoActivity extends AppCompatActivity {
             servicoItem.setBorder(PdfPCell.NO_BORDER);
             tableServico.addCell(servicoItem);
 
-            p = new Phrase("Instalação: ", smallNormal);
-            p.add(new Chunk((String) Hawk.get("InstalacaoMedidor"), smallNormal));
-            servicoItem = new PdfPCell(p);
+            servicoItem = new PdfPCell(new Phrase(" ", subFont));
             servicoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             servicoItem.setBorder(PdfPCell.NO_BORDER);
             tableServico.addCell(servicoItem);
@@ -841,16 +847,26 @@ public class ConclusaoActivity extends AppCompatActivity {
 
             document.close();
 
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setDataAndType(Uri.fromFile(myFile), "application/pdf");
-            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-            startActivityForResult(intent, ABRIR_PDF);
 
-            Hawk.put("usuario", user);
-            Hawk.put("senha", senha);
+            new Thread(new Runnable() {
+                public void run() {
+                    int i = 0;
+                    while (i < 80) {
+                        i += 2;
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setDataAndType(Uri.fromFile(myFile), "application/pdf");
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                        startActivityForResult(intent, ABRIR_PDF);
+                        try {
+                            Thread.sleep(300);
 
-//            Intent intent2 = new Intent(this, DashboardActivity.class);
-//            startActivity(intent2);
+
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }).start();
 
 
         } catch (DocumentException de) {
@@ -893,11 +909,14 @@ public class ConclusaoActivity extends AppCompatActivity {
 
         if (requestCode == ABRIR_PDF) {
             if (resultCode == RESULT_OK) {
+                Toast.makeText(getBaseContext(), "PDF Salvo em 'Documentos' no dispositivo", Toast.LENGTH_SHORT);
 
             } else {
                 Toast.makeText(getBaseContext(), "Verifique as permissões do aplicativo para abrir o relatório.", Toast.LENGTH_SHORT);
+
             }
         }
+
     }
 
 }

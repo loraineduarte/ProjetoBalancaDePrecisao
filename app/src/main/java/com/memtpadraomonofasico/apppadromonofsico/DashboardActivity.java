@@ -11,7 +11,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -70,20 +69,13 @@ implements NavigationView.OnNavigationItemSelectedListener {
         Button opcoesAdmin = findViewById(R.id.AdminOpcoes);
         Button teste = findViewById(R.id.Teste);
 
-
-        //itens de menu
-        Log.d("Usuario", String.valueOf(usuarioLogin));
-
-
         if (usuarioLogin.equals("true")) { //admin
             opcoesAdmin.setVisibility(View.VISIBLE);
             teste.setVisibility(View.VISIBLE);
 
-
         } else { //usuário normal
             opcoesAdmin.setVisibility(View.INVISIBLE);
             teste.setVisibility(View.VISIBLE);
-
 
         }
 
@@ -158,11 +150,7 @@ implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         MenuInflater inflater = getMenuInflater();
-
-        final BancoController crud = new BancoController(getBaseContext());
-        usuarioLogin = crud.pegaTipoUsuario(user, senha);
 
         inflater.inflate(R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
@@ -186,6 +174,9 @@ implements NavigationView.OnNavigationItemSelectedListener {
     }
 
     private void abrirRelatorio() {
+
+        Hawk.put("usuario", user);
+        Hawk.put("senha", senha);
         Intent intent = new Intent(this, RelatorioVerificacaoActivity.class);
         startActivity(intent);
     }
