@@ -15,20 +15,40 @@ public class BancoController {
     }
 
     public String insereNovoAvaliador(String nome, String matricula, String senha, boolean admin){
+
+
+        Cursor cursor;
         ContentValues valores;
-        long resultado;
+        long resultadoInserir, resultadoConferir;
 
-        db = banco.getWritableDatabase();
-        valores = new ContentValues();
-        valores.put(CriaBanco.NOME_AVALIADOR, nome);
-        valores.put(CriaBanco.MATRICULA, matricula);
-        valores.put(CriaBanco.SENHA, senha);
-        valores.put(CriaBanco.ADMIN, admin);
+        //conferir se avaliador já existe no banco
+        String[] campos = {CriaBanco.ID_AVALIADOR, CriaBanco.NOME_AVALIADOR, CriaBanco.MATRICULA, CriaBanco.SENHA, CriaBanco.ADMIN};
+        String avaliador = CriaBanco.MATRICULA + " = ? ";
+        String[] avaliadorArgs = {matricula};
+        db = banco.getReadableDatabase();
+        cursor = db.query(CriaBanco.TABELA_AVALIADOR, campos, avaliador, avaliadorArgs, null, null, null, null);
 
-        resultado = db.insert(CriaBanco.TABELA_AVALIADOR, null, valores);
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+        if (cursor.getCount() > 0) {
+            Log.d("Inseriu", "Erro ao inserir avaliador");
+            return "Avaliador já existente no banco";
+
+        } else {
+            db = banco.getWritableDatabase();
+            valores = new ContentValues();
+            valores.put(CriaBanco.NOME_AVALIADOR, nome);
+            valores.put(CriaBanco.MATRICULA, matricula);
+            valores.put(CriaBanco.SENHA, senha);
+            valores.put(CriaBanco.ADMIN, admin);
+
+            resultadoInserir = db.insert(CriaBanco.TABELA_AVALIADOR, null, valores);
+        }
+
         db.close();
 
-        if (resultado ==-1){
+        if (resultadoInserir == -1) {
             Log.d("Inseriu", "Erro ao inserir avaliador");
             return "Erro ao inserir registro";}
         else{

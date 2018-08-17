@@ -87,8 +87,12 @@ public class CriarAvaliadorActivity extends AppCompatActivity {
             public void onClick(View v) {
                 nome = findViewById(R.id.nomeAvaliador);
                 matricula = findViewById(R.id.numeroMatriculaAvaliador);
+                senha = findViewById(R.id.senhaAvaliador);
                 nome.getText().clear();
                 matricula.getText().clear();
+                senha.getText().clear();
+                radioButtonAvaliador.setChecked(false);
+                radioButtonEletronico.setChecked(false);
             }
         });
 
