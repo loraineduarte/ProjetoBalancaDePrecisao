@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -29,28 +28,22 @@ public class ListagemAvaliadores extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listagem_avaliadores);
 
-
         ListView listaDeAvaliadores = findViewById(R.id.lista);
         avaliadores = todosAvaliadores();
         adapter = new AdapterAvaliador(avaliadores, this);
         listaDeAvaliadores.setAdapter(adapter);
-
-
     }
 
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.d("OI", "entrou2");
         reloadAllData();
-
     }
 
 
 
     private List<Avaliador> todosAvaliadores() {
-
 
         List<Avaliador> av = new ArrayList<>();
         Cursor cursor = crud.pegaAvaliadores();
@@ -79,8 +72,8 @@ public class ListagemAvaliadores extends AppCompatActivity {
     }
 
     private void reloadAllData() {
-        List<Avaliador> objects = todosAvaliadores();
-        adapter.updateItens(objects);
+        avaliadores = todosAvaliadores();
+        adapter.updateItens(avaliadores);
 
     }
 
