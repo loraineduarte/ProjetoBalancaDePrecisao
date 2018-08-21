@@ -27,6 +27,7 @@ public class BancoController {
         String[] avaliadorArgs = {matricula};
         db = banco.getReadableDatabase();
         cursor = db.query(CriaBanco.TABELA_AVALIADOR, campos, avaliador, avaliadorArgs, null, null, null, null);
+        // db.close();
 
         if (cursor != null) {
             cursor.moveToFirst();

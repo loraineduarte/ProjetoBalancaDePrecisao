@@ -46,8 +46,6 @@ public class ConclusaoActivity extends AppCompatActivity {
     private RadioButton MedidorIrregularidade;
     private String conclusão = "";
 
-    private String user = "";
-    private String senha = "";
     private String usuarioLogin;
 
 
@@ -72,8 +70,8 @@ public class ConclusaoActivity extends AppCompatActivity {
         ComDefeito = findViewById(R.id.ComDefeito);
         MedidorIrregularidade = findViewById(R.id.MedidorIrregularidade);
 
-        user = Hawk.get("usuario");
-        senha = Hawk.get("senha");
+        String user = Hawk.get("usuario");
+        String senha = Hawk.get("senha");
 
 
         @SuppressLint("WrongViewCast") Button next = findViewById(R.id.gerarRelatorio);

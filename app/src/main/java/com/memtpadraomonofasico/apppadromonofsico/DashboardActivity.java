@@ -39,7 +39,6 @@ implements NavigationView.OnNavigationItemSelectedListener {
     private int i = 0;
     private String user = "";
     private String senha = "";
-    private String usuarioLogin;
 
     @SuppressLint("WrongConstant")
     @Override
@@ -57,6 +56,7 @@ implements NavigationView.OnNavigationItemSelectedListener {
         final BancoController crud = new BancoController(getBaseContext());
         cursorMedidor = crud.pegaMedidores();
         cursorAvaliador = crud.pegaAvaliadores();
+        String usuarioLogin;
         if ((user == null) || (senha == null)) {
             usuarioLogin = "false";
         }
