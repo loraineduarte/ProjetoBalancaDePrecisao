@@ -7,6 +7,7 @@ import android.bluetooth.BluetoothSocket;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.Message;
+import android.os.ParcelUuid;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -52,7 +53,11 @@ public class ThreadConexao extends Thread {
         /*  Determina que ações executar dependendo se a thread está configurada
         para atuar como servidor ou cliente.
          */
-        String myUUID = "00001101-0000-1000-8000-00805F9B34FB";
+
+        BluetoothDevice device = null;
+        ParcelUuid list[] = device.getUuids();
+        String myUUID = (list[0].toString());
+        //"00001101-0000-1000-8000-00805F9B34FB";
         if(this.server) {
 
             /*  Servidor.

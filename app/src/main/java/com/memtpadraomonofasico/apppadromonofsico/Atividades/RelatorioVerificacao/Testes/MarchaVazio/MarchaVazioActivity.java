@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,6 +29,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
     private static final int ENABLE_BLUETOOTH = 1;
     private static final int SELECT_PAIRED_DEVICE = 2;
     private static final int REQUEST_ENABLE_BT = 4;
+
     @SuppressLint("HandlerLeak")
     private static final Handler handler = new Handler() {
     };
@@ -42,8 +44,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
     private String statusMarchaVazio, tempoReprovadoMarchaVazio;
     private ThreadConexaoMarchaVazio conexao;
     @SuppressLint("WrongViewCast")
-    private Button conectar;
-    private Button teste;
+    private Button conectar, teste;
     private BluetoothAdapter mBluetoothAdapter = null;
     private boolean testeComecou = false;
     private boolean testeFCComecou = false;
@@ -165,13 +166,138 @@ public class MarchaVazioActivity extends AppCompatActivity {
         }
     }
 
+    private void conectarDispositivo(View view) {
+
+        if (conexao != null) {
+            Toast.makeText(getApplicationContext(), "Dispositivo já conectado.", Toast.LENGTH_LONG).show();
+        }
+
+        Intent searchPairedDevicesIntent = new Intent(this, PairedDevices.class);
+        startActivityForResult(searchPairedDevicesIntent, SELECT_PAIRED_DEVICE);
+
+    }
+
     private void abrirInspecaoConformidade() {
 
         Intent intent = new Intent(this, ExatidaoActivity.class);
         startActivity(intent);
     }
 
-    public void mudarEstadoTeste(View view) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == ENABLE_BLUETOOTH) {
+            if (resultCode == RESULT_OK) {
+                textMessage.setText("Bluetooth ativado.");
+            } else {
+                textMessage.setText("Bluetooth não ativado.");
+            }
+
+        } else if (requestCode == SELECT_PAIRED_DEVICE) {
+
+            if (resultCode == RESULT_OK) {
+                textMessage.setText("Você selecionou " + data.getStringExtra("btDevName") + "\n" + data.getStringExtra("btDevAddress"));
+                String macAddress = data.getStringExtra("btDevAddress");
+                Log.d("MAC ACRESS", macAddress);
+                conexao = new ThreadConexaoMarchaVazio(macAddress);
+                conexao.start();
+
+                if (conexao != null) {
+                    textMessage.setText("Conexao finalizada com: " + data.getStringExtra("btDevName") + "\n Verifique o LED de conexão");
+                }
+
+            } else {
+                textMessage.setText("Nenhum dispositivo selecionado.");
+            }
+        }
+    }
+
+    public void escreverTela(final String res) {
+
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (!(textMessage == null)) {
+                    if (res.startsWith("T")) {
+                        textMessage.clearComposingText();
+                        textMessage.setText("Teste Concluído!");
+                        testeComecou = false;
+                        teste.clearComposingText();
+                        teste.setText("Iniciar Teste");
+
+
+                    } else {
+
+                        textMessage.clearComposingText();
+                        textMessage.setText(res);
+                    }
+
+                }
+            }
+        });
+
+
+    }
+
+    public void checarPadrão() {
+
+        byte[] pacote = new byte[12];
+
+        //Header - AA -------------- OK
+        pacote[0] = (byte) 0xAA;
+        Log.d("HEADER", String.valueOf(pacote[0]));
+
+        //Length - 0007 (2 bytes)(passar para hexadecimal) -------OK
+        int lenght1 = 0x00;
+        int lenght2 = 0x07;
+        Log.d("Length", String.valueOf(lenght1));
+        Log.d("Length", String.valueOf(lenght2));
+        pacote[2] = (byte) (lenght1);
+        pacote[3] = (byte) (lenght2);
+
+
+        //Header Check - XX (passar para hexadecimal)(fazer XOR de frames anteriores) ---TESTAR
+        pacote[4] = (byte) (pacote[0] ^ pacote[1] ^ pacote[2]);
+        Log.d("Header Check", String.valueOf(pacote[4]));
+
+
+        //Category ID - 0010 (2 bytes)(passar para hexadecimal) ---TESTAR
+        int category1 = 0x0010;
+
+        byte[] bytes1 = new byte[2];
+        bytes1[0] = (byte) (category1 / (Math.pow(256, 1)));
+        bytes1[1] = (byte) (category1 - (bytes1[0] * (Math.pow(256, 1))));
+        Log.d("Category ID", String.valueOf(bytes1[0]));
+        Log.d("Category ID", String.valueOf(bytes1[1]));
+
+        pacote[5] = (byte) bytes1[0];
+        pacote[6] = (byte) bytes1[1];
+
+
+        //Command ID - 00 (1 byte)------------OK
+        pacote[7] = (byte) (0x00);
+        Log.d("Command ID", String.valueOf(pacote[7]));
+
+        //Function Adress - 00 (1 byte) (Sempre 0)-----------OK
+        pacote[8] = (byte) (0x00);
+        Log.d("Function Adress", String.valueOf(pacote[8]));
+
+        //Data - 00 ------------------------OK
+        pacote[9] = (byte) (0x00);
+        Log.d("Data", String.valueOf(pacote[9]));
+
+        //Pack Check - XX (fazer XOR de todos os pacotes anteriores) ---TESTAR
+        pacote[10] = (byte) (pacote[0] ^ pacote[1] ^ pacote[2] ^ pacote[3] ^ pacote[4] ^ pacote[5] ^ pacote[6] ^ pacote[7] ^ pacote[8] ^ pacote[9]);
+        Log.d("Pack Check ", String.valueOf(pacote[10]));
+
+        //End - 55 ------------------------ OK
+        pacote[11] = (byte) (0x55);
+        Log.d("End", String.valueOf(pacote[11]));
+
+        conexao.write(pacote);
+
+    }
+
+    public void TesteMarchaEmVazio(View view) {
 
         if (conexao == null) {
             Toast.makeText(getApplicationContext(), "O teste não pode ser iniciado/parado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
@@ -179,12 +305,14 @@ public class MarchaVazioActivity extends AppCompatActivity {
         } else {
 
             teste = findViewById(R.id.buttonAplicarTensao);
+            checarPadrão();
 
             if (!testeComecou) {
                 testeComecou = true;
                 teste.clearComposingText();
                 teste.setText("Cancelar Teste");
-                executarTeste();
+                //fazer checagem de qual padrão que é
+                executarTestePadrãoBrasileiro();
                 textMessage.clearComposingText();
                 textMessage.setText("Teste Iniciado!");
 
@@ -192,36 +320,77 @@ public class MarchaVazioActivity extends AppCompatActivity {
                 testeComecou = false;
                 teste.clearComposingText();
                 teste.setText("Iniciar Teste");
-                pararTeste();
+                //fazer checagem de qual padrão que é
+                pararTestePadrãoBrasileiro();
                 textMessage.clearComposingText();
                 textMessage.setText("Teste Cancelado!");
             }
         }
     }
 
-    public void mudarEstadoTesteFinal() {
-        teste = findViewById(R.id.buttonAplicarTensao);
+    public void TesteFotoCelula(View view) {
+        if (conexao == null) {
+            Toast.makeText(getApplicationContext(), "O teste não pode ser iniciado/parado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
 
-            if (!testeComecou) {
-                testeComecou = true;
+        } else {
+
+            teste = findViewById(R.id.buttonTesteFotoCelula);
+
+            if (!testeFCComecou) {
+                testeFCComecou = true;
                 teste.clearComposingText();
-                teste.setText("Cancelar Teste");
-                executarTeste();
+                teste.setText("Cancelar Teste de FotoCélula");
+                //olhar qual o padrão
+                fazerTesteFotoCelulaPadraoBrasileiro();
                 textMessage.clearComposingText();
-                textMessage.setText("Teste Iniciado!");
+                textMessage.setText("Teste de FotoCélula Iniciado!");
 
             } else {
-                testeComecou = false;
+                testeFCComecou = false;
                 teste.clearComposingText();
-                teste.setText("Iniciar Teste");
-                pararTeste();
+                teste.setText("Iniciar Teste de FotoCélula");
+                //olhar qual o padrão
+                pararTestePadrãoBrasileiro();
                 textMessage.clearComposingText();
-                textMessage.setText("Teste Parado!");
+                textMessage.setText("Teste de FotoCélula Cancelado!");
             }
+        }
+
 
     }
 
-    private void executarTeste() {
+    public void selecionarStatus(final double a) {
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        aprovado.setEnabled(true);
+                        reprovado.setEnabled(true);
+                        naoRealizado.setEnabled(true);
+
+                        if ((a == 1) || (a == 0)) {
+                            aprovado.setChecked(true);
+
+                        } else if (a > 1) {
+                            reprovado.setChecked(true);
+
+                        } else {
+                            naoRealizado.setChecked(true);
+
+                        }
+                    }
+                });
+            }
+        }).start();
+
+    }
+
+
+    //Funções Padrão Brasileiro
+    private void executarTestePadrãoBrasileiro() {
 
         tempoInicio = System.currentTimeMillis();
         byte[] pacote = new byte[10];
@@ -271,7 +440,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
 
     }
 
-    private void pararTeste() {
+    private void pararTestePadrãoBrasileiro() {
 
         byte[] pacote = new byte[10];
 
@@ -288,134 +457,10 @@ public class MarchaVazioActivity extends AppCompatActivity {
 
         conexao.write(pacote);
 
-    }
-
-
-    public void escreverTelaMarchaVazio(final String res) {
-
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (!(textMessage == null)) {
-                    if (res.startsWith("T")) {
-                        textMessage.clearComposingText();
-                        textMessage.setText("Teste Concluído!");
-                        testeComecou = false;
-
-                    } else {
-
-                        textMessage.clearComposingText();
-                        textMessage.setText(res);
-                    }
-
-                }
-            }
-        });
-
 
     }
 
-    public void selecionarStatus(final double a) {
-
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        aprovado.setEnabled(true);
-                        reprovado.setEnabled(true);
-                        naoRealizado.setEnabled(true);
-
-                        if ((a == 1) || (a == 0)) {
-                            aprovado.setChecked(true);
-
-                        } else if (a > 1) {
-                            reprovado.setChecked(true);
-
-                        } else {
-                            naoRealizado.setChecked(true);
-
-                        }
-                    }
-                });
-            }
-        }).start();
-
-
-
-    }
-
-    private void conectarDispositivo(View view) {
-
-        if (conexao != null) {
-            Toast.makeText(getApplicationContext(), "Dispositivo já conectado.", Toast.LENGTH_LONG).show();
-        }
-
-        Intent searchPairedDevicesIntent = new Intent(this, PairedDevices.class);
-        startActivityForResult(searchPairedDevicesIntent, SELECT_PAIRED_DEVICE);
-
-    }
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        if (requestCode == ENABLE_BLUETOOTH) {
-            if (resultCode == RESULT_OK) {
-                textMessage.setText("Bluetooth ativado.");
-            } else {
-                textMessage.setText("Bluetooth não ativado.");
-            }
-
-        } else if (requestCode == SELECT_PAIRED_DEVICE) {
-
-            if (resultCode == RESULT_OK) {
-                textMessage.setText("Você selecionou " + data.getStringExtra("btDevName") + "\n" + data.getStringExtra("btDevAddress"));
-                String macAddress = data.getStringExtra("btDevAddress");
-
-                conexao = new ThreadConexaoMarchaVazio(macAddress);
-                conexao.start();
-
-                if (conexao != null) {
-                    textMessage.setText("Conexao finalizada com: " + data.getStringExtra("btDevName") + "\n Verifique o LED de conexão");
-                }
-
-            } else {
-                textMessage.setText("Nenhum dispositivo selecionado.");
-            }
-        }
-    }
-
-    public void testeFotoCelula(View view) {
-        if (conexao == null) {
-            Toast.makeText(getApplicationContext(), "O teste não pode ser iniciado/parado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
-
-        } else {
-
-            teste = findViewById(R.id.buttonTesteFotoCelula);
-
-            if (!testeFCComecou) {
-                testeFCComecou = true;
-                teste.clearComposingText();
-                teste.setText("Cancelar Teste de FotoCélula");
-                testeFoto();
-                textMessage.clearComposingText();
-                textMessage.setText("Teste de FotoCélula Iniciado!");
-
-            } else {
-                testeFCComecou = false;
-                teste.clearComposingText();
-                teste.setText("Iniciar Teste de FotoCélula");
-                pararTeste();
-                textMessage.clearComposingText();
-                textMessage.setText("Teste de FotoCélula Cancelado!");
-            }
-        }
-
-
-    }
-
-    public void testeFoto() {
+    public void fazerTesteFotoCelulaPadraoBrasileiro() {
         if (conexao == null) {
             Toast.makeText(getApplicationContext(), "O teste não pode ser inicializado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
 
@@ -449,4 +494,114 @@ public class MarchaVazioActivity extends AppCompatActivity {
             conexao.write(pacote);
         }
     }
+
+
+    //Funçoes padrão Chines
+    private void executarTestePadrãoChines() {
+
+        tempoInicio = System.currentTimeMillis();
+        byte[] pacote = new byte[10];
+        float kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
+
+        byte[] bytes = new byte[8];
+        int valorMultiplicado = (int) (kdMedidor * 1000000);
+
+        bytes[0] = (byte) (valorMultiplicado / (Math.pow(256, 3)));
+        bytes[1] = (byte) ((valorMultiplicado - (bytes[0] * (Math.pow(256, 3)))) / Math.pow(256, 2));
+        bytes[2] = (byte) ((valorMultiplicado - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))))) / Math.pow(256, 1));
+        bytes[3] = (byte) ((valorMultiplicado - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))) + (bytes[2] * Math.pow(256, 1)))));
+
+        pacote[0] = ('I' & 0xFF);
+        pacote[1] = ('M' & 0xFF);
+        pacote[2] = (byte) (bytes[0] & 0xFF);
+        pacote[3] = (byte) (bytes[1] & 0xFF);
+        pacote[4] = (byte) (bytes[2] & 0xFF);
+        pacote[5] = (byte) (bytes[3] & 0xFF);
+
+        String time = tempoReprovado.getText().toString();
+
+        if (time.equals("")) {
+            tempoReprovado.setText("1");
+            Toast.makeText(getApplicationContext(), "Tempo de teste ajustado para 1 minuto... ", Toast.LENGTH_LONG).show();
+            pacote[6] = (byte) (0 & 0xFF);
+            pacote[7] = (byte) (0 & 0xFF);
+            pacote[8] = (byte) (0 & 0xFF);
+            pacote[9] = (byte) (60 & 0xFF);
+
+        } else {
+            float tempo = (Float.parseFloat(tempoReprovado.getText().toString())) * 60;
+            bytes[4] = (byte) (tempo / (Math.pow(256, 3)));
+            bytes[5] = (byte) ((tempo - (bytes[4] * (Math.pow(256, 3)))) / Math.pow(256, 2));
+            bytes[6] = (byte) ((tempo - ((bytes[4] * (Math.pow(256, 3))) + (bytes[5] * (Math.pow(256, 2))))) / Math.pow(256, 1));
+            bytes[7] = (byte) ((tempo - ((bytes[4] * (Math.pow(256, 3))) + (bytes[5] * (Math.pow(256, 2))) + (bytes[6] * Math.pow(256, 1)))));
+
+            pacote[6] = (byte) (bytes[4] & 0xFF);
+            pacote[7] = (byte) (bytes[5] & 0xFF);
+            pacote[8] = (byte) (bytes[6] & 0xFF);
+            pacote[9] = (byte) (bytes[7] & 0xFF);
+
+        }
+
+        conexao.write(pacote);
+
+
+    }
+
+    private void pararTestePadrãoChines() {
+
+        byte[] pacote = new byte[10];
+
+        pacote[0] = ('C' & 0xFF);
+        pacote[1] = (byte) (0 & 0xFF);
+        pacote[2] = (byte) (0 & 0xFF);
+        pacote[3] = (byte) (0 & 0xFF);
+        pacote[4] = (byte) (0 & 0xFF);
+        pacote[5] = (byte) (0 & 0xFF);
+        pacote[6] = (byte) (0 & 0xFF);
+        pacote[7] = (byte) (0 & 0xFF);
+        pacote[8] = (byte) (0 & 0xFF);
+        pacote[9] = (byte) (0 & 0xFF);
+
+        conexao.write(pacote);
+
+
+
+    }
+
+    public void fazerTesteFotoCelulaPadraoChines() {
+        if (conexao == null) {
+            Toast.makeText(getApplicationContext(), "O teste não pode ser inicializado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
+
+        } else {
+
+            if (conexao != null) {
+                textMessage.setText("O teste de FotoCélula vai ser iniciado...");
+            }
+
+            byte[] pacote = new byte[10];
+            float kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
+            byte[] bytes = new byte[4];
+            int valorMultiplicado = (int) (kdMedidor * 1000000);
+
+            bytes[0] = (byte) (valorMultiplicado / (Math.pow(256, 3)));
+            bytes[1] = (byte) ((valorMultiplicado - (bytes[0] * (Math.pow(256, 3)))) / Math.pow(256, 2));
+            bytes[2] = (byte) ((valorMultiplicado - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))))) / Math.pow(256, 1));
+            bytes[3] = (byte) ((valorMultiplicado - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))) + (bytes[2] * Math.pow(256, 1)))));
+
+            pacote[0] = ('I' & 0xFF);
+            pacote[1] = ('R' & 0xFF);
+            pacote[2] = (byte) (bytes[0] & 0xFF);
+            pacote[3] = (byte) (bytes[1] & 0xFF);
+            pacote[4] = (byte) (bytes[2] & 0xFF);
+            pacote[5] = (byte) (bytes[3] & 0xFF);
+            pacote[6] = (byte) (0 & 0xFF);
+            pacote[7] = (byte) (0 & 0xFF);
+            pacote[8] = (byte) (3 & 0xFF);
+            pacote[9] = (byte) (232 & 0xFF);
+
+            conexao.write(pacote);
+        }
+    }
+
+
 }

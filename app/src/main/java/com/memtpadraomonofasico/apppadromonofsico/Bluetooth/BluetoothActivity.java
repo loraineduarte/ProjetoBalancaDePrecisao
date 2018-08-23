@@ -53,6 +53,7 @@ public class BluetoothActivity extends AppCompatActivity {
                     Bundle bundle = msg.getData();
                     byte[] data = bundle.getByteArray("data");
                     String dataString = new String(data != null ? data : new byte[0]);
+                    String padrao = "";
 
 
                     switch (dataString) {
@@ -64,25 +65,31 @@ public class BluetoothActivity extends AppCompatActivity {
                             break;
 
                         default:
+
                             double a = 0, b = 0;
                             cont = cont + 1;
                             dados = dataString;
-//                            Log.d("DADOS", dados);
-//                            Log.d("DADOS TAMANHO", String.valueOf(dados.length()));
-//                            Log.d("DADOS STRING", dataString);
+                            Log.d("DADOS", dados);
+                            Log.d("DADOS TAMANHO", String.valueOf(dados.length()));
+                            Log.d("DADOS STRING", dataString);
 
+
+                            //funções padrão Chinês
+                            if ((dataString.startsWith("F"))) {
+                                finalDeTeste = true;
+                            }
+
+
+                            //funções padrao Brasileiro
                             if (dados.length() == 1) {
                                 pacote[0] = (byte) (data[0] & 0xFF);
-
                             }
 
                             if ((dataString.startsWith("F"))) {
-                                Log.d("ENTROU FIM", "FINAL DE TESTE");
                                 finalDeTeste = true;
                             }
 
                             if (dados.length() == 9) {
-
                                 pacote[1] = (byte) (data[0] & 0xFF);
                                 pacote[2] = (byte) (data[1] & 0xFF);
                                 pacote[3] = (byte) (data[2] & 0xFF);
@@ -93,26 +100,23 @@ public class BluetoothActivity extends AppCompatActivity {
                                 pacote[8] = (byte) (data[7] & 0xFF);
                                 pacote[9] = (byte) (data[8] & 0xFF);
 
-                                Log.d("PACOTE", String.valueOf(pacote[0]));
-                                Log.d("PACOTE", String.valueOf(pacote[1]));
-                                Log.d("PACOTE", String.valueOf(pacote[2]));
-                                Log.d("PACOTE", String.valueOf(pacote[3]));
-                                Log.d("PACOTE", String.valueOf(pacote[4]));
-                                Log.d("PACOTE", String.valueOf(pacote[5]));
-                                Log.d("PACOTE", String.valueOf(pacote[6]));
-                                Log.d("PACOTE", String.valueOf(pacote[7]));
-                                Log.d("PACOTE", String.valueOf(pacote[8]));
-                                Log.d("PACOTE", String.valueOf(pacote[9]));
+//                                Log.d("PACOTE", String.valueOf(pacote[0]));
+//                                Log.d("PACOTE", String.valueOf(pacote[1]));
+//                                Log.d("PACOTE", String.valueOf(pacote[2]));
+//                                Log.d("PACOTE", String.valueOf(pacote[3]));
+//                                Log.d("PACOTE", String.valueOf(pacote[4]));
+//                                Log.d("PACOTE", String.valueOf(pacote[5]));
+//                                Log.d("PACOTE", String.valueOf(pacote[6]));
+//                                Log.d("PACOTE", String.valueOf(pacote[7]));
+//                                Log.d("PACOTE", String.valueOf(pacote[8]));
+//                                Log.d("PACOTE", String.valueOf(pacote[9]));
 
                                 a = (pacote[2]) * Math.pow(256, 3) + (pacote[3] & 0xFF) * Math.pow(256, 2) + (pacote[4] & 0xFF) * 256 + (pacote[5] & 0xFF);
                                 b = (pacote[6] & 0xFF) * Math.pow(256, 3) + (pacote[7] & 0xFF) * Math.pow(256, 2) + (pacote[8] & 0xFF) * 256 + (pacote[9] & 0xFF);
-
                                 res = "  Tensão:   " + Float.toString((float) a / 1000) + " V   Corrente:  " + Float.toString((float) b / 1000) + " A \n";
-
                             }
 
                             if (dados.length() == 8) {
-
                                 pacote[1] = (byte) (data[0] & 0xFF);
                                 pacote[2] = (byte) (data[1] & 0xFF);
                                 pacote[3] = (byte) (data[2] & 0xFF);
@@ -122,102 +126,90 @@ public class BluetoothActivity extends AppCompatActivity {
                                 pacote[7] = (byte) (data[6] & 0xFF);
                                 pacote[8] = (byte) (data[7] & 0xFF);
 
-                                Log.d("PACOTE", String.valueOf(pacote[0]));
-                                Log.d("PACOTE", String.valueOf(pacote[1]));
-                                Log.d("PACOTE", String.valueOf(pacote[2]));
-                                Log.d("PACOTE", String.valueOf(pacote[3]));
-                                Log.d("PACOTE", String.valueOf(pacote[4]));
-                                Log.d("PACOTE", String.valueOf(pacote[5]));
-                                Log.d("PACOTE", String.valueOf(pacote[6]));
-                                Log.d("PACOTE", String.valueOf(pacote[7]));
-                                Log.d("PACOTE", String.valueOf(pacote[8]));
+//                                Log.d("PACOTE", String.valueOf(pacote[0]));
+//                                Log.d("PACOTE", String.valueOf(pacote[1]));
+//                                Log.d("PACOTE", String.valueOf(pacote[2]));
+//                                Log.d("PACOTE", String.valueOf(pacote[3]));
+//                                Log.d("PACOTE", String.valueOf(pacote[4]));
+//                                Log.d("PACOTE", String.valueOf(pacote[5]));
+//                                Log.d("PACOTE", String.valueOf(pacote[6]));
+//                                Log.d("PACOTE", String.valueOf(pacote[7]));
+//                                Log.d("PACOTE", String.valueOf(pacote[8]));
 
                                 a = (pacote[2]) * Math.pow(256, 3) + (pacote[3] & 0xFF) * Math.pow(256, 2) + (pacote[4] & 0xFF) * 256 + (pacote[5] & 0xFF);
-
-
                                 res = " Tensão :   " + Float.toString((float) a / 1000);
-
                             }
 
                             if (dataString.contains("R")) {
-
                                 if (finalDeTeste) {
+
                                     a = (pacote[2]) * Math.pow(256, 3) + (pacote[3] & 0xFF) * Math.pow(256, 2) + (pacote[4] & 0xFF) * 256 + (pacote[5] & 0xFF);
                                     b = (pacote[6] & 0xFF) * Math.pow(256, 3) + (pacote[7] & 0xFF) * Math.pow(256, 2) + (pacote[8] & 0xFF) * 256 + (pacote[9] & 0xFF);
                                     res = "Energia Total do Padrão: " + Float.toString((float) a / 1000)
                                             + "\n Energia total do Medidor :" + Float.toString((float) b / 1000);
                                     registrador.escreverTela("Teste sendo finalizado ... \n", (a / 1000), (b / 1000));
-
                                     finalDeTeste = false;
                                     break;
 
                                 } else {
-
                                     registrador.escreverTela("Recebendo dados do padrão \n" + res, (a / 1000), (b / 1000));
                                 }
                             }
 
                             if (dataString.contains("M")) {
                                 if (finalDeTeste) {
-                                    a = ((pacote[2]) * 256) + (pacote[3] & 0xFF);
 
+                                    a = ((pacote[2]) * 256) + (pacote[3] & 0xFF);
                                     res = "  Número de pulsos :   " + Integer.toString((int) a) + "\n";
-                                    marchaVazio.escreverTelaMarchaVazio("Teste sendo finalizado ... \n" + res);
+                                    marchaVazio.escreverTela("Teste sendo finalizado ... \n" + res);
                                     marchaVazio.selecionarStatus(a);
                                     finalDeTeste = false;
                                     break;
 
                                 } else {
-                                    marchaVazio.escreverTelaMarchaVazio("Recebendo dados do padrão \n" + res);
+                                    marchaVazio.escreverTela("Recebendo dados do padrão \n" + res);
                                 }
 
                             }
 
                             if (dataString.contains("N")) {
-
-
                                 if (finalDeTeste) {
+
                                     a = 0;
                                     b = 0;
                                     a = (pacote[2]) * Math.pow(256, 3) + (pacote[3] & 0xFF) * Math.pow(256, 2) + (pacote[4] & 0xFF) * 256 + (pacote[5] & 0xFF);
                                     res = Float.toString((float) (a / 1000)) + " % ";
                                     conformidade.escreverStatusTestesExatidao("Teste sendo finalizado ... \n" + res);
                                     conformidade.escreverTelaCargaNominal(res);
-                                   
                                     finalDeTeste = false;
                                     break;
 
                                 } else {
                                     conformidade.escreverStatusTestesExatidao("Recebendo dados do padrão \n" + res);
                                 }
-
                             }
 
                             if (dataString.contains("B")) {
-
-
                                 if (finalDeTeste) {
+
                                     a = 0;
                                     b = 0;
                                     a = ((pacote[2]) * Math.pow(256, 3) + (pacote[3] & 0xFF) * Math.pow(256, 2) + (pacote[4] & 0xFF) * 256 + (pacote[5] & 0xFF));
-
-
                                     res = Float.toString((float) (a / 1000)) + "%";
                                     conformidade.escreverStatusTestesExatidao("Teste sendo finalizado ...Erro:  \n" + res);
                                     conformidade.escreverTelaCargaPequena(res);
-
                                     finalDeTeste = false;
                                     break;
 
                                 } else {
                                     conformidade.escreverStatusTestesExatidao("Recebendo dados do padrão \n" + res);
                                 }
-
                             }
 
                             if (cont >= 2) {
                                 res = "";
                             }
+
                             break;
                     }
                 }

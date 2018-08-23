@@ -7,10 +7,12 @@ import android.bluetooth.BluetoothSocket;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.Message;
+import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.UUID;
 
@@ -22,9 +24,11 @@ public class ThreadConexaoMarchaVazio  extends Thread {
 
     private final boolean server;
     private final BluetoothActivity bluetooth = new BluetoothActivity();
+    ArrayList<BluetoothDevice> mDeviceList = new ArrayList<BluetoothDevice>();
     private BluetoothSocket btSocket = null;
     private OutputStream output = null;
-    private String btDevAddress = null;
+    private String btDevAddress = "";
+
 
     /*  Este construtor prepara o dispositivo para atuar como servidor.
      */
@@ -56,7 +60,8 @@ public class ThreadConexaoMarchaVazio  extends Thread {
         /*  Determina que ações executar dependendo se a thread está configurada
         para atuar como servidor ou cliente.
          */
-        String myUUID = "00001101-0000-1000-8000-00805F9B34FB";
+        String myUUID = "00001101-0000-1000-8000-00805F9B34FB"; //protocolo brasileiro
+        // String myUUID = "00060001-F8CE-11E4-ABF4-0002A5D5C51B";
         if(this.server) {
 
             /*  Servidor.
@@ -218,6 +223,7 @@ public class ThreadConexaoMarchaVazio  extends Thread {
 
                 /*  Transmite a mensagem.
                  */
+                Log.d("TRNSMITINDO", String.valueOf(data));
                 output.write(data);
 
             } catch (IOException e) {

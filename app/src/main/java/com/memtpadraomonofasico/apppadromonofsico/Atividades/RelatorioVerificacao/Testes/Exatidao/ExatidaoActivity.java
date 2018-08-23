@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
@@ -178,20 +177,7 @@ public class ExatidaoActivity extends AppCompatActivity {
                             testeNominal.setText("Iniciar Teste de Carga Nominal");
                         }
 
-
                     } else {
-
-//                        long total = System.currentTimeMillis();
-//                        tempoCorrendo = ((((total - tempoInicio)%1000)%3600) %60) ;
-//                        long hours, minutes, seconds;
-//                        hours = tempoCorrendo / 3600;
-//                        tempoCorrendo = tempoCorrendo - (hours * 3600);
-//                        minutes = tempoCorrendo / 60;
-//                        tempoCorrendo = tempoCorrendo - (minutes * 60);
-//                        seconds = tempoCorrendo;
-//                        Log.d("TEMPO", ( minutes + " minute(s) " + seconds + " second(s)"));
-//                        Log.d("TEMPO CORRIDO", String.valueOf(tempoCorrendo));
-
 
                         textMessageInspecaoConformidade.clearComposingText();
                         textMessageInspecaoConformidade.setText(res);
@@ -225,7 +211,6 @@ public class ExatidaoActivity extends AppCompatActivity {
         testeNominal = findViewById(R.id.button2);
         testePequeno = findViewById(R.id.button3);
         quantidadePulsos = findViewById(R.id.QuantidadePulsos);
-
 
         cronometroPequeno = new Chronometer(this);
         cronometroPequeno = findViewById(R.id.CronometroPequeno);
@@ -473,7 +458,6 @@ public class ExatidaoActivity extends AppCompatActivity {
         tempoInicio = System.currentTimeMillis();
         DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
         String today = formatter.format(tempoInicio);
-        Log.d("TEMPO DO INICIO", String.valueOf(today));
 
 
         if (conexao == null) {
