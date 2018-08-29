@@ -1,4 +1,4 @@
-package com.memtpadraomonofasico.apppadromonofsico.Bluetooth;
+package com.memtpadraomonofasico.apppadromonofsico.Bluetooth.ConexaoMarchaVazio.ConexaoBLE;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
+
+import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.BluetoothActivity;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,11 +22,11 @@ import java.util.UUID;
  * Created by loraine.duarte on 20/04/2018.
  */
 
-public class ThreadConexaoMarchaVazio  extends Thread {
+public class ThreadConexaoPadraoBrasileiro extends Thread {
 
     private final boolean server;
     private final BluetoothActivity bluetooth = new BluetoothActivity();
-    ArrayList<BluetoothDevice> mDeviceList = new ArrayList<BluetoothDevice>();
+    ArrayList<BluetoothDevice> mDeviceList = new ArrayList<>();
     private BluetoothSocket btSocket = null;
     private OutputStream output = null;
     private String btDevAddress = "";
@@ -32,7 +34,7 @@ public class ThreadConexaoMarchaVazio  extends Thread {
 
     /*  Este construtor prepara o dispositivo para atuar como servidor.
      */
-    public ThreadConexaoMarchaVazio() {
+    public ThreadConexaoPadraoBrasileiro() {
         this.server = true;
     }
 
@@ -40,7 +42,7 @@ public class ThreadConexaoMarchaVazio  extends Thread {
         Tem como argumento uma string contendo o endereço MAC do dispositivo
     Bluetooth para o qual deve ser solicitada uma conexão.
      */
-    public ThreadConexaoMarchaVazio(String btDevAddress) {
+    public ThreadConexaoPadraoBrasileiro(String btDevAddress) {
         this.server = false;
         this.btDevAddress = btDevAddress;
     }
@@ -223,7 +225,7 @@ public class ThreadConexaoMarchaVazio  extends Thread {
 
                 /*  Transmite a mensagem.
                  */
-                Log.d("TRNSMITINDO", String.valueOf(data));
+                Log.d("TRNSMITINDO", Arrays.toString(data));
                 output.write(data);
 
             } catch (IOException e) {

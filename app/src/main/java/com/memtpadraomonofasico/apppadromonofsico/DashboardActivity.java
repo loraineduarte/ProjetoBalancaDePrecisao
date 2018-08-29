@@ -58,7 +58,6 @@ implements NavigationView.OnNavigationItemSelectedListener {
         cursorAvaliador = crud.pegaAvaliadores();
         String usuarioLogin;
         if ((user == null) || (senha == null)) {
-            usuarioLogin = "false";
         }
         if ((user == null) && (senha == null)) {
             usuarioLogin = "false";
