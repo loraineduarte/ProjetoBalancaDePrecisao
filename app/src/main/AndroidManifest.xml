@@ -106,6 +106,13 @@
         <activity android:name=".Atividades.FuncoesAdmin.Mensagens.ListagemTodasMensagensActivity" />
         <activity android:name=".Atividades.FuncoesAdmin.Mensagens.CriarMensagemActivity" />
         <activity android:name=".Atividades.FuncoesAdmin.Mensagens.EditarMensagemActivity"></activity>
+        <activity android:name=".Bluetooth.ConexaoMarchaVazio.ConexaoBLE.DeviceScanActivity" />
+        <activity android:name=".Bluetooth.ConexaoMarchaVazio.ConexaoBLE.DeviceControlActivity" />
+
+        <service
+            android:name=".Bluetooth.ConexaoMarchaVazio.ConexaoBLE.BluetoothLeService"
+            android:enabled="true" />
+
 
         <provider
             android:name="android.support.v4.content.FileProvider"
