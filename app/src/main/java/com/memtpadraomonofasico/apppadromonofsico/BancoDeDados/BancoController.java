@@ -1,5 +1,6 @@
 package com.memtpadraomonofasico.apppadromonofsico.BancoDeDados;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -14,6 +15,7 @@ public class BancoController {
         banco = new CriaBanco(context);
     }
 
+    @SuppressLint("Recycle")
     public String insereNovoAvaliador(String nome, String matricula, String senha, boolean admin){
 
 
@@ -51,8 +53,7 @@ public class BancoController {
 
         if (resultadoInserir == -1) {
             Log.d("Inseriu", "Erro ao inserir avaliador");
-            return "Erro ao inserir registro";}
-        else{
+            return "Erro ao inserir registro";} else{
             Log.d("Inseriu", "Inseriu avaliador");
             return " Registro Inserido com sucesso";
         }

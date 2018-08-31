@@ -18,7 +18,6 @@ import android.widget.Toast;
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.Exatidao.ExatidaoActivity;
 import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.ConexaoMarchaVazio.ConexaoBLE.DeviceControlActivity;
 import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.ConexaoMarchaVazio.ConexaoBLE.DeviceScanActivity;
-import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.ConexaoMarchaVazio.ConexaoBLE.SampleGattAttributes;
 import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.ConexaoMarchaVazio.ConexãoBluetooth.ThreadConexaoPadraoBrasileiro;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
@@ -31,153 +30,9 @@ import java.util.UUID;
 @TargetApi(21)
 public class MarchaVazioActivity extends AppCompatActivity {
 
-    public final static UUID UUID_HEART_RATE_MEASUREMENT = UUID.fromString(SampleGattAttributes.HEART_RATE_MEASUREMENT);
     private final static String TAG = MarchaVazioActivity.class.getSimpleName();
     static final private UUID CCCD_ID = UUID.fromString("000002902-0000-1000-8000-00805f9b34fb");
-    private static final String myUUID = "00001800-0000-1000-8000-00805f9b34fb"; //"00060001-F8CE-11E4-ABF4-0002A5D5C51B";// configuração universão do WH-BLE 102
-
-//    public final static String ACTION_GATT_CONNECTED =
-//            "com.nordicsemi.nrfUART.ACTION_GATT_CONNECTED";
-//    public final static String ACTION_GATT_DISCONNECTED =
-//            "com.nordicsemi.nrfUART.ACTION_GATT_DISCONNECTED";
-//    public final static String ACTION_GATT_SERVICES_DISCOVERED =
-//            "com.nordicsemi.nrfUART.ACTION_GATT_SERVICES_DISCOVERED";
-//    public final static String ACTION_DATA_AVAILABLE =
-//            "com.nordicsemi.nrfUART.ACTION_DATA_AVAILABLE";
-//    public final static String EXTRA_DATA =
-//            "com.nordicsemi.nrfUART.EXTRA_DATA";
-//    public final static String DEVICE_DOES_NOT_SUPPORT_UART =
-//            "com.nordicsemi.nrfUART.DEVICE_DOES_NOT_SUPPORT_UART";
-//
-//    private int mConnectionState = STATE_DISCONNECTED;
-//
-//    private static final int STATE_DISCONNECTED = 0;
-//    private static final int STATE_CONNECTING = 1;
-//    private static final int STATE_CONNECTED = 2;
-//
-//
-
-//    private static final long SCAN_PERIOD = 10000;
-//
-//    List<BluetoothGattService> services;
-
-//    private Handler mHandler;
-//    private BluetoothLeScanner mLEScanner;
-//    private ScanSettings settings;
-//    private List<ScanFilter> filters;
-//    private BluetoothGatt mGatt;
-//    BluetoothGattCharacteristic characteristic;
-//    boolean enabled;
-//
-//    private final BroadcastReceiver mGattUpdateReceiver = new BroadcastReceiver() {
-//        @Override
-//        public void onReceive(Context context, Intent intent) {
-//            final String action = intent.getAction();
-//            if (ACTION_GATT_CONNECTED.equals(action)) {
-//                mConnected = true;
-//                updateConnectionState(R.string.connected);
-//                invalidateOptionsMenu();
-//            } else if (ACTION_GATT_DISCONNECTED.equals(action)) {
-//                mConnected = false;
-//                updateConnectionState(R.string.disconnected);
-//                invalidateOptionsMenu();
-//                clearUI();
-//            } else if (ACTION_GATT_SERVICES_DISCOVERED.equals(action)) {
-//                // Show all the supported services and characteristics on the
-//                // user interface.
-//                displayGattServices(mBluetoothLeService.getSupportedGattServices());
-//            } else if (ACTION_DATA_AVAILABLE.equals(action)) {
-//                displayData(intent.getStringExtra(EXTRA_DATA));
-//            }
-//        }
-//
-//
-//    };
-//
-//    private BluetoothAdapter.LeScanCallback mLeScanCallback = new BluetoothAdapter.LeScanCallback() {
-//        @Override
-//        public void onLeScan(final BluetoothDevice device, int rssi, byte[] scanRecord) {
-//            runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    Log.d("onLeScan", device.toString());
-//                    connectToDevice(device);
-//                }
-//            });
-//        }
-//    };
-//    //----classes de Scan
-//    private ScanCallback mScanCallback = new ScanCallback() {
-//        @Override
-//        public void onScanResult(int callbackType, ScanResult result) {
-//
-//            Log.d("callbackType", String.valueOf(callbackType));
-//            Log.d("result", result.toString());
-//            BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(result.getDevice().getAddress());
-//            connectToDevice(device);
-//
-//        }
-//
-//        @Override
-//        public void onBatchScanResults(List<ScanResult> results) {
-//            for (ScanResult sr : results) {
-//                Log.d("ScanResult - Results", sr.toString());
-//            }
-//        }
-//
-//        @Override
-//        public void onScanFailed(int errorCode) {
-//            Log.d("Scan Failed", "Error Code: " + errorCode);
-//        }
-//    };
-//
-//    //-----GATT conection
-//    public final BluetoothGattCallback gattCallback = new BluetoothGattCallback() {
-//
-//        @Override
-//        public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
-//            String intentAction;
-//            if (newState == BluetoothProfile.STATE_CONNECTED) {
-//                intentAction = ACTION_GATT_CONNECTED;
-//                mConnectionState = STATE_CONNECTED;
-//                broadcastUpdate(intentAction);
-//                Log.i(TAG, "Connected to GATT server.");
-//                Log.i(TAG, "Attempting to start service discovery:" +
-//                        mGatt.discoverServices());
-//
-//            } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
-//                intentAction = ACTION_GATT_DISCONNECTED;
-//                mConnectionState = STATE_DISCONNECTED;
-//                Log.i(TAG, "Disconnected from GATT server.");
-//                broadcastUpdate(intentAction);
-//            }
-//
-//        }
-//
-//        @Override
-//        public void onServicesDiscovered(BluetoothGatt gatt, int status) {
-//            if (status == BluetoothGatt.GATT_SUCCESS) {
-//                broadcastUpdate(ACTION_GATT_SERVICES_DISCOVERED);
-//            } else {
-//                Log.w(TAG, "onServicesDiscovered received: " + status);
-//            }
-//        }
-//
-//        @Override
-//        public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) { //le os dados recebidos
-//            if (status == BluetoothGatt.GATT_SUCCESS) {
-//                broadcastUpdate(ACTION_DATA_AVAILABLE, characteristic);
-//            }
-//        }
-//
-//        @Override
-//        // Characteristic notification
-//        public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
-//            broadcastUpdate(ACTION_DATA_AVAILABLE, characteristic);
-//        }
-//    };
-//
-
+    private static final String myUUID = "00001800-0000-1000-8000-00805f9b34fb";
 
     private static final int ENABLE_BLUETOOTH = 1;
     private static final int SELECT_PAIRED_DEVICE = 2;
@@ -299,26 +154,21 @@ public class MarchaVazioActivity extends AppCompatActivity {
                 }
             }
         });
-
-
     }
 
-    //para o padrao chines
+
     @Override
     protected void onResume() {
         super.onResume();
-
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-
     }
 
     @Override
     protected void onDestroy() {
-
         super.onDestroy();
     }
 
@@ -327,7 +177,6 @@ public class MarchaVazioActivity extends AppCompatActivity {
         if (requestCode == ENABLE_BLUETOOTH) {
             if (resultCode == RESULT_OK) {
                 textMessage.setText("Bluetooth ativado.");
-
 
             } else {
                 textMessage.setText("Bluetooth não ativado.");
@@ -340,15 +189,12 @@ public class MarchaVazioActivity extends AppCompatActivity {
                 macAddress = data.getStringExtra("btDevAddress");
                 Log.d("MAC ACRESS", macAddress);
 
-
                 conexaoBrasileiro = new ThreadConexaoPadraoBrasileiro(macAddress);
                 conexaoBrasileiro.start();
 
                 if (conexaoBrasileiro != null) {
                     textMessage.setText("Conexao finalizada com: " + data.getStringExtra("btDevName") + "\n Verifique o LED de conexão");
                 }
-
-
             } else {
                 textMessage.setText("Nenhum dispositivo selecionado.");
             }
@@ -358,11 +204,16 @@ public class MarchaVazioActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 textMessage.setText("Você selecionou " + data.getStringExtra("btDevName") + "\n" + data.getStringExtra("btDevAddress"));
                 macAddress = data.getStringExtra("btDevAddress");
+                String name = data.getStringExtra("btDevName");
                 Log.d("MAC ACRESS", macAddress);
+                Log.d("NAME", name);
 
-                Intent intent = new Intent(this, DeviceControlActivity.class);
-                intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_NAME, data.getStringExtra("btDevName"));
-                intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_ADDRESS, data.getStringExtra("btDevAddress"));
+                final Intent intentConection = new Intent(this, DeviceControlActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString(DeviceControlActivity.EXTRAS_DEVICE_NAME, name);
+                bundle.putString(DeviceControlActivity.EXTRAS_DEVICE_ADDRESS, macAddress);
+                intentConection.putExtras(bundle);
+                startActivity(intentConection);
 
             } else {
                 textMessage.setText("Nenhum dispositivo selecionado.");
@@ -371,14 +222,12 @@ public class MarchaVazioActivity extends AppCompatActivity {
     }
 
     private void abrirInspecaoConformidade() {
-
         Intent intent = new Intent(this, ExatidaoActivity.class);
         startActivity(intent);
     }
 
     //Funções Bluetooth
     private void ativarBluetooth() {
-
 
         if (mBluetoothAdapter == null) {
             textMessage.setText("Bluetooth não está funcionando.");
@@ -396,6 +245,23 @@ public class MarchaVazioActivity extends AppCompatActivity {
         }
     }
 
+    private void conectarDispositivo() {
+
+        //TODO conferir se é padrão brasileiro ou chines - integrção
+
+//        if (conexaoBrasileiro != null) {
+//            Toast.makeText(getApplicationContext(), "Dispositivo já conectado.", Toast.LENGTH_LONG).show();
+//        }
+//
+//        Intent searchPairedDevicesIntent = new Intent(this, PairedDevices.class);
+//        startActivityForResult(searchPairedDevicesIntent, SELECT_PAIRED_DEVICE);
+
+        Intent searchPairedDevicesIntent = new Intent(this, DeviceScanActivity.class);
+        startActivityForResult(searchPairedDevicesIntent, SELECT_BLE_DEVICE);
+
+    }
+
+
     //Funções Gerais da Atividade
     public void TesteMarchaEmVazio(View view) {
 
@@ -409,7 +275,8 @@ public class MarchaVazioActivity extends AppCompatActivity {
                 testeComecou = true;
                 teste.clearComposingText();
                 teste.setText("Cancelar Teste");
-                executarTestePadrãoBrasileiro();
+                //TODO conferir se é padrão brasileiro ou chines - if
+                marchaVazioPadrãoBrasileiro();
                 textMessage.clearComposingText();
                 textMessage.setText("Teste Iniciado!");
 
@@ -417,7 +284,8 @@ public class MarchaVazioActivity extends AppCompatActivity {
                 testeComecou = false;
                 teste.clearComposingText();
                 teste.setText("Iniciar Teste");
-                pararTestePadrãoBrasileiro();
+                //TODO conferir se é padrão brasileiro ou chines - if
+                pararTestesPadrãoBrasileiro();
                 textMessage.clearComposingText();
                 textMessage.setText("Teste Cancelado!");
             }
@@ -425,10 +293,6 @@ public class MarchaVazioActivity extends AppCompatActivity {
     }
 
     public void TesteFotoCelula(View view) {
-
-        confereVersaoPadraoChines();
-
-
         if (conexaoBrasileiro == null) {
             Toast.makeText(getApplicationContext(), "O teste não pode ser iniciado/parado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
 
@@ -440,7 +304,8 @@ public class MarchaVazioActivity extends AppCompatActivity {
                 testeFCComecou = true;
                 teste.clearComposingText();
                 teste.setText("Cancelar Teste de FotoCélula");
-                fazerTesteFotoCelulaPadraoBrasileiro();
+                //TODO conferir se é padrão brasileiro ou chines - if
+                fotoCelulaPadraoBrasileiro();
                 textMessage.clearComposingText();
                 textMessage.setText("Teste de FotoCélula Iniciado!");
 
@@ -448,18 +313,15 @@ public class MarchaVazioActivity extends AppCompatActivity {
                 testeFCComecou = false;
                 teste.clearComposingText();
                 teste.setText("Iniciar Teste de FotoCélula");
-                //olhar qual o padrão
-                pararTestePadrãoBrasileiro();
+                //TODO conferir se é padrão brasileiro ou chines - if
+                pararTestesPadrãoBrasileiro();
                 textMessage.clearComposingText();
                 textMessage.setText("Teste de FotoCélula Cancelado!");
             }
         }
-
-
     }
 
     public void escreverTela(final String res) {
-
         handler.post(new Runnable() {
             @Override
             public void run() {
@@ -471,18 +333,13 @@ public class MarchaVazioActivity extends AppCompatActivity {
                         teste.clearComposingText();
                         teste.setText("Iniciar Teste");
 
-
                     } else {
-
                         textMessage.clearComposingText();
                         textMessage.setText(res);
                     }
-
                 }
             }
         });
-
-
     }
 
     public void selecionarStatus(final double a) {
@@ -505,33 +362,87 @@ public class MarchaVazioActivity extends AppCompatActivity {
 
                         } else {
                             naoRealizado.setChecked(true);
-
                         }
                     }
                 });
             }
         }).start();
-
     }
 
-    //Funções Padrão Brasileiro
-    private void conectarDispositivo() {
 
-//        if (conexaoBrasileiro != null) {
-//            Toast.makeText(getApplicationContext(), "Dispositivo já conectado.", Toast.LENGTH_LONG).show();
-//        }
-//
-//        Intent searchPairedDevicesIntent = new Intent(this, PairedDevices.class);
-//        startActivityForResult(searchPairedDevicesIntent, SELECT_PAIRED_DEVICE);
+    //Conferir versões dos padrões
+    private void confereNumSeriePadraoChines() {
 
-        Intent searchPairedDevicesIntent = new Intent(this, DeviceScanActivity.class);
-        startActivityForResult(searchPairedDevicesIntent, SELECT_BLE_DEVICE);
+        byte[] pacote = new byte[12];
+
+        //Header - AA -------------- OK
+        pacote[0] = (byte) 0xAA;
+        Log.d("HEADER", String.valueOf(pacote[0]));
+
+        //Length - 0007 (2 bytes)(passar para hexadecimal) -------OK
+        int lenght1 = 0x00;
+        int lenght2 = 0x07;
+        Log.d("Length", String.valueOf(lenght1));
+        Log.d("Length", String.valueOf(lenght2));
+        pacote[2] = (byte) (lenght1);
+        pacote[3] = (byte) (lenght2);
+
+        //Header Check - XX (passar para hexadecimal)(fazer XOR de frames anteriores) ---TESTAR
+        pacote[4] = (byte) (pacote[0] ^ pacote[1] ^ pacote[2]);
+        Log.d("Header Check", String.valueOf(pacote[4]));
+
+        //Category ID - 0010 (2 bytes)(passar para hexadecimal) ---TESTAR
+        int category1 = 0x0010;
+
+        byte[] bytes1 = new byte[2];
+        bytes1[0] = (byte) (category1 / (Math.pow(256, 1)));
+        bytes1[1] = (byte) (category1 - (bytes1[0] * (Math.pow(256, 1))));
+        Log.d("Category ID", String.valueOf(bytes1[0]));
+        Log.d("Category ID", String.valueOf(bytes1[1]));
+
+        pacote[5] = (byte) bytes1[0];
+        pacote[6] = (byte) bytes1[1];
+
+        //Command ID - 00 (1 byte)------------OK
+        pacote[7] = (byte) (0x00);
+        Log.d("Command ID", String.valueOf(pacote[7]));
+
+        //Function Adress - 00 (1 byte) (Sempre 0)-----------OK
+        pacote[8] = (byte) (0x00);
+        Log.d("Function Adress", String.valueOf(pacote[8]));
+
+        //Data - 00 ------------------------OK
+        pacote[9] = (byte) (0x00);
+        Log.d("Data", String.valueOf(pacote[9]));
+
+        //Pack Check - XX (fazer XOR de todos os pacotes anteriores) ---TESTAR
+        pacote[10] = (byte) (pacote[0] ^ pacote[1] ^ pacote[2] ^ pacote[3] ^ pacote[4] ^ pacote[5] ^ pacote[6] ^ pacote[7] ^ pacote[8] ^ pacote[9]);
+        Log.d("Pack Check ", String.valueOf(pacote[10]));
+
+        //End - 55 ------------------------ OK
+        pacote[11] = (byte) (0x55);
+        Log.d("End", String.valueOf(pacote[11]));
 
 
+        Log.d("PACOTE", String.valueOf(pacote));
+
+        //  // BluetoothGattService service = mGatt.getService(UUID.fromString(myUUID));//serviços vem vazio
+        //   findCharacteristic(service);
+
+        //CARACTERISTIC: []
+        //CARACTERISTIC: null
+
+        // Log.d("CARACTERISTIC", String.valueOf(characteristic));
+
+//        characteristic.setValue(pacote);
+//        Log.d("CARACTERISTIC", String.valueOf(characteristic.getValue()));
+//        boolean successfullyWritten = mGatt.writeCharacteristic(characteristic);
     }
 
-    private void executarTestePadrãoBrasileiro() {
+    //Testes Padrao Brasileiro
+    private void marchaVazioPadrãoBrasileiro() {
 
+        //TODO Pegar o numero de série do medidor para ser comparado nos próximos testes
         tempoInicio = System.currentTimeMillis();
         byte[] pacote = new byte[10];
         float kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
@@ -580,27 +491,9 @@ public class MarchaVazioActivity extends AppCompatActivity {
 
     }
 
-    private void pararTestePadrãoBrasileiro() {
+    public void fotoCelulaPadraoBrasileiro() {
 
-        byte[] pacote = new byte[10];
-
-        pacote[0] = ('C' & 0xFF);
-        pacote[1] = (byte) (0 & 0xFF);
-        pacote[2] = (byte) (0 & 0xFF);
-        pacote[3] = (byte) (0 & 0xFF);
-        pacote[4] = (byte) (0 & 0xFF);
-        pacote[5] = (byte) (0 & 0xFF);
-        pacote[6] = (byte) (0 & 0xFF);
-        pacote[7] = (byte) (0 & 0xFF);
-        pacote[8] = (byte) (0 & 0xFF);
-        pacote[9] = (byte) (0 & 0xFF);
-
-        conexaoBrasileiro.write(pacote);
-
-
-    }
-
-    public void fazerTesteFotoCelulaPadraoBrasileiro() {
+        //TODO Pegar o numero de série do medidor para ser comparado nos próximos testes
         if (conexaoBrasileiro == null) {
             Toast.makeText(getApplicationContext(), "O teste não pode ser inicializado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
 
@@ -635,169 +528,34 @@ public class MarchaVazioActivity extends AppCompatActivity {
         }
     }
 
-    //Funções Padrão Chines
-//    private void scanLeDevice(final boolean enable) {
-//        if (enable) {
-//            mHandler.postDelayed(new Runnable() {
-//                @Override
-//                public void run() {
-//                    if (Build.VERSION.SDK_INT < 21) {
-//                        mBluetoothAdapter.stopLeScan(mLeScanCallback);
-//                    } else {
-//                        mLEScanner.stopScan(mScanCallback);
-//
-//                    }
-//                }
-//            }, SCAN_PERIOD);
-//            if (Build.VERSION.SDK_INT < 21) {
-//                mBluetoothAdapter.startLeScan(mLeScanCallback);
-//            } else {
-//                mLEScanner.startScan(filters, settings, mScanCallback);
-//            }
-//        } else {
-//            if (Build.VERSION.SDK_INT < 21) {
-//                mBluetoothAdapter.stopLeScan(mLeScanCallback);
-//            } else {
-//                mLEScanner.stopScan(mScanCallback);
-//            }
-//        }
-//    }
-//
-//    private void broadcastUpdate(final String action) {
-//        final Intent intent = new Intent(action);
-//        sendBroadcast(intent);
-//    }
-//
-//    private void broadcastUpdate(final String action, final BluetoothGattCharacteristic characteristic) {
-//        final Intent intent = new Intent(action);
-//
-//        // This is special handling for the Heart Rate Measurement profile. Data
-//        // parsing is carried out as per profile specifications.
-//        if (UUID_HEART_RATE_MEASUREMENT.equals(characteristic.getUuid())) {
-//            int flag = characteristic.getProperties();
-//            int format = -1;
-//            if ((flag & 0x01) != 0) {
-//                format = BluetoothGattCharacteristic.FORMAT_UINT16;
-//                Log.d(TAG, "Heart rate format UINT16.");
-//            } else {
-//                format = BluetoothGattCharacteristic.FORMAT_UINT8;
-//                Log.d(TAG, "Heart rate format UINT8.");
-//            }
-//            final int heartRate = characteristic.getIntValue(format, 1);
-//            Log.d(TAG, String.format("Received heart rate: %d", heartRate));
-//            intent.putExtra(EXTRA_DATA, String.valueOf(heartRate));
-//        } else {
-//            // For all other profiles, writes the data formatted in HEX.
-//            final byte[] data = characteristic.getValue();
-//            if (data != null && data.length > 0) {
-//                final StringBuilder stringBuilder = new StringBuilder(data.length);
-//                for(byte byteChar : data)
-//                    stringBuilder.append(String.format("%02X ", byteChar));
-//                intent.putExtra(EXTRA_DATA, new String(data) + "\n" +
-//                        stringBuilder.toString());
-//            }
-//        }
-//        sendBroadcast(intent);
-//    }
-//
-//    //-----encontrar caracteristicas de serviços
-//    private void findCharacteristic(BluetoothGattService service) {
-//
-//        if (service.getUuid().toString().equalsIgnoreCase(myUUID)) {
-//            for (BluetoothGattCharacteristic serviceCharacteristic : service.getCharacteristics()) {
-//                if (serviceCharacteristic.getUuid().toString().equalsIgnoreCase(myUUID)) {
-//                    characteristic = serviceCharacteristic;
-//                }
-//            }
-//        }
-//    }
-//
-//    private boolean refreshDeviceCache(BluetoothGatt gatt) {
-//        try {
-//            BluetoothGatt localBluetoothGatt = gatt;
-//            Method localMethod = localBluetoothGatt.getClass().getMethod("refresh", new Class[0]);
-//            if (localMethod != null) {
-//                boolean bool = ((Boolean) localMethod.invoke(localBluetoothGatt, new Object[0])).booleanValue();
-//                return bool;
-//            }
-//        } catch (Exception localException) {
-//            Log.e("REFRESHING CACHE", "An exception occured while refreshing device");
-//        }
-//        return false;
-//    }
-//
-//    public void connectToDevice(BluetoothDevice device) {
-//
-//        if (mGatt == null) {
-//            if (device.getName() == null) {
-//                scanLeDevice(true);// will stop after first device detection
-//
-//            } else {
-//                if (device.getName().startsWith("WH")) {
-//
-//                    mGatt = device.connectGatt(MarchaVazioActivity.this, false, gattCallback);
-//                    textMessage.setText("Conexao finalizada com: " + device.getName() + "\n");
-//                    refreshDeviceCache(mGatt);
-//                    scanLeDevice(false);// will stop after first device detection
-//
-//                    Log.d("CONEXAO", String.valueOf(mGatt.getDevice().getAddress()));
-//
-//
-//                } else {
-//                    Log.d("DISPOSITIVO ACAHADO:", device.getName() + "\n" + device.getAddress());
-//                    scanLeDevice(true);// will stop after first device detection
-//                }
-//            }
-//        }
-//    }
-//
-//    private void processData(byte[] value) {
-//
-//        String dados;
-//        byte[] data = value;
-//        String dataString = new String(data != null ? data : new byte[0]);
-//        dados = dataString;
-//        Log.d("DADOS", dados);
-//        Log.d("DADOS TAMANHO", String.valueOf(dados.length()));
-//        Log.d("DADOS STRING", dataString);
-//
-//    }
+    private void pararTestesPadrãoBrasileiro() {
 
-    private void confereVersaoPadraoChines() {
+        byte[] pacote = new byte[10];
 
-        int value = 5;
+        pacote[0] = ('C' & 0xFF);
+        pacote[1] = (byte) (0 & 0xFF);
+        pacote[2] = (byte) (0 & 0xFF);
+        pacote[3] = (byte) (0 & 0xFF);
+        pacote[4] = (byte) (0 & 0xFF);
+        pacote[5] = (byte) (0 & 0xFF);
+        pacote[6] = (byte) (0 & 0xFF);
+        pacote[7] = (byte) (0 & 0xFF);
+        pacote[8] = (byte) (0 & 0xFF);
+        pacote[9] = (byte) (0 & 0xFF);
 
-//        if (mBluetoothAdapter == null || mGatt == null) {
-//            Log.d("CONEFERE", "BluetoothAdapter not initialized");
-//            return;
-//        }
-//
-//        //lista todos os serviços com a conexão
-//        List<BluetoothGattService> mCustomService2 = mGatt.getServices();
-//        for (BluetoothGattService servico : mCustomService2) {
-//            Log.d("SERVIÇO ACHADO", servico.getUuid().toString());
-//        }
-//
-//
-//
-//        BluetoothGattService mCustomService = mGatt.getService(UUID.fromString("00001800-0000-1000-8000-00805f9b34fb"));
-//        if (mCustomService == null) {
-//            Log.d("CONEFERE", "Custom BLE Service not found");
-//            return;
-//        }
-//        /*get the read characteristic from the service*/
-//        Log.d("CARACTERISTICA 1", String.valueOf(mGatt.getService(UUID.fromString("00001800-0000-1000-8000-00805f9b34fb")).getUuid()));
-//        Log.d("CARACTERISTICA 2", String.valueOf(mCustomService.getCharacteristic(UUID.fromString("00001800-0000-1000-8000-00805f9b34fb")))); //aqui vem null
-//        BluetoothGattCharacteristic mWriteCharacteristic = mCustomService.getCharacteristic(UUID.fromString("00001800-0000-1000-8000-00805f9b34fb"));
-//       // Log.d("CARACTERISTICA ", mWriteCharacteristic.toString());
-//        Log.d("VALUE", String.valueOf(value));
-//        Log.d("FORMAT UNIT8", String.valueOf(BluetoothGattCharacteristic.FORMAT_UINT8));
-//        mWriteCharacteristic.setValue(value, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
-//
-//        if (mGatt.writeCharacteristic(mWriteCharacteristic) == false) {
-//            Log.d("CONEFERE", "Failed to write characteristic");
-//        }
+        conexaoBrasileiro.write(pacote);
+
+
     }
+
+    //Testes padrão chinês
+    //TODO função para teste de marcha em vaxio
+
+    //TODO função para teste de foto celula (registrador)
+
+    //TODO função de cancelar testes
+
+
 
 
 }

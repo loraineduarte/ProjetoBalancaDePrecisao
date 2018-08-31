@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <item
+        android:id="@+id/menu_refresh"
+        android:checkable="false"
+        android:orderInCategory="1"
+        android:showAsAction="ifRoom"
+        android:title=" "
+        tools:ignore="AppCompatResource" />
+    <item
+        android:id="@+id/menu_connect"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/menu_connect"
+        tools:ignore="AppCompatResource" />
+    <item
+        android:id="@+id/menu_disconnect"
+        android:orderInCategory="101"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/menu_disconnect"
+        tools:ignore="AppCompatResource" />
+</menu>
