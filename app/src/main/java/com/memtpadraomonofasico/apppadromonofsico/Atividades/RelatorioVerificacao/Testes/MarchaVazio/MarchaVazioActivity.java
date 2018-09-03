@@ -3,42 +3,54 @@ package com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificac
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothGattCharacteristic;
+import android.bluetooth.BluetoothGattService;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
 import android.widget.RadioButton;
+import android.widget.SimpleExpandableListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.Exatidao.ExatidaoActivity;
-import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.ConexaoMarchaVazio.ConexaoBLE.DeviceControlActivity;
+import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.ConexaoMarchaVazio.ConexaoBLE.BluetoothLeService;
 import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.ConexaoMarchaVazio.ConexaoBLE.DeviceScanActivity;
+import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.ConexaoMarchaVazio.ConexaoBLE.SampleGattAttributes;
 import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.ConexaoMarchaVazio.ConexãoBluetooth.ThreadConexaoPadraoBrasileiro;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
 import com.orhanobut.hawk.NoEncryption;
 
 import java.sql.Time;
-import java.util.UUID;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 @SuppressWarnings("ALL")
 @TargetApi(21)
 public class MarchaVazioActivity extends AppCompatActivity {
 
+    public static final String EXTRAS_DEVICE_NAME = "DEVICE_NAME";
+    public static final String EXTRAS_DEVICE_ADDRESS = "DEVICE_ADDRESS";
     private final static String TAG = MarchaVazioActivity.class.getSimpleName();
-    static final private UUID CCCD_ID = UUID.fromString("000002902-0000-1000-8000-00805f9b34fb");
-    private static final String myUUID = "00001800-0000-1000-8000-00805f9b34fb";
-
     private static final int ENABLE_BLUETOOTH = 1;
     private static final int SELECT_PAIRED_DEVICE = 2;
     private static final int SELECT_BLE_DEVICE = 3;
     private static final int REQUEST_ENABLE_BT = 4;
-
+    private static final int CONEXAO_BLE_FEITA = 5;
     @SuppressLint("HandlerLeak")
     private static final Handler handler = new Handler() {
     };
@@ -48,8 +60,10 @@ public class MarchaVazioActivity extends AppCompatActivity {
     @SuppressLint("StaticFieldLeak")
     private static EditText tempoReprovado;
     @SuppressLint("StaticFieldLeak")
-    private static TextView textMessage;
+    private static TextView mensagemNaTela;
     private static Runnable handlerTask;
+    private final String LIST_NAME = "NAME";
+    private final String LIST_UUID = "UUID";
     long tempoInicio;
     String macAddress = null;
     private BluetoothAdapter mBluetoothAdapter;
@@ -59,7 +73,102 @@ public class MarchaVazioActivity extends AppCompatActivity {
     private Button conectar, teste;
     private boolean testeComecou = false;
     private boolean testeFCComecou = false;
+    private ArrayList<BluetoothGattCharacteristic> servicos1 = new ArrayList<>();
+    private ArrayList<BluetoothGattCharacteristic> servicos2 = new ArrayList<>();
+    private ArrayList<BluetoothGattCharacteristic> servicos3 = new ArrayList<>();
+    private ExpandableListView mGattServicesList;
+    private BluetoothLeService mBluetoothLeService = new BluetoothLeService();
+    //Funções Bluetooth Baixa Energia
+    private final ServiceConnection mServiceConnection = new ServiceConnection() {   // Code to manage Service lifecycle.
 
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder service) {
+            mBluetoothLeService = ((BluetoothLeService.LocalBinder) service).getService();
+            if (!mBluetoothLeService.initialize()) {
+                Log.e(TAG, "Unable to initialize Bluetooth");
+                finish();
+            }
+
+            mBluetoothLeService.connect(macAddress);  // Automatically connects to the device upon successful start-up initialization.
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+            mBluetoothLeService = null;
+        }
+    };
+    private BluetoothGattCharacteristic mNotifyCharacteristic;
+    private ArrayList<ArrayList<BluetoothGattCharacteristic>> mGattCharacteristics = new ArrayList<>();
+    // If a given GATT characteristic is selected, check for supported features.  This sample demonstrates 'Read' and 'Notify' features.
+    private final ExpandableListView.OnChildClickListener servicesListClickListner = new ExpandableListView.OnChildClickListener() {
+        @Override
+        public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+
+            if (mGattCharacteristics != null) {
+
+                final BluetoothGattCharacteristic characteristic = mGattCharacteristics.get(groupPosition).get(childPosition);
+                final int charaProp = characteristic.getProperties();
+
+                if ((charaProp | BluetoothGattCharacteristic.PROPERTY_READ) > 0) {
+                    // If there is an active notification on a characteristic, clear
+                    // it first so it doesn't update the data field on the user interface.
+                    if (mNotifyCharacteristic != null) {
+                        mBluetoothLeService.setCharacteristicNotification(mNotifyCharacteristic, false);
+                        mNotifyCharacteristic = null;
+                    }
+                    mBluetoothLeService.readCharacteristic(characteristic);
+                }
+                if ((charaProp | BluetoothGattCharacteristic.PROPERTY_NOTIFY) > 0) {
+
+                    mNotifyCharacteristic = characteristic;
+                    mBluetoothLeService.setCharacteristicNotification(
+                            characteristic, true);
+                }
+                return true;
+            }
+            return false;
+        }
+    };
+    private boolean mConnected = false;
+    // Handles various events fired by the Service.
+    // ACTION_GATT_CONNECTED: connected to a GATT server.
+    // ACTION_GATT_DISCONNECTED: disconnected from a GATT server.
+    // ACTION_GATT_SERVICES_DISCOVERED: discovered GATT services.
+    // ACTION_DATA_AVAILABLE: received data from the device.  This can be a result of read  or notification operations.
+    private final BroadcastReceiver mGattUpdateReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            final String action = intent.getAction();
+            if (BluetoothLeService.ACTION_GATT_CONNECTED.equals(action)) {
+                mConnected = true;
+                updateConnectionState(R.string.connected);
+                invalidateOptionsMenu();
+            } else if (BluetoothLeService.ACTION_GATT_DISCONNECTED.equals(action)) {
+                mConnected = false;
+                updateConnectionState(R.string.disconnected);
+                invalidateOptionsMenu();
+                clearUI();
+            } else if (BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED.equals(action)) {
+                // Show all the supported services and characteristics on the user interface.
+                displayGattServices(mBluetoothLeService.getSupportedGattServices());
+
+            } else if (BluetoothLeService.ACTION_DATA_AVAILABLE.equals(action)) {
+                displayData(intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
+
+            }
+        }
+    };
+
+    private static IntentFilter makeGattUpdateIntentFilter() {
+
+        final IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(BluetoothLeService.ACTION_GATT_CONNECTED);
+        intentFilter.addAction(BluetoothLeService.ACTION_GATT_DISCONNECTED);
+        intentFilter.addAction(BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED);
+        intentFilter.addAction(BluetoothLeService.ACTION_DATA_AVAILABLE);
+        return intentFilter;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +178,8 @@ public class MarchaVazioActivity extends AppCompatActivity {
         NoEncryption encryption = new NoEncryption();
         Hawk.init(this).setEncryption(encryption).build();
 
-        textMessage = findViewById(R.id.textView5);
-        textMessage.setText("");
+        mensagemNaTela = findViewById(R.id.textView5);
+        mensagemNaTela.setText("");
         aprovado = findViewById(R.id.aprovado);
         aprovado.setEnabled(false);
         naoRealizado = findViewById(R.id.naoRealizado);
@@ -156,67 +265,91 @@ public class MarchaVazioActivity extends AppCompatActivity {
         });
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();
+        registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter());
+        if (mBluetoothLeService != null) {
+            final boolean result = mBluetoothLeService.connect(macAddress);
+            Log.d(TAG, "Connect request result=" + result);
+        }
+
+        mBluetoothLeService.connect(macAddress);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        unregisterReceiver(mGattUpdateReceiver);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        unbindService(mServiceConnection);
+        mBluetoothLeService = null;
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == ENABLE_BLUETOOTH) {
             if (resultCode == RESULT_OK) {
-                textMessage.setText("Bluetooth ativado.");
+                mensagemNaTela.setText("Bluetooth ativado.");
 
             } else {
-                textMessage.setText("Bluetooth não ativado.");
+                mensagemNaTela.setText("Bluetooth não ativado.");
             }
 
         } else if (requestCode == SELECT_PAIRED_DEVICE) {
 
             if (resultCode == RESULT_OK) {
-                textMessage.setText("Você selecionou " + data.getStringExtra("btDevName") + "\n" + data.getStringExtra("btDevAddress"));
+                mensagemNaTela.setText("Você selecionou " + data.getStringExtra("btDevName") + "\n" + data.getStringExtra("btDevAddress"));
                 macAddress = data.getStringExtra("btDevAddress");
-                Log.d("MAC ACRESS", macAddress);
+                // Log.d("MAC ACRESS", macAddress);
 
                 conexaoBrasileiro = new ThreadConexaoPadraoBrasileiro(macAddress);
                 conexaoBrasileiro.start();
 
                 if (conexaoBrasileiro != null) {
-                    textMessage.setText("Conexao finalizada com: " + data.getStringExtra("btDevName") + "\n Verifique o LED de conexão");
+                    mensagemNaTela.setText("Conexao finalizada com: " + data.getStringExtra("btDevName") + "\n Verifique o LED de conexão");
                 }
             } else {
-                textMessage.setText("Nenhum dispositivo selecionado.");
+                mensagemNaTela.setText("Nenhum dispositivo selecionado.");
             }
 
         } else if (requestCode == SELECT_BLE_DEVICE) {
 
             if (resultCode == RESULT_OK) {
-                textMessage.setText("Você selecionou " + data.getStringExtra("btDevName") + "\n" + data.getStringExtra("btDevAddress"));
+                mensagemNaTela.setText("Você selecionou " + data.getStringExtra("btDevName") + "\n" + data.getStringExtra("btDevAddress"));
                 macAddress = data.getStringExtra("btDevAddress");
-                String name = data.getStringExtra("btDevName");
-                Log.d("MAC ACRESS", macAddress);
-                Log.d("NAME", name);
 
-                final Intent intentConection = new Intent(this, DeviceControlActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString(DeviceControlActivity.EXTRAS_DEVICE_NAME, name);
-                bundle.putString(DeviceControlActivity.EXTRAS_DEVICE_ADDRESS, macAddress);
-                intentConection.putExtras(bundle);
-                startActivity(intentConection);
+                Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
+                bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
+                mBluetoothLeService.connect(macAddress);
 
             } else {
-                textMessage.setText("Nenhum dispositivo selecionado.");
+                mensagemNaTela.setText("Nenhum dispositivo selecionado.");
+
+            }
+        } else if (requestCode == CONEXAO_BLE_FEITA) {
+
+            if (resultCode == RESULT_OK) {
+
+                servicos1 = data.getParcelableArrayListExtra("lista1");
+                Log.d("MGATTCHARACTERISTIC", String.valueOf(servicos1));
+                Log.d("1", String.valueOf(servicos1.size()));
+
+                servicos2 = data.getParcelableArrayListExtra("lista2");
+                Log.d("MGATTCHARACTERISTIC", String.valueOf(servicos2.size()));
+                Log.d("2", String.valueOf(servicos2.size()));
+
+                servicos3 = data.getParcelableArrayListExtra(("lista3"));
+                Log.d("MGATTCHARACTERISTIC", String.valueOf(servicos3.size()));
+                Log.d("3", String.valueOf(servicos3.size()));
+
+
+            } else {
+                mensagemNaTela.setText("Não conseguiu ser realiza a conexão. Veja as permissões do aplicativo em seu aparelho e habilite a localização.");
             }
         }
     }
@@ -230,17 +363,17 @@ public class MarchaVazioActivity extends AppCompatActivity {
     private void ativarBluetooth() {
 
         if (mBluetoothAdapter == null) {
-            textMessage.setText("Bluetooth não está funcionando.");
+            mensagemNaTela.setText("Bluetooth não está funcionando.");
 
         } else {
-            textMessage.setText("Bluetooth está funcionando.");
+            mensagemNaTela.setText("Bluetooth está funcionando.");
             if (!mBluetoothAdapter.isEnabled()) {
                 Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-                textMessage.setText("Solicitando ativação do Bluetooth...");
+                mensagemNaTela.setText("Solicitando ativação do Bluetooth...");
 
             } else {
-                textMessage.setText("Bluetooth Ativado.");
+                mensagemNaTela.setText("Bluetooth Ativado.");
             }
         }
     }
@@ -258,6 +391,88 @@ public class MarchaVazioActivity extends AppCompatActivity {
 
         Intent searchPairedDevicesIntent = new Intent(this, DeviceScanActivity.class);
         startActivityForResult(searchPairedDevicesIntent, SELECT_BLE_DEVICE);
+    }
+
+    private void clearUI() {
+
+        mGattServicesList.setAdapter((SimpleExpandableListAdapter) null);
+        mensagemNaTela.setText(R.string.no_data);
+    }
+
+    private void updateConnectionState(final int resourceId) {
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mensagemNaTela.setText(resourceId); //Erro aqui
+            }
+        });
+    }
+
+    private void displayData(String data) {
+        if (data != null) {
+            mensagemNaTela.setText(data);
+        }
+    }
+
+    // Demonstrates how to iterate through the supported GATT Services/Characteristics.
+    // In this sample, we populate the data structure that is bound to the ExpandableListView
+    // on the UI.
+    private void displayGattServices(List<BluetoothGattService> gattServices) {
+        if (gattServices == null) return;
+        String uuid;
+        String unknownServiceString = getResources().getString(R.string.unknown_service);
+        String unknownCharaString = getResources().getString(R.string.unknown_characteristic);
+        ArrayList<HashMap<String, String>> gattServiceData = new ArrayList<>();
+        ArrayList<ArrayList<HashMap<String, String>>> gattCharacteristicData = new ArrayList<>();
+        mGattCharacteristics = new ArrayList<>();
+
+        // Loops through available GATT Services.
+        for (BluetoothGattService gattService : gattServices) {
+            HashMap<String, String> currentServiceData = new HashMap<>();
+            uuid = gattService.getUuid().toString();
+            currentServiceData.put(LIST_NAME, SampleGattAttributes.lookup(uuid, unknownServiceString));
+            currentServiceData.put(LIST_UUID, uuid);
+            gattServiceData.add(currentServiceData);
+
+            ArrayList<HashMap<String, String>> gattCharacteristicGroupData = new ArrayList<>();
+            List<BluetoothGattCharacteristic> gattCharacteristics = gattService.getCharacteristics();
+            ArrayList<BluetoothGattCharacteristic> charas = new ArrayList<>();
+
+            // Loops through available Characteristics.
+            for (BluetoothGattCharacteristic gattCharacteristic : gattCharacteristics) {
+
+                charas.add(gattCharacteristic);
+                HashMap<String, String> currentCharaData = new HashMap<>();
+                uuid = gattCharacteristic.getUuid().toString();
+                currentCharaData.put(LIST_NAME, SampleGattAttributes.lookup(uuid, unknownCharaString));
+                currentCharaData.put(LIST_UUID, uuid);
+                gattCharacteristicGroupData.add(currentCharaData);
+
+            }
+
+            mGattCharacteristics.add(charas);
+            gattCharacteristicData.add(gattCharacteristicGroupData);
+        }
+//
+//        //FAZER UMA LISTA PARA PEGAR TUDO?
+//        SimpleExpandableListAdapter gattServiceAdapter = new SimpleExpandableListAdapter(
+//                this,
+//                gattServiceData,
+//                android.R.layout.simple_expandable_list_item_2,
+//                new String[]{LIST_NAME, LIST_UUID},
+//                new int[]{android.R.id.text1, android.R.id.text2},
+//                gattCharacteristicData,
+//                android.R.layout.simple_expandable_list_item_2,
+//                new String[]{LIST_NAME, LIST_UUID},
+//                new int[]{android.R.id.text1, android.R.id.text2}
+//        );
+//        mGattServicesList.setAdapter(gattServiceAdapter);
+
+        Log.d("MGATTCHARACTERISTIC", String.valueOf(mGattCharacteristics.size()));
+        Log.d("1", String.valueOf(mGattCharacteristics.get(0).size()));
+        Log.d("2", String.valueOf(mGattCharacteristics.get(1).size()));
+        Log.d("3", String.valueOf(mGattCharacteristics.get(2).size()));
 
     }
 
@@ -277,8 +492,8 @@ public class MarchaVazioActivity extends AppCompatActivity {
                 teste.setText("Cancelar Teste");
                 //TODO conferir se é padrão brasileiro ou chines - if
                 marchaVazioPadrãoBrasileiro();
-                textMessage.clearComposingText();
-                textMessage.setText("Teste Iniciado!");
+                mensagemNaTela.clearComposingText();
+                mensagemNaTela.setText("Teste Iniciado!");
 
             } else {
                 testeComecou = false;
@@ -286,8 +501,8 @@ public class MarchaVazioActivity extends AppCompatActivity {
                 teste.setText("Iniciar Teste");
                 //TODO conferir se é padrão brasileiro ou chines - if
                 pararTestesPadrãoBrasileiro();
-                textMessage.clearComposingText();
-                textMessage.setText("Teste Cancelado!");
+                mensagemNaTela.clearComposingText();
+                mensagemNaTela.setText("Teste Cancelado!");
             }
         }
     }
@@ -306,8 +521,8 @@ public class MarchaVazioActivity extends AppCompatActivity {
                 teste.setText("Cancelar Teste de FotoCélula");
                 //TODO conferir se é padrão brasileiro ou chines - if
                 fotoCelulaPadraoBrasileiro();
-                textMessage.clearComposingText();
-                textMessage.setText("Teste de FotoCélula Iniciado!");
+                mensagemNaTela.clearComposingText();
+                mensagemNaTela.setText("Teste de FotoCélula Iniciado!");
 
             } else {
                 testeFCComecou = false;
@@ -315,8 +530,8 @@ public class MarchaVazioActivity extends AppCompatActivity {
                 teste.setText("Iniciar Teste de FotoCélula");
                 //TODO conferir se é padrão brasileiro ou chines - if
                 pararTestesPadrãoBrasileiro();
-                textMessage.clearComposingText();
-                textMessage.setText("Teste de FotoCélula Cancelado!");
+                mensagemNaTela.clearComposingText();
+                mensagemNaTela.setText("Teste de FotoCélula Cancelado!");
             }
         }
     }
@@ -325,17 +540,17 @@ public class MarchaVazioActivity extends AppCompatActivity {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                if (!(textMessage == null)) {
+                if (!(mensagemNaTela == null)) {
                     if (res.startsWith("T")) {
-                        textMessage.clearComposingText();
-                        textMessage.setText("Teste Concluído!");
+                        mensagemNaTela.clearComposingText();
+                        mensagemNaTela.setText("Teste Concluído!");
                         testeComecou = false;
                         teste.clearComposingText();
                         teste.setText("Iniciar Teste");
 
                     } else {
-                        textMessage.clearComposingText();
-                        textMessage.setText(res);
+                        mensagemNaTela.clearComposingText();
+                        mensagemNaTela.setText(res);
                     }
                 }
             }
@@ -500,7 +715,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
         } else {
 
             if (conexaoBrasileiro != null) {
-                textMessage.setText("O teste de FotoCélula vai ser iniciado...");
+                mensagemNaTela.setText("O teste de FotoCélula vai ser iniciado...");
             }
 
             byte[] pacote = new byte[10];

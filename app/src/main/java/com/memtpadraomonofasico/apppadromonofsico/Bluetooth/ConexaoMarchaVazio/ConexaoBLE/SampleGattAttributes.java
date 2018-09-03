@@ -22,17 +22,42 @@ import java.util.HashMap;
  * This class includes a small subset of standard GATT attributes for demonstration purposes.
  */
 public class SampleGattAttributes {
-    public static final String HEART_RATE_MEASUREMENT = "00002a37-0000-1000-8000-00805f9b34fb";
-    public static final String CLIENT_CHARACTERISTIC_CONFIG = "00002902-0000-1000-8000-00805f9b34fb";
+
+    //Serviço 1 - Atributos Genéricos
+    public static final String ATRIBUTOS_GENERICOS = "00001801-0000-1000-8000-00805f9b34fb";
+    //características
+    public static final String S1_SERVICE_CHANGED = "00002a05-0000-1000-8000-00805f9b34fb";
+
+    //Serviço 2 - Acesso Generico
+    public static final String ACESSO_GENERICO = "00001800-0000-1000-8000-00805f9b34fb";
+    //características
+    public static final String S2_DEVICE_NAME = "00002a00-0000-1000-8000-00805f9b34fb";
+    public static final String S2_APPEARANCE = "00002a01-0000-1000-8000-00805f9b34fb";
+    public static final String S2_PHERIPHERAL_PREFERRED_CONNECTION_PARAMETERS = "00002a04-0000-1000-8000-00805f9b34fb";
+
+    //Serviço 3 - ?
+    public static final String SERVICO_DO_PADRAO = "0003cdd0-0000-1000-8000-00805f9b0131";
+    //características
+    public static final String S3_1 = "0003cdd1-0000-1000-8000-00805f9b0131";
+    public static final String S3_2 = "0003cdd2-0000-1000-8000-00805f9b0131";
+
+
+
     private static final HashMap<String, String> attributes = new HashMap();
 
     static {
         // Sample Services.
-        attributes.put("0000180d-0000-1000-8000-00805f9b34fb", "Heart Rate Service");
-        attributes.put("0000180a-0000-1000-8000-00805f9b34fb", "Device Information Service");
+        attributes.put(ATRIBUTOS_GENERICOS, "Atributos Genericos");
+        attributes.put(ACESSO_GENERICO, "Informações do Acesso");
+        attributes.put(SERVICO_DO_PADRAO, "Serviço do Padrão ");
+
         // Sample Characteristics.
-        attributes.put(HEART_RATE_MEASUREMENT, "Heart Rate Measurement");
-        attributes.put("00002a29-0000-1000-8000-00805f9b34fb", "Manufacturer Name String");
+        attributes.put(S1_SERVICE_CHANGED, "Service Changed");
+        attributes.put(S2_DEVICE_NAME, "Nome do Dispositivo");
+        attributes.put(S2_APPEARANCE, "Appearance");
+        attributes.put(S2_PHERIPHERAL_PREFERRED_CONNECTION_PARAMETERS, "PHERIPHERAL_PREFERRED_CONNECTION_PARAMETERS");
+        attributes.put(S3_1, "S3_1");
+        attributes.put(S3_2, "S3_2");
     }
 
     public static String lookup(String uuid, String defaultName) {

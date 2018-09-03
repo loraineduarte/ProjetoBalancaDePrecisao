@@ -90,6 +90,7 @@ public class DeviceControlActivity extends AppCompatActivity {
     private final BroadcastReceiver mGattUpdateReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+
             final String action = intent.getAction();
             if (BluetoothLeService.ACTION_GATT_CONNECTED.equals(action)) {
                 mConnected = true;
@@ -103,6 +104,8 @@ public class DeviceControlActivity extends AppCompatActivity {
             } else if (BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED.equals(action)) {
                 // Show all the supported services and characteristics on the user interface.
                 displayGattServices(mBluetoothLeService.getSupportedGattServices());
+                retornaMarchaVazio();
+
             } else if (BluetoothLeService.ACTION_DATA_AVAILABLE.equals(action)) {
                 displayData(intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
             }
@@ -126,8 +129,7 @@ public class DeviceControlActivity extends AppCompatActivity {
                             // If there is an active notification on a characteristic, clear
                             // it first so it doesn't update the data field on the user interface.
                             if (mNotifyCharacteristic != null) {
-                                mBluetoothLeService.setCharacteristicNotification(
-                                        mNotifyCharacteristic, false);
+                                mBluetoothLeService.setCharacteristicNotification(mNotifyCharacteristic, false);
                                 mNotifyCharacteristic = null;
                             }
                             mBluetoothLeService.readCharacteristic(characteristic);
@@ -150,6 +152,23 @@ public class DeviceControlActivity extends AppCompatActivity {
         intentFilter.addAction(BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED);
         intentFilter.addAction(BluetoothLeService.ACTION_DATA_AVAILABLE);
         return intentFilter;
+    }
+
+    private void retornaMarchaVazio() {
+        Log.d("MGATTCHARACTERISTIC", String.valueOf(mGattCharacteristics.size()));
+
+        Log.d("1", String.valueOf(mGattCharacteristics.get(0).size()));
+        Log.d("2", String.valueOf(mGattCharacteristics.get(1).size()));
+        Log.d("3", String.valueOf(mGattCharacteristics.get(2).size()));
+
+        Intent returnIntent = new Intent();
+        returnIntent.putParcelableArrayListExtra("lista1", mGattCharacteristics.get(0));
+        returnIntent.putParcelableArrayListExtra("lista2", mGattCharacteristics.get(1));
+        returnIntent.putParcelableArrayListExtra("lista3", mGattCharacteristics.get(2));
+
+        setResult(RESULT_OK, returnIntent);
+        finish();
+
     }
 
     private void clearUI() {
@@ -266,33 +285,27 @@ public class DeviceControlActivity extends AppCompatActivity {
         String unknownServiceString = getResources().getString(R.string.unknown_service);
         String unknownCharaString = getResources().getString(R.string.unknown_characteristic);
         ArrayList<HashMap<String, String>> gattServiceData = new ArrayList<>();
-        ArrayList<ArrayList<HashMap<String, String>>> gattCharacteristicData
-                = new ArrayList<>();
+        ArrayList<ArrayList<HashMap<String, String>>> gattCharacteristicData = new ArrayList<>();
         mGattCharacteristics = new ArrayList<>();
 
         // Loops through available GATT Services.
         for (BluetoothGattService gattService : gattServices) {
             HashMap<String, String> currentServiceData = new HashMap<>();
             uuid = gattService.getUuid().toString();
-            currentServiceData.put(
-                    LIST_NAME, SampleGattAttributes.lookup(uuid, unknownServiceString));
+            currentServiceData.put(LIST_NAME, SampleGattAttributes.lookup(uuid, unknownServiceString));
             currentServiceData.put(LIST_UUID, uuid);
             gattServiceData.add(currentServiceData);
 
-            ArrayList<HashMap<String, String>> gattCharacteristicGroupData =
-                    new ArrayList<>();
-            List<BluetoothGattCharacteristic> gattCharacteristics =
-                    gattService.getCharacteristics();
-            ArrayList<BluetoothGattCharacteristic> charas =
-                    new ArrayList<>();
+            ArrayList<HashMap<String, String>> gattCharacteristicGroupData = new ArrayList<>();
+            List<BluetoothGattCharacteristic> gattCharacteristics = gattService.getCharacteristics();
+            ArrayList<BluetoothGattCharacteristic> charas = new ArrayList<>();
 
             // Loops through available Characteristics.
             for (BluetoothGattCharacteristic gattCharacteristic : gattCharacteristics) {
                 charas.add(gattCharacteristic);
                 HashMap<String, String> currentCharaData = new HashMap<>();
                 uuid = gattCharacteristic.getUuid().toString();
-                currentCharaData.put(
-                        LIST_NAME, SampleGattAttributes.lookup(uuid, unknownCharaString));
+                currentCharaData.put(LIST_NAME, SampleGattAttributes.lookup(uuid, unknownCharaString));
                 currentCharaData.put(LIST_UUID, uuid);
                 gattCharacteristicGroupData.add(currentCharaData);
             }
@@ -300,6 +313,7 @@ public class DeviceControlActivity extends AppCompatActivity {
             gattCharacteristicData.add(gattCharacteristicGroupData);
         }
 
+        //FAZER UMA LISTA PARA PEGAR TUDO?
         SimpleExpandableListAdapter gattServiceAdapter = new SimpleExpandableListAdapter(
                 this,
                 gattServiceData,
@@ -312,5 +326,15 @@ public class DeviceControlActivity extends AppCompatActivity {
                 new int[]{android.R.id.text1, android.R.id.text2}
         );
         mGattServicesList.setAdapter(gattServiceAdapter);
+
+
+        Log.d("MGATTCHARACTERISTIC", String.valueOf(mGattCharacteristics.size()));
+
+        Log.d("1", String.valueOf(mGattCharacteristics.get(0).size()));
+        Log.d("2", String.valueOf(mGattCharacteristics.get(1).size()));
+        Log.d("3", String.valueOf(mGattCharacteristics.get(2).size()));
+
+
+
     }
 }
