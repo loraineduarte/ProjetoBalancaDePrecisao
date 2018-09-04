@@ -49,14 +49,11 @@ import java.util.List;
  */
 public class DeviceControlActivity extends AppCompatActivity {
 
-    public static final String EXTRAS_DEVICE_NAME = "DEVICE_NAME";
-    public static final String EXTRAS_DEVICE_ADDRESS = "DEVICE_ADDRESS";
+    private static final String EXTRAS_DEVICE_NAME = "DEVICE_NAME";
+    private static final String EXTRAS_DEVICE_ADDRESS = "DEVICE_ADDRESS";
     private final static String TAG = DeviceControlActivity.class.getSimpleName();
-    private final String LIST_NAME = "NAME";
-    private final String LIST_UUID = "UUID";
     private TextView mConnectionState;
     private TextView mDataField;
-    private String mDeviceName = "";
     private String mDeviceAddress = "";
     private ExpandableListView mGattServicesList;
     private BluetoothLeService mBluetoothLeService = new BluetoothLeService();
@@ -66,7 +63,7 @@ public class DeviceControlActivity extends AppCompatActivity {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder service) {
             mBluetoothLeService = ((BluetoothLeService.LocalBinder) service).getService();
-            if (!mBluetoothLeService.initialize()) {
+            if (mBluetoothLeService.initialize()) {
                 Log.e(TAG, "Unable to initialize Bluetooth");
                 finish();
             }
@@ -185,7 +182,7 @@ public class DeviceControlActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Log.d("INTENT", intent.getExtras().toString());
         Bundle dados = intent.getExtras();
-        mDeviceName = dados.getString(EXTRAS_DEVICE_NAME);
+        String mDeviceName = dados.getString(EXTRAS_DEVICE_NAME);
         mDeviceAddress = dados.getString(EXTRAS_DEVICE_ADDRESS);
         Log.d("ADRESS", mDeviceAddress);
         Log.d("NAME", mDeviceName);
@@ -289,6 +286,8 @@ public class DeviceControlActivity extends AppCompatActivity {
         mGattCharacteristics = new ArrayList<>();
 
         // Loops through available GATT Services.
+        String LIST_UUID = "UUID";
+        String LIST_NAME = "NAME";
         for (BluetoothGattService gattService : gattServices) {
             HashMap<String, String> currentServiceData = new HashMap<>();
             uuid = gattService.getUuid().toString();
@@ -314,12 +313,12 @@ public class DeviceControlActivity extends AppCompatActivity {
         }
 
         //FAZER UMA LISTA PARA PEGAR TUDO?
-        SimpleExpandableListAdapter gattServiceAdapter = new SimpleExpandableListAdapter(
-                this,
+        SimpleExpandableListAdapter gattServiceAdapter = new SimpleExpandableListAdapter(this,
                 gattServiceData,
                 android.R.layout.simple_expandable_list_item_2,
                 new String[]{LIST_NAME, LIST_UUID},
                 new int[]{android.R.id.text1, android.R.id.text2},
+
                 gattCharacteristicData,
                 android.R.layout.simple_expandable_list_item_2,
                 new String[]{LIST_NAME, LIST_UUID},
