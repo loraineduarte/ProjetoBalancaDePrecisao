@@ -581,7 +581,7 @@
                             android:layout_height="fill_parent"
                             android:ems="10"
                             android:hint="@string/portaria_inmetro"
-                            android:inputType="number"
+                            android:inputType="textUri|number|numberSigned|numberDecimal|numberPassword"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
                     </android.support.design.widget.TextInputLayout>
 
@@ -675,6 +675,7 @@
         android:visibility="visible"
         app:backgroundTint="@android:color/background_light"
         app:elevation="10dp"
+        app:fabSize="normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
