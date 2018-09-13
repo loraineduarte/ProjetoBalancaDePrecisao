@@ -37,7 +37,6 @@ public class RelatorioVerificacaoActivity extends AppCompatActivity  {
     private EditText MatriculaAvaliador, nomeAvaliador, ToiNumero, nomeGerente;
     private String horaInicialFormatada = null;
     private List<String> av = new ArrayList<>();
-    private Spinner opcoesModeloPadrao;
 
 
     @SuppressLint("WrongViewCast")
@@ -64,7 +63,7 @@ public class RelatorioVerificacaoActivity extends AppCompatActivity  {
         TOI = findViewById(R.id.TOI);
         ToiNumero = findViewById(R.id.ToiNumero);
 
-        opcoesModeloPadrao = findViewById(R.id.PadraoModelo);
+        Spinner opcoesModeloPadrao = findViewById(R.id.PadraoModelo);
         ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this, R.array.ModelosPadrao, android.R.layout.simple_spinner_item);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         opcoesModeloPadrao.setAdapter(adapter2);

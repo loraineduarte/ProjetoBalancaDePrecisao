@@ -118,7 +118,7 @@
         android:id="@+id/ModeloPadrao"
         android:layout_width="match_parent"
         android:layout_height="65dp"
-        android:layout_marginEnd="100dp"
+        android:layout_marginEnd="150dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
