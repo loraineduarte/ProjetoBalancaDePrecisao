@@ -230,4 +230,10 @@
         ]]>
     </string>
 
+    <string-array name="ModelosPadrao">
+        <item></item>
+        <item>MKV-40</item>
+        <item>Chinês</item>
+    </string-array>
+
 </resources>

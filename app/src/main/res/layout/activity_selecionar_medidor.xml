@@ -498,7 +498,7 @@
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
                             android:ems="10"
-                            android:hint="@string/classe"
+                            android:hint="Classe (%)*"
                             android:inputType="textPersonName"
                             android:singleLine="true"
                             android:textAppearance="@style/TextAppearance.AppCompat.Small" />
@@ -674,7 +674,6 @@
         android:longClickable="false"
         android:visibility="visible"
         app:backgroundTint="@android:color/background_light"
-        app:elevation="10dp"
         app:fabSize="normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

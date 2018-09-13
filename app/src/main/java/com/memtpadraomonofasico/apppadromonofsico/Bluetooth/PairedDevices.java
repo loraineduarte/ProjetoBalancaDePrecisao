@@ -5,10 +5,14 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import com.memtpadraomonofasico.apppadromonofsico.R;
 
 import java.util.Set;
 
@@ -18,15 +22,15 @@ public class PairedDevices extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        /*  Esse trecho não é essencial, mas dá um melhor visual à lista.
-//            Adiciona um título à lista de dispositivos pareados utilizando
-//        o layout text_header.xml.
-//        */
-//        ListView lv = getListView();
-//        LayoutInflater inflater = getLayoutInflater();
-//        View header = inflater.inflate(R.layout.text_header, lv, false);
-//        ((TextView) header.findViewById(R.id.textView)).setText("\nDispositivos pareados\n");
-//        lv.addHeaderView(header, null, false);
+        /*  Esse trecho não é essencial, mas dá um melhor visual à lista.
+            Adiciona um título à lista de dispositivos pareados utilizando
+        o layout text_header.xml.
+        */
+        ListView lv = getListView();
+        LayoutInflater inflater = getLayoutInflater();
+        View header = inflater.inflate(R.layout.text_header, lv, false);
+        ((TextView) header.findViewById(R.id.textView)).setText("\nDispositivos pareados\n");
+        lv.addHeaderView(header, null, false);
 
         /*  Usa o adaptador Bluetooth para obter uma lista de dispositivos pareados.
          */

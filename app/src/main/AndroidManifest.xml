@@ -106,11 +106,10 @@
         <activity android:name=".Atividades.FuncoesAdmin.Mensagens.ListagemTodasMensagensActivity" />
         <activity android:name=".Atividades.FuncoesAdmin.Mensagens.CriarMensagemActivity" />
         <activity android:name=".Atividades.FuncoesAdmin.Mensagens.EditarMensagemActivity"></activity>
-        <activity android:name=".Bluetooth.ConexaoMarchaVazio.ConexaoBLE.DeviceScanActivity" />
-        <activity android:name=".Bluetooth.ConexaoMarchaVazio.ConexaoBLE.DeviceControlActivity" />
+        <activity android:name=".Bluetooth.BLE.DeviceScanActivity" />
 
         <service
-            android:name=".Bluetooth.ConexaoMarchaVazio.ConexaoBLE.BluetoothLeService"
+            android:name=".Bluetooth.Testes.ConexaoMarchaVazio.BluetoothLeServicoPadraoChines"
             android:enabled="true" />
 
 

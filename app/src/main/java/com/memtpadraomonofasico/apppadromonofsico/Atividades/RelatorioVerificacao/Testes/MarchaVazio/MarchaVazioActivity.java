@@ -25,10 +25,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.Testes.Exatidao.ExatidaoActivity;
-import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.ConexaoMarchaVazio.ConexaoBLE.BluetoothLeService;
-import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.ConexaoMarchaVazio.ConexaoBLE.DeviceScanActivity;
-import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.ConexaoMarchaVazio.ConexaoBLE.SampleGattAttributes;
-import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.ConexaoMarchaVazio.ConexãoBluetooth.ThreadConexaoPadraoBrasileiro;
+import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.BLE.DeviceScanActivity;
+import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.BLE.SampleGattAttributes;
+import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.PairedDevices;
+import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.Testes.ConexaoMarchaVazio.BluetoothLeServicoPadraoChines;
+import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.Testes.ConexaoMarchaVazio.BluetoothServicoPadraoMKV;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
 import com.orhanobut.hawk.NoEncryption;
@@ -49,36 +50,31 @@ public class MarchaVazioActivity extends AppCompatActivity {
     private static final int SELECT_BLE_DEVICE = 3;
     private static final int REQUEST_ENABLE_BT = 4;
     private static final int CONEXAO_BLE_FEITA = 5;
+    private static final long SCAN_PERIOD = 10000;  // Stops scanning after 10 seconds.
     @SuppressLint("HandlerLeak")
     private static final Handler handler = new Handler() {
     };
-    private static final long SCAN_PERIOD = 10000;  // Stops scanning after 10 seconds.
     @SuppressLint("StaticFieldLeak")
     private static RadioButton aprovado, naoRealizado, reprovado;
     @SuppressLint("StaticFieldLeak")
     private static EditText tempoReprovado;
     @SuppressLint("StaticFieldLeak")
     private static TextView mensagemNaTela;
-    private static Runnable handlerTask;
+    @SuppressLint("WrongViewCast")
+    private static Button botaoConectar, botaoTesteMarchaVazio, botaoTesteFotoCelula;
+    private static boolean testeMarchaVazioRodando = false;
+    private static boolean testeFotoCelulaRodando = false;
+    private static String modeloPadrao, macAddress, statusMarchaVazio, tempoReprovadoMarchaVazio;
+    private static BluetoothAdapter bluetoothAdapter;
+    private static BluetoothServicoPadraoMKV conexaoPadraoMKV;
+    private static BluetoothLeServicoPadraoChines conexaoBLEPadraoChines = new BluetoothLeServicoPadraoChines();
     private final String LIST_NAME = "NAME";
     private final String LIST_UUID = "UUID";
-    String macAddress = null;
-    private BluetoothAdapter bluetoothAdapter;
-    private String statusMarchaVazio, tempoReprovadoMarchaVazio;
-    private ThreadConexaoPadraoBrasileiro conexaoBrasileiro;
-    @SuppressLint("WrongViewCast")
-    private Button conectar, testeMarchaVazio, testeFotoCelula;
-    private boolean testeMarchaVazioRodando = false;
-    private boolean testeFotoCelulaRodando = false;
-    private ArrayList<BluetoothGattCharacteristic> servicos1 = new ArrayList<>();
-    private ArrayList<BluetoothGattCharacteristic> servicos2 = new ArrayList<>();
-    private ArrayList<BluetoothGattCharacteristic> servicos3 = new ArrayList<>();
-    private BluetoothLeService conexaoBLEPadraoChines = new BluetoothLeService();
-    private final ServiceConnection mServiceConnection = new ServiceConnection() {   // Code to manage Service lifecycle.
+    private final ServiceConnection mServiceConnection = new ServiceConnection() {
 
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder service) {
-            conexaoBLEPadraoChines = ((BluetoothLeService.LocalBinder) service).getService();
+            conexaoBLEPadraoChines = ((BluetoothLeServicoPadraoChines.LocalBinder) service).getService();
             if (conexaoBLEPadraoChines.initialize()) {
                 Log.e(TAG, "Unable to initialize Bluetooth");
                 finish();
@@ -92,9 +88,13 @@ public class MarchaVazioActivity extends AppCompatActivity {
             conexaoBLEPadraoChines = null;
         }
     };
+    private ArrayList<BluetoothGattCharacteristic> servicos1 = new ArrayList<>();
+    private ArrayList<BluetoothGattCharacteristic> servicos2 = new ArrayList<>();
+    private ArrayList<BluetoothGattCharacteristic> servicos3 = new ArrayList<>();
     private BluetoothGattCharacteristic mNotifyCharacteristic;
+
     private ArrayList<ArrayList<BluetoothGattCharacteristic>> mGattCharacteristics = new ArrayList<>();
-    // If a given GATT characteristic is selected, check for supported features.  This sample demonstrates 'Read' and 'Notify' features.
+
     private final ExpandableListView.OnChildClickListener servicesListClickListner = new ExpandableListView.OnChildClickListener() {
         @Override
         public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
@@ -105,8 +105,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
                 final int charaProp = characteristic.getProperties();
 
                 if ((charaProp | BluetoothGattCharacteristic.PROPERTY_READ) > 0) {
-                    // If there is an active notification on a characteristic, clear
-                    // it first so it doesn't update the data field on the user interface.
+
                     if (mNotifyCharacteristic != null) {
                         conexaoBLEPadraoChines.setCharacteristicNotification(mNotifyCharacteristic, false);
                         mNotifyCharacteristic = null;
@@ -129,33 +128,29 @@ public class MarchaVazioActivity extends AppCompatActivity {
             return false;
         }
     };
+
     private boolean mConnected = false;
-    // Handles various events fired by the Service.
-    // ACTION_GATT_CONNECTED: connected to a GATT server.
-    // ACTION_GATT_DISCONNECTED: disconnected from a GATT server.
-    // ACTION_GATT_SERVICES_DISCOVERED: discovered GATT services.
-    // ACTION_DATA_AVAILABLE: received data from the device.  This can be a result of read  or notification operations.
+
     private final BroadcastReceiver mGattUpdateReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
 
             final String action = intent.getAction();
-            if (BluetoothLeService.ACTION_GATT_CONNECTED.equals(action)) {
+            if (BluetoothLeServicoPadraoChines.ACTION_GATT_CONNECTED.equals(action)) {
                 mConnected = true;
                 updateConnectionState(R.string.connected);
 
 
-            } else if (BluetoothLeService.ACTION_GATT_DISCONNECTED.equals(action)) {
+            } else if (BluetoothLeServicoPadraoChines.ACTION_GATT_DISCONNECTED.equals(action)) {
                 mConnected = false;
                 updateConnectionState(R.string.disconnected);
                 clearUI();
 
-            } else if (BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED.equals(action)) {
-                // Show all the supported services and characteristics on the user interface.
-                displayGattServices(conexaoBLEPadraoChines.getSupportedGattServices());
+            } else if (BluetoothLeServicoPadraoChines.ACTION_GATT_SERVICES_DISCOVERED.equals(action)) {
+                mostraServicosGatt(conexaoBLEPadraoChines.getSupportedGattServices());
 
-            } else if (BluetoothLeService.ACTION_DATA_AVAILABLE.equals(action)) {
-                displayData(intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
+            } else if (BluetoothLeServicoPadraoChines.ACTION_DATA_AVAILABLE.equals(action)) {
+                mostraDados(intent.getStringExtra(BluetoothLeServicoPadraoChines.EXTRA_DATA));
 
             }
         }
@@ -164,10 +159,10 @@ public class MarchaVazioActivity extends AppCompatActivity {
     private static IntentFilter makeGattUpdateIntentFilter() {
 
         final IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(BluetoothLeService.ACTION_GATT_CONNECTED);
-        intentFilter.addAction(BluetoothLeService.ACTION_GATT_DISCONNECTED);
-        intentFilter.addAction(BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED);
-        intentFilter.addAction(BluetoothLeService.ACTION_DATA_AVAILABLE);
+        intentFilter.addAction(BluetoothLeServicoPadraoChines.ACTION_GATT_CONNECTED);
+        intentFilter.addAction(BluetoothLeServicoPadraoChines.ACTION_GATT_DISCONNECTED);
+        intentFilter.addAction(BluetoothLeServicoPadraoChines.ACTION_GATT_SERVICES_DISCOVERED);
+        intentFilter.addAction(BluetoothLeServicoPadraoChines.ACTION_DATA_AVAILABLE);
         return intentFilter;
     }
 
@@ -187,13 +182,15 @@ public class MarchaVazioActivity extends AppCompatActivity {
         reprovado = findViewById(R.id.Reprovado);
         reprovado.setEnabled(false);
         tempoReprovado = findViewById(R.id.TempoMarchaVazio);
-        conectar = findViewById(R.id.buttonConectarDispositivo);
-        testeMarchaVazio = findViewById(R.id.buttonAplicarTensao);
-        testeFotoCelula = findViewById(R.id.buttonTesteFotoCelula);
+        botaoConectar = findViewById(R.id.buttonConectarDispositivo);
+        botaoTesteMarchaVazio = findViewById(R.id.buttonAplicarTensao);
+        botaoTesteFotoCelula = findViewById(R.id.buttonTesteFotoCelula);
 
+        modeloPadrao = Hawk.get("ModeloPadrao");
+        Log.d("PADRAO", modeloPadrao);
         ativarBluetooth();
 
-        conectar.setOnClickListener(new View.OnClickListener() {
+        botaoConectar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -244,21 +241,21 @@ public class MarchaVazioActivity extends AppCompatActivity {
                             Hawk.put("statusMarchaVazio", statusMarchaVazio);
                             Hawk.put("tempoReprovadoMarchaVazio", tempoReprovadoMarchaVazio);
 
-                            if (conexaoBrasileiro != null) {
-                                conexaoBrasileiro.interrupt();
+                            if (conexaoPadraoMKV != null) {
+                                conexaoPadraoMKV.interrupt();
                             }
-                            bluetoothAdapter.disable();
-                            conexaoBrasileiro = null;
+                            // bluetoothAdapter.disable();
+                            conexaoPadraoMKV = null;
                             abrirInspecaoConformidade();
 
                         } else {
                             Hawk.put("statusMarchaVazio", statusMarchaVazio);
                             Hawk.put("tempoReprovadoMarchaVazio", tempoReprovadoMarchaVazio);
 
-                            if (conexaoBrasileiro != null) {
-                                conexaoBrasileiro.interrupt();
+                            if (conexaoPadraoMKV != null) {
+                                conexaoPadraoMKV.interrupt();
                             }
-                            bluetoothAdapter.disable();
+                            // bluetoothAdapter.disable();
                             abrirInspecaoConformidade();
                         }
                     }
@@ -270,26 +267,46 @@ public class MarchaVazioActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter());
-        if (conexaoBLEPadraoChines != null) {
-            final boolean result = conexaoBLEPadraoChines.connect(macAddress);
-            Log.d(TAG, "Connect request result=" + result);
+
+        if (modeloPadrao.startsWith("MKV")) {
+
+
+        } else if (modeloPadrao.startsWith("Chin")) {
+            registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter());
+            if (conexaoBLEPadraoChines != null) {
+                final boolean result = conexaoBLEPadraoChines.connect(macAddress);
+                Log.d(TAG, "Connect request result=" + result);
+            }
+
+            conexaoBLEPadraoChines.connect(macAddress);
         }
 
-        conexaoBLEPadraoChines.connect(macAddress);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        unregisterReceiver(mGattUpdateReceiver);
+
+        if (modeloPadrao.startsWith("MKV")) {
+
+
+        } else if (modeloPadrao.startsWith("Chin")) {
+            unregisterReceiver(mGattUpdateReceiver);
+        }
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unbindService(mServiceConnection);
-        conexaoBLEPadraoChines = null;
+        if (modeloPadrao.startsWith("MKV")) {
+
+
+        } else if (modeloPadrao.startsWith("Chin")) {
+            unbindService(mServiceConnection);
+            conexaoBLEPadraoChines = null;
+        }
+
     }
 
     //Funções bluetooth Padrao Chinês
@@ -307,14 +324,14 @@ public class MarchaVazioActivity extends AppCompatActivity {
         } else if (requestCode == SELECT_PAIRED_DEVICE) {
 
             if (resultCode == RESULT_OK) {
+
                 mensagemNaTela.setText("Você selecionou " + data.getStringExtra("btDevName") + "\n" + data.getStringExtra("btDevAddress"));
                 macAddress = data.getStringExtra("btDevAddress");
-                // Log.d("MAC ACRESS", macAddress);
 
-                conexaoBrasileiro = new ThreadConexaoPadraoBrasileiro(macAddress);
-                conexaoBrasileiro.start();
+                conexaoPadraoMKV = new BluetoothServicoPadraoMKV(macAddress);
+                conexaoPadraoMKV.start();
 
-                if (conexaoBrasileiro != null) {
+                if (conexaoPadraoMKV != null) {
                     mensagemNaTela.setText("Conexao finalizada com: " + data.getStringExtra("btDevName") + "\n Verifique o LED de conexão");
                 }
             } else {
@@ -324,10 +341,11 @@ public class MarchaVazioActivity extends AppCompatActivity {
         } else if (requestCode == SELECT_BLE_DEVICE) {
 
             if (resultCode == RESULT_OK) {
+
                 mensagemNaTela.setText("Você selecionou " + data.getStringExtra("btDevName") + "\n" + data.getStringExtra("btDevAddress"));
                 macAddress = data.getStringExtra("btDevAddress");
 
-                Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
+                Intent gattServiceIntent = new Intent(this, BluetoothLeServicoPadraoChines.class);
                 bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
                 conexaoBLEPadraoChines.connect(macAddress);
 
@@ -336,21 +354,11 @@ public class MarchaVazioActivity extends AppCompatActivity {
             }
 
         } else if (requestCode == BIND_AUTO_CREATE) {
-
             if (resultCode == RESULT_OK) {
 
                 servicos1 = data.getParcelableArrayListExtra("lista1");
-                Log.d("MGATTCHARACTERISTIC", String.valueOf(servicos1));
-                Log.d("1", String.valueOf(servicos1.size()));
-
                 servicos2 = data.getParcelableArrayListExtra("lista2");
-                Log.d("MGATTCHARACTERISTIC", String.valueOf(servicos2.size()));
-                Log.d("2", String.valueOf(servicos2.size()));
-
                 servicos3 = data.getParcelableArrayListExtra(("lista3"));
-                Log.d("MGATTCHARACTERISTIC", String.valueOf(servicos3.size()));
-                Log.d("3", String.valueOf(servicos3.size()));
-
 
             } else {
                 mensagemNaTela.setText("Não conseguiu ser realiza a conexão. Veja as permissões do aplicativo em seu aparelho e habilite a localização.");
@@ -384,44 +392,189 @@ public class MarchaVazioActivity extends AppCompatActivity {
 
     private void conectarDispositivo() {
 
-        //TODO conferir se é padrão brasileiro ou chines - integrção
+        if (modeloPadrao.startsWith("MKV")) {
+            Log.d("ENTROU MKV", "ENTROU MKV");
+            Log.d("PADRAO", modeloPadrao);
 
-//        if (conexaoBrasileiro != null) {
-//            Toast.makeText(getApplicationContext(), "Dispositivo já conectado.", Toast.LENGTH_LONG).show();
-//        }
-//
-//        Intent searchPairedDevicesIntent = new Intent(this, PairedDevices.class);
-//        startActivityForResult(searchPairedDevicesIntent, SELECT_PAIRED_DEVICE);
+            if (conexaoPadraoMKV != null) {
+                Toast.makeText(getApplicationContext(), "Dispositivo já conectado.", Toast.LENGTH_LONG).show();
+            }
+            Intent searchPairedDevicesIntent = new Intent(this, PairedDevices.class);
+            startActivityForResult(searchPairedDevicesIntent, SELECT_PAIRED_DEVICE);
 
-        Intent searchPairedDevicesIntent = new Intent(this, DeviceScanActivity.class);
-        startActivityForResult(searchPairedDevicesIntent, SELECT_BLE_DEVICE);
+        }
+        if (modeloPadrao.startsWith("Chin")) {
+            if (conexaoBLEPadraoChines != null) {
+                Toast.makeText(getApplicationContext(), "Dispositivo já conectado.", Toast.LENGTH_LONG).show();
+            }
+            Intent searchPairedDevicesIntent = new Intent(this, DeviceScanActivity.class);
+            startActivityForResult(searchPairedDevicesIntent, SELECT_BLE_DEVICE);
+        }
+
     }
 
     private void clearUI() {
         mensagemNaTela.setText(R.string.no_data);
-
     }
 
     private void updateConnectionState(final int resourceId) {
-
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mensagemNaTela.setText(resourceId); //Erro aqui
+                mensagemNaTela.setText(resourceId);
             }
         });
     }
 
-    private void displayData(String data) {
+    private void mostraDados(String data) {
         if (data != null) {
-            mensagemNaTela.setText(data);
+
+            Log.d("RECEBIDO STRING", data.toString());
+            Log.d("RECEBIDO TAMANHO", String.valueOf(data.length()));
+            String mensagemCortada = data.substring(27);  //pacote vem com tamanho 22)
+
+            String[] pacote = new String[9];
+
+            Log.d("RECEBIDO TAMANHO", String.valueOf(mensagemCortada.length()));
+            pacote[0] = (mensagemCortada.substring(0, 2));
+            pacote[1] = (mensagemCortada.substring(2, 4));
+            pacote[2] = (mensagemCortada.substring(4, 6));
+            pacote[3] = (mensagemCortada.substring(6, 11));
+            pacote[4] = (mensagemCortada.substring(12, 13));
+            pacote[5] = (mensagemCortada.substring(14, 15));
+            pacote[6] = (mensagemCortada.substring(16, 17));
+            pacote[7] = (mensagemCortada.substring(18, 19));
+            pacote[8] = (mensagemCortada.substring(20, 22));
+
+//            String category = pacote[2].substring(0,3);
+//            String commandID = pacote[2].substring(4,5);
+//            String functionAdress = pacote[2].substring(6,7);
+//            String equipmentID = pacote[2].substring(8,10);
+
+
+            Log.d("RECEBIDO CHAR", String.valueOf(pacote[0]));
+            Log.d("RECEBIDO CHAR", String.valueOf(pacote[1]));
+            Log.d("RECEBIDO CHAR", String.valueOf(pacote[2]));
+            Log.d("RECEBIDO CHAR", String.valueOf(pacote[3]));
+            Log.d("RECEBIDO CHAR", String.valueOf(pacote[4]));
+            Log.d("RECEBIDO CHAR", String.valueOf(pacote[5]));
+            Log.d("RECEBIDO CHAR", String.valueOf(pacote[6]));
+            Log.d("RECEBIDO CHAR", String.valueOf(pacote[7]));
+            Log.d("RECEBIDO CHAR", String.valueOf(pacote[8]));
+
+
+//            Log.d("CATEGORY", String.valueOf(category));
+//            Log.d("COMMAND ID", String.valueOf(commandID));
+//            Log.d("FUNCTION ADRESS", String.valueOf(functionAdress));
+//            Log.d("EQUIPMENT ID", String.valueOf(equipmentID));
+//            pacote[3] = (byte) (letras[3] & 0xFF);
+//            pacote[4] = (byte) (letras[4] & 0xFF);
+//            pacote[5] = (byte) (letras[5] & 0xFF);
+//            pacote[6] = (byte) (letras[6] & 0xFF);
+//            pacote[7] = (byte) (letras[7] & 0xFF);
+//            pacote[8] = (byte) (letras[8] & 0xFF);
+//            pacote[9] = (byte) (letras[9] & 0xFF);
+//            pacote[10] = (byte) (letras[10]);
+//            pacote[11] = (byte) (letras[11] & 0xFF);
+//            pacote[12] = (byte) (letras[12] & 0xFF);
+//            pacote[13] = (byte) (letras[13] & 0xFF);
+//            pacote[14] = (byte) (letras[14] & 0xFF);
+//            pacote[15] = (byte) (letras[15] & 0xFF);
+//            pacote[16] = (byte) (letras[16] & 0xFF);
+//            pacote[17] = (byte) (letras[17] & 0xFF);
+//            pacote[18] = (byte) (letras[18] & 0xFF);
+//            pacote[19] = (byte) (letras[19] & 0xFF);
+//            pacote[20] = (byte) (letras[20]);
+//            pacote[21] = (byte) (letras[21] & 0xFF);
+//            pacote[22] = (byte) (letras[22] & 0xFF);
+//            pacote[23] = (byte) (letras[23] & 0xFF);
+//            pacote[24] = (byte) (letras[24] & 0xFF);
+//            pacote[25] = (byte) (letras[25]);
+//            pacote[26] = (byte) (letras[26]);
+//            pacote[27] = (byte) (letras[27]);
+//            pacote[28] = (byte) (letras[28]);
+//            pacote[29] = (byte) (letras[29]);
+//            pacote[30] = (byte) (letras[30]);
+//            pacote[31] = (byte) (letras[31]);
+//            pacote[32] = (byte) (letras[32]);
+//            pacote[33] = (byte) (letras[33]);
+//            pacote[34] = (byte) (letras[34]);
+//            pacote[35] = (byte) (letras[35]);
+//            pacote[36] = (byte) (letras[36]);
+//            pacote[37] = (byte) (letras[37]);
+//            pacote[38] = (byte) (letras[38]);
+//            pacote[39] = (byte) (letras[39]);
+//            pacote[40] = (byte) (letras[40]);
+//            pacote[41] = (byte) (letras[41]);
+//            pacote[42] = (byte) (letras[42]);
+//            pacote[43] = (byte) (letras[43]);
+//            pacote[44] = (byte) (letras[44]);
+//            pacote[45] = (byte) (letras[45]);
+//            pacote[46] = (byte) (letras[46]);
+//            pacote[47] = (byte) (letras[47]);
+//            pacote[48] = (byte) (letras[48]);
+
+
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[0]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[1]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[2]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[3]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[4]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[5]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[6]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[7]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[8]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[9]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[10]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[11]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[12]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[13]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[14]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[15]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[16]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[17]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[18]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[19]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[20]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[21]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[22]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[23]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[24]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[25]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[26]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[27]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[28]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[29]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[30]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[31]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[32]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[33]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[34]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[35]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[36]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[37]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[38]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[39]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[40]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[41]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[42]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[43]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[44]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[45]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[46]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[47]));
+//            Log.d("RECEBIDO CHAR", String.valueOf(pacote[48]));
+
+
+            mensagemNaTela.setText(data.toString());
+
         }
     }
 
     // Demonstrates how to iterate through the supported GATT Services/Characteristics.
     // In this sample, we populate the data structure that is bound to the ExpandableListView
     // on the UI.
-    private void displayGattServices(List<BluetoothGattService> gattServices) {
+    private void mostraServicosGatt(List<BluetoothGattService> gattServices) {
 
         if (gattServices == null) return;
         String uuid;
@@ -461,10 +614,6 @@ public class MarchaVazioActivity extends AppCompatActivity {
         servicos1 = mGattCharacteristics.get(0);
         servicos2 = mGattCharacteristics.get(1);
         servicos3 = mGattCharacteristics.get(2);
-        Log.d("MGATTCHARACTERISTIC", String.valueOf(mGattCharacteristics.size()));
-        Log.d("1", String.valueOf(servicos1.size()));
-        Log.d("2", String.valueOf(servicos2.size()));
-        Log.d("3", String.valueOf(servicos3.size()));
 
     }
 
@@ -472,27 +621,40 @@ public class MarchaVazioActivity extends AppCompatActivity {
     //Funções Gerais da Atividade
     public void TesteMarchaEmVazio(View view) {
 
-        if ((conexaoBrasileiro == null) && (conexaoBLEPadraoChines == null)) {
-            Toast.makeText(getApplicationContext(), "O teste não pode ser iniciado/parado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
+        if ((conexaoPadraoMKV == null) && (conexaoBLEPadraoChines == null)) {
+            Toast.makeText(getApplicationContext(), "O teste não pode ser iniciado/parado, favor botaoConectar com o padrão.", Toast.LENGTH_LONG).show();
 
         } else {
-            testeMarchaVazio = findViewById(R.id.buttonAplicarTensao);
+
+            botaoTesteMarchaVazio = findViewById(R.id.buttonAplicarTensao);
 
             if (!testeMarchaVazioRodando) {
                 testeMarchaVazioRodando = true;
-                testeMarchaVazio.clearComposingText();
-                testeMarchaVazio.setText("Cancelar Teste");
-                //TODO conferir se é padrão brasileiro ou chines - if
-                marchaVazioPadrãoBrasileiro();
+                botaoTesteMarchaVazio.clearComposingText();
+                botaoTesteMarchaVazio.setText("Cancelar Teste de Marcha em Vazio");
+                if (modeloPadrao.startsWith("MKV")) {
+                    Log.d("PADRAO", modeloPadrao);
+                    marchaVazioPadrãoBrasileiro();
+
+                } else if (modeloPadrao.startsWith("Chin")) {
+                    //TODO - função para teste de marcha a vazio para o padrão chines
+                }
                 mensagemNaTela.clearComposingText();
                 mensagemNaTela.setText("Teste Iniciado!");
 
             } else {
                 testeMarchaVazioRodando = false;
-                testeMarchaVazio.clearComposingText();
-                testeMarchaVazio.setText("Iniciar Teste");
-                //TODO conferir se é padrão brasileiro ou chines - if
-                pararTestesPadrãoBrasileiro();
+                botaoTesteMarchaVazio.clearComposingText();
+                botaoTesteMarchaVazio.setText("Iniciar Teste de Marcha em Vazio");
+                if (modeloPadrao.startsWith("MKV")) {
+                    Log.d("PADRAO", modeloPadrao);
+                    pararTestesPadrãoBrasileiro();
+
+                } else if (modeloPadrao.startsWith("Chin")) {
+                    //TODO - função para parar teste no padrão chinês
+
+                }
+
                 mensagemNaTela.clearComposingText();
                 mensagemNaTela.setText("Teste Cancelado!");
             }
@@ -500,31 +662,44 @@ public class MarchaVazioActivity extends AppCompatActivity {
     }
 
     public void TesteFotoCelula(View view) {
-        if ((conexaoBrasileiro == null) && (conexaoBLEPadraoChines == null)) {
-            Toast.makeText(getApplicationContext(), "O teste não pode ser iniciado/parado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
+        if ((conexaoPadraoMKV == null) && (conexaoBLEPadraoChines == null)) {
+            Toast.makeText(getApplicationContext(), "O teste não pode ser iniciado/parado, favor botaoConectar com o padrão.", Toast.LENGTH_LONG).show();
             return;
 
         } else {
 
-            confereNumSeriePadraoChines();
-            testeFotoCelula = findViewById(R.id.buttonTesteFotoCelula);
+            botaoTesteFotoCelula = findViewById(R.id.buttonTesteFotoCelula);
 
             if (!testeFotoCelulaRodando) {
                 testeFotoCelulaRodando = true;
-                testeFotoCelula.clearComposingText();
-                testeFotoCelula.setText("Cancelar Teste de FotoCélula");
+                botaoTesteFotoCelula.clearComposingText();
+                botaoTesteFotoCelula.setText("Cancelar Teste de FotoCélula");
 
-                //TODO conferir se é padrão brasileiro ou chines - if
-                fotoCelulaPadraoBrasileiro();
+                if (modeloPadrao.startsWith("MKV")) {
+                    Log.d("PADRAO", modeloPadrao);
+                    fotoCelulaPadraoBrasileiro();
+
+                } else if (modeloPadrao.startsWith("Chin")) {
+                    //TODO - função teste para foto celula padrão chinês
+
+                }
+
                 mensagemNaTela.clearComposingText();
                 mensagemNaTela.setText("Teste de FotoCélula Iniciado!");
 
             } else {
                 testeFotoCelulaRodando = false;
-                testeFotoCelula.clearComposingText();
-                testeFotoCelula.setText("Iniciar Teste de FotoCélula");
-                //TODO conferir se é padrão brasileiro ou chines - if
-                pararTestesPadrãoBrasileiro();
+                botaoTesteFotoCelula.clearComposingText();
+                botaoTesteFotoCelula.setText("Iniciar Teste de FotoCélula");
+
+                if (modeloPadrao.startsWith("MKV")) {
+                    Log.d("PADRAO", modeloPadrao);
+                    pararTestesPadrãoBrasileiro();
+
+                } else if (modeloPadrao.startsWith("Chin")) {
+                    //TODO - função para teste padrão chinês
+
+                }
                 mensagemNaTela.clearComposingText();
                 mensagemNaTela.setText("Teste de FotoCélula Cancelado!");
             }
@@ -541,10 +716,11 @@ public class MarchaVazioActivity extends AppCompatActivity {
                         mensagemNaTela.setText("Teste Concluído!");
                         testeMarchaVazioRodando = false;
                         testeFotoCelulaRodando = false;
-                        testeMarchaVazio.clearComposingText();
-                        testeMarchaVazio.setText("Iniciar Teste");
-                        testeFotoCelula.clearComposingText();
-                        testeFotoCelula.setText("Iniciar Teste");
+
+                        botaoTesteMarchaVazio.clearComposingText();
+                        botaoTesteMarchaVazio.setText("Iniciar Teste de Marcha em Vazio");
+                        botaoTesteFotoCelula.clearComposingText();
+                        botaoTesteFotoCelula.setText("Iniciar Teste de FotoCelula");
 
                     } else {
                         mensagemNaTela.clearComposingText();
@@ -592,43 +768,41 @@ public class MarchaVazioActivity extends AppCompatActivity {
         pacote[0] = (byte) 0xAA;
         Log.d("HEADER", String.valueOf(pacote[0]));
 
-        //Length - 0007 (2 bytes)(passar para hexadecimal) -------OK
+        //Length - 0007 (2 bytes)(passar para hexadecimal)
         int lenght1 = 0x00;
         int lenght2 = 0x07;
-        Log.d("Length", String.valueOf(lenght1));
-        Log.d("Length", String.valueOf(lenght2));
         pacote[2] = (byte) (lenght1);
         pacote[3] = (byte) (lenght2);
+        Log.d("Length", String.valueOf(lenght1));
+        Log.d("Length", String.valueOf(lenght2));
 
-        //Header Check - XX (passar para hexadecimal)(fazer XOR de frames anteriores) ---TESTAR
+        //Header Check - XX (passar para hexadecimal)(fazer XOR de frames anteriores)
         pacote[4] = (byte) (pacote[0] ^ pacote[1] ^ pacote[2]);
         Log.d("Header Check", String.valueOf(pacote[4]));
 
-        //Category ID - 0010 (2 bytes)(passar para hexadecimal) ---TESTAR
+        //Category ID - 0010 (2 bytes)(passar para hexadecimal)
         int category1 = 0x0010;
-
         byte[] bytes1 = new byte[2];
         bytes1[0] = (byte) (category1 / (Math.pow(256, 1)));
         bytes1[1] = (byte) (category1 - (bytes1[0] * (Math.pow(256, 1))));
         Log.d("Category ID", String.valueOf(bytes1[0]));
         Log.d("Category ID", String.valueOf(bytes1[1]));
-
         pacote[5] = (byte) bytes1[0];
         pacote[6] = (byte) bytes1[1];
 
-        //Command ID - 00 (1 byte)------------OK
-        pacote[7] = (byte) (0x00);
+        //Command ID - 02 (1 byte)
+        pacote[7] = (byte) (0x02);
         Log.d("Command ID", String.valueOf(pacote[7]));
 
-        //Function Adress - 00 (1 byte) (Sempre 0)-----------OK
+        //Function Adress - 00 (1 byte) (Sempre 0)
         pacote[8] = (byte) (0x00);
         Log.d("Function Adress", String.valueOf(pacote[8]));
 
-        //Data - 00 ------------------------OK
+        //Data - 00
         pacote[9] = (byte) (0x00);
         Log.d("Data", String.valueOf(pacote[9]));
 
-        //Pack Check - XX (fazer XOR de todos os pacotes anteriores) ---TESTAR
+        //Pack Check - XX (fazer XOR de todos os pacotes anteriores)
         pacote[10] = (byte) (pacote[0] ^ pacote[1] ^ pacote[2] ^ pacote[3] ^ pacote[4] ^ pacote[5] ^ pacote[6] ^ pacote[7] ^ pacote[8] ^ pacote[9]);
         Log.d("Pack Check ", String.valueOf(pacote[10]));
 
@@ -639,16 +813,8 @@ public class MarchaVazioActivity extends AppCompatActivity {
 
         Log.d("PACOTE", String.valueOf(pacote));
 
-//        BluetoothGattCharacteristic caracteristica = servicos3.get(0);
-//        Log.d("CARACTERISTIC", String.valueOf(servicos3.get(0).getUuid()));
-//        caracteristica.setValue(pacote);
-//        Log.d("CARACTERISTIC", String.valueOf(caracteristica.getValue()));
-//        conexaoBLEPadraoChines.writeCharacteristic(caracteristica);
-
         boolean success = conexaoBLEPadraoChines.writeCharacteristic(pacote);
-
         Log.d(TAG, String.valueOf(success));
-
 
     }
 
@@ -656,7 +822,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
     //Testes Padrao Brasileiro
     private void marchaVazioPadrãoBrasileiro() {
 
-        //TODO Pegar o numero de série do medidor para ser comparado nos próximos testes
+        //TODO Função para pegar o numero de série do medidor para ser comparado nos próximos testes
 
         byte[] pacote = new byte[10];
         float kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
@@ -700,20 +866,20 @@ public class MarchaVazioActivity extends AppCompatActivity {
 
         }
 
-        conexaoBrasileiro.write(pacote);
+        conexaoPadraoMKV.write(pacote);
 
 
     }
 
     public void fotoCelulaPadraoBrasileiro() {
 
-        //TODO Pegar o numero de série do medidor para ser comparado nos próximos testes
-        if (conexaoBrasileiro == null) {
-            Toast.makeText(getApplicationContext(), "O teste não pode ser inicializado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
+        //TODO Função para pegar o numero de série do medidor para ser comparado nos próximos testes
+        if (conexaoPadraoMKV == null) {
+            Toast.makeText(getApplicationContext(), "O teste não pode ser inicializado, favor botaoConectar com o padrão.", Toast.LENGTH_LONG).show();
 
         } else {
 
-            if (conexaoBrasileiro != null) {
+            if (conexaoPadraoMKV != null) {
                 mensagemNaTela.setText("O teste de FotoCélula vai ser iniciado...");
             }
 
@@ -738,7 +904,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
             pacote[8] = (byte) (3 & 0xFF);
             pacote[9] = (byte) (232 & 0xFF);
 
-            conexaoBrasileiro.write(pacote);
+            conexaoPadraoMKV.write(pacote);
         }
     }
 
@@ -757,7 +923,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
         pacote[8] = (byte) (0 & 0xFF);
         pacote[9] = (byte) (0 & 0xFF);
 
-        conexaoBrasileiro.write(pacote);
+        conexaoPadraoMKV.write(pacote);
 
 
     }

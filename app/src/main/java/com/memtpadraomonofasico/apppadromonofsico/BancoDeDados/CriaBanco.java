@@ -19,7 +19,7 @@ public class CriaBanco extends SQLiteOpenHelper {
     //tabela de medidor
     public static final String TABELA_MEDIDOR = "medidor";
     public static final String ID_MEDIDOR = "_id_medidor";
-    public static final String NUM_GERAL = "medidor_num_geral";
+    public static final String NUM_SERIE = "medidor_num_serie";
     public static final String FABRICANTE = "medidor_fabricante";
     public static final String NUM_ELEMENTOS = "medidor_num_elementos";
     public static final String MODELO = "medidor_modelo";
@@ -39,7 +39,7 @@ public class CriaBanco extends SQLiteOpenHelper {
     private static final String NOME_BANCO = "banco.db";
 
 
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 4;
     public SQLiteDatabase db;
     BancoController banco;
 
@@ -53,7 +53,7 @@ public class CriaBanco extends SQLiteOpenHelper {
 
         String sqlMedidor = "CREATE TABLE IF NOT EXISTS " + TABELA_MEDIDOR + " (  "
                 + ID_MEDIDOR + " INTEGER PRIMARY KEY AUTOINCREMENT , "
-                + NUM_GERAL + " text, "
+                + NUM_SERIE + " text, "
                 + FABRICANTE + " text, "
                 + NUM_ELEMENTOS + " integer, "
                 + MODELO + " text, "
@@ -85,7 +85,7 @@ public class CriaBanco extends SQLiteOpenHelper {
         db.execSQL(sqlMensagens);
 
 
-        final String Insert_Data_Admin = "INSERT or replace INTO avaliador VALUES( 1, 'administrador','cemig','123456', 'true');";
+        final String Insert_Data_Admin = "INSERT or replace INTO avaliador VALUES( 1, 'administrador','admin','123456', 'true');";
         db.execSQL(Insert_Data_Admin);
 
         final String Insert_Data_Mensagens = "INSERT or replace INTO mensagens VALUES ( 1, 'Selos de Calibração','Base Perfurada')," +
@@ -128,7 +128,7 @@ public class CriaBanco extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-        if (oldVersion < 1) {
+        if (oldVersion < 4) {
             db.execSQL(" DROP TABLE IF EXISTS " + TABELA_AVALIADOR);
             db.execSQL(" DROP TABLE IF EXISTS " + TABELA_MEDIDOR);
             db.execSQL(" DROP TABLE IF EXISTS " + TABELA_MENSAGENS);
@@ -176,9 +176,6 @@ public class CriaBanco extends SQLiteOpenHelper {
             String[] campos = {NOME_AVALIADOR};
 
             cursor = db.query(TABELA_AVALIADOR, campos, MATRICULA + " = ?", selectionArgs, null, null, null, null);
-//            String strSQL = "SELECT avaliador_nome FROM " + TABELA_AVALIADOR + " WHERE avaliador_matricula = " + matricula ;
-//            Cursor cursor = db.rawQuery(strSQL, null);
-//            Log.d("RESULT", String.valueOf(cursor));
             if(cursor != null)
             {
                 if (cursor.moveToFirst()) {
@@ -205,7 +202,7 @@ public class CriaBanco extends SQLiteOpenHelper {
             String arrData[] = null;
             SQLiteDatabase db;
             db = this.getReadableDatabase(); // Read Data
-            String strSQL = "SELECT medidor_num_geral FROM " + TABELA_MEDIDOR;
+            String strSQL = "SELECT medidor_num_serie FROM " + TABELA_MEDIDOR;
             Cursor cursor = db.rawQuery(strSQL, null);
             if(cursor != null)
             {
@@ -236,15 +233,15 @@ public class CriaBanco extends SQLiteOpenHelper {
         db = this.getReadableDatabase();
         String[] selectionArgs = new String[1];
         selectionArgs[0] = codigo;
-        String[] campos = {NUM_GERAL, FABRICANTE, NUM_ELEMENTOS, MODELO, CORRENTE_NOMINAL, CLASSE, TENSAO_NOMINAL, KDKE,
+        String[] campos = {NUM_SERIE, FABRICANTE, NUM_ELEMENTOS, MODELO, CORRENTE_NOMINAL, CLASSE, TENSAO_NOMINAL, KDKE,
                 RR, FIOS, TIPO_MEDIDOR};
 
-        cursor = db.query(TABELA_MEDIDOR, campos, NUM_GERAL + " = ?", selectionArgs, null, null, null, null);
+        cursor = db.query(TABELA_MEDIDOR, campos, NUM_SERIE + " = ?", selectionArgs, null, null, null, null);
 
         if(cursor!=null){
             if(cursor.moveToFirst()){
                 arrData = new String[14];
-                arrData[0] = cursor.getString(cursor.getColumnIndexOrThrow(NUM_GERAL));
+                arrData[0] = cursor.getString(cursor.getColumnIndexOrThrow(NUM_SERIE));
                 arrData[2] = cursor.getString(cursor.getColumnIndexOrThrow(MODELO));
                 arrData[3] = cursor.getString(cursor.getColumnIndexOrThrow(FABRICANTE));
                 arrData[4] = cursor.getString(cursor.getColumnIndexOrThrow(TENSAO_NOMINAL));
@@ -271,7 +268,7 @@ public class CriaBanco extends SQLiteOpenHelper {
         db = this.getReadableDatabase();
         String[] selectionArgs = new String[1];
         selectionArgs[0] = codigo;
-        cursor = db.delete(TABELA_MEDIDOR, NUM_GERAL + " = ?", selectionArgs);
+        cursor = db.delete(TABELA_MEDIDOR, NUM_SERIE + " = ?", selectionArgs);
 
         Log.d("ARRAY", String.valueOf(cursor));
         if (cursor == -1) {

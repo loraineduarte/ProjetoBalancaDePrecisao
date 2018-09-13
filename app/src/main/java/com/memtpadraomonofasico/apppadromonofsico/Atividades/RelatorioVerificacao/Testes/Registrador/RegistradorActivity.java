@@ -25,7 +25,7 @@ import android.widget.Toast;
 import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.SituacoesObservadasActivity;
 import com.memtpadraomonofasico.apppadromonofsico.BancoDeDados.BancoController;
 import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.PairedDevices;
-import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.ThreadConexaoRegistrador;
+import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.Testes.ConexaoRegistrador.ThreadConexaoRegistrador;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
 import com.orhanobut.hawk.NoEncryption;

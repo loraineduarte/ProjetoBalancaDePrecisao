@@ -320,12 +320,11 @@ public class ConclusaoActivity extends AppCompatActivity {
             servicoItem.setBorder(PdfPCell.NO_BORDER);
             tableServico.addCell(servicoItem);
 
-            p = new Phrase("Nº de Série: ", smallNormal);
-            p.add(new Chunk((String) Hawk.get("NumeroSerieMedidor"), smallNormal));
-            servicoItem = new PdfPCell(p);
+            servicoItem = new PdfPCell(new Phrase(" ", subFont));
             servicoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             servicoItem.setBorder(PdfPCell.NO_BORDER);
             tableServico.addCell(servicoItem);
+
 
             servicoItem = new PdfPCell(new Phrase(" ", subFont));
             servicoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
@@ -402,12 +401,13 @@ public class ConclusaoActivity extends AppCompatActivity {
             medidorItem.setBorder(PdfPCell.NO_BORDER);
             tabelaMedidor.addCell(medidorItem);
 
-            p = new Phrase("Nº Geral:  ", smallNormal);
-            p.add(new Chunk((String) Hawk.get("NumeroGeralMedidor"), smallNormal));
+            p = new Phrase("Nº de Série:  ", smallNormal);
+            p.add(new Chunk((String) Hawk.get("NumeroSerieMedidor"), smallNormal));
             medidorItem = new PdfPCell(p);
             medidorItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             medidorItem.setBorder(PdfPCell.NO_BORDER);
             tabelaMedidor.addCell(medidorItem);
+
 
             p = new Phrase("Modelo: ", smallNormal);
             p.add(new Chunk((String) Hawk.get("ModeloMedidor"), smallNormal));
@@ -481,7 +481,7 @@ public class ConclusaoActivity extends AppCompatActivity {
             medidorItem.setBorder(PdfPCell.NO_BORDER);
             tabelaMedidor.addCell(medidorItem);
 
-            p = new Phrase("Classe: ", smallNormal);
+            p = new Phrase("Classe (%): ", smallNormal);
             p.add(new Chunk((String) Hawk.get("ClasseMedidor"), smallNormal));
             medidorItem = new PdfPCell(p);
             medidorItem.setHorizontalAlignment(Element.ALIGN_LEFT);

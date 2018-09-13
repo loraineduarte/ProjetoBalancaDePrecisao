@@ -50,6 +50,8 @@ implements NavigationView.OnNavigationItemSelectedListener {
 
         user = Hawk.get("usuario");
         senha = Hawk.get("senha" );
+
+        // Hawk.init(this);
         Hawk.put("usuario", user);
         Hawk.put("senha", senha);
 

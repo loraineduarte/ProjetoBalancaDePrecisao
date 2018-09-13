@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
@@ -23,14 +24,12 @@ import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
 import com.orhanobut.hawk.NoEncryption;
 
-import java.text.DateFormat;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
 
 
 @SuppressWarnings("ALL")
 public class ExatidaoActivity extends AppCompatActivity {
+
 
     private static final int ENABLE_BLUETOOTH = 1;
     private static final int SELECT_PAIRED_DEVICE = 2;
@@ -38,31 +37,23 @@ public class ExatidaoActivity extends AppCompatActivity {
     @SuppressLint("HandlerLeak")
     private static final Handler handlerInspecaoConformidade = new Handler(Looper.getMainLooper()) {
     };
-    static int hours, minutes, seconds;
+    private static String modeloPadrao;
     @SuppressLint("StaticFieldLeak")
-    private static EditText cargaNominalErro, cargaPequenaErro;
+    private static EditText erroCargaNominal, erroCargaPequeno, quantidadePulsos;
     @SuppressLint("StaticFieldLeak")
-    private static TextView textMessageInspecaoConformidade;
+    private static TextView mensagemInspecaoConformidade;
     @SuppressLint("StaticFieldLeak")
-    private static EditText quantidadePulsos;
-    @SuppressLint("StaticFieldLeak")
-    private static Chronometer cronometroPequeno;
-    @SuppressLint("StaticFieldLeak")
-    private static Chronometer cronometroNominal;
+    private static Chronometer cronometroTesteCargaPequena, cronometroTesteCargaNominal;
+    @SuppressLint("WrongViewCast")
+    private static Button botaoConectar, botaoTesteNominal, botaoTestePequeno, botaoTesteFotoCelula;
     boolean testeCargaNominalComecou = false;
     boolean testeCargaPequenaComecou = false;
-    boolean testeFCComecou = false;
-    double tempoTeste;
-    long tempoInicio, tempoCorrendo;
-    Instant iInicial;
-    @SuppressLint("WrongViewCast")
-    private
-    Button conectar;
+    boolean testeFotoCelulaComecou = false;
+    double tempoEstimadoTeste;
     private RadioButton Aprovado, NaoPossibilitaTeste, VariacaoLeitura, Reprovado;
-    private String statusConformidade;
-    private BluetoothAdapter mBluetoothAdapter;
-    private ThreadConexao conexao;
-    private Button testeNominal, testePequeno, teste;
+    private String statusTestesExatidao;
+    private BluetoothAdapter bluetoothAdapter;
+    private ThreadConexao conexaoMKV;
 
     public void escreverTelaCargaPequena(final String res) {
 
@@ -70,8 +61,8 @@ public class ExatidaoActivity extends AppCompatActivity {
             public void run() {
                 if (res.startsWith("T")) {
 
-                    cronometroPequeno.stop(); // stop a chronometer
-                    cronometroPequeno.setText("00:00");
+                    cronometroTesteCargaPequena.stop(); // stop a chronometer
+                    cronometroTesteCargaPequena.setText("00:00");
                 }
             }
         }).start();
@@ -80,30 +71,30 @@ public class ExatidaoActivity extends AppCompatActivity {
             @Override
             public void run() {
 
-                cargaPequenaErro.setEnabled(true);
-                if (!(cargaPequenaErro == null)) {
+                erroCargaPequeno.setEnabled(true);
+                if (!(erroCargaPequeno == null)) {
 
 
                     if (res.startsWith("T")) {
 
-                        cronometroPequeno.setVisibility(View.INVISIBLE);
-                        cronometroPequeno.setEnabled(false);//stop(); // stop a chronometer
-                        cronometroPequeno.setText("00:00");
+                        cronometroTesteCargaPequena.setVisibility(View.INVISIBLE);
+                        cronometroTesteCargaPequena.setEnabled(false);//stop(); // stop a chronometer
+                        cronometroTesteCargaPequena.setText("00:00");
 
-                        textMessageInspecaoConformidade.clearComposingText();
-                        textMessageInspecaoConformidade.setText(res);
+                        mensagemInspecaoConformidade.clearComposingText();
+                        mensagemInspecaoConformidade.setText(res);
 
                         testeCargaNominalComecou = false;
-                        testeNominal.clearComposingText();
-                        testeNominal.setText("Iniciar Teste de Carga Nominal");
+                        botaoTesteNominal.clearComposingText();
+                        botaoTesteNominal.setText("Iniciar Teste de Carga Nominal");
                         testeCargaPequenaComecou = false;
-                        testePequeno.clearComposingText();
-                        testePequeno.setText("Iniciar Teste de Carga Pequena");
+                        botaoTestePequeno.clearComposingText();
+                        botaoTestePequeno.setText("Iniciar Teste de Carga Pequena");
 
                     }
 
-                    cargaPequenaErro.clearComposingText();
-                    cargaPequenaErro.setText(res);
+                    erroCargaPequeno.clearComposingText();
+                    erroCargaPequeno.setText(res);
                 }
 
             }
@@ -112,34 +103,32 @@ public class ExatidaoActivity extends AppCompatActivity {
     }
 
     public void escreverTelaCargaNominal(final String res) {
-
-
         handlerInspecaoConformidade.post(new Runnable() {
             @Override
             public void run() {
 
-                cargaNominalErro.setEnabled(true);
-                if (!(cargaNominalErro == null)) {
+                erroCargaNominal.setEnabled(true);
+                if (!(erroCargaNominal == null)) {
                     if (res.startsWith("T")) {
 
-                        cronometroNominal.setVisibility(View.INVISIBLE);
-                        cronometroNominal.setEnabled(false);// stop(); // stop a chronometer
-                        cronometroNominal.setText("00:00");
+                        cronometroTesteCargaNominal.setVisibility(View.INVISIBLE);
+                        cronometroTesteCargaNominal.setEnabled(false);// stop(); // stop a chronometer
+                        cronometroTesteCargaNominal.setText("00:00");
 
 
-                        textMessageInspecaoConformidade.clearComposingText();
-                        textMessageInspecaoConformidade.setText(res);
+                        mensagemInspecaoConformidade.clearComposingText();
+                        mensagemInspecaoConformidade.setText(res);
                         testeCargaNominalComecou = false;
-                        testeNominal.clearComposingText();
-                        testeNominal.setText("Iniciar Teste de Carga Nominal");
+                        botaoTesteNominal.clearComposingText();
+                        botaoTesteNominal.setText("Iniciar Teste de Carga Nominal");
                         testeCargaPequenaComecou = false;
-                        testePequeno.clearComposingText();
-                        testePequeno.setText("Iniciar Teste de Carga Pequena");
+                        botaoTestePequeno.clearComposingText();
+                        botaoTestePequeno.setText("Iniciar Teste de Carga Pequena");
 
                     }
 
-                    cargaNominalErro.clearComposingText();
-                    cargaNominalErro.setText(res);
+                    erroCargaNominal.clearComposingText();
+                    erroCargaNominal.setText(res);
 
                 }
             }
@@ -149,8 +138,8 @@ public class ExatidaoActivity extends AppCompatActivity {
             public void run() {
                 if (res.startsWith("T")) {
 
-                    cronometroNominal.stop(); // stop a chronometer
-                    cronometroNominal.setText("00:00");
+                    cronometroTesteCargaNominal.stop(); // stop a chronometer
+                    cronometroTesteCargaNominal.setText("00:00");
                 }
             }
         }).start();
@@ -161,32 +150,30 @@ public class ExatidaoActivity extends AppCompatActivity {
         handlerInspecaoConformidade.post(new Runnable() {
             @Override
             public void run() {
-                if (!(textMessageInspecaoConformidade == null)) {
+                if (!(mensagemInspecaoConformidade == null)) {
                     if (res.startsWith("T")) {
-                        textMessageInspecaoConformidade.clearComposingText();
-                        textMessageInspecaoConformidade.setText(res);
+                        mensagemInspecaoConformidade.clearComposingText();
+                        mensagemInspecaoConformidade.setText(res);
 
-                        if (testePequeno != null) {
+                        if (botaoTestePequeno != null) {
                             testeCargaPequenaComecou = false;
-                            testePequeno.clearComposingText();
-                            testePequeno.setText("Iniciar Teste de Carga Pequena");
+                            botaoTestePequeno.clearComposingText();
+                            botaoTestePequeno.setText("Iniciar Teste de Carga Pequena");
                         }
-                        if (testeNominal != null) {
+                        if (botaoTesteNominal != null) {
                             testeCargaNominalComecou = false;
-                            testeNominal.clearComposingText();
-                            testeNominal.setText("Iniciar Teste de Carga Nominal");
+                            botaoTesteNominal.clearComposingText();
+                            botaoTesteNominal.setText("Iniciar Teste de Carga Nominal");
                         }
 
                     } else {
 
-                        textMessageInspecaoConformidade.clearComposingText();
-                        textMessageInspecaoConformidade.setText(res);
+                        mensagemInspecaoConformidade.clearComposingText();
+                        mensagemInspecaoConformidade.setText(res);
                     }
-
                 }
             }
         });
-
     }
 
     @Override
@@ -197,37 +184,39 @@ public class ExatidaoActivity extends AppCompatActivity {
         NoEncryption encryption = new NoEncryption();
         Hawk.init(this).setEncryption(encryption).build();
 
-        textMessageInspecaoConformidade = findViewById(R.id.textView7);
-        textMessageInspecaoConformidade.setText("  ");
-        cargaNominalErro = findViewById(R.id.CargaNominalErro);
-        cargaNominalErro.setEnabled(false);
-        cargaPequenaErro = findViewById(R.id.CargaPequenaErro);
-        cargaPequenaErro.setEnabled(false);
+        mensagemInspecaoConformidade = findViewById(R.id.textView7);
+        mensagemInspecaoConformidade.setText("  ");
+        erroCargaNominal = findViewById(R.id.CargaNominalErro);
+        erroCargaNominal.setEnabled(false);
+        erroCargaPequeno = findViewById(R.id.CargaPequenaErro);
+        erroCargaPequeno.setEnabled(false);
         Aprovado = findViewById(R.id.tampasolidarizada);
         NaoPossibilitaTeste = findViewById(R.id.sinaisCarbonizacao);
         VariacaoLeitura = findViewById(R.id.VariacaoLeitura);
         Reprovado = findViewById(R.id.Reprovado);
-        conectar = findViewById(R.id.buttonConectarDispositivo);
-        testeNominal = findViewById(R.id.button2);
-        testePequeno = findViewById(R.id.button3);
+        botaoConectar = findViewById(R.id.buttonConectarDispositivo);
+        botaoTesteNominal = findViewById(R.id.button2);
+        botaoTestePequeno = findViewById(R.id.button3);
         quantidadePulsos = findViewById(R.id.QuantidadePulsos);
 
-        cronometroPequeno = new Chronometer(this);
-        cronometroPequeno = findViewById(R.id.CronometroPequeno);
-        cronometroPequeno.setVisibility(View.INVISIBLE);
+        cronometroTesteCargaPequena = new Chronometer(this);
+        cronometroTesteCargaPequena = findViewById(R.id.CronometroPequeno);
+        cronometroTesteCargaPequena.setVisibility(View.INVISIBLE);
 
-        cronometroNominal = new Chronometer(this);
-        cronometroNominal = (Chronometer) findViewById(R.id.CronometroNominal); // initiate a chronometer
-        cronometroNominal.setVisibility(View.INVISIBLE);
+        cronometroTesteCargaNominal = new Chronometer(this);
+        cronometroTesteCargaNominal = (Chronometer) findViewById(R.id.CronometroNominal); // initiate a chronometer
+        cronometroTesteCargaNominal.setVisibility(View.INVISIBLE);
 
+        modeloPadrao = Hawk.get("ModeloPadrao");
+        Log.d("PADRAO", modeloPadrao);
         ativarBluetooth();
 
-        conectar.setOnClickListener(new View.OnClickListener() {
+        botaoConectar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 try {
-                    if (mBluetoothAdapter == null) {
+                    if (bluetoothAdapter == null) {
                         ativarBluetooth();
                         new Thread().sleep(4500);
                     }
@@ -246,23 +235,23 @@ public class ExatidaoActivity extends AppCompatActivity {
 
                 Hawk.delete("CargaNominalErroConformidade");
                 Hawk.delete("CargaPequenaErroConformidade");
-                Hawk.delete("statusConformidade");
+                Hawk.delete("statusTestesExatidao");
 
 
                 if (Aprovado.isChecked()) {
-                    statusConformidade = "Aprovado";
+                    statusTestesExatidao = "Aprovado";
 
                 }
                 if (NaoPossibilitaTeste.isChecked()) {
-                    statusConformidade = "Não Possibilita Teste";
+                    statusTestesExatidao = "Não Possibilita Teste";
 
                 }
                 if (VariacaoLeitura.isChecked()) {
-                    statusConformidade = "Variação de Leitura";
+                    statusTestesExatidao = "Variação de Leitura";
 
                 }
                 if (Reprovado.isChecked()) {
-                    statusConformidade = "Reprovado";
+                    statusTestesExatidao = "Reprovado";
                 }
 
                 if ((!Aprovado.isChecked()) && (!NaoPossibilitaTeste.isChecked()) && (!VariacaoLeitura.isChecked()) && (!Reprovado.isChecked())) {
@@ -270,26 +259,26 @@ public class ExatidaoActivity extends AppCompatActivity {
 
                 } else {
                     if ((NaoPossibilitaTeste.isChecked())) {
-                        Hawk.put("CargaNominalErroConformidade", String.valueOf(cargaNominalErro.getText()));
-                        Hawk.put("CargaPequenaErroConformidade", String.valueOf(cargaPequenaErro.getText()));
-                        Hawk.put("statusConformidade", statusConformidade);
+                        Hawk.put("CargaNominalErroConformidade", String.valueOf(erroCargaNominal.getText()));
+                        Hawk.put("CargaPequenaErroConformidade", String.valueOf(erroCargaPequeno.getText()));
+                        Hawk.put("statusTestesExatidao", statusTestesExatidao);
 
-                        if (conexao != null) {
-                            conexao.interrupt();
+                        if (conexaoMKV != null) {
+                            conexaoMKV.interrupt();
                         }
-                        mBluetoothAdapter.disable();
-                        conexao = null;
+                        bluetoothAdapter.disable();
+                        conexaoMKV = null;
                         abrirRegistrador();
 
                     } else {
-                        Hawk.put("CargaNominalErroConformidade", String.valueOf(cargaNominalErro.getText()));
-                        Hawk.put("CargaPequenaErroConformidade", String.valueOf(cargaPequenaErro.getText()));
-                        Hawk.put("statusConformidade", statusConformidade);
+                        Hawk.put("CargaNominalErroConformidade", String.valueOf(erroCargaNominal.getText()));
+                        Hawk.put("CargaPequenaErroConformidade", String.valueOf(erroCargaPequeno.getText()));
+                        Hawk.put("statusTestesExatidao", statusTestesExatidao);
 
-                        if (conexao != null) {
-                            conexao.interrupt();
+                        if (conexaoMKV != null) {
+                            conexaoMKV.interrupt();
                         }
-                        mBluetoothAdapter.disable();
+                        bluetoothAdapter.disable();
                         abrirRegistrador();
                     }
                 }
@@ -305,13 +294,13 @@ public class ExatidaoActivity extends AppCompatActivity {
 
     public void mudarEstadoTesteCargaNominal(View view) {
 
-        cronometroNominal.setVisibility(View.VISIBLE);
-        cronometroNominal.setBase(SystemClock.elapsedRealtime());
-        cronometroNominal.start(); // start a chronometer
+        cronometroTesteCargaNominal.setVisibility(View.VISIBLE);
+        cronometroTesteCargaNominal.setBase(SystemClock.elapsedRealtime());
+        cronometroTesteCargaNominal.start(); // start a chronometer
 
         int pulsos = 5;
         if (quantidadePulsos.getText().toString().equals("")) {
-            Toast.makeText(getApplicationContext(), "O teste vai ser realizado com 5 pulsos!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "O botaoTesteFotoCelula vai ser realizado com 5 pulsos!", Toast.LENGTH_LONG).show();
             pulsos = 5;
         } else {
             pulsos = Integer.parseInt(quantidadePulsos.getText().toString());
@@ -322,45 +311,45 @@ public class ExatidaoActivity extends AppCompatActivity {
         float kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
         float FP = 1;
 
-        tempoTeste = ((((3600 * pulsos * kdMedidor) / (tensao * corrente * FP))) / 10);
+        tempoEstimadoTeste = ((((3600 * pulsos * kdMedidor) / (tensao * corrente * FP))) / 10);
         DecimalFormat df = new DecimalFormat("0.##");
-        String dx = df.format(tempoTeste);
+        String dx = df.format(tempoEstimadoTeste);
 
-        if (conexao == null) {
-            Toast.makeText(getApplicationContext(), "O teste não pode ser iniciado/parado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
+        if (conexaoMKV == null) {
+            Toast.makeText(getApplicationContext(), "O botaoTesteFotoCelula não pode ser iniciado/parado, favor botaoConectar com o padrão.", Toast.LENGTH_LONG).show();
 
         } else {
 
             if (!testeCargaNominalComecou) {
                 testeCargaNominalComecou = true;
-                testeNominal.clearComposingText();
-                testeNominal.setText("Cancelar Teste de Carga Nominal");
+                botaoTesteNominal.clearComposingText();
+                botaoTesteNominal.setText("Cancelar Teste de Carga Nominal");
                 aplicarCargaNominal(view);
-                textMessageInspecaoConformidade.clearComposingText();
-                textMessageInspecaoConformidade.setText("Teste sendo iniciado...  \n " +
+                mensagemInspecaoConformidade.clearComposingText();
+                mensagemInspecaoConformidade.setText("Teste sendo iniciado...  \n " +
                         "Estimativa: " + dx + " minuto(s)");
-                tempoTeste = 0;
+                tempoEstimadoTeste = 0;
 
             } else {
                 testeCargaNominalComecou = false;
-                testeNominal.clearComposingText();
-                testeNominal.setText("Iniciar Teste de Carga Nominal");
-                pararTeste(view);
-                textMessageInspecaoConformidade.clearComposingText();
-                textMessageInspecaoConformidade.setText("Teste Cancelado!");
+                botaoTesteNominal.clearComposingText();
+                botaoTesteNominal.setText("Iniciar Teste de Carga Nominal");
+                pararTestePadraoMKV(view);
+                mensagemInspecaoConformidade.clearComposingText();
+                mensagemInspecaoConformidade.setText("Teste Cancelado!");
             }
         }
     }
 
     public void mudarEstadoTesteCargaPequena(View view) {
 
-        cronometroPequeno.setVisibility(View.VISIBLE);
-        cronometroPequeno.setBase(SystemClock.elapsedRealtime());
-        cronometroPequeno.start(); // start a chronometer
+        cronometroTesteCargaPequena.setVisibility(View.VISIBLE);
+        cronometroTesteCargaPequena.setBase(SystemClock.elapsedRealtime());
+        cronometroTesteCargaPequena.start(); // start a chronometer
 
         int pulsos = 5;
         if (quantidadePulsos.getText().toString().equals("")) {
-            Toast.makeText(getApplicationContext(), "O teste vai ser realizado com 5 pulsos!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "O botaoTesteFotoCelula vai ser realizado com 5 pulsos!", Toast.LENGTH_LONG).show();
             pulsos = 5;
         } else {
             pulsos = Integer.parseInt(quantidadePulsos.getText().toString());
@@ -370,38 +359,38 @@ public class ExatidaoActivity extends AppCompatActivity {
         float kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
         float FP = 1;
 
-        tempoTeste = ((((3600 * pulsos * kdMedidor) / (tensao * corrente * FP))) / 10);
+        tempoEstimadoTeste = ((((3600 * pulsos * kdMedidor) / (tensao * corrente * FP))) / 10);
 
         DecimalFormat df = new DecimalFormat("0.##");
-        String dx = df.format(tempoTeste);
+        String dx = df.format(tempoEstimadoTeste);
 
-        if (conexao == null) {
-            Toast.makeText(getApplicationContext(), "O teste não pode ser iniciado/parado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
+        if (conexaoMKV == null) {
+            Toast.makeText(getApplicationContext(), "O botaoTesteFotoCelula não pode ser iniciado/parado, favor botaoConectar com o padrão.", Toast.LENGTH_LONG).show();
 
         } else {
 
             if (!testeCargaPequenaComecou) {
                 testeCargaPequenaComecou = true;
-                testePequeno.clearComposingText();
-                testePequeno.setText("Cancelar Teste de Carga Pequena");
+                botaoTestePequeno.clearComposingText();
+                botaoTestePequeno.setText("Cancelar Teste de Carga Pequena");
                 aplicarCargaPequena(view);
-                textMessageInspecaoConformidade.clearComposingText();
-                textMessageInspecaoConformidade.setText("Teste sendo iniciado... \n" +
+                mensagemInspecaoConformidade.clearComposingText();
+                mensagemInspecaoConformidade.setText("Teste sendo iniciado... \n" +
                         "Estimativa: " + dx + " minuto(s) ");
-                tempoTeste = 0;
+                tempoEstimadoTeste = 0;
 
             } else {
                 testeCargaPequenaComecou = false;
-                testePequeno.clearComposingText();
-                testePequeno.setText("Iniciar Teste de Carga Pequena");
-                pararTeste(view);
-                textMessageInspecaoConformidade.clearComposingText();
-                textMessageInspecaoConformidade.setText("Teste Cancelado!");
+                botaoTestePequeno.clearComposingText();
+                botaoTestePequeno.setText("Iniciar Teste de Carga Pequena");
+                pararTestePadraoMKV(view);
+                mensagemInspecaoConformidade.clearComposingText();
+                mensagemInspecaoConformidade.setText("Teste Cancelado!");
             }
         }
     }
 
-    private void pararTeste(View view) {
+    private void pararTestePadraoMKV(View view) {
 
         byte[] pacote = new byte[10];
 
@@ -416,35 +405,35 @@ public class ExatidaoActivity extends AppCompatActivity {
         pacote[8] = (byte) (0 & 0xFF);
         pacote[9] = (byte) (0 & 0xFF);
 
-        conexao.write(pacote);
+        conexaoMKV.write(pacote);
 
 
-        cronometroPequeno.stop(); // stop a chronometer
-        cronometroPequeno.setText("00:00");
+        cronometroTesteCargaPequena.stop(); // stop a chronometer
+        cronometroTesteCargaPequena.setText("00:00");
 
-        cronometroNominal.stop(); // stop a chronometer
-        cronometroNominal.setText("00:00");
+        cronometroTesteCargaNominal.stop(); // stop a chronometer
+        cronometroTesteCargaNominal.setText("00:00");
 
 
     }
 
     private void ativarBluetooth() {
 
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
-        if (mBluetoothAdapter == null) {
-            textMessageInspecaoConformidade.setText("Bluetooth não está funcionando.");
+        if (bluetoothAdapter == null) {
+            mensagemInspecaoConformidade.setText("Bluetooth não está funcionando.");
 
         } else {
-            textMessageInspecaoConformidade.setText("Bluetooth está funcionando.");
+            mensagemInspecaoConformidade.setText("Bluetooth está funcionando.");
 
-            if (!mBluetoothAdapter.isEnabled()) {
+            if (!bluetoothAdapter.isEnabled()) {
                 Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-                textMessageInspecaoConformidade.setText("Solicitando ativação do Bluetooth...");
+                mensagemInspecaoConformidade.setText("Solicitando ativação do Bluetooth...");
 
             } else {
-                textMessageInspecaoConformidade.setText("Bluetooth Ativado.");
+                mensagemInspecaoConformidade.setText("Bluetooth Ativado.");
 
             }
 
@@ -454,18 +443,12 @@ public class ExatidaoActivity extends AppCompatActivity {
 
     public void aplicarCargaNominal(View view) {
 
-
-        tempoInicio = System.currentTimeMillis();
-        DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-        String today = formatter.format(tempoInicio);
-
-
-        if (conexao == null) {
-            Toast.makeText(getApplicationContext(), "O teste não pode ser inicializado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
+        if (conexaoMKV == null) {
+            Toast.makeText(getApplicationContext(), "O botaoTesteFotoCelula não pode ser inicializado, favor botaoConectar com o padrão.", Toast.LENGTH_LONG).show();
 
         } else {
-            if (conexao.isAlive()) {
-                textMessageInspecaoConformidade.setText("Conectado!");
+            if (conexaoMKV.isAlive()) {
+                mensagemInspecaoConformidade.setText("Conectado!");
             }
 
             byte[] pacote = new byte[10];
@@ -487,7 +470,7 @@ public class ExatidaoActivity extends AppCompatActivity {
 
 
             if (quantidadePulsos.getText().toString().equals("")) {
-                Toast.makeText(getApplicationContext(), "O teste foi configurado para 5 pulsos", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "O botaoTesteFotoCelula foi configurado para 5 pulsos", Toast.LENGTH_LONG).show();
                 quantidadePulsos.setText("5");
                 pacote[6] = (byte) (0 & 0xFF);
                 pacote[7] = (byte) (5 & 0xFF);
@@ -508,7 +491,7 @@ public class ExatidaoActivity extends AppCompatActivity {
                 pacote[9] = (byte) (bytes[3] & 0xFF);
             }
 
-            conexao.write(pacote);
+            conexaoMKV.write(pacote);
         }
 
 
@@ -516,14 +499,9 @@ public class ExatidaoActivity extends AppCompatActivity {
 
     public void aplicarCargaPequena(View view) {
 
-//
-//        tempoInicio = System.currentTimeMillis();
-//        DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-//        String today = formatter.format(tempoInicio);
-//        Log.d("TEMPO DO INICIO", String.valueOf(today));
 
-        if (conexao == null) {
-            Toast.makeText(getApplicationContext(), "O teste não pode ser inicializado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
+        if (conexaoMKV == null) {
+            Toast.makeText(getApplicationContext(), "O botaoTesteFotoCelula não pode ser inicializado, favor botaoConectar com o padrão.", Toast.LENGTH_LONG).show();
 
         } else {
 
@@ -546,7 +524,7 @@ public class ExatidaoActivity extends AppCompatActivity {
 
 
             if (quantidadePulsos.getText().toString().equals("")) {
-                Toast.makeText(getApplicationContext(), "O teste foi configurado para 5 pulsos", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "O botaoTesteFotoCelula foi configurado para 5 pulsos", Toast.LENGTH_LONG).show();
                 quantidadePulsos.setText("5");
                 pacote[6] = (byte) (0 & 0xFF);
                 pacote[7] = (byte) (5 & 0xFF);
@@ -568,9 +546,7 @@ public class ExatidaoActivity extends AppCompatActivity {
             }
 
 
-
-
-            conexao.write(pacote);
+            conexaoMKV.write(pacote);
         }
 
 
@@ -578,12 +554,19 @@ public class ExatidaoActivity extends AppCompatActivity {
 
     private void conectarDispositivo(View view) {
 
-        if (conexao != null) {
-            Toast.makeText(getApplicationContext(), "Dispositivo já conectado.", Toast.LENGTH_LONG).show();
 
+        if (modeloPadrao.startsWith("MKV")) {
+            if (conexaoMKV != null) {
+                Toast.makeText(getApplicationContext(), "Dispositivo já conectado.", Toast.LENGTH_LONG).show();
+
+            }
+            Intent searchPairedDevicesIntent = new Intent(this, PairedDevices.class);
+            startActivityForResult(searchPairedDevicesIntent, SELECT_PAIRED_DEVICE);
+
+        } else if (modeloPadrao.startsWith("Chin")) {
+            //TODO - Fazer conexaoc om padrao chinês
         }
-        Intent searchPairedDevicesIntent = new Intent(this, PairedDevices.class);
-        startActivityForResult(searchPairedDevicesIntent, SELECT_PAIRED_DEVICE);
+
 
 
     }
@@ -592,22 +575,22 @@ public class ExatidaoActivity extends AppCompatActivity {
 
         if (requestCode == ENABLE_BLUETOOTH) {
             if (resultCode == RESULT_OK) {
-                textMessageInspecaoConformidade.setText("Bluetooth ativado.");
+                mensagemInspecaoConformidade.setText("Bluetooth ativado.");
             } else {
-                textMessageInspecaoConformidade.setText("Bluetooth não ativado.");
+                mensagemInspecaoConformidade.setText("Bluetooth não ativado.");
             }
         } else if (requestCode == SELECT_PAIRED_DEVICE) {
             if (resultCode == RESULT_OK) {
-                textMessageInspecaoConformidade.setText("Você selecionou " + data.getStringExtra("btDevName") + "\n" + data.getStringExtra("btDevAddress"));
+                mensagemInspecaoConformidade.setText("Você selecionou " + data.getStringExtra("btDevName") + "\n" + data.getStringExtra("btDevAddress"));
                 String macAddress = data.getStringExtra("btDevAddress");
 
-                conexao = new ThreadConexao(macAddress);
-                conexao.start();
-                if (conexao.isAlive()) {
-                    textMessageInspecaoConformidade.setText("Conexao finalizada com:" + data.getStringExtra("btDevName") + "\n Verifique o LED de conexão");
+                conexaoMKV = new ThreadConexao(macAddress);
+                conexaoMKV.start();
+                if (conexaoMKV.isAlive()) {
+                    mensagemInspecaoConformidade.setText("Conexao finalizada com:" + data.getStringExtra("btDevName") + "\n Verifique o LED de conexão");
                 }
             } else {
-                textMessageInspecaoConformidade.setText("Nenhum dispositivo selecionado.");
+                mensagemInspecaoConformidade.setText("Nenhum dispositivo selecionado.");
             }
         }
     }
@@ -650,40 +633,57 @@ public class ExatidaoActivity extends AppCompatActivity {
 
     public void testeFotoCelula(View view) {
 
-        if (conexao == null) {
-            Toast.makeText(getApplicationContext(), "O teste da FotoCélula não pode ser iniciado/parado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
+        if (conexaoMKV == null) {
+            Toast.makeText(getApplicationContext(), "O botaoTesteFotoCelula da FotoCélula não pode ser iniciado/parado, favor botaoConectar com o padrão.", Toast.LENGTH_LONG).show();
 
         } else {
-            teste = findViewById(R.id.buttonTesteFotoCelula);
+            botaoTesteFotoCelula = findViewById(R.id.buttonTesteFotoCelula);
 
-            if (!testeFCComecou) {
-                testeFCComecou = true;
-                teste.clearComposingText();
-                teste.setText("Cancelar Teste da FotoCélula");
-                testeFoto(view);
-                textMessageInspecaoConformidade.clearComposingText();
-                textMessageInspecaoConformidade.setText("Teste da FotoCélula sendo iniciado...");
+            if (!testeFotoCelulaComecou) {
+                testeFotoCelulaComecou = true;
+                botaoTesteFotoCelula.clearComposingText();
+                botaoTesteFotoCelula.setText("Cancelar Teste da FotoCélula");
+
+                if (modeloPadrao.startsWith("MKV")) {
+                    testeFotoCelulaPadraoMKV(view);
+
+                } else if (modeloPadrao.startsWith("Chin")) {
+                    //TODO - Fazer função de botaoTesteFotoCelula de foto célula para o padrão chinês
+                }
+
+                mensagemInspecaoConformidade.clearComposingText();
+                mensagemInspecaoConformidade.setText("Teste da FotoCélula sendo iniciado...");
 
             } else {
-                testeFCComecou = false;
-                teste.clearComposingText();
-                teste.setText("Iniciar Teste da FotoCélula");
-                pararTeste(view);
-                textMessageInspecaoConformidade.clearComposingText();
-                textMessageInspecaoConformidade.setText("Teste da FotoCélula Cancelado!");
+                testeFotoCelulaComecou = false;
+                botaoTesteFotoCelula.clearComposingText();
+                botaoTesteFotoCelula.setText("Iniciar Teste da FotoCélula");
+
+                if (modeloPadrao.startsWith("MKV")) {
+                    pararTestePadraoMKV(view);
+
+                } else if (modeloPadrao.startsWith("Chin")) {
+                    //TODO - Fazer função de para botaoTesteFotoCelula para o padrão chinês
+                }
+
+                mensagemInspecaoConformidade.clearComposingText();
+                mensagemInspecaoConformidade.setText("Teste da FotoCélula Cancelado!");
             }
         }
     }
 
-    private void testeFoto(View view) {
+    private void testeFotoCelulaPadraoMKV(View view) {
 
-        if (conexao == null) {
-            Toast.makeText(getApplicationContext(), "O teste não pode ser inicializado, favor conectar com o padrão.", Toast.LENGTH_LONG).show();
+        //TODO - função para pedir número de série do padrão
+        //TODO - comparar com o número de série mandado pelo botaoTesteFotoCelula anterior
+
+        if (conexaoMKV == null) {
+            Toast.makeText(getApplicationContext(), "O botaoTesteFotoCelula não pode ser inicializado, favor botaoConectar com o padrão.", Toast.LENGTH_LONG).show();
 
         } else {
 
-            if (conexao != null) {
-                textMessageInspecaoConformidade.setText("O teste de FotoCélula vai ser iniciado...");
+            if (conexaoMKV != null) {
+                mensagemInspecaoConformidade.setText("O botaoTesteFotoCelula de FotoCélula vai ser iniciado...");
             }
 
             byte[] pacote = new byte[10];
@@ -707,15 +707,15 @@ public class ExatidaoActivity extends AppCompatActivity {
             pacote[8] = (byte) (3 & 0xFF);
             pacote[9] = (byte) (232 & 0xFF);
 
-            conexao.write(pacote);
+            conexaoMKV.write(pacote);
         }
     }
 
     public void pararCronometro(String res) {
         if (res.startsWith("T")) {
-            cronometroNominal.setVisibility(View.INVISIBLE);
-            cronometroNominal.setEnabled(false);// stop(); // stop a chronometer
-            cronometroNominal.setText("00:00");
+            cronometroTesteCargaNominal.setVisibility(View.INVISIBLE);
+            cronometroTesteCargaNominal.setEnabled(false);// stop(); // stop a chronometer
+            cronometroTesteCargaNominal.setText("00:00");
         }
     }
 }

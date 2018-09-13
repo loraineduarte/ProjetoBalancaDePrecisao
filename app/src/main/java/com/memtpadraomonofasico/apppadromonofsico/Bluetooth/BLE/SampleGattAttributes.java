@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.memtpadraomonofasico.apppadromonofsico.Bluetooth.ConexaoMarchaVazio.ConexaoBLE;
+package com.memtpadraomonofasico.apppadromonofsico.Bluetooth.BLE;
 
 import java.util.HashMap;
 
@@ -27,22 +27,17 @@ public class SampleGattAttributes {
     public static final String ATRIBUTOS_GENERICOS = "00001801-0000-1000-8000-00805f9b34fb";
     //características
     public static final String S1_SERVICE_CHANGED = "00002a05-0000-1000-8000-00805f9b34fb";
-
-    //Serviço 2 - Acesso Generico
-    public static final String ACESSO_GENERICO = "00001800-0000-1000-8000-00805f9b34fb";
-    //características
-    public static final String S2_DEVICE_NAME = "00002a00-0000-1000-8000-00805f9b34fb";
-    public static final String S2_APPEARANCE = "00002a01-0000-1000-8000-00805f9b34fb";
-    public static final String S2_PHERIPHERAL_PREFERRED_CONNECTION_PARAMETERS = "00002a04-0000-1000-8000-00805f9b34fb";
-
     //Serviço 3 - ?
     public static final String SERVICO_DO_PADRAO = "0003cdd0-0000-1000-8000-00805f9b0131";
-    //características
-    public static final String S3_1 = "0003cdd1-0000-1000-8000-00805f9b0131";
     public static final String S3_2 = "0003cdd2-0000-1000-8000-00805f9b0131";
-
-
-
+    //Serviço 2 - Acesso Generico
+    private static final String ACESSO_GENERICO = "00001800-0000-1000-8000-00805f9b34fb";
+    //características
+    private static final String S2_DEVICE_NAME = "00002a00-0000-1000-8000-00805f9b34fb";
+    private static final String S2_APPEARANCE = "00002a01-0000-1000-8000-00805f9b34fb";
+    private static final String S2_PHERIPHERAL_PREFERRED_CONNECTION_PARAMETERS = "00002a04-0000-1000-8000-00805f9b34fb";
+    //características
+    private static final String S3_1 = "0003cdd1-0000-1000-8000-00805f9b0131";
     private static final HashMap<String, String> attributes = new HashMap();
 
     static {

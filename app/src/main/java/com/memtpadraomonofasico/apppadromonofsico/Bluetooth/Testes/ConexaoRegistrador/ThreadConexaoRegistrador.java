@@ -1,4 +1,4 @@
-package com.memtpadraomonofasico.apppadromonofsico.Bluetooth;
+package com.memtpadraomonofasico.apppadromonofsico.Bluetooth.Testes.ConexaoRegistrador;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -7,6 +7,8 @@ import android.bluetooth.BluetoothSocket;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.Message;
+
+import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.BluetoothActivity;
 
 import java.io.IOException;
 import java.io.InputStream;

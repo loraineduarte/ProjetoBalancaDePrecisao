@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.memtpadraomonofasico.apppadromonofsico.Bluetooth.ConexaoMarchaVazio.ConexaoBLE;
+package com.memtpadraomonofasico.apppadromonofsico.Bluetooth.Testes.ConexaoMarchaVazio;
 
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
@@ -33,6 +33,8 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.BLE.SampleGattAttributes;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -40,7 +42,7 @@ import java.util.UUID;
  * Service for managing connection and data communication with a GATT server hosted on a
  * given Bluetooth LE device.
  */
-public class BluetoothLeService extends Service {
+public class BluetoothLeServicoPadraoChines extends Service {
     public final static String ACTION_GATT_CONNECTED =
             "com.example.bluetooth.le.ACTION_GATT_CONNECTED";
     public final static String ACTION_GATT_DISCONNECTED =
@@ -54,7 +56,7 @@ public class BluetoothLeService extends Service {
     private final static UUID ATRIBUTOS_GENERICOS =
             UUID.fromString(SampleGattAttributes.ATRIBUTOS_GENERICOS);
 
-    private final static String TAG = BluetoothLeService.class.getSimpleName();
+    private final static String TAG = BluetoothLeServicoPadraoChines.class.getSimpleName();
     private static final int STATE_DISCONNECTED = 0;
     private static final int STATE_CONNECTING = 1;
     private static final int STATE_CONNECTED = 2;
@@ -295,29 +297,15 @@ public class BluetoothLeService extends Service {
         }
 
         BluetoothGattService service = mBluetoothGatt.getService(UUID.fromString(SampleGattAttributes.SERVICO_DO_PADRAO));
-        Log.d(TAG, String.valueOf(service));
+        // Log.d(TAG, String.valueOf(service));
         BluetoothGattCharacteristic characteristic = service.getCharacteristic(UUID.fromString(SampleGattAttributes.S3_2));
-        Log.d(TAG, String.valueOf(characteristic));
+        //  Log.d(TAG, String.valueOf(characteristic));
         characteristic.setValue(pacote);
 
-        // setupServer();
         mBluetoothGatt.beginReliableWrite();
         return mBluetoothGatt.writeCharacteristic(characteristic);
 
     }
-
-    private void setupServer() {
-        BluetoothGattService service = new BluetoothGattService(UUID.fromString(SampleGattAttributes.SERVICO_DO_PADRAO), BluetoothGattService.SERVICE_TYPE_PRIMARY);
-        BluetoothGattCharacteristic writeCharacteristic = new BluetoothGattCharacteristic(
-                UUID.fromString(SampleGattAttributes.S3_2),
-                BluetoothGattCharacteristic.PROPERTY_WRITE,
-                BluetoothGattCharacteristic.PERMISSION_WRITE);
-        service.addCharacteristic(writeCharacteristic);
-
-        mGattServer.addService(service);
-    }
-
-
 
     /**
      * Enables or disables notification on a give characteristic.
@@ -335,8 +323,7 @@ public class BluetoothLeService extends Service {
 
         // This is specific to Heart Rate Measurement.
         if (ATRIBUTOS_GENERICOS.equals(characteristic.getUuid())) {
-            BluetoothGattDescriptor descriptor = characteristic.getDescriptor(
-                    UUID.fromString(SampleGattAttributes.S1_SERVICE_CHANGED));
+            BluetoothGattDescriptor descriptor = characteristic.getDescriptor(UUID.fromString(SampleGattAttributes.S1_SERVICE_CHANGED));
             descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
             mBluetoothGatt.writeDescriptor(descriptor);
         }
@@ -355,8 +342,8 @@ public class BluetoothLeService extends Service {
     }
 
     public class LocalBinder extends Binder {
-        public BluetoothLeService getService() {
-            return BluetoothLeService.this;
+        public BluetoothLeServicoPadraoChines getService() {
+            return BluetoothLeServicoPadraoChines.this;
         }
     }
 }

@@ -8,11 +8,13 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.memtpadraomonofasico.apppadromonofsico.BancoDeDados.BancoController;
@@ -22,16 +24,20 @@ import com.orhanobut.hawk.Hawk;
 import com.orhanobut.hawk.NoEncryption;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class RelatorioVerificacaoActivity extends AppCompatActivity  {
     private final CriaBanco banco = new CriaBanco(this);
-    private String toiNumero, matricula, nomeAvaliadorString, gerenteAvaliador;
+    private String toiNumero, matricula, nomeAvaliadorString, gerenteAvaliador, modeloPadrao;
     private RadioButton SEM, TOI;
     private EditText MatriculaAvaliador, nomeAvaliador, ToiNumero, nomeGerente;
     private String horaInicialFormatada = null;
+    private List<String> av = new ArrayList<>();
+    private Spinner opcoesModeloPadrao;
 
 
     @SuppressLint("WrongViewCast")
@@ -57,6 +63,20 @@ public class RelatorioVerificacaoActivity extends AppCompatActivity  {
         SEM = findViewById(R.id.SEM);
         TOI = findViewById(R.id.TOI);
         ToiNumero = findViewById(R.id.ToiNumero);
+
+        opcoesModeloPadrao = findViewById(R.id.PadraoModelo);
+        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this, R.array.ModelosPadrao, android.R.layout.simple_spinner_item);
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        opcoesModeloPadrao.setAdapter(adapter2);
+        opcoesModeloPadrao.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                modeloPadrao = parent.getItemAtPosition(position).toString();
+            }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         FloatingActionButton botaoProcurar = findViewById(R.id.ProcurarAvaliador);
         botaoProcurar.setClickable(true);
@@ -92,11 +112,15 @@ public class RelatorioVerificacaoActivity extends AppCompatActivity  {
                 } else if (((TOI.isChecked()) && (toiNumero.length()==0) )){
                     Toast.makeText(getApplicationContext(), "Sessão incompleta - Colocar o número do TOI ! ", Toast.LENGTH_LONG).show();
 
+                } else if (modeloPadrao.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Sessão incompleta - Selecionar o Modelo do Padrão! ", Toast.LENGTH_LONG).show();
+
                 } else{
                     Hawk.put("HoraInicial", horaInicialFormatada);
                     Hawk.put("NomeAvaliador", String.valueOf(nomeAvaliador.getText()));
                     Hawk.put("MatriculaAvaliador", String.valueOf(MatriculaAvaliador.getText()));
                     Hawk.put("GerenteAvaliador", String.valueOf(nomeGerente.getText()));
+                    Hawk.put("ModeloPadrao", String.valueOf(modeloPadrao));
 
                     abrirServicos();
                 }

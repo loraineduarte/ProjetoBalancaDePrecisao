@@ -171,7 +171,7 @@ public class SelecionarMedidorActivity extends AppCompatActivity {
             } else {
 
                 //vetor que vem do banco está na ordem :
-//                arrData[0] = cursor.getString(cursor.getColumnIndexOrThrow(NUM_GERAL));
+//                arrData[0] = cursor.getString(cursor.getColumnIndexOrThrow(NUM_SERIE));
 //                arrData[2] = cursor.getString(cursor.getColumnIndexOrThrow(MODELO));
 //                arrData[3] = cursor.getString(cursor.getColumnIndexOrThrow(FABRICANTE));
 //                arrData[4] = cursor.getString(cursor.getColumnIndexOrThrow(TENSAO_NOMINAL));
