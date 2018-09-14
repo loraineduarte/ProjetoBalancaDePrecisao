@@ -530,6 +530,7 @@ public class ConclusaoActivity extends AppCompatActivity {
             resultadoEnsaios.add(new Paragraph("Resultados do Ensaios", catFont));
             resultadoEnsaios.setAlignment(Element.ALIGN_CENTER);
 
+
             //--------------------------------INSPEÇÃO VISUAL
             addEmptyLine(resultadoEnsaios, 1);
             Paragraph inspecaoVisual = new Paragraph();
@@ -539,20 +540,20 @@ public class ConclusaoActivity extends AppCompatActivity {
             tabelaInspecaoVisual.setWidthPercentage(100);
             tabelaInspecaoVisual.setHorizontalAlignment(Element.ALIGN_LEFT);
 
-            PdfPCell inspecaoVisualItem = new PdfPCell(new Phrase("Inspeção Visual ", subFont));
+            PdfPCell inspecaoVisualItem = new PdfPCell(new Phrase("Inspeção Visual: ", subFont));
             inspecaoVisualItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             inspecaoVisualItem.setBorder(PdfPCell.NO_BORDER);
             tabelaInspecaoVisual.addCell(inspecaoVisualItem);
 
-            servicoItem = new PdfPCell(new Phrase(" ", subFont));
-            servicoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
-            servicoItem.setBorder(PdfPCell.NO_BORDER);
-            tableServico.addCell(servicoItem);
+            inspecaoVisualItem = new PdfPCell(new Phrase(" ", subFont));
+            inspecaoVisualItem.setHorizontalAlignment(Element.ALIGN_LEFT);
+            inspecaoVisualItem.setBorder(PdfPCell.NO_BORDER);
+            tableServico.addCell(inspecaoVisualItem);
 
-            servicoItem = new PdfPCell(new Phrase(" ", subFont));
-            servicoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
-            servicoItem.setBorder(PdfPCell.NO_BORDER);
-            tableServico.addCell(servicoItem);
+            inspecaoVisualItem = new PdfPCell(new Phrase(" ", subFont));
+            inspecaoVisualItem.setHorizontalAlignment(Element.ALIGN_LEFT);
+            inspecaoVisualItem.setBorder(PdfPCell.NO_BORDER);
+            tableServico.addCell(inspecaoVisualItem);
 
             p = new Phrase("Status: ", smallNormal);
             p.add(new Chunk((String) Hawk.get("Status"), smallNormal));
@@ -578,10 +579,6 @@ public class ConclusaoActivity extends AppCompatActivity {
                 tabelaInspecaoVisual.addCell(inspecaoVisualItem);
             }
 
-            inspecaoVisualItem = new PdfPCell(new Phrase(" ", smallBold));
-            inspecaoVisualItem.setHorizontalAlignment(Element.ALIGN_LEFT);
-            inspecaoVisualItem.setBorder(PdfPCell.NO_BORDER);
-            tabelaInspecaoVisual.addCell(inspecaoVisualItem);
 
             inspecaoVisualItem = new PdfPCell(new Phrase(" ", smallBold));
             inspecaoVisualItem.setHorizontalAlignment(Element.ALIGN_LEFT);
@@ -611,31 +608,46 @@ public class ConclusaoActivity extends AppCompatActivity {
 
             inspecaoVisual.add(tabelaInspecaoVisual);
 
-            //--------------------------------REGISTRADOR/MOSTRADOR + MARCHA EM VAZIO
+
+            //---------------------------------------------CIRCUITO POTENCIAL
             addEmptyLine(inspecaoVisual, 1);
-            Paragraph registrador = new Paragraph();
-            registrador.setAlignment(Element.ALIGN_JUSTIFIED);
+            Paragraph circuitoPotencial = new Paragraph();
+            circuitoPotencial.setAlignment(Element.ALIGN_JUSTIFIED);
 
-            PdfPTable tabelaRegistrador = new PdfPTable(2);
-            tabelaRegistrador.setWidthPercentage(100);
-            tabelaRegistrador.setHorizontalAlignment(Element.ALIGN_LEFT);
+            //tabela com dados do serviço
+            PdfPTable tabelaCircuitoPotecial = new PdfPTable(1);
+            tabelaCircuitoPotecial.setWidthPercentage(100);
+            tabelaCircuitoPotecial.setHorizontalAlignment(Element.ALIGN_LEFT);
 
-            PdfPCell MostradorItem = new PdfPCell(new Phrase("Registrador/Mostrador  ", subFont));
-            MostradorItem.setHorizontalAlignment(Element.ALIGN_LEFT);
-            MostradorItem.setBorder(PdfPCell.NO_BORDER);
-            tabelaRegistrador.addCell(MostradorItem);
+            PdfPCell ciecuitoPotencialItem = new PdfPCell(new Phrase("Circuito de Potencial:", subFont));
+            ciecuitoPotencialItem.setHorizontalAlignment(Element.ALIGN_LEFT);
+            ciecuitoPotencialItem.setBorder(PdfPCell.NO_BORDER);
+            tabelaCircuitoPotecial.addCell(ciecuitoPotencialItem);
 
-            MostradorItem = new PdfPCell(new Phrase("Marcha em Vazio  ", subFont));
-            MostradorItem.setHorizontalAlignment(Element.ALIGN_LEFT);
-            MostradorItem.setBorder(PdfPCell.NO_BORDER);
-            tabelaRegistrador.addCell(MostradorItem);
+            p = new Phrase("Status: ", smallNormal); //Circuito de Potencial/ Elo de Calibração:
+            p.add(new Chunk((String) Hawk.get("statusCircuitoPotencial"), smallNormal));
+            ciecuitoPotencialItem = new PdfPCell(p);
+            ciecuitoPotencialItem.setHorizontalAlignment(Element.ALIGN_LEFT);
+            ciecuitoPotencialItem.setBorder(PdfPCell.NO_BORDER);
+            tabelaCircuitoPotecial.addCell(ciecuitoPotencialItem);
 
-            p = new Phrase("Status: ", smallNormal); //registrador
-            p.add(new Chunk((String) Hawk.get("statusRegistrador"), smallNormal));
-            MostradorItem = new PdfPCell(p);
-            MostradorItem.setHorizontalAlignment(Element.ALIGN_LEFT);
-            MostradorItem.setBorder(PdfPCell.NO_BORDER);
-            tabelaRegistrador.addCell(MostradorItem);
+            circuitoPotencial.add(tabelaCircuitoPotecial);
+
+
+            //------------------------------MARCHA EM VAZIO
+
+            addEmptyLine(circuitoPotencial, 1);
+            Paragraph marchaVazio = new Paragraph();
+            marchaVazio.setAlignment(Element.ALIGN_JUSTIFIED);
+
+            PdfPTable tabelaMarchaVazio = new PdfPTable(1);
+            tabelaMarchaVazio.setWidthPercentage(100);
+            tabelaMarchaVazio.setHorizontalAlignment(Element.ALIGN_LEFT);
+
+            PdfPCell marchaVazioItem = new PdfPCell(new Phrase("Marcha em Vazio: ", subFont));
+            marchaVazioItem.setHorizontalAlignment(Element.ALIGN_LEFT);
+            marchaVazioItem.setBorder(PdfPCell.NO_BORDER);
+            tabelaMarchaVazio.addCell(marchaVazioItem);
 
             p = new Phrase("Status: ", smallNormal); //marcha em vazio
             if (String.valueOf(Hawk.get("ObservaçãoRegistrador")).equals("null")) {
@@ -655,10 +667,97 @@ public class ConclusaoActivity extends AppCompatActivity {
             if (!(String.valueOf(Hawk.get("tempoReprovadoMarchaVazio")).equals("null"))) {
                 p.add(new Chunk("", smallNormal));
             }
+            marchaVazioItem = new PdfPCell(p);
+            marchaVazioItem.setHorizontalAlignment(Element.ALIGN_LEFT);
+            marchaVazioItem.setBorder(PdfPCell.NO_BORDER);
+            tabelaMarchaVazio.addCell(marchaVazioItem);
+
+            marchaVazio.add(tabelaMarchaVazio);
+
+
+            //------------------------------EXATIDAO
+
+            addEmptyLine(marchaVazio, 1);
+            Paragraph exatidao = new Paragraph();
+            exatidao.setAlignment(Element.ALIGN_JUSTIFIED);
+
+            PdfPTable tabelaExatidao = new PdfPTable(2);
+            tabelaExatidao.setWidthPercentage(100);
+            tabelaExatidao.setHorizontalAlignment(Element.ALIGN_LEFT);
+
+            PdfPCell exatidaoItem = new PdfPCell(new Phrase("Exatidão:", subFont));
+            exatidaoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
+            exatidaoItem.setBorder(PdfPCell.NO_BORDER);
+            tabelaExatidao.addCell(exatidaoItem);
+
+            exatidaoItem = new PdfPCell(new Phrase(" ", subFont));
+            exatidaoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
+            exatidaoItem.setBorder(PdfPCell.NO_BORDER);
+            tabelaExatidao.addCell(exatidaoItem);
+
+
+            p = new Phrase("Status: ", smallNormal); //"Exatidão/ Condições de Carga:
+            if ((String.valueOf(Hawk.get("statusConformidade")).equals("null"))) {
+                p.add(new Chunk("", smallNormal));
+            } else {
+                p.add(new Chunk((String) Hawk.get("statusConformidade"), smallNormal));
+            }
+            exatidaoItem = new PdfPCell(p);
+            exatidaoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
+            exatidaoItem.setBorder(PdfPCell.NO_BORDER);
+            tabelaExatidao.addCell(exatidaoItem);
+
+            exatidaoItem = new PdfPCell(new Phrase(" ", subFont));
+            exatidaoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
+            exatidaoItem.setBorder(PdfPCell.NO_BORDER);
+            tabelaExatidao.addCell(exatidaoItem);
+
+            p = new Phrase("Carga Nominal Erro(%): ", smallNormal); //"Conformidade/ Condições de Carga:
+            p.add(new Chunk((String) Hawk.get("CargaNominalErroConformidade"), smallNormal));
+            exatidaoItem = new PdfPCell(p);
+            exatidaoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
+            exatidaoItem.setBorder(PdfPCell.NO_BORDER);
+            tabelaExatidao.addCell(exatidaoItem);
+
+
+            p = new Phrase("Carga Pequena Erro(%): ", smallNormal); //"Conformidade/ Condições de Carga:
+            p.add(new Chunk((String) Hawk.get("CargaPequenaErroConformidade"), smallNormal));
+            exatidaoItem = new PdfPCell(p);
+            exatidaoItem.setHorizontalAlignment(Element.ALIGN_LEFT);
+            exatidaoItem.setBorder(PdfPCell.NO_BORDER);
+            tabelaExatidao.addCell(exatidaoItem);
+
+            exatidao.add(tabelaExatidao);
+
+
+            //------------------------------REGISTRADOR
+
+            addEmptyLine(exatidao, 1);
+            Paragraph registrador = new Paragraph();
+            registrador.setAlignment(Element.ALIGN_JUSTIFIED);
+
+            PdfPTable tabelaRegistrador = new PdfPTable(2);
+            tabelaRegistrador.setWidthPercentage(100);
+            tabelaRegistrador.setHorizontalAlignment(Element.ALIGN_LEFT);
+
+            PdfPCell MostradorItem = new PdfPCell(new Phrase("Registrador: ", subFont));
+            MostradorItem.setHorizontalAlignment(Element.ALIGN_LEFT);
+            MostradorItem.setBorder(PdfPCell.NO_BORDER);
+            tabelaRegistrador.addCell(MostradorItem);
+
+            MostradorItem = new PdfPCell(new Phrase(" ", smallBold));
+            MostradorItem.setHorizontalAlignment(Element.ALIGN_LEFT);
+            MostradorItem.setBorder(PdfPCell.NO_BORDER);
+            tabelaRegistrador.addCell(MostradorItem);
+
+
+            p = new Phrase("Status: ", smallNormal); //registrador
+            p.add(new Chunk((String) Hawk.get("statusRegistrador"), smallNormal));
             MostradorItem = new PdfPCell(p);
             MostradorItem.setHorizontalAlignment(Element.ALIGN_LEFT);
             MostradorItem.setBorder(PdfPCell.NO_BORDER);
             tabelaRegistrador.addCell(MostradorItem);
+
 
             if (String.valueOf(Hawk.get("ObservaçãoRegistrador")).equals("null")) {
                 MostradorItem = new PdfPCell(new Phrase(" ", smallBold));
@@ -674,80 +773,13 @@ public class ConclusaoActivity extends AppCompatActivity {
                 MostradorItem.setBorder(PdfPCell.NO_BORDER);
                 tabelaRegistrador.addCell(MostradorItem);
             }
-            p = new Phrase(" ", smallNormal);
-            MostradorItem = new PdfPCell(p);
-            MostradorItem.setHorizontalAlignment(Element.ALIGN_LEFT);
-            MostradorItem.setBorder(PdfPCell.NO_BORDER);
-            tabelaRegistrador.addCell(MostradorItem);
 
             registrador.add(tabelaRegistrador);
 
-            //--------------------------------CIRCUITO POTENCIAL / ELO DE CALIBRAÇÃO + CONFORMIDADE/ CONDIÇÕES DE CARGA
-            addEmptyLine(registrador, 1);
-            Paragraph circuitoPotencial = new Paragraph();
-            circuitoPotencial.setAlignment(Element.ALIGN_JUSTIFIED);
 
-            //tabela com dados do serviço
-            PdfPTable tabelaCircuitoPotecial = new PdfPTable(2);
-            tabelaCircuitoPotecial.setWidthPercentage(100);
-            tabelaCircuitoPotecial.setHorizontalAlignment(Element.ALIGN_LEFT);
-
-            PdfPCell ciecuitoPotencialItem = new PdfPCell(new Phrase("Circuito de Potencial/ Elo de Calibração ", subFont));
-            ciecuitoPotencialItem.setHorizontalAlignment(Element.ALIGN_LEFT);
-            ciecuitoPotencialItem.setBorder(PdfPCell.NO_BORDER);
-            tabelaCircuitoPotecial.addCell(ciecuitoPotencialItem);
-
-            ciecuitoPotencialItem = new PdfPCell(new Phrase("Conformidade/ Condições de Carga ", subFont));
-            ciecuitoPotencialItem.setHorizontalAlignment(Element.ALIGN_LEFT);
-            ciecuitoPotencialItem.setBorder(PdfPCell.NO_BORDER);
-            tabelaCircuitoPotecial.addCell(ciecuitoPotencialItem);
-
-            p = new Phrase("Status: ", smallNormal); //Circuito de Potencial/ Elo de Calibração:
-            p.add(new Chunk((String) Hawk.get("statusCircuitoPotencial"), smallNormal));
-            ciecuitoPotencialItem = new PdfPCell(p);
-            ciecuitoPotencialItem.setHorizontalAlignment(Element.ALIGN_LEFT);
-            ciecuitoPotencialItem.setBorder(PdfPCell.NO_BORDER);
-            tabelaCircuitoPotecial.addCell(ciecuitoPotencialItem);
-
-            p = new Phrase("Status: ", smallNormal); //"Conformidade/ Condições de Carga:
-            if ((String.valueOf(Hawk.get("statusConformidade")).equals("null"))) {
-                p.add(new Chunk("", smallNormal));
-            } else {
-                p.add(new Chunk((String) Hawk.get("statusConformidade"), smallNormal));
-            }
-            ciecuitoPotencialItem = new PdfPCell(p);
-            ciecuitoPotencialItem.setHorizontalAlignment(Element.ALIGN_LEFT);
-            ciecuitoPotencialItem.setBorder(PdfPCell.NO_BORDER);
-            tabelaCircuitoPotecial.addCell(ciecuitoPotencialItem);
-
-            ciecuitoPotencialItem = new PdfPCell(new Phrase(" ", smallBold)); //Circuito de Potencial/ Elo de Calibração:
-            ciecuitoPotencialItem.setHorizontalAlignment(Element.ALIGN_LEFT);
-            ciecuitoPotencialItem.setBorder(PdfPCell.NO_BORDER);
-            tabelaCircuitoPotecial.addCell(ciecuitoPotencialItem);
-
-            p = new Phrase("Carga Nominal Erro(%): ", smallNormal); //"Conformidade/ Condições de Carga:
-            p.add(new Chunk((String) Hawk.get("CargaNominalErroConformidade"), smallNormal));
-            ciecuitoPotencialItem = new PdfPCell(p);
-            ciecuitoPotencialItem.setHorizontalAlignment(Element.ALIGN_LEFT);
-            ciecuitoPotencialItem.setBorder(PdfPCell.NO_BORDER);
-            tabelaCircuitoPotecial.addCell(ciecuitoPotencialItem);
-
-            ciecuitoPotencialItem = new PdfPCell(new Phrase(" ", smallBold)); //Circuito de Potencial/ Elo de Calibração:
-            ciecuitoPotencialItem.setHorizontalAlignment(Element.ALIGN_LEFT);
-            ciecuitoPotencialItem.setBorder(PdfPCell.NO_BORDER);
-            tabelaCircuitoPotecial.addCell(ciecuitoPotencialItem);
-
-            p = new Phrase("Carga Pequena Erro(%): ", smallNormal); //"Conformidade/ Condições de Carga:
-            p.add(new Chunk((String) Hawk.get("CargaPequenaErroConformidade"), smallNormal));
-            ciecuitoPotencialItem = new PdfPCell(p);
-            ciecuitoPotencialItem.setHorizontalAlignment(Element.ALIGN_LEFT);
-            ciecuitoPotencialItem.setBorder(PdfPCell.NO_BORDER);
-            tabelaCircuitoPotecial.addCell(ciecuitoPotencialItem);
-
-            circuitoPotencial.add(tabelaCircuitoPotecial);
 
             //--------------------------------------------SITUAÇÕES OBSERVADAS
-            addEmptyLine(circuitoPotencial, 1);
+            addEmptyLine(registrador, 1);
             Paragraph situacaoObservada = new Paragraph();
             situacaoObservada.add(new Paragraph("Situações Observadas", catFont));
             situacaoObservada.setAlignment(Element.ALIGN_CENTER);
@@ -836,8 +868,10 @@ public class ConclusaoActivity extends AppCompatActivity {
             document.add(sessaoMedidor);
             document.add(resultadoEnsaios);
             document.add(inspecaoVisual);
-            document.add(registrador);
             document.add(circuitoPotencial);
+            document.add(marchaVazio);
+            document.add(exatidao);
+            document.add(registrador);
             document.add(situacaoObservada);
             document.add(informacoesComplementares);
             document.add(conclusao);

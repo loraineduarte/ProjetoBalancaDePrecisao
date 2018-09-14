@@ -12,7 +12,8 @@
     <style name="AppTheme.NoActionBar">
         false
         true
-        @android:color/transparent</style>
+        @android:color/transparent
+    </style>
 
     <!--suppress AndroidDomInspection -->
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
