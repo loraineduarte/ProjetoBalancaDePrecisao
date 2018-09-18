@@ -42,7 +42,7 @@ import java.util.UUID;
  * Service for managing connection and data communication with a GATT server hosted on a
  * given Bluetooth LE device.
  */
-public class BluetoothLeServicoPadraoChines extends Service {
+public class BluetoothServicoPadraoMSC extends Service {
     public final static String ACTION_GATT_CONNECTED =
             "com.example.bluetooth.le.ACTION_GATT_CONNECTED";
     public final static String ACTION_GATT_DISCONNECTED =
@@ -56,7 +56,7 @@ public class BluetoothLeServicoPadraoChines extends Service {
     private final static UUID ATRIBUTOS_GENERICOS =
             UUID.fromString(SampleGattAttributes.ATRIBUTOS_GENERICOS);
 
-    private final static String TAG = BluetoothLeServicoPadraoChines.class.getSimpleName();
+    private final static String TAG = BluetoothServicoPadraoMSC.class.getSimpleName();
     private static final int STATE_DISCONNECTED = 0;
     private static final int STATE_CONNECTING = 1;
     private static final int STATE_CONNECTED = 2;
@@ -342,8 +342,8 @@ public class BluetoothLeServicoPadraoChines extends Service {
     }
 
     public class LocalBinder extends Binder {
-        public BluetoothLeServicoPadraoChines getService() {
-            return BluetoothLeServicoPadraoChines.this;
+        public BluetoothServicoPadraoMSC getService() {
+            return BluetoothServicoPadraoMSC.this;
         }
     }
 }

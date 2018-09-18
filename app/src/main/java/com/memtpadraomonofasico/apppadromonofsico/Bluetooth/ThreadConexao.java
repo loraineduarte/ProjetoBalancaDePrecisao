@@ -7,7 +7,7 @@ import android.bluetooth.BluetoothSocket;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.Message;
-import android.os.ParcelUuid;
+import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,6 +21,7 @@ public class ThreadConexao extends Thread {
     private final BluetoothActivity bluetooth = new BluetoothActivity();
     private BluetoothSocket btSocket = null;
     private OutputStream output = null;
+    private InputStream input = null;
     private String btDevAddress = null;
 
     /*  Este construtor prepara o dispositivo para atuar como servidor.
@@ -54,10 +55,7 @@ public class ThreadConexao extends Thread {
         para atuar como servidor ou cliente.
          */
 
-        BluetoothDevice device = null;
-        ParcelUuid list[] = device.getUuids();
-        String myUUID = (list[0].toString());
-        //"00001101-0000-1000-8000-00805F9B34FB";
+        String myUUID = "00001101-0000-1000-8000-00805F9B34FB"; //protocolo brasileiro
         if(this.server) {
 
             /*  Servidor.
@@ -149,7 +147,7 @@ public class ThreadConexao extends Thread {
                 /*  Obtem referências para os fluxos de entrada e saída do
                 socket Bluetooth.
                  */
-                InputStream input = btSocket.getInputStream();
+                input = btSocket.getInputStream();
                 output = btSocket.getOutputStream();
 
                 /*  Cria um byte array para armazenar temporariamente uma
@@ -175,7 +173,6 @@ public class ThreadConexao extends Thread {
 
                 }
 
-
             } catch (IOException e) {
 
                 /*  Caso ocorra alguma exceção, exibe o stack trace para debug.
@@ -185,14 +182,9 @@ public class ThreadConexao extends Thread {
                 e.printStackTrace();
                 toMainActivity("---N".getBytes());
             }
-
         }
-       Looper.loop();
-
-
 
     }
-
 
 
     /*  Utiliza um handler para enviar um byte array à Activity principal.
@@ -205,8 +197,10 @@ public class ThreadConexao extends Thread {
         Bundle bundle = new Bundle();
         bundle.putByteArray("data", data);
         message.setData(bundle);
-
+        Log.d("DADOS STRING CONEXAO", message.toString());
         bluetooth.handler.get().handleMessage(message);
+
+
     }
 
     /*  Método utilizado pela Activity principal para transmitir uma mensagem ao

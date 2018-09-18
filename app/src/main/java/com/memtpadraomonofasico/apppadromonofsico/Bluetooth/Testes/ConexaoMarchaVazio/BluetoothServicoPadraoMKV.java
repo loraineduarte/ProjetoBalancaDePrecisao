@@ -7,7 +7,6 @@ import android.bluetooth.BluetoothSocket;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.Message;
-import android.util.Log;
 
 import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.BluetoothActivity;
 
@@ -63,7 +62,6 @@ public class BluetoothServicoPadraoMKV extends Thread {
         para atuar como servidor ou cliente.
          */
         String myUUID = "00001101-0000-1000-8000-00805F9B34FB"; //protocolo brasileiro
-        // String myUUID = "00060001-F8CE-11E4-ABF4-0002A5D5C51B";
         if (this.server) {
 
             /*  Servidor.
@@ -223,7 +221,6 @@ public class BluetoothServicoPadraoMKV extends Thread {
 
                 /*  Transmite a mensagem.
                  */
-                Log.d("TRNSMITINDO", Arrays.toString(data));
                 output.write(data);
 
             } catch (IOException e) {

@@ -30,6 +30,7 @@ import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.BLE.SampleGattAttrib
 import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.PairedDevices;
 import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.Testes.ConexaoMarchaVazio.BluetoothLeServicoPadraoChines;
 import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.Testes.ConexaoMarchaVazio.BluetoothServicoPadraoMKV;
+import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.Testes.ConexaoMarchaVazio.BluetoothServicoPadraoMSC;
 import com.memtpadraomonofasico.apppadromonofsico.R;
 import com.orhanobut.hawk.Hawk;
 import com.orhanobut.hawk.NoEncryption;
@@ -65,29 +66,29 @@ public class MarchaVazioActivity extends AppCompatActivity {
     private static boolean testeMarchaVazioRodando = false;
     private static boolean testeFotoCelulaRodando = false;
     private static String modeloPadrao, macAddress, statusMarchaVazio, tempoReprovadoMarchaVazio;
-    private static BluetoothAdapter bluetoothAdapter;
     private static BluetoothServicoPadraoMKV conexaoPadraoMKV;
-    private static BluetoothLeServicoPadraoChines conexaoBLEPadraoChines = new BluetoothLeServicoPadraoChines();
+    private static BluetoothServicoPadraoMSC conexaoPadraoMSC = new BluetoothServicoPadraoMSC();
     private final String LIST_NAME = "NAME";
     private final String LIST_UUID = "UUID";
     private final ServiceConnection mServiceConnection = new ServiceConnection() {
 
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder service) {
-            conexaoBLEPadraoChines = ((BluetoothLeServicoPadraoChines.LocalBinder) service).getService();
-            if (conexaoBLEPadraoChines.initialize()) {
+            conexaoPadraoMSC = ((BluetoothServicoPadraoMSC.LocalBinder) service).getService();
+            if (conexaoPadraoMSC.initialize()) {
                 Log.e(TAG, "Unable to initialize Bluetooth");
                 finish();
             }
 
-            conexaoBLEPadraoChines.connect(macAddress);  // Automatically connects to the device upon successful start-up initialization.
+            conexaoPadraoMSC.connect(macAddress);  // Automatically connects to the device upon successful start-up initialization.
         }
 
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
-            conexaoBLEPadraoChines = null;
+            conexaoPadraoMSC = null;
         }
     };
+    private BluetoothAdapter bluetoothAdapter = null;
     private ArrayList<BluetoothGattCharacteristic> servicos1 = new ArrayList<>();
     private ArrayList<BluetoothGattCharacteristic> servicos2 = new ArrayList<>();
     private ArrayList<BluetoothGattCharacteristic> servicos3 = new ArrayList<>();
@@ -107,21 +108,21 @@ public class MarchaVazioActivity extends AppCompatActivity {
                 if ((charaProp | BluetoothGattCharacteristic.PROPERTY_READ) > 0) {
 
                     if (mNotifyCharacteristic != null) {
-                        conexaoBLEPadraoChines.setCharacteristicNotification(mNotifyCharacteristic, false);
+                        conexaoPadraoMSC.setCharacteristicNotification(mNotifyCharacteristic, false);
                         mNotifyCharacteristic = null;
                     }
-                    conexaoBLEPadraoChines.readCharacteristic(characteristic);
+                    conexaoPadraoMSC.readCharacteristic(characteristic);
                 }
                 if ((charaProp | BluetoothGattCharacteristic.PROPERTY_NOTIFY) > 0) {
 
                     mNotifyCharacteristic = characteristic;
-                    conexaoBLEPadraoChines.setCharacteristicNotification(characteristic, true);
+                    conexaoPadraoMSC.setCharacteristicNotification(characteristic, true);
                 }
 
                 if ((charaProp | BluetoothGattCharacteristic.PROPERTY_WRITE) > 0) {
 
                     mNotifyCharacteristic = characteristic;
-                    conexaoBLEPadraoChines.setCharacteristicNotification(characteristic, true);
+                    conexaoPadraoMSC.setCharacteristicNotification(characteristic, true);
                 }
                 return true;
             }
@@ -136,21 +137,21 @@ public class MarchaVazioActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
 
             final String action = intent.getAction();
-            if (BluetoothLeServicoPadraoChines.ACTION_GATT_CONNECTED.equals(action)) {
+            if (BluetoothServicoPadraoMSC.ACTION_GATT_CONNECTED.equals(action)) {
                 mConnected = true;
                 updateConnectionState(R.string.connected);
 
 
-            } else if (BluetoothLeServicoPadraoChines.ACTION_GATT_DISCONNECTED.equals(action)) {
+            } else if (BluetoothServicoPadraoMSC.ACTION_GATT_DISCONNECTED.equals(action)) {
                 mConnected = false;
                 updateConnectionState(R.string.disconnected);
                 clearUI();
 
-            } else if (BluetoothLeServicoPadraoChines.ACTION_GATT_SERVICES_DISCOVERED.equals(action)) {
-                mostraServicosGatt(conexaoBLEPadraoChines.getSupportedGattServices());
+            } else if (BluetoothServicoPadraoMSC.ACTION_GATT_SERVICES_DISCOVERED.equals(action)) {
+                mostraServicosGatt(conexaoPadraoMSC.getSupportedGattServices());
 
-            } else if (BluetoothLeServicoPadraoChines.ACTION_DATA_AVAILABLE.equals(action)) {
-                mostraDados(intent.getStringExtra(BluetoothLeServicoPadraoChines.EXTRA_DATA));
+            } else if (BluetoothServicoPadraoMSC.ACTION_DATA_AVAILABLE.equals(action)) {
+                mostraDados(intent.getStringExtra(BluetoothServicoPadraoMSC.EXTRA_DATA));
 
             }
         }
@@ -159,10 +160,10 @@ public class MarchaVazioActivity extends AppCompatActivity {
     private static IntentFilter makeGattUpdateIntentFilter() {
 
         final IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(BluetoothLeServicoPadraoChines.ACTION_GATT_CONNECTED);
-        intentFilter.addAction(BluetoothLeServicoPadraoChines.ACTION_GATT_DISCONNECTED);
-        intentFilter.addAction(BluetoothLeServicoPadraoChines.ACTION_GATT_SERVICES_DISCOVERED);
-        intentFilter.addAction(BluetoothLeServicoPadraoChines.ACTION_DATA_AVAILABLE);
+        intentFilter.addAction(BluetoothServicoPadraoMSC.ACTION_GATT_CONNECTED);
+        intentFilter.addAction(BluetoothServicoPadraoMSC.ACTION_GATT_DISCONNECTED);
+        intentFilter.addAction(BluetoothServicoPadraoMSC.ACTION_GATT_SERVICES_DISCOVERED);
+        intentFilter.addAction(BluetoothServicoPadraoMSC.ACTION_DATA_AVAILABLE);
         return intentFilter;
     }
 
@@ -244,7 +245,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
                             if (conexaoPadraoMKV != null) {
                                 conexaoPadraoMKV.interrupt();
                             }
-                            // bluetoothAdapter.disable();
+                            bluetoothAdapter.disable();
                             conexaoPadraoMKV = null;
                             abrirInspecaoConformidade();
 
@@ -255,7 +256,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
                             if (conexaoPadraoMKV != null) {
                                 conexaoPadraoMKV.interrupt();
                             }
-                            // bluetoothAdapter.disable();
+                            bluetoothAdapter.disable();
                             abrirInspecaoConformidade();
                         }
                     }
@@ -271,14 +272,14 @@ public class MarchaVazioActivity extends AppCompatActivity {
         if (modeloPadrao.startsWith("MKV")) {
 
 
-        } else if (modeloPadrao.startsWith("Chin")) {
+        } else if (modeloPadrao.startsWith("MSC")) {
             registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter());
-            if (conexaoBLEPadraoChines != null) {
-                final boolean result = conexaoBLEPadraoChines.connect(macAddress);
+            if (conexaoPadraoMSC != null) {
+                final boolean result = conexaoPadraoMSC.connect(macAddress);
                 Log.d(TAG, "Connect request result=" + result);
             }
 
-            conexaoBLEPadraoChines.connect(macAddress);
+            conexaoPadraoMSC.connect(macAddress);
         }
 
     }
@@ -290,7 +291,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
         if (modeloPadrao.startsWith("MKV")) {
 
 
-        } else if (modeloPadrao.startsWith("Chin")) {
+        } else if (modeloPadrao.startsWith("MSC")) {
             unregisterReceiver(mGattUpdateReceiver);
         }
 
@@ -302,9 +303,9 @@ public class MarchaVazioActivity extends AppCompatActivity {
         if (modeloPadrao.startsWith("MKV")) {
 
 
-        } else if (modeloPadrao.startsWith("Chin")) {
+        } else if (modeloPadrao.startsWith("MSC")) {
             unbindService(mServiceConnection);
-            conexaoBLEPadraoChines = null;
+            conexaoPadraoMSC = null;
         }
 
     }
@@ -345,9 +346,9 @@ public class MarchaVazioActivity extends AppCompatActivity {
                 mensagemNaTela.setText("Você selecionou " + data.getStringExtra("btDevName") + "\n" + data.getStringExtra("btDevAddress"));
                 macAddress = data.getStringExtra("btDevAddress");
 
-                Intent gattServiceIntent = new Intent(this, BluetoothLeServicoPadraoChines.class);
+                Intent gattServiceIntent = new Intent(this, BluetoothServicoPadraoMSC.class);
                 bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
-                conexaoBLEPadraoChines.connect(macAddress);
+                conexaoPadraoMSC.connect(macAddress);
 
             } else {
                 mensagemNaTela.setText("Nenhum dispositivo selecionado.");
@@ -373,6 +374,8 @@ public class MarchaVazioActivity extends AppCompatActivity {
 
     //Funções Bluetooth
     private void ativarBluetooth() {
+
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         if (bluetoothAdapter == null) {
             mensagemNaTela.setText("Bluetooth não está funcionando.");
@@ -403,8 +406,8 @@ public class MarchaVazioActivity extends AppCompatActivity {
             startActivityForResult(searchPairedDevicesIntent, SELECT_PAIRED_DEVICE);
 
         }
-        if (modeloPadrao.startsWith("Chin")) {
-            if (conexaoBLEPadraoChines != null) {
+        if (modeloPadrao.startsWith("MSC")) {
+            if (conexaoPadraoMSC != null) {
                 Toast.makeText(getApplicationContext(), "Dispositivo já conectado.", Toast.LENGTH_LONG).show();
             }
             Intent searchPairedDevicesIntent = new Intent(this, DeviceScanActivity.class);
@@ -621,7 +624,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
     //Funções Gerais da Atividade
     public void TesteMarchaEmVazio(View view) {
 
-        if ((conexaoPadraoMKV == null) && (conexaoBLEPadraoChines == null)) {
+        if ((conexaoPadraoMKV == null) && (conexaoPadraoMSC == null)) {
             Toast.makeText(getApplicationContext(), "O teste não pode ser iniciado/parado, favor botaoConectar com o padrão.", Toast.LENGTH_LONG).show();
 
         } else {
@@ -636,7 +639,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
                     Log.d("PADRAO", modeloPadrao);
                     marchaVazioPadrãoBrasileiro();
 
-                } else if (modeloPadrao.startsWith("Chin")) {
+                } else if (modeloPadrao.startsWith("MSC")) {
                     //TODO - função para teste de marcha a vazio para o padrão chines
                 }
                 mensagemNaTela.clearComposingText();
@@ -650,7 +653,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
                     Log.d("PADRAO", modeloPadrao);
                     pararTestesPadrãoBrasileiro();
 
-                } else if (modeloPadrao.startsWith("Chin")) {
+                } else if (modeloPadrao.startsWith("MSC")) {
                     //TODO - função para parar teste no padrão chinês
 
                 }
@@ -662,7 +665,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
     }
 
     public void TesteFotoCelula(View view) {
-        if ((conexaoPadraoMKV == null) && (conexaoBLEPadraoChines == null)) {
+        if ((conexaoPadraoMKV == null) && (conexaoPadraoMSC == null)) {
             Toast.makeText(getApplicationContext(), "O teste não pode ser iniciado/parado, favor botaoConectar com o padrão.", Toast.LENGTH_LONG).show();
             return;
 
@@ -679,7 +682,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
                     Log.d("PADRAO", modeloPadrao);
                     fotoCelulaPadraoBrasileiro();
 
-                } else if (modeloPadrao.startsWith("Chin")) {
+                } else if (modeloPadrao.startsWith("MSC")) {
                     //TODO - função teste para foto celula padrão chinês
 
                 }
@@ -696,7 +699,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
                     Log.d("PADRAO", modeloPadrao);
                     pararTestesPadrãoBrasileiro();
 
-                } else if (modeloPadrao.startsWith("Chin")) {
+                } else if (modeloPadrao.startsWith("MSC")) {
                     //TODO - função para teste padrão chinês
 
                 }
@@ -760,7 +763,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
 
 
     //Conferir versões dos padrões
-    private void confereNumSeriePadraoChines() {
+    private void confereNumSeriePadraoMSC() {
 
         byte[] pacote = new byte[12];
 
@@ -813,7 +816,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
 
         Log.d("PACOTE", String.valueOf(pacote));
 
-        boolean success = conexaoBLEPadraoChines.writeCharacteristic(pacote);
+        boolean success = conexaoPadraoMSC.writeCharacteristic(pacote);
         Log.d(TAG, String.valueOf(success));
 
     }

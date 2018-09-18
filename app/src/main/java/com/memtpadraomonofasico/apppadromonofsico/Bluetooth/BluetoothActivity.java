@@ -53,7 +53,10 @@ public class BluetoothActivity extends AppCompatActivity {
                     Bundle bundle = msg.getData();
                     byte[] data = bundle.getByteArray("data");
                     String dataString = new String(data != null ? data : new byte[0]);
-                    String padrao = "";
+
+
+                    Log.d("DADOS TAMANHO", String.valueOf(dataString.length()));
+                    Log.d("DADOS STRING", dataString);
 
 
                     switch (dataString) {
@@ -69,16 +72,6 @@ public class BluetoothActivity extends AppCompatActivity {
                             double a = 0, b = 0;
                             cont = cont + 1;
                             dados = dataString;
-                            Log.d("DADOS", dados);
-                            Log.d("DADOS TAMANHO", String.valueOf(dados.length()));
-                            Log.d("DADOS STRING", dataString);
-
-
-                            //funções padrão Chinês
-                            if ((dataString.startsWith("F"))) {
-                                finalDeTeste = true;
-                            }
-
 
                             //funções padrao Brasileiro
                             if (dados.length() == 1) {
@@ -100,16 +93,6 @@ public class BluetoothActivity extends AppCompatActivity {
                                 pacote[8] = (byte) (data[7] & 0xFF);
                                 pacote[9] = (byte) (data[8] & 0xFF);
 
-//                                Log.d("PACOTE", String.valueOf(pacote[0]));
-//                                Log.d("PACOTE", String.valueOf(pacote[1]));
-//                                Log.d("PACOTE", String.valueOf(pacote[2]));
-//                                Log.d("PACOTE", String.valueOf(pacote[3]));
-//                                Log.d("PACOTE", String.valueOf(pacote[4]));
-//                                Log.d("PACOTE", String.valueOf(pacote[5]));
-//                                Log.d("PACOTE", String.valueOf(pacote[6]));
-//                                Log.d("PACOTE", String.valueOf(pacote[7]));
-//                                Log.d("PACOTE", String.valueOf(pacote[8]));
-//                                Log.d("PACOTE", String.valueOf(pacote[9]));
 
                                 a = (pacote[2]) * Math.pow(256, 3) + (pacote[3] & 0xFF) * Math.pow(256, 2) + (pacote[4] & 0xFF) * 256 + (pacote[5] & 0xFF);
                                 b = (pacote[6] & 0xFF) * Math.pow(256, 3) + (pacote[7] & 0xFF) * Math.pow(256, 2) + (pacote[8] & 0xFF) * 256 + (pacote[9] & 0xFF);
@@ -126,15 +109,15 @@ public class BluetoothActivity extends AppCompatActivity {
                                 pacote[7] = (byte) (data[6] & 0xFF);
                                 pacote[8] = (byte) (data[7] & 0xFF);
 
-//                                Log.d("PACOTE", String.valueOf(pacote[0]));
-//                                Log.d("PACOTE", String.valueOf(pacote[1]));
-//                                Log.d("PACOTE", String.valueOf(pacote[2]));
-//                                Log.d("PACOTE", String.valueOf(pacote[3]));
-//                                Log.d("PACOTE", String.valueOf(pacote[4]));
-//                                Log.d("PACOTE", String.valueOf(pacote[5]));
-//                                Log.d("PACOTE", String.valueOf(pacote[6]));
-//                                Log.d("PACOTE", String.valueOf(pacote[7]));
-//                                Log.d("PACOTE", String.valueOf(pacote[8]));
+                                Log.d("PACOTE", String.valueOf(pacote[0]));
+                                Log.d("PACOTE", String.valueOf(pacote[1]));
+                                Log.d("PACOTE", String.valueOf(pacote[2]));
+                                Log.d("PACOTE", String.valueOf(pacote[3]));
+                                Log.d("PACOTE", String.valueOf(pacote[4]));
+                                Log.d("PACOTE", String.valueOf(pacote[5]));
+                                Log.d("PACOTE", String.valueOf(pacote[6]));
+                                Log.d("PACOTE", String.valueOf(pacote[7]));
+                                Log.d("PACOTE", String.valueOf(pacote[8]));
 
                                 a = (pacote[2]) * Math.pow(256, 3) + (pacote[3] & 0xFF) * Math.pow(256, 2) + (pacote[4] & 0xFF) * 256 + (pacote[5] & 0xFF);
                                 res = " Tensão :   " + Float.toString((float) a / 1000);
