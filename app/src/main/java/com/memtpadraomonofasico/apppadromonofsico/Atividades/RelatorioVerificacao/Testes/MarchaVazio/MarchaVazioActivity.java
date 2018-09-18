@@ -28,7 +28,6 @@ import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificaca
 import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.BLE.DeviceScanActivity;
 import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.BLE.SampleGattAttributes;
 import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.PairedDevices;
-import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.Testes.ConexaoMarchaVazio.BluetoothLeServicoPadraoChines;
 import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.Testes.ConexaoMarchaVazio.BluetoothServicoPadraoMKV;
 import com.memtpadraomonofasico.apppadromonofsico.Bluetooth.Testes.ConexaoMarchaVazio.BluetoothServicoPadraoMSC;
 import com.memtpadraomonofasico.apppadromonofsico.R;

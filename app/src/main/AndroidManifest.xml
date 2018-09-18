@@ -109,7 +109,6 @@
         <activity android:name=".Bluetooth.BLE.DeviceScanActivity" />
 
         <service
-            android:name=".Bluetooth.Testes.ConexaoMarchaVazio.BluetoothLeServicoPadraoChines"
             android:name=".Bluetooth.Testes.ConexaoMarchaVazio.BluetoothServicoPadraoMSC"
             android:enabled="true" />
 
