@@ -546,7 +546,7 @@ public class ExatidaoActivity extends AppCompatActivity {
 
         byte[] pacote = new byte[15];
 
-        pacote[0] = ('C' & 0xFF);
+        pacote[0] = ('P' & 0xFF);
         pacote[1] = (byte) (0 & 0xFF);
         pacote[2] = (byte) (0 & 0xFF);
         pacote[3] = (byte) (0 & 0xFF);
