@@ -756,6 +756,8 @@ public class MarchaVazioActivity extends AppCompatActivity {
 
 
     //-------------------Testes Padrao Brasileiro
+    //TODO - função de pedir o numero de série do padrao
+
     private void marchaVazioPadrãoBrasileiro() {
 
         //TODO Função para pegar o numero de série do medidor para ser comparado nos próximos testes
@@ -925,7 +927,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
 
     }
 
-    //Testes padrão chinês
+    //----------------------Testes padrão chinês
     private void confereNumSeriePadraoMSC() {
 
         byte[] pacote = new byte[12];

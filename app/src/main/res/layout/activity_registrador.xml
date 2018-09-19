@@ -357,7 +357,7 @@
                         android:layout_height="fill_parent"
                         android:background="@drawable/botao_arredondado"
                         android:backgroundTint="@color/colorPrimaryDark"
-                        android:onClick="mudarEstadoTeste"
+                        android:onClick="testeRegistrador"
                         android:text="Iniciar Teste de Registrador"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textColor="@android:color/white" />
