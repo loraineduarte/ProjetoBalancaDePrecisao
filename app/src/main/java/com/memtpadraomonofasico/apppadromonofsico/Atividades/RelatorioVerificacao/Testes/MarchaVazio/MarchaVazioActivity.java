@@ -38,6 +38,7 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.zip.CRC32;
 
 @SuppressWarnings("ALL")
 @TargetApi(21)
@@ -150,7 +151,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
                 mostraServicosGatt(conexaoPadraoMSC.getSupportedGattServices());
 
             } else if (BluetoothServicoPadraoMSC.ACTION_DATA_AVAILABLE.equals(action)) {
-                mostraDados(intent.getStringExtra(BluetoothServicoPadraoMSC.EXTRA_DATA));
+                trataDadosPadraoMSC(intent.getStringExtra(BluetoothServicoPadraoMSC.EXTRA_DATA));
 
             }
         }
@@ -309,8 +310,6 @@ public class MarchaVazioActivity extends AppCompatActivity {
 
     }
 
-    //Funções bluetooth Padrao Chinês
-
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == ENABLE_BLUETOOTH) {
@@ -371,7 +370,8 @@ public class MarchaVazioActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    //Funções Bluetooth
+
+    //-----------Funções Bluetooth
     private void ativarBluetooth() {
 
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -395,9 +395,6 @@ public class MarchaVazioActivity extends AppCompatActivity {
     private void conectarDispositivo() {
 
         if (modeloPadrao.startsWith("MKV")) {
-            Log.d("ENTROU MKV", "ENTROU MKV");
-            Log.d("PADRAO", modeloPadrao);
-
             if (conexaoPadraoMKV != null) {
                 Toast.makeText(getApplicationContext(), "Dispositivo já conectado.", Toast.LENGTH_LONG).show();
             }
@@ -428,7 +425,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
         });
     }
 
-    private void mostraDados(String data) {
+    private void trataDadosPadraoMSC(String data) {
         if (data != null) {
 
             Log.d("RECEBIDO STRING", data.toString());
@@ -567,15 +564,12 @@ public class MarchaVazioActivity extends AppCompatActivity {
 //            Log.d("RECEBIDO CHAR", String.valueOf(pacote[47]));
 //            Log.d("RECEBIDO CHAR", String.valueOf(pacote[48]));
 
-
             mensagemNaTela.setText(data.toString());
+            //TODO - colocar para mandar a mensagem para função "escreverTela"
 
         }
     }
 
-    // Demonstrates how to iterate through the supported GATT Services/Characteristics.
-    // In this sample, we populate the data structure that is bound to the ExpandableListView
-    // on the UI.
     private void mostraServicosGatt(List<BluetoothGattService> gattServices) {
 
         if (gattServices == null) return;
@@ -620,7 +614,7 @@ public class MarchaVazioActivity extends AppCompatActivity {
     }
 
 
-    //Funções Gerais da Atividade
+    //-------------------- Funções Gerais da Atividade
     public void TesteMarchaEmVazio(View view) {
 
         if ((conexaoPadraoMKV == null) && (conexaoPadraoMSC == null)) {
@@ -761,7 +755,177 @@ public class MarchaVazioActivity extends AppCompatActivity {
     }
 
 
-    //Conferir versões dos padrões
+    //-------------------Testes Padrao Brasileiro
+    private void marchaVazioPadrãoBrasileiro() {
+
+        //TODO Função para pegar o numero de série do medidor para ser comparado nos próximos testes
+
+        byte[] pacote = new byte[15];
+        float kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
+
+        byte[] bytesKdKe = new byte[4];
+        int valorMultiplicado = (int) (kdMedidor * 1e6);
+
+        bytesKdKe[0] = (byte) (valorMultiplicado / (Math.pow(256, 3)));
+        bytesKdKe[1] = (byte) ((valorMultiplicado - (bytesKdKe[0] * (Math.pow(256, 3)))) / Math.pow(256, 2));
+        bytesKdKe[2] = (byte) ((valorMultiplicado - ((bytesKdKe[0] * (Math.pow(256, 3))) + (bytesKdKe[1] * (Math.pow(256, 2))))) / Math.pow(256, 1));
+        bytesKdKe[3] = (byte) ((valorMultiplicado - ((bytesKdKe[0] * (Math.pow(256, 3))) + (bytesKdKe[1] * (Math.pow(256, 2))) + (bytesKdKe[2] * Math.pow(256, 1)))));
+
+        pacote[0] = ('I' & 0xFF);
+        pacote[1] = ('M' & 0xFF);
+        pacote[2] = (byte) (bytesKdKe[0] & 0xFF);
+        pacote[3] = (byte) (bytesKdKe[1] & 0xFF);
+        pacote[4] = (byte) (bytesKdKe[2] & 0xFF);
+        pacote[5] = (byte) (bytesKdKe[3] & 0xFF);
+
+        String time = tempoReprovado.getText().toString();
+
+        if (time.equals("")) {
+            tempoReprovado.setText("1");
+            Toast.makeText(getApplicationContext(), "Tempo de teste ajustado para 1 minuto... ", Toast.LENGTH_LONG).show();
+            pacote[6] = (byte) (0 & 0xFF);
+            pacote[7] = (byte) (0 & 0xFF);
+            pacote[8] = (byte) (0 & 0xFF);
+            pacote[9] = (byte) (60 & 0xFF);
+
+        } else {
+            byte[] bytesTempo = new byte[4];
+            float tempo = (Float.parseFloat(tempoReprovado.getText().toString())) * 60;
+            bytesTempo[0] = (byte) (tempo / (Math.pow(256, 3)));
+            bytesTempo[1] = (byte) ((tempo - (bytesTempo[0] * (Math.pow(256, 3)))) / Math.pow(256, 2));
+            bytesTempo[2] = (byte) ((tempo - ((bytesTempo[0] * (Math.pow(256, 3))) + (bytesTempo[1] * (Math.pow(256, 2))))) / Math.pow(256, 1));
+            bytesTempo[3] = (byte) ((tempo - ((bytesTempo[0] * (Math.pow(256, 3))) + (bytesTempo[1] * (Math.pow(256, 2))) + (bytesTempo[2] * Math.pow(256, 1)))));
+
+            pacote[6] = (byte) (bytesTempo[0] & 0xFF);
+            pacote[7] = (byte) (bytesTempo[1] & 0xFF);
+            pacote[8] = (byte) (bytesTempo[2] & 0xFF);
+            pacote[9] = (byte) (bytesTempo[3] & 0xFF);
+
+        }
+
+        //Lógica nova para o CRC32
+        String dataString = new String(pacote != null ? pacote : new byte[0]);
+        Log.d("MANDADO PARA FAZER O CHECKSUM", dataString);
+        CRC32 crc = new CRC32();
+        crc.update(dataString.getBytes());
+        int checkSumEncontrado = Integer.parseInt(String.format("%08X", crc.getValue()));
+        Log.d("CHECKSUM", String.valueOf(checkSumEncontrado));
+
+        byte[] bytesCheckSum = new byte[4];
+        bytesCheckSum[0] = (byte) (checkSumEncontrado / (Math.pow(256, 3)));
+        bytesCheckSum[1] = (byte) ((checkSumEncontrado - (bytesCheckSum[0] * (Math.pow(256, 3)))) / Math.pow(256, 2));
+        bytesCheckSum[2] = (byte) ((checkSumEncontrado - ((bytesCheckSum[0] * (Math.pow(256, 3))) + (bytesCheckSum[1] * (Math.pow(256, 2))))) / Math.pow(256, 1));
+        bytesCheckSum[3] = (byte) ((checkSumEncontrado - ((bytesCheckSum[0] * (Math.pow(256, 3))) + (bytesCheckSum[1] * (Math.pow(256, 2))) + (bytesCheckSum[2] * Math.pow(256, 1)))));
+
+        pacote[10] = (byte) (bytesCheckSum[0] & 0xFF);
+        pacote[11] = (byte) (bytesCheckSum[1] & 0xFF);
+        pacote[12] = (byte) (bytesCheckSum[2] & 0xFF);
+        pacote[13] = (byte) (bytesCheckSum[3] & 0xFF);
+        pacote[14] = ('Z' & 0xFF);
+
+        conexaoPadraoMKV.write(pacote);
+
+
+    }
+
+    public void fotoCelulaPadraoBrasileiro() {
+
+        //TODO Função para pegar o numero de série do medidor para ser comparado nos próximos testes
+        if (conexaoPadraoMKV == null) {
+            Toast.makeText(getApplicationContext(), "O teste não pode ser inicializado, favor botaoConectar com o padrão.", Toast.LENGTH_LONG).show();
+
+        } else {
+
+            if (conexaoPadraoMKV != null) {
+                mensagemNaTela.setText("O teste de FotoCélula vai ser iniciado...");
+            }
+
+            byte[] pacote = new byte[15];
+            float kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
+            byte[] bytes = new byte[4];
+            int valorMultiplicado = (int) (kdMedidor * 1000000);
+
+            bytes[0] = (byte) (valorMultiplicado / (Math.pow(256, 3)));
+            bytes[1] = (byte) ((valorMultiplicado - (bytes[0] * (Math.pow(256, 3)))) / Math.pow(256, 2));
+            bytes[2] = (byte) ((valorMultiplicado - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))))) / Math.pow(256, 1));
+            bytes[3] = (byte) ((valorMultiplicado - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))) + (bytes[2] * Math.pow(256, 1)))));
+
+            pacote[0] = ('I' & 0xFF);
+            pacote[1] = ('R' & 0xFF);
+            pacote[2] = (byte) (bytes[0] & 0xFF);
+            pacote[3] = (byte) (bytes[1] & 0xFF);
+            pacote[4] = (byte) (bytes[2] & 0xFF);
+            pacote[5] = (byte) (bytes[3] & 0xFF);
+            pacote[6] = (byte) (0 & 0xFF);
+            pacote[7] = (byte) (0 & 0xFF);
+            pacote[8] = (byte) (3 & 0xFF);
+            pacote[9] = (byte) (232 & 0xFF);
+
+            //Lógica nova para o CRC32
+            String dataString = new String(pacote != null ? pacote : new byte[0]);
+            Log.d("MANDADO PARA FAZER O CHECKSUM", dataString);
+            CRC32 crc = new CRC32();
+            crc.update(dataString.getBytes());
+            int checkSumEncontrado = Integer.parseInt(String.format("%08X", crc.getValue()));
+            Log.d("CHECKSUM", String.valueOf(checkSumEncontrado));
+
+            byte[] bytesCheckSum = new byte[4];
+            bytesCheckSum[0] = (byte) (checkSumEncontrado / (Math.pow(256, 3)));
+            bytesCheckSum[1] = (byte) ((checkSumEncontrado - (bytesCheckSum[0] * (Math.pow(256, 3)))) / Math.pow(256, 2));
+            bytesCheckSum[2] = (byte) ((checkSumEncontrado - ((bytesCheckSum[0] * (Math.pow(256, 3))) + (bytesCheckSum[1] * (Math.pow(256, 2))))) / Math.pow(256, 1));
+            bytesCheckSum[3] = (byte) ((checkSumEncontrado - ((bytesCheckSum[0] * (Math.pow(256, 3))) + (bytesCheckSum[1] * (Math.pow(256, 2))) + (bytesCheckSum[2] * Math.pow(256, 1)))));
+
+            pacote[10] = (byte) (bytesCheckSum[0] & 0xFF);
+            pacote[11] = (byte) (bytesCheckSum[1] & 0xFF);
+            pacote[12] = (byte) (bytesCheckSum[2] & 0xFF);
+            pacote[13] = (byte) (bytesCheckSum[3] & 0xFF);
+            pacote[14] = ('Z' & 0xFF);
+
+            conexaoPadraoMKV.write(pacote);
+        }
+    }
+
+    private void pararTestesPadrãoBrasileiro() {
+
+        byte[] pacote = new byte[15];
+
+        pacote[0] = ('C' & 0xFF);
+        pacote[1] = (byte) (0 & 0xFF);
+        pacote[2] = (byte) (0 & 0xFF);
+        pacote[3] = (byte) (0 & 0xFF);
+        pacote[4] = (byte) (0 & 0xFF);
+        pacote[5] = (byte) (0 & 0xFF);
+        pacote[6] = (byte) (0 & 0xFF);
+        pacote[7] = (byte) (0 & 0xFF);
+        pacote[8] = (byte) (0 & 0xFF);
+        pacote[9] = (byte) (0 & 0xFF);
+
+        //Lógica nova para o CRC32
+        String dataString = new String(pacote != null ? pacote : new byte[0]);
+        Log.d("MANDADO PARA FAZER O CHECKSUM", dataString);
+        CRC32 crc = new CRC32();
+        crc.update(dataString.getBytes());
+        int checkSumEncontrado = Integer.parseInt(String.format("%08X", crc.getValue()));
+        Log.d("CHECKSUM", String.valueOf(checkSumEncontrado));
+
+        byte[] bytesCheckSum = new byte[4];
+        bytesCheckSum[0] = (byte) (checkSumEncontrado / (Math.pow(256, 3)));
+        bytesCheckSum[1] = (byte) ((checkSumEncontrado - (bytesCheckSum[0] * (Math.pow(256, 3)))) / Math.pow(256, 2));
+        bytesCheckSum[2] = (byte) ((checkSumEncontrado - ((bytesCheckSum[0] * (Math.pow(256, 3))) + (bytesCheckSum[1] * (Math.pow(256, 2))))) / Math.pow(256, 1));
+        bytesCheckSum[3] = (byte) ((checkSumEncontrado - ((bytesCheckSum[0] * (Math.pow(256, 3))) + (bytesCheckSum[1] * (Math.pow(256, 2))) + (bytesCheckSum[2] * Math.pow(256, 1)))));
+
+        pacote[10] = (byte) (bytesCheckSum[0] & 0xFF);
+        pacote[11] = (byte) (bytesCheckSum[1] & 0xFF);
+        pacote[12] = (byte) (bytesCheckSum[2] & 0xFF);
+        pacote[13] = (byte) (bytesCheckSum[3] & 0xFF);
+        pacote[14] = ('Z' & 0xFF);
+
+        conexaoPadraoMKV.write(pacote);
+
+
+    }
+
+    //Testes padrão chinês
     private void confereNumSeriePadraoMSC() {
 
         byte[] pacote = new byte[12];
@@ -819,118 +983,6 @@ public class MarchaVazioActivity extends AppCompatActivity {
         Log.d(TAG, String.valueOf(success));
 
     }
-
-
-    //Testes Padrao Brasileiro
-    private void marchaVazioPadrãoBrasileiro() {
-
-        //TODO Função para pegar o numero de série do medidor para ser comparado nos próximos testes
-
-        byte[] pacote = new byte[10];
-        float kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
-
-        byte[] bytes = new byte[8];
-        int valorMultiplicado = (int) (kdMedidor * 1e6);
-
-        bytes[0] = (byte) (valorMultiplicado / (Math.pow(256, 3)));
-        bytes[1] = (byte) ((valorMultiplicado - (bytes[0] * (Math.pow(256, 3)))) / Math.pow(256, 2));
-        bytes[2] = (byte) ((valorMultiplicado - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))))) / Math.pow(256, 1));
-        bytes[3] = (byte) ((valorMultiplicado - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))) + (bytes[2] * Math.pow(256, 1)))));
-
-        pacote[0] = ('I' & 0xFF);
-        pacote[1] = ('M' & 0xFF);
-        pacote[2] = (byte) (bytes[0] & 0xFF);
-        pacote[3] = (byte) (bytes[1] & 0xFF);
-        pacote[4] = (byte) (bytes[2] & 0xFF);
-        pacote[5] = (byte) (bytes[3] & 0xFF);
-
-        String time = tempoReprovado.getText().toString();
-
-        if (time.equals("")) {
-            tempoReprovado.setText("1");
-            Toast.makeText(getApplicationContext(), "Tempo de teste ajustado para 1 minuto... ", Toast.LENGTH_LONG).show();
-            pacote[6] = (byte) (0 & 0xFF);
-            pacote[7] = (byte) (0 & 0xFF);
-            pacote[8] = (byte) (0 & 0xFF);
-            pacote[9] = (byte) (60 & 0xFF);
-
-        } else {
-            float tempo = (Float.parseFloat(tempoReprovado.getText().toString())) * 60;
-            bytes[4] = (byte) (tempo / (Math.pow(256, 3)));
-            bytes[5] = (byte) ((tempo - (bytes[4] * (Math.pow(256, 3)))) / Math.pow(256, 2));
-            bytes[6] = (byte) ((tempo - ((bytes[4] * (Math.pow(256, 3))) + (bytes[5] * (Math.pow(256, 2))))) / Math.pow(256, 1));
-            bytes[7] = (byte) ((tempo - ((bytes[4] * (Math.pow(256, 3))) + (bytes[5] * (Math.pow(256, 2))) + (bytes[6] * Math.pow(256, 1)))));
-
-            pacote[6] = (byte) (bytes[4] & 0xFF);
-            pacote[7] = (byte) (bytes[5] & 0xFF);
-            pacote[8] = (byte) (bytes[6] & 0xFF);
-            pacote[9] = (byte) (bytes[7] & 0xFF);
-
-        }
-
-        conexaoPadraoMKV.write(pacote);
-
-
-    }
-
-    public void fotoCelulaPadraoBrasileiro() {
-
-        //TODO Função para pegar o numero de série do medidor para ser comparado nos próximos testes
-        if (conexaoPadraoMKV == null) {
-            Toast.makeText(getApplicationContext(), "O teste não pode ser inicializado, favor botaoConectar com o padrão.", Toast.LENGTH_LONG).show();
-
-        } else {
-
-            if (conexaoPadraoMKV != null) {
-                mensagemNaTela.setText("O teste de FotoCélula vai ser iniciado...");
-            }
-
-            byte[] pacote = new byte[10];
-            float kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
-            byte[] bytes = new byte[4];
-            int valorMultiplicado = (int) (kdMedidor * 1000000);
-
-            bytes[0] = (byte) (valorMultiplicado / (Math.pow(256, 3)));
-            bytes[1] = (byte) ((valorMultiplicado - (bytes[0] * (Math.pow(256, 3)))) / Math.pow(256, 2));
-            bytes[2] = (byte) ((valorMultiplicado - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))))) / Math.pow(256, 1));
-            bytes[3] = (byte) ((valorMultiplicado - ((bytes[0] * (Math.pow(256, 3))) + (bytes[1] * (Math.pow(256, 2))) + (bytes[2] * Math.pow(256, 1)))));
-
-            pacote[0] = ('I' & 0xFF);
-            pacote[1] = ('R' & 0xFF);
-            pacote[2] = (byte) (bytes[0] & 0xFF);
-            pacote[3] = (byte) (bytes[1] & 0xFF);
-            pacote[4] = (byte) (bytes[2] & 0xFF);
-            pacote[5] = (byte) (bytes[3] & 0xFF);
-            pacote[6] = (byte) (0 & 0xFF);
-            pacote[7] = (byte) (0 & 0xFF);
-            pacote[8] = (byte) (3 & 0xFF);
-            pacote[9] = (byte) (232 & 0xFF);
-
-            conexaoPadraoMKV.write(pacote);
-        }
-    }
-
-    private void pararTestesPadrãoBrasileiro() {
-
-        byte[] pacote = new byte[10];
-
-        pacote[0] = ('C' & 0xFF);
-        pacote[1] = (byte) (0 & 0xFF);
-        pacote[2] = (byte) (0 & 0xFF);
-        pacote[3] = (byte) (0 & 0xFF);
-        pacote[4] = (byte) (0 & 0xFF);
-        pacote[5] = (byte) (0 & 0xFF);
-        pacote[6] = (byte) (0 & 0xFF);
-        pacote[7] = (byte) (0 & 0xFF);
-        pacote[8] = (byte) (0 & 0xFF);
-        pacote[9] = (byte) (0 & 0xFF);
-
-        conexaoPadraoMKV.write(pacote);
-
-
-    }
-
-    //Testes padrão chinês
     //TODO função para teste de marcha em vaxio
 
     //TODO função para teste de foto celula (registrador)

@@ -21,6 +21,7 @@ import com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificaca
 import com.memtpadraomonofasico.apppadromonofsico.R;
 
 import java.util.Arrays;
+import java.util.zip.CRC32;
 
 import static java.lang.System.out;
 
@@ -54,7 +55,6 @@ public class BluetoothActivity extends AppCompatActivity {
                     byte[] data = bundle.getByteArray("data");
                     String dataString = new String(data != null ? data : new byte[0]);
 
-
                     Log.d("DADOS TAMANHO", String.valueOf(dataString.length()));
                     Log.d("DADOS STRING", dataString);
 
@@ -70,6 +70,7 @@ public class BluetoothActivity extends AppCompatActivity {
                         default:
 
                             double a = 0, b = 0;
+                            String valorCrcMandado;
                             cont = cont + 1;
                             dados = dataString;
 
@@ -82,7 +83,7 @@ public class BluetoothActivity extends AppCompatActivity {
                                 finalDeTeste = true;
                             }
 
-                            if (dados.length() == 9) {
+                            if (dados.length() == 14) {
                                 pacote[1] = (byte) (data[0] & 0xFF);
                                 pacote[2] = (byte) (data[1] & 0xFF);
                                 pacote[3] = (byte) (data[2] & 0xFF);
@@ -92,36 +93,56 @@ public class BluetoothActivity extends AppCompatActivity {
                                 pacote[7] = (byte) (data[6] & 0xFF);
                                 pacote[8] = (byte) (data[7] & 0xFF);
                                 pacote[9] = (byte) (data[8] & 0xFF);
+                                pacote[10] = (byte) (data[9] & 0xFF);
+                                pacote[11] = (byte) (data[10] & 0xFF);
+                                pacote[12] = (byte) (data[11] & 0xFF);
+                                pacote[13] = (byte) (data[12] & 0xFF);
+                                pacote[14] = (byte) (data[13] & 0xFF);
 
+                                valorCrcMandado = String.valueOf((pacote[10]) * Math.pow(256, 3) + (pacote[11] & 0xFF) * Math.pow(256, 2) + (pacote[12] & 0xFF) * 256 + (pacote[13] & 0xFF));
 
-                                a = (pacote[2]) * Math.pow(256, 3) + (pacote[3] & 0xFF) * Math.pow(256, 2) + (pacote[4] & 0xFF) * 256 + (pacote[5] & 0xFF);
-                                b = (pacote[6] & 0xFF) * Math.pow(256, 3) + (pacote[7] & 0xFF) * Math.pow(256, 2) + (pacote[8] & 0xFF) * 256 + (pacote[9] & 0xFF);
-                                res = "  Tensão:   " + Float.toString((float) a / 1000) + " V   Corrente:  " + Float.toString((float) b / 1000) + " A \n";
+                                CRC32 crc = new CRC32();
+                                String pacoteDados = new String(data.length <= 9 ? data : new byte[0]);
+                                crc.update(pacoteDados.getBytes()); //tem que pegar os bytes 0-9
+                                String crcValorEncontrado = String.format("%08X", crc.getValue());
+                                Log.d("CHECKSUM CALCULADO", crcValorEncontrado);
+                                Log.d("CHECKSUM MANDADO", valorCrcMandado);
+
+                                if (valorCrcMandado.equals(crcValorEncontrado)) {
+                                    a = (pacote[2]) * Math.pow(256, 3) + (pacote[3] & 0xFF) * Math.pow(256, 2) + (pacote[4] & 0xFF) * 256 + (pacote[5] & 0xFF);
+                                    b = (pacote[6] & 0xFF) * Math.pow(256, 3) + (pacote[7] & 0xFF) * Math.pow(256, 2) + (pacote[8] & 0xFF) * 256 + (pacote[9] & 0xFF);
+                                    res = "  Tensão:   " + Float.toString((float) a / 1000) + " V   Corrente:  " + Float.toString((float) b / 1000) + " A \n";
+
+                                } else {
+                                    res = " ";
+                                    Log.d("CHECKSUM", "Pacote Incorreto");
+                                }
+
                             }
 
-                            if (dados.length() == 8) {
-                                pacote[1] = (byte) (data[0] & 0xFF);
-                                pacote[2] = (byte) (data[1] & 0xFF);
-                                pacote[3] = (byte) (data[2] & 0xFF);
-                                pacote[4] = (byte) (data[3] & 0xFF);
-                                pacote[5] = (byte) (data[4] & 0xFF);
-                                pacote[6] = (byte) (data[5] & 0xFF);
-                                pacote[7] = (byte) (data[6] & 0xFF);
-                                pacote[8] = (byte) (data[7] & 0xFF);
-
-                                Log.d("PACOTE", String.valueOf(pacote[0]));
-                                Log.d("PACOTE", String.valueOf(pacote[1]));
-                                Log.d("PACOTE", String.valueOf(pacote[2]));
-                                Log.d("PACOTE", String.valueOf(pacote[3]));
-                                Log.d("PACOTE", String.valueOf(pacote[4]));
-                                Log.d("PACOTE", String.valueOf(pacote[5]));
-                                Log.d("PACOTE", String.valueOf(pacote[6]));
-                                Log.d("PACOTE", String.valueOf(pacote[7]));
-                                Log.d("PACOTE", String.valueOf(pacote[8]));
-
-                                a = (pacote[2]) * Math.pow(256, 3) + (pacote[3] & 0xFF) * Math.pow(256, 2) + (pacote[4] & 0xFF) * 256 + (pacote[5] & 0xFF);
-                                res = " Tensão :   " + Float.toString((float) a / 1000);
-                            }
+//                            if (dados.length() == 8) {
+//                                pacote[1] = (byte) (data[0] & 0xFF);
+//                                pacote[2] = (byte) (data[1] & 0xFF);
+//                                pacote[3] = (byte) (data[2] & 0xFF);
+//                                pacote[4] = (byte) (data[3] & 0xFF);
+//                                pacote[5] = (byte) (data[4] & 0xFF);
+//                                pacote[6] = (byte) (data[5] & 0xFF);
+//                                pacote[7] = (byte) (data[6] & 0xFF);
+//                                pacote[8] = (byte) (data[7] & 0xFF);
+//
+//                                Log.d("PACOTE", String.valueOf(pacote[0]));
+//                                Log.d("PACOTE", String.valueOf(pacote[1]));
+//                                Log.d("PACOTE", String.valueOf(pacote[2]));
+//                                Log.d("PACOTE", String.valueOf(pacote[3]));
+//                                Log.d("PACOTE", String.valueOf(pacote[4]));
+//                                Log.d("PACOTE", String.valueOf(pacote[5]));
+//                                Log.d("PACOTE", String.valueOf(pacote[6]));
+//                                Log.d("PACOTE", String.valueOf(pacote[7]));
+//                                Log.d("PACOTE", String.valueOf(pacote[8]));
+//
+//                                a = (pacote[2]) * Math.pow(256, 3) + (pacote[3] & 0xFF) * Math.pow(256, 2) + (pacote[4] & 0xFF) * 256 + (pacote[5] & 0xFF);
+//                                res = " Tensão :   " + Float.toString((float) a / 1000);
+//                            }
 
                             if (dataString.contains("R")) {
                                 if (finalDeTeste) {
