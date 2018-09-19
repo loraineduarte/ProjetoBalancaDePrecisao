@@ -545,6 +545,9 @@ public class RegistradorActivity extends AppCompatActivity {
 
     public void registradorPadraoMKV(View view) {
 
+        //TODO - função para pedir número de série do padrão
+        //TODO - comparar com o número de série mandado pelo botaoTesteFotoCelula anterior
+
         cronometroTesteRegistrador.setVisibility(View.VISIBLE);
         cronometroTesteRegistrador.setBase(SystemClock.elapsedRealtime());
         cronometroTesteRegistrador.start(); // start a chronometer
@@ -559,7 +562,7 @@ public class RegistradorActivity extends AppCompatActivity {
         } else {
 
             if (conexaoPadraoMKV != null) {
-                mensagemNaTela.setText("O testeRegistradorRodando vai ser iniciado...");
+                mensagemNaTela.setText("O teste de Registrador vai ser iniciado...");
             }
 
             byte[] pacote = new byte[15];
@@ -611,6 +614,8 @@ public class RegistradorActivity extends AppCompatActivity {
 
     private void fotoCelulaPadraoMKV(View view) {
 
+        //TODO - função para pedir número de série do padrão
+        //TODO - comparar com o número de série mandado pelo botaoTesteFotoCelula anterior
         if (conexaoPadraoMKV == null) {
             Toast.makeText(getApplicationContext(), "O testeRegistradorRodando não pode ser inicializado, favor botaoConectar com o padrão.", Toast.LENGTH_LONG).show();
 

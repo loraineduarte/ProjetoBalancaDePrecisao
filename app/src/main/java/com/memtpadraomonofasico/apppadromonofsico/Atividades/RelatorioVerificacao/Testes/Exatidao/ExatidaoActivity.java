@@ -25,6 +25,7 @@ import com.orhanobut.hawk.Hawk;
 import com.orhanobut.hawk.NoEncryption;
 
 import java.text.DecimalFormat;
+import java.util.zip.CRC32;
 
 
 @SuppressWarnings("ALL")
@@ -35,20 +36,20 @@ public class ExatidaoActivity extends AppCompatActivity {
     private static final int SELECT_PAIRED_DEVICE = 2;
     private static final int REQUEST_ENABLE_BT = 4;
     @SuppressLint("HandlerLeak")
-    private static final Handler handlerInspecaoConformidade = new Handler(Looper.getMainLooper()) {
+    private static final Handler handler = new Handler(Looper.getMainLooper()) {
     };
-    private static String modeloPadrao;
+    private static String modeloPadraoMonofasico;
     @SuppressLint("StaticFieldLeak")
     private static EditText erroCargaNominal, erroCargaPequeno, quantidadePulsos;
     @SuppressLint("StaticFieldLeak")
-    private static TextView mensagemInspecaoConformidade;
+    private static TextView mensagemNaTela;
     @SuppressLint("StaticFieldLeak")
     private static Chronometer cronometroTesteCargaPequena, cronometroTesteCargaNominal;
     @SuppressLint("WrongViewCast")
     private static Button botaoConectar, botaoTesteNominal, botaoTestePequeno, botaoTesteFotoCelula;
-    boolean testeCargaNominalComecou = false;
-    boolean testeCargaPequenaComecou = false;
-    boolean testeFotoCelulaComecou = false;
+    boolean testeCargaNominalRodando = false;
+    boolean testeCargaPequenaRodando = false;
+    boolean testeFotoCelulaRodando = false;
     double tempoEstimadoTeste;
     private RadioButton Aprovado, NaoPossibilitaTeste, VariacaoLeitura, Reprovado;
     private String statusTestesExatidao;
@@ -67,7 +68,7 @@ public class ExatidaoActivity extends AppCompatActivity {
             }
         }).start();
 
-        handlerInspecaoConformidade.post(new Runnable() {
+        handler.post(new Runnable() {
             @Override
             public void run() {
 
@@ -80,17 +81,14 @@ public class ExatidaoActivity extends AppCompatActivity {
                         cronometroTesteCargaPequena.setVisibility(View.INVISIBLE);
                         cronometroTesteCargaPequena.setEnabled(false);//stop(); // stop a chronometer
                         cronometroTesteCargaPequena.setText("00:00");
-
-                        mensagemInspecaoConformidade.clearComposingText();
-                        mensagemInspecaoConformidade.setText(res);
-
-                        testeCargaNominalComecou = false;
+                        mensagemNaTela.clearComposingText();
+                        mensagemNaTela.setText(res);
+                        testeCargaNominalRodando = false;
                         botaoTesteNominal.clearComposingText();
                         botaoTesteNominal.setText("Iniciar Teste de Carga Nominal");
-                        testeCargaPequenaComecou = false;
+                        testeCargaPequenaRodando = false;
                         botaoTestePequeno.clearComposingText();
                         botaoTestePequeno.setText("Iniciar Teste de Carga Pequena");
-
                     }
 
                     erroCargaPequeno.clearComposingText();
@@ -103,25 +101,22 @@ public class ExatidaoActivity extends AppCompatActivity {
     }
 
     public void escreverTelaCargaNominal(final String res) {
-        handlerInspecaoConformidade.post(new Runnable() {
+        handler.post(new Runnable() {
             @Override
             public void run() {
 
                 erroCargaNominal.setEnabled(true);
                 if (!(erroCargaNominal == null)) {
                     if (res.startsWith("T")) {
-
                         cronometroTesteCargaNominal.setVisibility(View.INVISIBLE);
                         cronometroTesteCargaNominal.setEnabled(false);// stop(); // stop a chronometer
                         cronometroTesteCargaNominal.setText("00:00");
-
-
-                        mensagemInspecaoConformidade.clearComposingText();
-                        mensagemInspecaoConformidade.setText(res);
-                        testeCargaNominalComecou = false;
+                        mensagemNaTela.clearComposingText();
+                        mensagemNaTela.setText(res);
+                        testeCargaNominalRodando = false;
                         botaoTesteNominal.clearComposingText();
                         botaoTesteNominal.setText("Iniciar Teste de Carga Nominal");
-                        testeCargaPequenaComecou = false;
+                        testeCargaPequenaRodando = false;
                         botaoTestePequeno.clearComposingText();
                         botaoTestePequeno.setText("Iniciar Teste de Carga Pequena");
 
@@ -146,30 +141,28 @@ public class ExatidaoActivity extends AppCompatActivity {
 
     }
 
-    public void escreverStatusTestesExatidao(final String res) {
-        handlerInspecaoConformidade.post(new Runnable() {
+    public void escreverNaTela(final String res) {
+        handler.post(new Runnable() {
             @Override
             public void run() {
-                if (!(mensagemInspecaoConformidade == null)) {
+                if (!(mensagemNaTela == null)) {
                     if (res.startsWith("T")) {
-                        mensagemInspecaoConformidade.clearComposingText();
-                        mensagemInspecaoConformidade.setText(res);
+                        mensagemNaTela.clearComposingText();
+                        mensagemNaTela.setText(res);
 
                         if (botaoTestePequeno != null) {
-                            testeCargaPequenaComecou = false;
+                            testeCargaPequenaRodando = false;
                             botaoTestePequeno.clearComposingText();
                             botaoTestePequeno.setText("Iniciar Teste de Carga Pequena");
                         }
                         if (botaoTesteNominal != null) {
-                            testeCargaNominalComecou = false;
+                            testeCargaNominalRodando = false;
                             botaoTesteNominal.clearComposingText();
                             botaoTesteNominal.setText("Iniciar Teste de Carga Nominal");
                         }
-
                     } else {
-
-                        mensagemInspecaoConformidade.clearComposingText();
-                        mensagemInspecaoConformidade.setText(res);
+                        mensagemNaTela.clearComposingText();
+                        mensagemNaTela.setText(res);
                     }
                 }
             }
@@ -184,8 +177,8 @@ public class ExatidaoActivity extends AppCompatActivity {
         NoEncryption encryption = new NoEncryption();
         Hawk.init(this).setEncryption(encryption).build();
 
-        mensagemInspecaoConformidade = findViewById(R.id.textView7);
-        mensagemInspecaoConformidade.setText("  ");
+        mensagemNaTela = findViewById(R.id.textView7);
+        mensagemNaTela.setText("  ");
         erroCargaNominal = findViewById(R.id.CargaNominalErro);
         erroCargaNominal.setEnabled(false);
         erroCargaPequeno = findViewById(R.id.CargaPequenaErro);
@@ -207,8 +200,8 @@ public class ExatidaoActivity extends AppCompatActivity {
         cronometroTesteCargaNominal = (Chronometer) findViewById(R.id.CronometroNominal); // initiate a chronometer
         cronometroTesteCargaNominal.setVisibility(View.INVISIBLE);
 
-        modeloPadrao = Hawk.get("ModeloPadrao");
-        Log.d("PADRAO", modeloPadrao);
+        modeloPadraoMonofasico = Hawk.get("ModeloPadrao");
+        Log.d("PADRAO", modeloPadraoMonofasico);
         ativarBluetooth();
 
         botaoConectar.setOnClickListener(new View.OnClickListener() {
@@ -287,21 +280,133 @@ public class ExatidaoActivity extends AppCompatActivity {
     }
 
     private void abrirRegistrador() {
-
         Intent intent = new Intent(this, RegistradorActivity.class);
         startActivity(intent);
     }
 
-    public void mudarEstadoTesteCargaNominal(View view) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == ENABLE_BLUETOOTH) {
+            if (resultCode == RESULT_OK) {
+                mensagemNaTela.setText("Bluetooth ativado.");
+            } else {
+                mensagemNaTela.setText("Bluetooth não ativado.");
+            }
+        } else if (requestCode == SELECT_PAIRED_DEVICE) {
+            if (resultCode == RESULT_OK) {
+                mensagemNaTela.setText("Você selecionou " + data.getStringExtra("btDevName") + "\n" + data.getStringExtra("btDevAddress"));
+                String macAddress = data.getStringExtra("btDevAddress");
+
+                conexaoMKV = new ThreadConexao(macAddress);
+                conexaoMKV.start();
+                if (conexaoMKV.isAlive()) {
+                    mensagemNaTela.setText("Conexao finalizada com:" + data.getStringExtra("btDevName") + "\n Verifique o LED de conexão");
+                }
+            } else {
+                mensagemNaTela.setText("Nenhum dispositivo selecionado.");
+            }
+        }
+    }
+
+    public void onCheckboxClicked(View view) {
+
+        Aprovado = findViewById(R.id.tampasolidarizada);
+        NaoPossibilitaTeste = findViewById(R.id.sinaisCarbonizacao);
+        VariacaoLeitura = findViewById(R.id.VariacaoLeitura);
+        Reprovado = findViewById(R.id.Reprovado);
+
+        switch (view.getId()) {
+            case R.id.tampasolidarizada:
+                NaoPossibilitaTeste.setChecked(false);
+                VariacaoLeitura.setChecked(false);
+                Reprovado.setChecked(false);
+                break;
+
+            case R.id.sinaisCarbonizacao:
+                Aprovado.setChecked(false);
+                VariacaoLeitura.setChecked(false);
+                Reprovado.setChecked(false);
+                break;
+
+            case R.id.VariacaoLeitura:
+                Aprovado.setChecked(false);
+                NaoPossibilitaTeste.setChecked(false);
+                Reprovado.setChecked(false);
+                break;
+
+            case R.id.Reprovado:
+                Aprovado.setChecked(false);
+                NaoPossibilitaTeste.setChecked(false);
+                VariacaoLeitura.setChecked(false);
+                break;
+
+        }
+    }
+
+    public void pararCronometro(String res) {
+        if (res.startsWith("T")) {
+            cronometroTesteCargaNominal.setVisibility(View.INVISIBLE);
+            cronometroTesteCargaNominal.setEnabled(false);// stop(); // stop a chronometer
+            cronometroTesteCargaNominal.setText("00:00");
+        }
+    }
+
+    //----------------Bluetooth
+    private void ativarBluetooth() {
+
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+        if (bluetoothAdapter == null) {
+            mensagemNaTela.setText("Bluetooth não está funcionando.");
+
+        } else {
+            mensagemNaTela.setText("Bluetooth está funcionando.");
+
+            if (!bluetoothAdapter.isEnabled()) {
+                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+                mensagemNaTela.setText("Solicitando ativação do Bluetooth...");
+
+            } else {
+                mensagemNaTela.setText("Bluetooth Ativado.");
+
+            }
+
+        }
+
+    }
+
+    private void conectarDispositivo(View view) {
+
+        if (modeloPadraoMonofasico.startsWith("MKV")) {
+            if (conexaoMKV != null) {
+                Toast.makeText(getApplicationContext(), "Dispositivo já conectado.", Toast.LENGTH_LONG).show();
+
+            }
+            Intent searchPairedDevicesIntent = new Intent(this, PairedDevices.class);
+            startActivityForResult(searchPairedDevicesIntent, SELECT_PAIRED_DEVICE);
+
+        } else if (modeloPadraoMonofasico.startsWith("Chin")) {
+            //TODO - Fazer conexaoc om padrao chinês
+        }
+
+
+    }
+
+
+    //------------------Testes
+    public void testeCargaNominal(View view) {
 
         cronometroTesteCargaNominal.setVisibility(View.VISIBLE);
         cronometroTesteCargaNominal.setBase(SystemClock.elapsedRealtime());
         cronometroTesteCargaNominal.start(); // start a chronometer
 
         int pulsos = 5;
+
         if (quantidadePulsos.getText().toString().equals("")) {
             Toast.makeText(getApplicationContext(), "O botaoTesteFotoCelula vai ser realizado com 5 pulsos!", Toast.LENGTH_LONG).show();
             pulsos = 5;
+
         } else {
             pulsos = Integer.parseInt(quantidadePulsos.getText().toString());
         }
@@ -320,28 +425,30 @@ public class ExatidaoActivity extends AppCompatActivity {
 
         } else {
 
-            if (!testeCargaNominalComecou) {
-                testeCargaNominalComecou = true;
+            if (!testeCargaNominalRodando) {
+                testeCargaNominalRodando = true;
                 botaoTesteNominal.clearComposingText();
                 botaoTesteNominal.setText("Cancelar Teste de Carga Nominal");
-                aplicarCargaNominal(view);
-                mensagemInspecaoConformidade.clearComposingText();
-                mensagemInspecaoConformidade.setText("Teste sendo iniciado...  \n " +
+                //TODO - conferir modelo do padrão (se é chines ou Brasileiro)
+                cargaNominalPadraoMKV(view);
+                mensagemNaTela.clearComposingText();
+                mensagemNaTela.setText("Teste sendo iniciado...  \n " +
                         "Estimativa: " + dx + " minuto(s)");
                 tempoEstimadoTeste = 0;
 
             } else {
-                testeCargaNominalComecou = false;
+                testeCargaNominalRodando = false;
                 botaoTesteNominal.clearComposingText();
                 botaoTesteNominal.setText("Iniciar Teste de Carga Nominal");
+                //TODO - conferir modelo do padrão (se é chines ou Brasileiro)
                 pararTestePadraoMKV(view);
-                mensagemInspecaoConformidade.clearComposingText();
-                mensagemInspecaoConformidade.setText("Teste Cancelado!");
+                mensagemNaTela.clearComposingText();
+                mensagemNaTela.setText("Teste Cancelado!");
             }
         }
     }
 
-    public void mudarEstadoTesteCargaPequena(View view) {
+    public void testeCargaPequena(View view) {
 
         cronometroTesteCargaPequena.setVisibility(View.VISIBLE);
         cronometroTesteCargaPequena.setBase(SystemClock.elapsedRealtime());
@@ -369,30 +476,75 @@ public class ExatidaoActivity extends AppCompatActivity {
 
         } else {
 
-            if (!testeCargaPequenaComecou) {
-                testeCargaPequenaComecou = true;
+            if (!testeCargaPequenaRodando) {
+                testeCargaPequenaRodando = true;
                 botaoTestePequeno.clearComposingText();
                 botaoTestePequeno.setText("Cancelar Teste de Carga Pequena");
-                aplicarCargaPequena(view);
-                mensagemInspecaoConformidade.clearComposingText();
-                mensagemInspecaoConformidade.setText("Teste sendo iniciado... \n" +
+                //TODO - conferir modelo do padrão (se é chines ou Brasileiro)
+                cargaPequenaPadraoMKV(view);
+                mensagemNaTela.clearComposingText();
+                mensagemNaTela.setText("Teste sendo iniciado... \n" +
                         "Estimativa: " + dx + " minuto(s) ");
                 tempoEstimadoTeste = 0;
 
             } else {
-                testeCargaPequenaComecou = false;
+                testeCargaPequenaRodando = false;
                 botaoTestePequeno.clearComposingText();
                 botaoTestePequeno.setText("Iniciar Teste de Carga Pequena");
+                //TODO - conferir modelo do padrão (se é chines ou Brasileiro)
                 pararTestePadraoMKV(view);
-                mensagemInspecaoConformidade.clearComposingText();
-                mensagemInspecaoConformidade.setText("Teste Cancelado!");
+                mensagemNaTela.clearComposingText();
+                mensagemNaTela.setText("Teste Cancelado!");
             }
         }
     }
 
+    public void testeFotoCelula(View view) {
+
+        if (conexaoMKV == null) {
+            Toast.makeText(getApplicationContext(), "O botaoTesteFotoCelula da FotoCélula não pode ser iniciado/parado, favor botaoConectar com o padrão.", Toast.LENGTH_LONG).show();
+
+        } else {
+            botaoTesteFotoCelula = findViewById(R.id.buttonTesteFotoCelula);
+
+            if (!testeFotoCelulaRodando) {
+                testeFotoCelulaRodando = true;
+                botaoTesteFotoCelula.clearComposingText();
+                botaoTesteFotoCelula.setText("Cancelar Teste da FotoCélula");
+
+                if (modeloPadraoMonofasico.startsWith("MKV")) {
+                    fotoCelulaPadraoMKV(view);
+
+                } else if (modeloPadraoMonofasico.startsWith("Chin")) {
+                    //TODO - Fazer função de botaoTesteFotoCelula de foto célula para o padrão chinês
+                }
+
+                mensagemNaTela.clearComposingText();
+                mensagemNaTela.setText("Teste da FotoCélula sendo iniciado...");
+
+            } else {
+                testeFotoCelulaRodando = false;
+                botaoTesteFotoCelula.clearComposingText();
+                botaoTesteFotoCelula.setText("Iniciar Teste da FotoCélula");
+
+                if (modeloPadraoMonofasico.startsWith("MKV")) {
+                    pararTestePadraoMKV(view);
+
+                } else if (modeloPadraoMonofasico.startsWith("Chin")) {
+                    //TODO - Fazer função de para botaoTesteFotoCelula para o padrão chinês
+                }
+
+                mensagemNaTela.clearComposingText();
+                mensagemNaTela.setText("Teste da FotoCélula Cancelado!");
+            }
+        }
+    }
+
+    //--------------Funções Padrao MKV
+    //TODO - Fazer função para conferir número de série do padrão MKV
     private void pararTestePadraoMKV(View view) {
 
-        byte[] pacote = new byte[10];
+        byte[] pacote = new byte[15];
 
         pacote[0] = ('C' & 0xFF);
         pacote[1] = (byte) (0 & 0xFF);
@@ -405,53 +557,50 @@ public class ExatidaoActivity extends AppCompatActivity {
         pacote[8] = (byte) (0 & 0xFF);
         pacote[9] = (byte) (0 & 0xFF);
 
+        //Lógica nova para o CRC32
+        String dataString = new String(pacote != null ? pacote : new byte[0]);
+        Log.d("MANDADO PARA FAZER O CHECKSUM", dataString);
+        CRC32 crc = new CRC32();
+        crc.update(dataString.getBytes());
+        int checkSumEncontrado = Integer.parseInt(String.format("%08X", crc.getValue()));
+        Log.d("CHECKSUM", String.valueOf(checkSumEncontrado));
+
+        byte[] bytesCheckSum = new byte[4];
+        bytesCheckSum[0] = (byte) (checkSumEncontrado / (Math.pow(256, 3)));
+        bytesCheckSum[1] = (byte) ((checkSumEncontrado - (bytesCheckSum[0] * (Math.pow(256, 3)))) / Math.pow(256, 2));
+        bytesCheckSum[2] = (byte) ((checkSumEncontrado - ((bytesCheckSum[0] * (Math.pow(256, 3))) + (bytesCheckSum[1] * (Math.pow(256, 2))))) / Math.pow(256, 1));
+        bytesCheckSum[3] = (byte) ((checkSumEncontrado - ((bytesCheckSum[0] * (Math.pow(256, 3))) + (bytesCheckSum[1] * (Math.pow(256, 2))) + (bytesCheckSum[2] * Math.pow(256, 1)))));
+
+        pacote[10] = (byte) (bytesCheckSum[0] & 0xFF);
+        pacote[11] = (byte) (bytesCheckSum[1] & 0xFF);
+        pacote[12] = (byte) (bytesCheckSum[2] & 0xFF);
+        pacote[13] = (byte) (bytesCheckSum[3] & 0xFF);
+        pacote[14] = ('Z' & 0xFF);
+
         conexaoMKV.write(pacote);
 
-
-        cronometroTesteCargaPequena.stop(); // stop a chronometer
+        cronometroTesteCargaPequena.stop();
         cronometroTesteCargaPequena.setText("00:00");
-
-        cronometroTesteCargaNominal.stop(); // stop a chronometer
+        cronometroTesteCargaNominal.stop();
         cronometroTesteCargaNominal.setText("00:00");
 
 
     }
 
-    private void ativarBluetooth() {
+    public void cargaNominalPadraoMKV(View view) {
 
-        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
-        if (bluetoothAdapter == null) {
-            mensagemInspecaoConformidade.setText("Bluetooth não está funcionando.");
-
-        } else {
-            mensagemInspecaoConformidade.setText("Bluetooth está funcionando.");
-
-            if (!bluetoothAdapter.isEnabled()) {
-                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-                mensagemInspecaoConformidade.setText("Solicitando ativação do Bluetooth...");
-
-            } else {
-                mensagemInspecaoConformidade.setText("Bluetooth Ativado.");
-
-            }
-
-        }
-
-    }
-
-    public void aplicarCargaNominal(View view) {
+        //TODO - função para pedir número de série do padrão
+        //TODO - comparar com o número de série mandado pelo botaoTesteFotoCelula anterior
 
         if (conexaoMKV == null) {
             Toast.makeText(getApplicationContext(), "O botaoTesteFotoCelula não pode ser inicializado, favor botaoConectar com o padrão.", Toast.LENGTH_LONG).show();
 
         } else {
             if (conexaoMKV.isAlive()) {
-                mensagemInspecaoConformidade.setText("Conectado!");
+                mensagemNaTela.setText("Conectado!");
             }
 
-            byte[] pacote = new byte[10];
+            byte[] pacote = new byte[15];
             float kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
 
             byte[] bytes = new byte[4];
@@ -491,21 +640,43 @@ public class ExatidaoActivity extends AppCompatActivity {
                 pacote[9] = (byte) (bytes[3] & 0xFF);
             }
 
+            //Lógica nova para o CRC32
+            String dataString = new String(pacote != null ? pacote : new byte[0]);
+            Log.d("MANDADO PARA FAZER O CHECKSUM", dataString);
+            CRC32 crc = new CRC32();
+            crc.update(dataString.getBytes());
+            int checkSumEncontrado = Integer.parseInt(String.format("%08X", crc.getValue()));
+            Log.d("CHECKSUM", String.valueOf(checkSumEncontrado));
+
+            byte[] bytesCheckSum = new byte[4];
+            bytesCheckSum[0] = (byte) (checkSumEncontrado / (Math.pow(256, 3)));
+            bytesCheckSum[1] = (byte) ((checkSumEncontrado - (bytesCheckSum[0] * (Math.pow(256, 3)))) / Math.pow(256, 2));
+            bytesCheckSum[2] = (byte) ((checkSumEncontrado - ((bytesCheckSum[0] * (Math.pow(256, 3))) + (bytesCheckSum[1] * (Math.pow(256, 2))))) / Math.pow(256, 1));
+            bytesCheckSum[3] = (byte) ((checkSumEncontrado - ((bytesCheckSum[0] * (Math.pow(256, 3))) + (bytesCheckSum[1] * (Math.pow(256, 2))) + (bytesCheckSum[2] * Math.pow(256, 1)))));
+
+            pacote[10] = (byte) (bytesCheckSum[0] & 0xFF);
+            pacote[11] = (byte) (bytesCheckSum[1] & 0xFF);
+            pacote[12] = (byte) (bytesCheckSum[2] & 0xFF);
+            pacote[13] = (byte) (bytesCheckSum[3] & 0xFF);
+            pacote[14] = ('Z' & 0xFF);
+
             conexaoMKV.write(pacote);
         }
 
 
     }
 
-    public void aplicarCargaPequena(View view) {
+    public void cargaPequenaPadraoMKV(View view) {
 
+        //TODO - função para pedir número de série do padrão
+        //TODO - comparar com o número de série mandado pelo botaoTesteFotoCelula anterior
 
         if (conexaoMKV == null) {
             Toast.makeText(getApplicationContext(), "O botaoTesteFotoCelula não pode ser inicializado, favor botaoConectar com o padrão.", Toast.LENGTH_LONG).show();
 
         } else {
 
-            byte[] pacote = new byte[10];
+            byte[] pacote = new byte[15];
             float kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
 
             byte[] bytes = new byte[4];
@@ -545,6 +716,25 @@ public class ExatidaoActivity extends AppCompatActivity {
                 pacote[9] = (byte) (bytes[3] & 0xFF);
             }
 
+            //Lógica nova para o CRC32
+            String dataString = new String(pacote != null ? pacote : new byte[0]);
+            Log.d("MANDADO PARA FAZER O CHECKSUM", dataString);
+            CRC32 crc = new CRC32();
+            crc.update(dataString.getBytes());
+            int checkSumEncontrado = Integer.parseInt(String.format("%08X", crc.getValue()));
+            Log.d("CHECKSUM", String.valueOf(checkSumEncontrado));
+
+            byte[] bytesCheckSum = new byte[4];
+            bytesCheckSum[0] = (byte) (checkSumEncontrado / (Math.pow(256, 3)));
+            bytesCheckSum[1] = (byte) ((checkSumEncontrado - (bytesCheckSum[0] * (Math.pow(256, 3)))) / Math.pow(256, 2));
+            bytesCheckSum[2] = (byte) ((checkSumEncontrado - ((bytesCheckSum[0] * (Math.pow(256, 3))) + (bytesCheckSum[1] * (Math.pow(256, 2))))) / Math.pow(256, 1));
+            bytesCheckSum[3] = (byte) ((checkSumEncontrado - ((bytesCheckSum[0] * (Math.pow(256, 3))) + (bytesCheckSum[1] * (Math.pow(256, 2))) + (bytesCheckSum[2] * Math.pow(256, 1)))));
+
+            pacote[10] = (byte) (bytesCheckSum[0] & 0xFF);
+            pacote[11] = (byte) (bytesCheckSum[1] & 0xFF);
+            pacote[12] = (byte) (bytesCheckSum[2] & 0xFF);
+            pacote[13] = (byte) (bytesCheckSum[3] & 0xFF);
+            pacote[14] = ('Z' & 0xFF);
 
             conexaoMKV.write(pacote);
         }
@@ -552,127 +742,7 @@ public class ExatidaoActivity extends AppCompatActivity {
 
     }
 
-    private void conectarDispositivo(View view) {
-
-
-        if (modeloPadrao.startsWith("MKV")) {
-            if (conexaoMKV != null) {
-                Toast.makeText(getApplicationContext(), "Dispositivo já conectado.", Toast.LENGTH_LONG).show();
-
-            }
-            Intent searchPairedDevicesIntent = new Intent(this, PairedDevices.class);
-            startActivityForResult(searchPairedDevicesIntent, SELECT_PAIRED_DEVICE);
-
-        } else if (modeloPadrao.startsWith("Chin")) {
-            //TODO - Fazer conexaoc om padrao chinês
-        }
-
-
-
-    }
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        if (requestCode == ENABLE_BLUETOOTH) {
-            if (resultCode == RESULT_OK) {
-                mensagemInspecaoConformidade.setText("Bluetooth ativado.");
-            } else {
-                mensagemInspecaoConformidade.setText("Bluetooth não ativado.");
-            }
-        } else if (requestCode == SELECT_PAIRED_DEVICE) {
-            if (resultCode == RESULT_OK) {
-                mensagemInspecaoConformidade.setText("Você selecionou " + data.getStringExtra("btDevName") + "\n" + data.getStringExtra("btDevAddress"));
-                String macAddress = data.getStringExtra("btDevAddress");
-
-                conexaoMKV = new ThreadConexao(macAddress);
-                conexaoMKV.start();
-                if (conexaoMKV.isAlive()) {
-                    mensagemInspecaoConformidade.setText("Conexao finalizada com:" + data.getStringExtra("btDevName") + "\n Verifique o LED de conexão");
-                }
-            } else {
-                mensagemInspecaoConformidade.setText("Nenhum dispositivo selecionado.");
-            }
-        }
-    }
-
-
-    public void onCheckboxClicked(View view) {
-
-        Aprovado = findViewById(R.id.tampasolidarizada);
-        NaoPossibilitaTeste = findViewById(R.id.sinaisCarbonizacao);
-        VariacaoLeitura = findViewById(R.id.VariacaoLeitura);
-        Reprovado = findViewById(R.id.Reprovado);
-
-        switch (view.getId()) {
-            case R.id.tampasolidarizada:
-                NaoPossibilitaTeste.setChecked(false);
-                VariacaoLeitura.setChecked(false);
-                Reprovado.setChecked(false);
-                break;
-
-            case R.id.sinaisCarbonizacao:
-                Aprovado.setChecked(false);
-                VariacaoLeitura.setChecked(false);
-                Reprovado.setChecked(false);
-                break;
-
-            case R.id.VariacaoLeitura:
-                Aprovado.setChecked(false);
-                NaoPossibilitaTeste.setChecked(false);
-                Reprovado.setChecked(false);
-                break;
-
-            case R.id.Reprovado:
-                Aprovado.setChecked(false);
-                NaoPossibilitaTeste.setChecked(false);
-                VariacaoLeitura.setChecked(false);
-                break;
-
-        }
-    }
-
-    public void testeFotoCelula(View view) {
-
-        if (conexaoMKV == null) {
-            Toast.makeText(getApplicationContext(), "O botaoTesteFotoCelula da FotoCélula não pode ser iniciado/parado, favor botaoConectar com o padrão.", Toast.LENGTH_LONG).show();
-
-        } else {
-            botaoTesteFotoCelula = findViewById(R.id.buttonTesteFotoCelula);
-
-            if (!testeFotoCelulaComecou) {
-                testeFotoCelulaComecou = true;
-                botaoTesteFotoCelula.clearComposingText();
-                botaoTesteFotoCelula.setText("Cancelar Teste da FotoCélula");
-
-                if (modeloPadrao.startsWith("MKV")) {
-                    testeFotoCelulaPadraoMKV(view);
-
-                } else if (modeloPadrao.startsWith("Chin")) {
-                    //TODO - Fazer função de botaoTesteFotoCelula de foto célula para o padrão chinês
-                }
-
-                mensagemInspecaoConformidade.clearComposingText();
-                mensagemInspecaoConformidade.setText("Teste da FotoCélula sendo iniciado...");
-
-            } else {
-                testeFotoCelulaComecou = false;
-                botaoTesteFotoCelula.clearComposingText();
-                botaoTesteFotoCelula.setText("Iniciar Teste da FotoCélula");
-
-                if (modeloPadrao.startsWith("MKV")) {
-                    pararTestePadraoMKV(view);
-
-                } else if (modeloPadrao.startsWith("Chin")) {
-                    //TODO - Fazer função de para botaoTesteFotoCelula para o padrão chinês
-                }
-
-                mensagemInspecaoConformidade.clearComposingText();
-                mensagemInspecaoConformidade.setText("Teste da FotoCélula Cancelado!");
-            }
-        }
-    }
-
-    private void testeFotoCelulaPadraoMKV(View view) {
+    private void fotoCelulaPadraoMKV(View view) {
 
         //TODO - função para pedir número de série do padrão
         //TODO - comparar com o número de série mandado pelo botaoTesteFotoCelula anterior
@@ -683,10 +753,10 @@ public class ExatidaoActivity extends AppCompatActivity {
         } else {
 
             if (conexaoMKV != null) {
-                mensagemInspecaoConformidade.setText("O botaoTesteFotoCelula de FotoCélula vai ser iniciado...");
+                mensagemNaTela.setText("O botaoTesteFotoCelula de FotoCélula vai ser iniciado...");
             }
 
-            byte[] pacote = new byte[10];
+            byte[] pacote = new byte[15];
             float kdMedidor = Float.parseFloat((String) Hawk.get("KdKeMedidor"));
             byte[] bytes = new byte[4];
             int valorMultiplicado = (int) (kdMedidor * 1000000);
@@ -707,16 +777,37 @@ public class ExatidaoActivity extends AppCompatActivity {
             pacote[8] = (byte) (3 & 0xFF);
             pacote[9] = (byte) (232 & 0xFF);
 
+            //Lógica nova para o CRC32
+            String dataString = new String(pacote != null ? pacote : new byte[0]);
+            Log.d("MANDADO PARA FAZER O CHECKSUM", dataString);
+            CRC32 crc = new CRC32();
+            crc.update(dataString.getBytes());
+            int checkSumEncontrado = Integer.parseInt(String.format("%08X", crc.getValue()));
+            Log.d("CHECKSUM", String.valueOf(checkSumEncontrado));
+
+            byte[] bytesCheckSum = new byte[4];
+            bytesCheckSum[0] = (byte) (checkSumEncontrado / (Math.pow(256, 3)));
+            bytesCheckSum[1] = (byte) ((checkSumEncontrado - (bytesCheckSum[0] * (Math.pow(256, 3)))) / Math.pow(256, 2));
+            bytesCheckSum[2] = (byte) ((checkSumEncontrado - ((bytesCheckSum[0] * (Math.pow(256, 3))) + (bytesCheckSum[1] * (Math.pow(256, 2))))) / Math.pow(256, 1));
+            bytesCheckSum[3] = (byte) ((checkSumEncontrado - ((bytesCheckSum[0] * (Math.pow(256, 3))) + (bytesCheckSum[1] * (Math.pow(256, 2))) + (bytesCheckSum[2] * Math.pow(256, 1)))));
+
+            pacote[10] = (byte) (bytesCheckSum[0] & 0xFF);
+            pacote[11] = (byte) (bytesCheckSum[1] & 0xFF);
+            pacote[12] = (byte) (bytesCheckSum[2] & 0xFF);
+            pacote[13] = (byte) (bytesCheckSum[3] & 0xFF);
+            pacote[14] = ('Z' & 0xFF);
+
             conexaoMKV.write(pacote);
         }
     }
 
-    public void pararCronometro(String res) {
-        if (res.startsWith("T")) {
-            cronometroTesteCargaNominal.setVisibility(View.INVISIBLE);
-            cronometroTesteCargaNominal.setEnabled(false);// stop(); // stop a chronometer
-            cronometroTesteCargaNominal.setText("00:00");
-        }
-    }
+
+    //--------------Funções Padrão Chinês
+    //TODO - Funçao para pegar número de série do Padrão
+    //TODO - Função para teste de Foto Célula do padrão
+    //TODO - Função para teste de Carga Nominal
+    //TODO - Função para teste de Carga Pequena
+    //TODO - Função para para testes
+
 }
 

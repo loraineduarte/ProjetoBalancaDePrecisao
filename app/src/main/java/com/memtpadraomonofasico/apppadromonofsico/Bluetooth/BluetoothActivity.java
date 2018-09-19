@@ -183,13 +183,13 @@ public class BluetoothActivity extends AppCompatActivity {
                                     b = 0;
                                     a = (pacote[2]) * Math.pow(256, 3) + (pacote[3] & 0xFF) * Math.pow(256, 2) + (pacote[4] & 0xFF) * 256 + (pacote[5] & 0xFF);
                                     res = Float.toString((float) (a / 1000)) + " % ";
-                                    conformidade.escreverStatusTestesExatidao("Teste sendo finalizado ... \n" + res);
+                                    conformidade.escreverNaTela("Teste sendo finalizado ... \n" + res);
                                     conformidade.escreverTelaCargaNominal(res);
                                     finalDeTeste = false;
                                     break;
 
                                 } else {
-                                    conformidade.escreverStatusTestesExatidao("Recebendo dados do padrão \n" + res);
+                                    conformidade.escreverNaTela("Recebendo dados do padrão \n" + res);
                                 }
                             }
 
@@ -200,13 +200,13 @@ public class BluetoothActivity extends AppCompatActivity {
                                     b = 0;
                                     a = ((pacote[2]) * Math.pow(256, 3) + (pacote[3] & 0xFF) * Math.pow(256, 2) + (pacote[4] & 0xFF) * 256 + (pacote[5] & 0xFF));
                                     res = Float.toString((float) (a / 1000)) + "%";
-                                    conformidade.escreverStatusTestesExatidao("Teste sendo finalizado ...Erro:  \n" + res);
+                                    conformidade.escreverNaTela("Teste sendo finalizado ...Erro:  \n" + res);
                                     conformidade.escreverTelaCargaPequena(res);
                                     finalDeTeste = false;
                                     break;
 
                                 } else {
-                                    conformidade.escreverStatusTestesExatidao("Recebendo dados do padrão \n" + res);
+                                    conformidade.escreverNaTela("Recebendo dados do padrão \n" + res);
                                 }
                             }
 
