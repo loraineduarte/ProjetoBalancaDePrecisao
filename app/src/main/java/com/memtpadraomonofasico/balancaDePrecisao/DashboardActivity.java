@@ -18,8 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import com.memtpadraomonofasico.balancaDePrecisao.Atividades.RelatorioVerificacao.RelatorioVerificacaoActivity;
-import com.memtpadraomonofasico.balancaDePrecisao.BancoDeDados.BancoController;
+
 import com.orhanobut.hawk.Hawk;
 
 

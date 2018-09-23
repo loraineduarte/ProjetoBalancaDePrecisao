@@ -44,32 +44,13 @@
             android:parentActivityName="com.memtpadraomonofasico.balancaDePrecisao.Bluetooth.BluetoothActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.memtpadraomonofasico.balancaDePrecisao.Atividades.RelatorioVerificacao.RelatorioVerificacaoActivity"
-            android:parentActivityName="com.memtpadraomonofasico.balancaDePrecisao.DashboardActivity"
-            android:screenOrientation="portrait" >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-        </activity>
-        <activity
-            android:name="com.memtpadraomonofasico.balancaDePrecisao.Atividades.RelatorioVerificacao.ServicoActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name="com.memtpadraomonofasico.balancaDePrecisao.Atividades.RelatorioVerificacao.SelecionarMedidorActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.memtpadraomonofasico.balancaDePrecisao.Atividades.RelatorioVerificacao.MarchaVazioActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.memtpadraomonofasico.balancaDePrecisao.Atividades.RelatorioVerificacao.SituacoesObservadasActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name="com.memtpadraomonofasico.balancaDePrecisao.Atividades.RelatorioVerificacao.ResultadosFinaisActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.memtpadraomonofasico.balancaDePrecisao.Atividades.RelatorioVerificacao.ConclusaoActivity"
             android:screenOrientation="portrait" />
 
         <provider

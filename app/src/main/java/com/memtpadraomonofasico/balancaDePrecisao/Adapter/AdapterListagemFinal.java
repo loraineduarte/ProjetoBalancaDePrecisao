@@ -1,4 +1,4 @@
-package com.memtpadraomonofasico.balancaDePrecisao.Atividades.RelatorioVerificacao;
+package com.memtpadraomonofasico.balancaDePrecisao.Adapter;
 
 
 import android.app.Activity;

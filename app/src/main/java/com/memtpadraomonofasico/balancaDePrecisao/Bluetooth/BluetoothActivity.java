@@ -14,7 +14,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.memtpadraomonofasico.balancaDePrecisao.Atividades.RelatorioVerificacao.MarchaVazioActivity;
+
 import com.memtpadraomonofasico.balancaDePrecisao.R;
 
 import java.util.Arrays;
@@ -35,7 +35,6 @@ public class BluetoothActivity extends AppCompatActivity {
     static String tipoTeste = "";
     static boolean finalDeTeste = false;
     private static String res;
-    MarchaVazioActivity marchaVazio = new MarchaVazioActivity();
     @SuppressLint("HandlerLeak")
     public final ThreadLocal<Handler> handler = new ThreadLocal<Handler>() {
         @Override
@@ -142,18 +141,7 @@ public class BluetoothActivity extends AppCompatActivity {
 
 
                             if (dataString.contains("M")) {
-                                if (finalDeTeste) {
 
-                                    a = ((pacote[2]) * 256) + (pacote[3] & 0xFF);
-                                    res = "  Número de pulsos :   " + Integer.toString((int) a) + "\n";
-                                    marchaVazio.escreverTela("Teste sendo finalizado ... \n" + res);
-                                    marchaVazio.selecionarStatus(a);
-                                    finalDeTeste = false;
-                                    break;
-
-                                } else {
-                                    marchaVazio.escreverTela("Recebendo dados do padrão \n" + res);
-                                }
 
                             }
 
