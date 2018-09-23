@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.memtpadraomonofasico.balancaDePrecisao">
+    package="com.balancaDePrecisao">
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
@@ -27,30 +27,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.memtpadraomonofasico.balancaDePrecisao.DashboardActivity"
+            android:name="com.balancaDePrecisao.DashboardActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name="com.memtpadraomonofasico.balancaDePrecisao.Bluetooth.BluetoothActivity"
-            android:parentActivityName="com.memtpadraomonofasico.balancaDePrecisao.DashboardActivity"
+            android:name="com.balancaDePrecisao.Bluetooth.BluetoothActivity"
+            android:parentActivityName="com.balancaDePrecisao.DashboardActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.memtpadraomonofasico.balancaDePrecisao.Bluetooth.DiscoveredDevices"
-            android:parentActivityName="com.memtpadraomonofasico.balancaDePrecisao.Bluetooth.BluetoothActivity"
+            android:name="com.balancaDePrecisao.Bluetooth.DiscoveredDevices"
+            android:parentActivityName="com.balancaDePrecisao.Bluetooth.BluetoothActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.memtpadraomonofasico.balancaDePrecisao.Bluetooth.PairedDevices"
-            android:parentActivityName="com.memtpadraomonofasico.balancaDePrecisao.Bluetooth.BluetoothActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.memtpadraomonofasico.balancaDePrecisao.Atividades.RelatorioVerificacao.SelecionarMedidorActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.memtpadraomonofasico.balancaDePrecisao.Atividades.RelatorioVerificacao.MarchaVazioActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.memtpadraomonofasico.balancaDePrecisao.Atividades.RelatorioVerificacao.ResultadosFinaisActivity"
+            android:name="com.balancaDePrecisao.Bluetooth.PairedDevices"
+            android:parentActivityName="com.balancaDePrecisao.Bluetooth.BluetoothActivity"
             android:screenOrientation="portrait" />
 
         <provider
