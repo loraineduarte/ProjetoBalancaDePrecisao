@@ -6,7 +6,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.memtpadraomonofasico.apppadromonofsico.DashboardActivity"
+    tools:context="com.memtpadraomonofasico.balancaDePrecisao.DashboardActivity"
     tools:showIn="@layout/app_bar_dashboard">
 
 

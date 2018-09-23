@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.memtpadraomonofasico.apppadromonofsico.DashBoard"
+    tools:context="com.memtpadraomonofasico.balancaDePrecisao.DashBoard"
     tools:keep="@layout/activity_dash_board">
 
     <android.support.design.widget.AppBarLayout

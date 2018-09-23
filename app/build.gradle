@@ -6,7 +6,7 @@ android {
         applicationId "com.memtpadraomonofasico.apppadromonofsico"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 2
+        versionCode 3
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -62,4 +62,5 @@ dependencies {
     implementation files('libs/butterknife-6.1.0.jar')
     implementation files('libs/opencsv-4.1.jar')
     implementation files('libs/common-lang3.jar')
+    compile 'no.nordicsemi.android.support.v18:scanner:1.1.0'
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.memtpadraomonofasico.apppadromonofsico">
+    package="com.memtpadraomonofasico.balancaDePrecisao">
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
@@ -10,6 +10,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="com.principal.permission.MAPS_RECEIVE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
 
     <uses-feature
         android:name="android.hardware.bluetooth_le"
@@ -20,98 +22,55 @@
         android:fullBackupContent="@xml/backup_descriptor"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="Balança de Pracisão"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".DashboardActivity"
+            android:name="com.memtpadraomonofasico.balancaDePrecisao.DashboardActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".Atividades.FuncoesAdmin.Avaliador.CriarAvaliadorActivity"
-            android:parentActivityName=".DashboardActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Atividades.FuncoesAdmin.Medidor.CriarMedidorActivity"
-            android:parentActivityName=".DashboardActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Bluetooth.BluetoothActivity"
-            android:parentActivityName=".DashboardActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Bluetooth.DiscoveredDevices"
-            android:parentActivityName=".Bluetooth.BluetoothActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Bluetooth.PairedDevices"
-            android:parentActivityName=".Bluetooth.BluetoothActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Atividades.RelatorioVerificacao.RelatorioVerificacaoActivity"
-            android:parentActivityName=".DashboardActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Atividades.RelatorioVerificacao.ServicoActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Atividades.RelatorioVerificacao.SelecionarMedidorActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Atividades.RelatorioVerificacao.Testes.InspecaoVisual.InspecaoVisualActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Atividades.RelatorioVerificacao.Testes.Registrador.RegistradorActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Atividades.RelatorioVerificacao.Testes.MarchaVazio.MarchaVazioActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Atividades.RelatorioVerificacao.Testes.Exatidao.ExatidaoActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Atividades.RelatorioVerificacao.SituacoesObservadasActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Atividades.RelatorioVerificacao.ResultadosFinaisActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Atividades.RelatorioVerificacao.ConclusaoActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Atividades.RelatorioVerificacao.Testes.InspecaoVisual.ObservacaoInspecaoVisualActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Atividades.RelatorioVerificacao.Testes.Registrador.ObservacaoRegistradorActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Atividades.RelatorioVerificacao.Testes.CircuitoPotencial.CircuitoPotencialActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name=".Login.LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity
+            android:name="com.memtpadraomonofasico.balancaDePrecisao.Bluetooth.BluetoothActivity"
+            android:parentActivityName="com.memtpadraomonofasico.balancaDePrecisao.DashboardActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.memtpadraomonofasico.balancaDePrecisao.Bluetooth.DiscoveredDevices"
+            android:parentActivityName="com.memtpadraomonofasico.balancaDePrecisao.Bluetooth.BluetoothActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.memtpadraomonofasico.balancaDePrecisao.Bluetooth.PairedDevices"
+            android:parentActivityName="com.memtpadraomonofasico.balancaDePrecisao.Bluetooth.BluetoothActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.memtpadraomonofasico.balancaDePrecisao.Atividades.RelatorioVerificacao.RelatorioVerificacaoActivity"
+            android:parentActivityName="com.memtpadraomonofasico.balancaDePrecisao.DashboardActivity"
+            android:screenOrientation="portrait" >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
         </activity>
-        <activity android:name=".Atividades.FuncoesAdmin.AdminDashboard" />
-        <activity android:name=".Atividades.FuncoesAdmin.Avaliador.AvaliadorDashboard" />
-        <activity android:name=".Atividades.FuncoesAdmin.Avaliador.ListagemAvaliadores" />
-        <activity android:name=".Atividades.FuncoesAdmin.Avaliador.EditarAvaliadorActivity" />
-        <activity android:name=".Atividades.FuncoesAdmin.Medidor.MedidorDashboard" />
-        <activity android:name=".Atividades.FuncoesAdmin.Medidor.ListagemMedidores" />
-        <activity android:name=".Atividades.FuncoesAdmin.Medidor.EditarMedidorActivity" />
-        <activity android:name=".Atividades.FuncoesAdmin.Mensagens.MensagensDashboard" />
-        <activity android:name=".Atividades.FuncoesAdmin.Mensagens.ListagemTodasMensagensActivity" />
-        <activity android:name=".Atividades.FuncoesAdmin.Mensagens.CriarMensagemActivity" />
-        <activity android:name=".Atividades.FuncoesAdmin.Mensagens.EditarMensagemActivity"></activity>
-        <activity android:name=".Bluetooth.BLE.DeviceScanActivity" />
-
-        <service
-            android:name=".Bluetooth.Testes.ConexaoMarchaVazio.BluetoothServicoPadraoMSC"
-            android:enabled="true" />
-
+        <activity
+            android:name="com.memtpadraomonofasico.balancaDePrecisao.Atividades.RelatorioVerificacao.ServicoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.memtpadraomonofasico.balancaDePrecisao.Atividades.RelatorioVerificacao.SelecionarMedidorActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.memtpadraomonofasico.balancaDePrecisao.Atividades.RelatorioVerificacao.MarchaVazioActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.memtpadraomonofasico.balancaDePrecisao.Atividades.RelatorioVerificacao.SituacoesObservadasActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.memtpadraomonofasico.balancaDePrecisao.Atividades.RelatorioVerificacao.ResultadosFinaisActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.memtpadraomonofasico.balancaDePrecisao.Atividades.RelatorioVerificacao.ConclusaoActivity"
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

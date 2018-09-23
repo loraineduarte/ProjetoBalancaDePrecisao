@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    tools:context="com.memtpadraomonofasico.apppadromonofsico.Atividades.RelatorioVerificacao.ConclusaoActivity">
+    tools:context="com.memtpadraomonofasico.balancaDePrecisao.Atividades.RelatorioVerificacao.ConclusaoActivity">
 
     <TextView
         android:id="@+id/Conclusao"
