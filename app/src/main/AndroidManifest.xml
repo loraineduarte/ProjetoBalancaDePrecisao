@@ -27,21 +27,26 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.balancaDePrecisao.DashboardActivity"
+            android:name=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
-            android:name="com.balancaDePrecisao.Bluetooth.BluetoothActivity"
-            android:parentActivityName="com.balancaDePrecisao.DashboardActivity"
+            android:name=".Bluetooth.BluetoothActivity"
+            android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.balancaDePrecisao.Bluetooth.DiscoveredDevices"
-            android:parentActivityName="com.balancaDePrecisao.Bluetooth.BluetoothActivity"
+            android:name=".Bluetooth.DiscoveredDevices"
+            android:parentActivityName=".Bluetooth.BluetoothActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.balancaDePrecisao.Bluetooth.PairedDevices"
-            android:parentActivityName="com.balancaDePrecisao.Bluetooth.BluetoothActivity"
+            android:name=".Bluetooth.PairedDevices"
+            android:parentActivityName=".Bluetooth.BluetoothActivity"
             android:screenOrientation="portrait" />
 
         <provider
@@ -54,6 +59,8 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
+        <activity android:name=".HistoricoPesosActivity" />
+        <activity android:name=".SalvarPesoActivity"></activity>
     </application>
 
 </manifest>
