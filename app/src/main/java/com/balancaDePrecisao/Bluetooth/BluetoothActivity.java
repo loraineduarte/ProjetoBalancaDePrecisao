@@ -60,16 +60,19 @@ public class BluetoothActivity extends AppCompatActivity {
                             Log.d("BLUETOOTH", "Ocorreu um erro durante a conexão.");
                             break;
                         case "---S":
-                            Log.d("BLUETOOTH", "Conectado.");
+
                             break;
 
                         default:
 
+
                             Log.d("DADOS TAMANHO", String.valueOf(dataString.length()));
                             Log.d("DADOS STRING", dataString);
 
-                            dados = dataString;
-                            main.escreverTela(dados);
+                            if (data.length > 1) {
+                                dados = dataString;
+                                main.escreverTela(dados);
+                            }
 
                             break;
                     }
