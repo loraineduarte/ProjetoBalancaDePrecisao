@@ -2,9 +2,12 @@ package com.balancaDePrecisao.Banco;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.NonNull;
+
+import java.util.ArrayList;
 
 /**
  * Created by loraine.duarte on 29/09/2018.
@@ -22,7 +25,7 @@ public class DadoDAO extends SQLiteOpenHelper {
     private static final String NOME_BANCO = "banco.db";
 
 
-    private static final int DATABASE_VERSION = 0;
+    private static final int DATABASE_VERSION = 1;
     public SQLiteDatabase db;
     BancoController banco;
 
@@ -59,31 +62,39 @@ public class DadoDAO extends SQLiteOpenHelper {
 
 
     @NonNull
-    private ContentValues pegaDados(Dado dado) {
-        ContentValues dados = new ContentValues();
-        dados.put("dados_peso", dado.getPeso());
-        dados.put("dados_dataHora", dado.getDataHora());
-        dados.put("dados_descricao", dado.getDescricao());
+    public ArrayList pegaDados() {
+
+        String selectQuery = "SELECT * FROM "+ TABELA_DADOS;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        ArrayList dados = new ArrayList<Dado>();
+        //String peso, String dataHora, String descricao
+
+        if(cursor.getCount()>0){
+            while (cursor.moveToNext()) { //se a select devolver várias colunas
+                cursor.moveToFirst();
+                String dado =  (cursor.getString(cursor.getColumnIndex(DADOS_PESO)) +
+                        cursor.getString(cursor.getColumnIndex(DADOS_DATA_HORA)));
+
+                dados.add(dado);
+            } //fim do while
+        } //fim do if
         return dados;
     }
 
-    public void altera(Dado dado) {
-
-        SQLiteDatabase db = getWritableDatabase();
-
-        ContentValues dados = pegaDados(dado);
-
-        String[] params = {dado.getDataHora()};
-        db.update("tabela_dados", dados, "id = ?", params);
-    }
 
     public void insere(Dado dado) {
 
         SQLiteDatabase db = getWritableDatabase();
-
-        ContentValues dados = pegaDados(dado);
+        ContentValues dados = new ContentValues();
+        dados.put("dados_peso", dado.getPeso());
+        dados.put("dados_dataHora", dado.getDataHora());
+        dados.put("dados_descricao", dado.getDescricao());
 
         db.insert("tabela_dados", null, dados);
+        db.close();
     }
 }
 

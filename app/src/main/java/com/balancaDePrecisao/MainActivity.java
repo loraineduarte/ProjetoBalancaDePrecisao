@@ -65,11 +65,14 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void MostrarHistorico(View view) {
+        Intent intent = new Intent (this, HistoricoPesosActivity.class);
+        startActivity(intent);
     }
 
     public void SalvarPeso(View view) {
         Intent intent = new Intent(this, SalvarPesoActivity.class);
         intent.putExtra("peso", textViewPesoBalanca.getText().toString());
+        Log.d("PESO",textViewPesoBalanca.getText().toString() );
         startActivityForResult(intent, SALVAR_PESO);
 
     }
@@ -167,26 +170,5 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void iniciarPesagem(View view) {
-
-
-        byte[] pacote = new byte[10];
-
-
-            pacote[0] = (byte) (0 & 0xFF);
-            pacote[1] = (byte) (0 & 0xFF);
-            pacote[2] = (byte) (0 & 0xFF);
-            pacote[3] = (byte) (0 & 0xFF);
-            pacote[4] = (byte) (0 & 0xFF);
-            pacote[5] = (byte) (0 & 0xFF);
-            pacote[6] = (byte) (0 & 0xFF);
-            pacote[7] = (byte) (0 & 0xFF);
-            pacote[8] = (byte) (0 & 0xFF);
-            pacote[9] = (byte) (0 & 0xFF);
-
-
-       // textViewSituacaoConexao.setText(Arrays.toString(pacote));
-        conexao.write(pacote);
-    }
 
 }
