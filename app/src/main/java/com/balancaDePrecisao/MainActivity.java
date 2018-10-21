@@ -6,15 +6,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.balancaDePrecisao.Bluetooth.BluetoothActivity;
 import com.balancaDePrecisao.Bluetooth.PairedDevices;
 import com.balancaDePrecisao.Bluetooth.ThreadConexao;
+
+import java.util.Arrays;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -27,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_ENABLE_BT = 4;
     private static final int SELECT_PAIRED_DEVICE = 2;
     private static final int SALVAR_PESO = 5;
-    private static ThreadConexao conexaoBluetooth;
+    private com.balancaDePrecisao.Bluetooth.ThreadConexao conexao;
 
     private static Button botaoConectar, botaoSalvar, botaoHistorico, botaoTara;
     private static TextView textViewPesoBalanca, textViewSituacaoConexao;
@@ -73,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void ConectarBluetooth(View view) {
+
+
         try {
             if (bluetoothAdapter == null) {
                 ativarBluetooth();
@@ -109,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
     private void conectarDispositivo() {
 
 
-        if (conexaoBluetooth != null) {
+        if (conexao != null) {
             Toast.makeText(getApplicationContext(), "Dispositivo já conectado.", Toast.LENGTH_LONG).show();
         }
         Intent searchPairedDevicesIntent = new Intent(this, PairedDevices.class);
@@ -129,27 +136,22 @@ public class MainActivity extends AppCompatActivity {
                 textViewSituacaoConexao.setText("Bluetooth não ativado.");
             }
 
-        } else if (requestCode == SELECT_PAIRED_DEVICE) {
-
+        } else if (requestCode == SELECT_PAIRED_DEVICE ) {
             if (resultCode == RESULT_OK) {
+                textViewSituacaoConexao.setText("Você selecionou " + data.getStringExtra("btDevName") + "\n"
+                        + data.getStringExtra("btDevAddress"));
 
-                textViewSituacaoConexao.setText("Você selecionou " + data.getStringExtra("btDevName") + "\n" + data.getStringExtra("btDevAddress"));
-                macAddress = data.getStringExtra("btDevAddress");
-
-                conexaoBluetooth = new ThreadConexao(macAddress);
-                conexaoBluetooth.start();
-
-                if (conexaoBluetooth != null) {
-                    textViewSituacaoConexao.setText("Conexao finalizada com: " + data.getStringExtra("btDevName") + "\n Verifique o LED de conexão");
-                }
+                conexao = new ThreadConexao(data.getStringExtra("btDevAddress"));
+                conexao.start();
             } else {
                 textViewSituacaoConexao.setText("Nenhum dispositivo selecionado.");
             }
-
         }
+
+
     }
 
-    public void escreverTela(final String dados) {
+    public static void escreverTela(final String dados) {
 
         handler.post(new Runnable() {
             @Override
@@ -160,4 +162,27 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    public void iniciarPesagem(View view) {
+
+
+        byte[] pacote = new byte[10];
+
+
+            pacote[0] = (byte) (0 & 0xFF);
+            pacote[1] = (byte) (0 & 0xFF);
+            pacote[2] = (byte) (0 & 0xFF);
+            pacote[3] = (byte) (0 & 0xFF);
+            pacote[4] = (byte) (0 & 0xFF);
+            pacote[5] = (byte) (0 & 0xFF);
+            pacote[6] = (byte) (0 & 0xFF);
+            pacote[7] = (byte) (0 & 0xFF);
+            pacote[8] = (byte) (0 & 0xFF);
+            pacote[9] = (byte) (0 & 0xFF);
+
+
+       // textViewSituacaoConexao.setText(Arrays.toString(pacote));
+        conexao.write(pacote);
+    }
+
 }

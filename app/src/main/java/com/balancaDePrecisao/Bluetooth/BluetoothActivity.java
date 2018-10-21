@@ -41,7 +41,7 @@ public class BluetoothActivity extends AppCompatActivity {
     static String tipoTeste = "";
     static boolean finalDeTeste = false;
     private static String res;
-    MainActivity main;
+
     @SuppressLint("HandlerLeak")
     public final ThreadLocal<Handler> handler = new ThreadLocal<Handler>() {
         @Override
@@ -71,7 +71,10 @@ public class BluetoothActivity extends AppCompatActivity {
 
                             if (data.length > 1) {
                                 dados = dataString;
-                                main.escreverTela(dados);
+                                if(dados!=null){
+                                    MainActivity.escreverTela(dados);
+                                }
+
                             }
 
                             break;
