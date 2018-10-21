@@ -75,6 +75,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void LimparTara(View view) {
+
+        byte[] pacote = new byte[1];
+        pacote[0] = (byte) (0 & 0xFF);
+        conexao.write(pacote);
     }
 
     public void ConectarBluetooth(View view) {
