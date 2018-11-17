@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
     public void LimparTara(View view) {
 
         byte[] pacote = new byte[1];
-        pacote[0] = (byte) (0 & 0xFF);
+        pacote[0] = 0;
         conexao.write(pacote);
     }
 

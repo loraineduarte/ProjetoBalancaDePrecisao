@@ -3,13 +3,13 @@ package com.balancaDePrecisao;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.balancaDePrecisao.Banco.BancoController;
 import com.balancaDePrecisao.Banco.Dado;
-import com.balancaDePrecisao.Banco.DadoDAO;
+import com.balancaDePrecisao.Banco.CriaBanco;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -57,11 +57,10 @@ public class SalvarPesoActivity extends AppCompatActivity {
     public void SalvarMedicao(View view) {
 
         Dado dado = new Dado(pesoDaBalança.getText().toString(), dataHoraMedicao.getText().toString(), descricao.getText().toString());
-        DadoDAO dao = new DadoDAO(this);
-        dao.insere(dado);
-        dao.close();
+        BancoController dao = new BancoController(this);
+        String result = dao.insere(dado);
 
-        Toast.makeText(SalvarPesoActivity.this, "Dado salvo!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(SalvarPesoActivity.this, result, Toast.LENGTH_SHORT).show();
 
         finish();
 

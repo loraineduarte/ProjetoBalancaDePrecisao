@@ -69,7 +69,7 @@ public class BluetoothActivity extends AppCompatActivity {
                             Log.d("DADOS TAMANHO", String.valueOf(dataString.length()));
                             Log.d("DADOS STRING", dataString);
 
-                            if (data.length > 1) {
+                            if (data.length >= 1) {
                                 dados = dataString;
                                 if(dados!=null){
                                     MainActivity.escreverTela(dados);

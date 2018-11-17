@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -13,7 +14,7 @@ import java.util.ArrayList;
  * Created by loraine.duarte on 29/09/2018.
  */
 
-public class DadoDAO extends SQLiteOpenHelper {
+public class CriaBanco extends SQLiteOpenHelper {
 
     //tabela de avaliador
     public static final String TABELA_DADOS = "tabela_dados";
@@ -30,7 +31,7 @@ public class DadoDAO extends SQLiteOpenHelper {
     BancoController banco;
 
 
-    public DadoDAO(Context context) {
+    public CriaBanco(Context context) {
         super(context, NOME_BANCO, null, DATABASE_VERSION);
     }
 
@@ -61,40 +62,6 @@ public class DadoDAO extends SQLiteOpenHelper {
     }
 
 
-    @NonNull
-    public ArrayList pegaDados() {
 
-        String selectQuery = "SELECT * FROM "+ TABELA_DADOS;
-
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        ArrayList dados = new ArrayList<Dado>();
-        //String peso, String dataHora, String descricao
-
-        if(cursor.getCount()>0){
-            while (cursor.moveToNext()) { //se a select devolver várias colunas
-                cursor.moveToFirst();
-                String dado =  (cursor.getString(cursor.getColumnIndex(DADOS_PESO)) +
-                        cursor.getString(cursor.getColumnIndex(DADOS_DATA_HORA)));
-
-                dados.add(dado);
-            } //fim do while
-        } //fim do if
-        return dados;
-    }
-
-
-    public void insere(Dado dado) {
-
-        SQLiteDatabase db = getWritableDatabase();
-        ContentValues dados = new ContentValues();
-        dados.put("dados_peso", dado.getPeso());
-        dados.put("dados_dataHora", dado.getDataHora());
-        dados.put("dados_descricao", dado.getDescricao());
-
-        db.insert("tabela_dados", null, dados);
-        db.close();
-    }
 }
 

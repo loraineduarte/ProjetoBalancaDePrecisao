@@ -208,7 +208,7 @@ public class ThreadConexao extends Thread {
         A mensagem deve ser representada por um byte array.
      */
     public void write(byte[] data) {
-        Log.d("ENVIADO", data.toString());
+        Log.d("ENVIADO", String.valueOf(data[0]));
 
         if (output != null) {
             try {
@@ -216,7 +216,7 @@ public class ThreadConexao extends Thread {
                 /*  Transmite a mensagem.
                  */
                 output.write(data);
-                Log.d("ENVIADO", data.toString());
+                Log.d("ENVIADO",String.valueOf(data[0]));
 
             } catch (IOException e) {
                 e.printStackTrace();
