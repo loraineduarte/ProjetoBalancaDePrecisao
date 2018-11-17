@@ -38,9 +38,10 @@ public class HistoricoPesosActivity extends AppCompatActivity {
         Cursor cursor = dao.pegaDados();
         dados.clear();
         for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-            String peso = cursor.getString(1);
-            String data = cursor.getString(2);
-            dados.add(peso + " - " + data);
+            String data = cursor.getString(1);
+            String peso = cursor.getString(2);
+            String descrição = cursor.getString(3);
+            dados.add(peso + " - " + descrição + " ("+ data + ")");
         }
 
         adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, dados);

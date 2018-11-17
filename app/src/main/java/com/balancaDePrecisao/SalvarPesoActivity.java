@@ -48,11 +48,6 @@ public class SalvarPesoActivity extends AppCompatActivity {
         super.onResume();
     }
 
-    public void limparDados(View view) {
-        pesoDaBalança.clearComposingText();
-        dataHoraMedicao.clearComposingText();
-        descricao.clearComposingText();
-    }
 
     public void SalvarMedicao(View view) {
 

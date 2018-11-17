@@ -72,7 +72,7 @@ public class BluetoothActivity extends AppCompatActivity {
                             if (data.length >= 1) {
                                 dados = dataString;
                                 if(dados!=null){
-                                    MainActivity.escreverTela(dados);
+                                    MainActivity.escreverTela(dados + " g");
                                 }
 
                             }
